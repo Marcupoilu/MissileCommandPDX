@@ -37,16 +37,19 @@ function myGameSetUp()
 	
     cannonBaseSprite = gfx.sprite.new( cannonBase )
     cannonGunSprite = gfx.sprite.new( cannonGun )
-    cannonGunSprite:setCenter(0.5,1)
+
+    --cannonGunSprite:setOpaque(true)
+
+    cannonGunSprite:setCenter(0.5, 1)
     cannonBaseSprite:moveTo( 200, 220 ) -- this is where the center of the sprite is placed; (200,120) is the center of the Playdate screen
 
-    cannonGunSprite:moveTo( 200, 200 ) -- this is where the center of the sprite is placed; (200,120) is the center of the Playdate screen
+    cannonGunSprite:moveTo( 200, 210 ) -- this is where the center of the sprite is placed; (200,120) is the center of the Playdate screen
     cannonBaseSprite:add() -- This is critical!
     cannonGunSprite:add() -- This is critical!
 
     -- We want an environment displayed behind our sprite.
     -- There are generally two ways to do this:
-    -- 1) Use setBackgroundDrawingCallback() to draw a background image. (This is what we're doing below.)
+    -- 1) Use setBackgroundDrawingCallback() to draw a background image. (This isB what we're doing below.)
     -- 2) Use a tilemap, assign it to a sprite with sprite:setTilemap(tilemap),
     --       and call :setZIndex() with some low number so the background stays behind
     --       your other sprites.
