@@ -25,6 +25,7 @@ function Enemy:update()
             value:remove()
         end
         if value:isa(UISprite) then
+            shake:setShakeAmount(5)
             self:death()
         end
     end
