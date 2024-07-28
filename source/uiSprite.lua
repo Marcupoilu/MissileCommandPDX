@@ -1,10 +1,10 @@
 class("UISprite").extends(gfx.sprite)
 
-function UISprite:init( image, zIndex, centerX, centerY, posX, posY  )
+function UISprite:init( image, zIndex, centerX, centerY, posX, posY, collider  )
     local uiImage = gfx.image.new(image)
     assert(uiImage)
-    self.uiSprite = gfx.sprite.new(uiImage)
-    self.uiSprite:setZIndex(zIndex)
+    self:setImage(uiImage)
+    self:setZIndex(zIndex)
     if not centerX then
         centerX = 0
     end
@@ -17,7 +17,10 @@ function UISprite:init( image, zIndex, centerX, centerY, posX, posY  )
     if not posY then
         posY = 120
     end
-    self.uiSprite:setCenter(centerX, centerY)
-    self.uiSprite:moveTo(posX, posY)
-    self.uiSprite:add()
+    self:setCenter(centerX, centerY)
+    self:moveTo(posX, posY)
+    self:add()
+    if collider == true then
+        self:setCollideRect(0,0,self:getSize())
+    end
 end

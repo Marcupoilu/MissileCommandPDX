@@ -13,6 +13,8 @@ function Player:init( basePosition, gunPosition)
     local cannonGun = gfx.image.new("images/cannon_gun")
     assert( cannonBase ) -- make sure <he image was where we thought
     assert( cannonGun ) -- make sure the image was where we thought
+    self.xp = 0
+    self.xpMax = 10
     self.cannonBaseSprite = gfx.sprite.new( cannonBase )
     self.cannonGunSprite = gfx.sprite.new( cannonGun )
     self.cannonGunSprite:setCenter(0.5, 0.875)
