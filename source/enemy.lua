@@ -2,11 +2,13 @@ class("Enemy").extends(gfx.sprite)
 
 local enemyImage = gfx.image.new("images/enemy")
 
-function Enemy:init(x,y,speed,hp)
-    Bullet.super.init(self)
+function Enemy:init(x,y,speed,hp, xp, damage, enemyImage)
+    Enemy.super.init(self)
     self.speed = speed
     self.hp = hp
-    self.xpReward = 1
+    self.damage = damage
+    print(self.damage)
+    self.xpReward = xp
     self:setImage(enemyImage)
     self:setCollideRect(0,0,self:getSize())
     self:moveTo(x,y)
@@ -14,7 +16,6 @@ function Enemy:init(x,y,speed,hp)
 end
 
 function Enemy:update()
-    self:moveTo(self.x, self.y + self.speed)
     if self.x > playdate.display.getWidth() or self.y > playdate.display.getHeight() or self.x < 0 or self.y < 0 then
         self:remove()
     end
@@ -26,6 +27,8 @@ function Enemy:update()
         end
         if value:isa(UISprite) then
             shake:setShakeAmount(5)
+            print(self.damage)
+            player:loseHp(self.damage)
             self:death()
         end
     end

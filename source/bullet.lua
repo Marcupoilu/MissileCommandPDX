@@ -1,12 +1,13 @@
 class("Bullet").extends(gfx.sprite)
 
-local bulletImage = gfx.image.new("images/bullet")
+local bulletImage = gfx.image.new("images/bullet",15,15 )
 
 function Bullet:init(x,y,speed, damage)
     Bullet.super.init(self)
     self.speed = speed
     self.damage = damage
     self:setImage(bulletImage)
+    self:setScale(0.5)
     self.originAngle = crankPosition - 90
     self.originPosition = {x=x,y=y}
     self.radius = 0

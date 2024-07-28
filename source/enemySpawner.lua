@@ -2,14 +2,15 @@ class("EnemySpawner").extends(Spawner)
 
 function EnemySpawner:init(spawnTime, x, y)
     EnemySpawner.super.init(self, spawnTime)
+    print("init enemy spawner")
     self.x = x
     self.y = y
 end
 
-function EnemySpawner:spawn()
+function EnemySpawner:spawn(enemy)
     EnemySpawner.super.spawn()
     local position = 0
-    local enemy = Enemy(position, self.y, 0.5, 1)
+    local enemy = enemy
     repeat 
         position = math.random(32,playdate.display.getWidth()-32)
         enemy:moveTo(position, 0)
