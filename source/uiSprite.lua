@@ -1,12 +1,5 @@
 class("UISprite").extends(gfx.sprite)
 
-function UISprite:new(o)
-    o = o or {}
-    setmetatable(o,self)
-    self.__index = self
-    return o
-end
-
 function UISprite:init( image, zIndex, centerX, centerY, posX, posY  )
     local uiImage = gfx.image.new(image)
     assert(uiImage)
