@@ -1,36 +1,10 @@
--- Ground display
-local ground = gfx.image.new("images/ground")
-assert( ground )
-local groundSprite = gfx.sprite.new(ground)
-groundSprite:setZIndex(1)
-groundSprite:setCenter(0.5, 1)
-groundSprite:moveTo(200 , 240)
-groundSprite:add()
+import "uiSprite.lua"
 
-local hpBody = gfx.image.new("images/hp_body")
-assert( hpBody )
-local hpBodySprite = gfx.sprite.new(hpBody)
-hpBodySprite:setZIndex(2)
-hpBodySprite:setCenter(0.5, 0)
-hpBodySprite:moveTo(200, 197)
-hpBodySprite:add()
+local ground = UISprite("images/ground", 1, 0.5, 1, 200, 240)
 
-local xpBody = gfx.image.new("images/xp_body")
-assert( xpBody )
-local xpBodySprite = gfx.sprite.new(xpBody)
-xpBodySprite:setZIndex(2)
-xpBodySprite:setCenter(0.5, 0)
-xpBodySprite:moveTo(200, 217)
-xpBodySprite:add()
+local hpBody = UISprite("images/hp_body", 2, 0.5, 0, 200, 197)
 
-local hpFill = gfx.image.new("images/hp_fill")
-assert( hpFill )
-local hpFillSprite = gfx.sprite.new(hpFill)
-hpFillSprite:setZIndex(2)
-hpFillSprite:setCenter(0.5, 0)
-hpFillSprite:moveTo(200, 201)
-hpFillSprite:add()
+local xpBody = UISprite("images/xp_body", 2, 0.5, 0, 200, 217)
 
--- local hpMask = gfx.image.new("images/hp_mask")
--- hpFill:setMaskImage(hpMask)
--- hpFill:setScale(0.5, 1)
+local hpFill = UISprite("images/hp_fill", 2, 0.5, 0, 200, 201)
+
