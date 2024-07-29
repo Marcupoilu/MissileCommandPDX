@@ -29,6 +29,7 @@ uiManager = UiManager()
 
 
 gfx.setBackgroundColor(gfx.kColorBlack)
+gfx.clear()
 local game = function()
     for key, value in pairs(gfx.sprite.getAllSprites()) do
         value:setImageDrawMode(gfx.kDrawModeInverted)
