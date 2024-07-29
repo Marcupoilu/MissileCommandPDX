@@ -28,7 +28,11 @@ SaucerSpawner(math.random(500,1000), spawnPositionX, 0)
 uiManager = UiManager()
 
 
+gfx.setBackgroundColor(gfx.kColorBlack)
 local game = function()
+    for key, value in pairs(gfx.sprite.getAllSprites()) do
+        value:setImageDrawMode(gfx.kDrawModeInverted)
+    end
     crankPosition = playdate.getCrankPosition()
     player:update()
     gfx.sprite.update()
