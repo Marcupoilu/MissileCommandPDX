@@ -14,21 +14,16 @@ local margeHpFillCells = 2
 -- local hpFill = UISprite("images/hp_fill", 2, 0.5, 0, 200, 201)
 
 function UiManager:init()
-    self.totalHpCellsWidth = (player.hpMax * hpCellSize) + ((player.hpMax - 1) * margeHpCells)
-    self.hpPositionBaseX = ((playdate.display.getWidth() - self.totalHpCellsWidth) / 2)
-    self.hpPositionBaseY = 200
-    self.totalHpFillCellsWidth = (player.hp * hpFillSize) + ((player.hp - 1) * margeHpFillCells)
-    self.hpFillPositionBaseX = ((playdate.display.getWidth() - self.totalHpFillCellsWidth) / 2) - 2
-    self.hpFillPositionBaseY = 203
-    self:createHPBar(hpCells, "images/hpbar_cell", self.hpPositionBaseX + 10, self.hpPositionBaseY, hpCellSize, margeHpCells, 0.85)
-    self:createHPBar(hpFillCells, "images/hpbar_cellfill", self.hpFillPositionBaseX + 10, self.hpFillPositionBaseY, hpFillSize, margeHpFillCells, 0.85)
+    self.horizontalLayoutHPCell = HorizontalLayout(22, -4, player.hpMax, 200)
+    self.horizontalLayoutHPFillCell = HorizontalLayout(16, 2, player.hp, 203)
+    self:createHPBar(hpCells, "images/hpbar_cell", self.horizontalLayoutHPCell.positionBaseX + 10, self.horizontalLayoutHPCell.positionBaseY, self.horizontalLayoutHPCell.cellSize, self.horizontalLayoutHPCell.distance, 0.85)
+    self:createHPBar(hpFillCells, "images/hpbar_cellfill", self.horizontalLayoutHPFillCell.positionBaseX + 7, self.horizontalLayoutHPFillCell.positionBaseY, self.horizontalLayoutHPFillCell.cellSize, self.horizontalLayoutHPFillCell.distance, 0.85)
 end
 
-function UiManager:update()
+function UiManager:levelUpDisplay()
 end
 
 function UiManager:updateHPDisplay()
-    print(player.hp)
     for i = 1, player.hpMax do
         if(i <= player.hp) then
             hpFillCells[i]:setVisible(true)

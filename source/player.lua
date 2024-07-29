@@ -8,7 +8,6 @@ class("Player").extends()
 -- end
 
 function Player:init( basePosition, gunPosition)
-    
     local cannonBase = gfx.image.new("images/cannon_base")
     local cannonGun = gfx.image.new("images/cannon_gun")
     assert( cannonBase ) -- make sure <he image was where we thought
@@ -31,6 +30,18 @@ end
 
 function Player:update()
     self.cannonGunSprite:setRotation(crankPosition)
+end
+
+function Player:gainXP(xp)
+    self.xp += xp
+    if(self.xp >= self.xpMax) then
+        self:levelUp()
+    end
+end
+
+function Player:levelUp()
+    self.xpMax *= 2
+    self.xp = 0
 end
 
 function Player:loseHp(value)

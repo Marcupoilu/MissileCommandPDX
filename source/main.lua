@@ -14,6 +14,7 @@ import "spawner.lua"
 import "saucer.lua"
 import "enemySpawner.lua"
 import "saucerSpawner.lua"
+import "horizontalLayout.lua"
 import "uiSprite.lua"
 import "ui.lua"
 import "uiManager.lua"
@@ -26,14 +27,14 @@ local spawnPositionX = 32
 SaucerSpawner(math.random(500,1000), spawnPositionX, 0)
 uiManager = UiManager()
 
-function playdate.update()
 
+local game = function()
     crankPosition = playdate.getCrankPosition()
-
     player:update()
     gfx.sprite.update()
     Particles:update()
     playdate.timer.updateTimers()
-
 end
+
+playdate.update = game
 
