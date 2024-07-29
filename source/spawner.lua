@@ -7,7 +7,7 @@ function Spawner:init(spawnTime)
 end
 
 function Spawner:startSpawn()
-    playdate.timer.performAfterDelay(math.random(1000,2000), function()
+    playdate.timer.performAfterDelay(math.random(300,800), function()
         self:spawn()
         self:startSpawn()
     end)

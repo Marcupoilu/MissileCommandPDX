@@ -1,8 +1,7 @@
-import "uiSprite.lua"
 
 ground = UISprite("images/ground", 1, 0.5, 1, 200, 240, true)
 
-local hpBody = UISprite("images/hp_body", 2, 0.5, 0, 200, 197)
+-- local hpBody = UISprite("images/hp_body", 2, 0.5, 0, 200, 197)
 
 local xpBody = UISprite("images/xp_body", 2, 0.5, 0, 200, 217)
 

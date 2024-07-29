@@ -7,8 +7,8 @@ function Enemy:init(x,y,speed,hp, xp, damage, enemyImage)
     self.speed = speed
     self.hp = hp
     self.damage = damage
-    print(self.damage)
     self.xpReward = xp
+    self:setScale(0.8)
     self:setImage(enemyImage)
     self:setCollideRect(0,0,self:getSize())
     self:moveTo(x,y)
@@ -25,9 +25,8 @@ function Enemy:update()
             self:loseHp(value.damage)
             value:remove()
         end
-        if value:isa(UISprite) then
-            shake:setShakeAmount(5)
-            print(self.damage)
+        if value:isa(UISprite) or value:getTag() == 1 then
+            shake:setShakeAmount(15)
             player:loseHp(self.damage)
             self:death()
         end
@@ -43,5 +42,11 @@ function Enemy:loseHp(value)
 end
 
 function Enemy:death()
+    shake:setShakeAmount(5)
+    local p = ParticleCircle(self.x,self.y)
+    p:setSize(7,7)
+    p:setMode(Particles.modes.DECAY)
+    p:setSpeed(3, 7)
+    p:add(20)
     self:remove()
 end

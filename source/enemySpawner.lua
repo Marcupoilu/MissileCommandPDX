@@ -2,7 +2,6 @@ class("EnemySpawner").extends(Spawner)
 
 function EnemySpawner:init(spawnTime, x, y)
     EnemySpawner.super.init(self, spawnTime)
-    print("init enemy spawner")
     self.x = x
     self.y = y
 end
