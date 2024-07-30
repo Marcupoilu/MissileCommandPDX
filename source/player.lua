@@ -15,7 +15,7 @@ function Player:init( basePosition, gunPosition)
     self.hpMax = 10
     self.hp = self.hpMax
     self.xp = 0
-    self.xpMax = 10
+    self.xpMax = 1
     self.cannonBaseSprite = gfx.sprite.new( cannonBase )
     self.cannonBaseSprite:setTag(1)
     self.cannonBaseSprite:setCollideRect(0,0,self.cannonBaseSprite:getSize())
@@ -42,6 +42,8 @@ end
 function Player:levelUp()
     self.xpMax *= 2
     self.xp = 0
+    playdate.update = levelUpUpdate
+    -- uiManager:levelUpDisplay()
 end
 
 function Player:loseHp(value)

@@ -1,26 +1,38 @@
 class("UiManager").extends()
 
--- ground = UISprite("images/ground", 1, 0.5, 1, 200, 240, true)
-
--- local hpBody = UISprite("images/hp_body", 2, 0.5, 0, 200, 197)
 local hpCells = {} 
-local hpCellSize = 22
 local hpFillCells = {}
-local hpFillSize = 16
-local margeHpCells = -4
-local margeHpFillCells = 2
--- local xpBody = UISprite("images/xp_body", 2, 0.5, 0, 200, 217)
-
--- local hpFill = UISprite("images/hp_fill", 2, 0.5, 0, 200, 201)
+local levelUpCellWidth = 100
+local levelUpCellHeight = 200
+local levelUpDistance = 15
+local levelUpCellNumber = 3
+local _pick_anim_y = sequence.new():from(20):to(13, 1, "easeOutSine"):mirror():start()
+local font = gfx.font.new("font/Asheville-Sans-24-Light")
+local upgrades =  {}
 
 function UiManager:init()
     self.horizontalLayoutHPCell = HorizontalLayout(22, -4, player.hpMax, 200)
     self.horizontalLayoutHPFillCell = HorizontalLayout(16, 2, player.hp, 203)
+    self.horizontalLayoutLevelUp = HorizontalLayout(levelUpCellWidth, levelUpDistance, levelUpCellNumber, 20)
     self:createHPBar(hpCells, "images/hpbar_cell", self.horizontalLayoutHPCell.positionBaseX + 10, self.horizontalLayoutHPCell.positionBaseY, self.horizontalLayoutHPCell.cellSize, self.horizontalLayoutHPCell.distance, 0.85)
     self:createHPBar(hpFillCells, "images/hpbar_cellfill", self.horizontalLayoutHPFillCell.positionBaseX + 7, self.horizontalLayoutHPFillCell.positionBaseY, self.horizontalLayoutHPFillCell.cellSize, self.horizontalLayoutHPFillCell.distance, 0.85)
 end
 
+function UiManager:generateUpgrades()
+    for i = 1, levelUpCellNumber do
+        printTable(table.random(Upgrade.types))
+    end
+end
+
 function UiManager:levelUpDisplay()
+    gfx.setColor(gfx.kColorWhite)
+    for i = 0, 3 -1 do
+        gfx.setColor(gfx.kColorWhite)
+        gfx.fillRoundRect(self.horizontalLayoutLevelUp.positionBaseX + (i*(levelUpCellWidth+levelUpDistance)),self.horizontalLayoutLevelUp.positionBaseY + _pick_anim_y:get() , levelUpCellWidth, levelUpCellHeight,10)
+    end
+    gfx.setImageDrawMode(gfx.kDrawModeFillWhite)
+    gfx.setFont(font,gfx.kVariantBold)
+    gfx.drawText("Pick Upgrade", 130, 1)
 end
 
 function UiManager:updateHPDisplay()

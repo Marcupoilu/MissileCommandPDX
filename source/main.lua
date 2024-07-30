@@ -4,6 +4,9 @@ import "CoreLibs/object"
 import "CoreLibs/graphics"
 import "CoreLibs/sprites"
 import "CoreLibs/timer"
+import "mathExtensions.lua"
+import "tableExtensions.lua"
+import "sequence.lua"
 import "screenShake.lua"
 import "weapon.lua"
 import "simpleCannon.lua"
@@ -17,6 +20,9 @@ import "saucerSpawner.lua"
 import "horizontalLayout.lua"
 import "uiSprite.lua"
 import "ui.lua"
+import "upgrade.lua"
+import "upgradeStat.lua"
+import "upgradeWeapon.lua"
 import "uiManager.lua"
 import "pdParticles.lua"
 
@@ -26,11 +32,10 @@ shake = ScreenShake()
 local spawnPositionX = 32
 SaucerSpawner(math.random(500,1000), spawnPositionX, 0)
 uiManager = UiManager()
-
-
 gfx.setBackgroundColor(gfx.kColorBlack)
 gfx.clear()
-local game = function()
+
+game = function()
     for key, value in pairs(gfx.sprite.getAllSprites()) do
         value:setImageDrawMode(gfx.kDrawModeInverted)
     end
@@ -41,5 +46,17 @@ local game = function()
     playdate.timer.updateTimers()
 end
 
-playdate.update = game
+test = false
+
+levelUpUpdate = function()
+    if(test == false) then
+        test = true
+        uiManager:generateUpgrades()
+    end
+    gfx.clear()
+    uiManager:levelUpDisplay()
+    sequence.update()
+end
+
+playdate.update = levelUpUpdate
 
