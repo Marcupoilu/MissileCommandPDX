@@ -28,3 +28,11 @@ function enum( t )
 
 	return result
 end
+
+function table.find(table, element)
+    for key, value in pairs(table) do
+      if element == value then
+        return element
+      end
+    end
+end

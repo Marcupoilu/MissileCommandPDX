@@ -16,6 +16,7 @@ function Player:init( basePosition, gunPosition)
     self.hp = self.hpMax
     self.xp = 0
     self.xpMax = 1
+    self.attackSpeedBonus = 0
     self.cannonBaseSprite = gfx.sprite.new( cannonBase )
     self.cannonBaseSprite:setTag(1)
     self.cannonBaseSprite:setCollideRect(0,0,self.cannonBaseSprite:getSize())
@@ -25,7 +26,8 @@ function Player:init( basePosition, gunPosition)
     self.cannonGunSprite:moveTo( gunPosition.x, gunPosition.y ) -- this is where the center of the sprite is placed; (200,120) is the center of the Playdate screen
     self.cannonBaseSprite:add() -- This is critical!
     self.cannonGunSprite:add() -- This is critical!
-    self.simpleCannon = SimpleCannon(350, gunPosition.x, gunPosition.y)
+    self.weapons = {}
+    table.insert(self.weapons,SimpleCannon(350, gunPosition.x, gunPosition.y))
 end
 
 function Player:update()
