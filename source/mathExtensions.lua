@@ -12,6 +12,13 @@ function math.ring(a, min, max)
     return min + (a-min)%(max-min)
 end
 
+function math.ringInvert(a, min, max)
+    -- if min > max then
+    --     min, max = max, min
+    -- end
+    return min - (a-min)%(max-min)
+end
+
 function math.ring_int(a, min, max)
     return math.ring(a, min, max+1)
 end
@@ -49,5 +56,3 @@ function math.sign(v)
     local bracket = bracket or 1
     return math.floor(v/bracket + math.sign(v) * 0.5) * bracket
   end
-
-  

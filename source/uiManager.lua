@@ -10,6 +10,7 @@ local _pick_anim_y = sequence.new():from(20):to(13, 1, "easeOutSine"):mirror():s
 local font = gfx.font.new("font/Asheville-Sans-24-Light")
 local smallFont = gfx.font.new("font/font-pixieval-large-white")
 local ups = {}
+local levelUpIndex = 0
 
 function UiManager:init()
     self.horizontalLayoutHPCell = HorizontalLayout(22, -4, player.hpMax, 200)
@@ -28,6 +29,7 @@ function UiManager:generateUpgrades()
         until (table.contains(ups, rand) == false)
         table.insert(ups, rand)
     end
+    levelUpIndex = 0
 end
 
 function UiManager:levelUpDisplay()
@@ -36,6 +38,11 @@ function UiManager:levelUpDisplay()
     for key, value in pairs(ups) do
         gfx.setColor(gfx.kColorWhite)
         gfx.fillRoundRect(self.horizontalLayoutLevelUp.positionBaseX + (i*(levelUpCellWidth+levelUpDistance)),self.horizontalLayoutLevelUp.positionBaseY + _pick_anim_y:get() , levelUpCellWidth, levelUpCellHeight,10)
+        if i == levelUpIndex then
+            gfx.setColor(gfx.kColorBlack)
+            gfx.setLineWidth(4)
+            gfx.drawRoundRect(self.horizontalLayoutLevelUp.positionBaseX + (i*(levelUpCellWidth+levelUpDistance)) +5 ,self.horizontalLayoutLevelUp.positionBaseY + _pick_anim_y:get() +5, levelUpCellWidth -10, levelUpCellHeight-10, 10)
+        end
         gfx.setImageDrawMode(gfx.kDrawModeFillBlack)
         gfx.setFont(smallFont,gfx.kVariantBold)
         gfx.drawText(value.descriptionText , self.horizontalLayoutLevelUp.positionBaseX + (i*(levelUpCellWidth+levelUpDistance)) + 10,self.horizontalLayoutLevelUp.positionBaseY + _pick_anim_y:get() + 150)
@@ -45,6 +52,15 @@ function UiManager:levelUpDisplay()
     gfx.setImageDrawMode(gfx.kDrawModeFillWhite)
     gfx.setFont(font,gfx.kVariantBold)
     gfx.drawText("Pick Upgrade", 130, 1)
+    if playdate.buttonJustPressed(playdate.kButtonRight) then
+        levelUpIndex = math.ring_int(levelUpIndex +1, 0, 2)
+    end
+    if playdate.buttonJustPressed(playdate.kButtonLeft) then
+        levelUpIndex -= 1
+        if levelUpIndex == -1 then
+            levelUpIndex = 2
+        end
+    end
 end
 
 function UiManager:updateHPDisplay()
