@@ -41,9 +41,9 @@ gfx.setBackgroundColor(gfx.kColorBlack)
 gfx.clear()
 
 game = function()
-    for key, value in pairs(gfx.sprite.getAllSprites()) do
-        value:setImageDrawMode(gfx.kDrawModeInverted)
-    end
+    -- for key, value in pairs(gfx.sprite.getAllSprites()) do
+    --     value:setImageDrawMode(gfx.kDrawModeInverted)
+    -- end
     crankPosition = playdate.getCrankPosition()
     player:update()
     gfx.sprite.update()
@@ -63,4 +63,4 @@ levelUpUpdate = function()
     sequence.update()
 end
 
-playdate.update = levelUpUpdate
+playdate.update = game
