@@ -36,3 +36,21 @@ function table.find(table, element)
       end
     end
 end
+
+function table.count(table)
+  count = 0
+  for i,a in pairs(table) do
+      count += 1
+  end
+  return count
+end
+
+function table.contains(table, element)
+  -- print("ELEMENT RAND "..printTable(element))
+  for key, value in pairs(table) do
+    if element == value then
+      return true
+    end
+  end
+    return false
+end

@@ -1,12 +1,5 @@
 class("Player").extends()
 
--- function Player:new(o)
---     o = o or {}
---     setmetatable(o,self)
---     self.__index = self
---     return o
--- end
-
 function Player:init( basePosition, gunPosition)
     local cannonBase = gfx.image.new("images/cannon_base")
     local cannonGun = gfx.image.new("images/cannon_gun")
@@ -15,7 +8,8 @@ function Player:init( basePosition, gunPosition)
     self.hpMax = 10
     self.hp = self.hpMax
     self.xp = 0
-    self.xpMax = 1
+    self.xpMax = 10
+    self.damageBonus = 0
     self.attackSpeedBonus = 0
     self.cannonBaseSprite = gfx.sprite.new( cannonBase )
     self.cannonBaseSprite:setTag(1)
@@ -27,7 +21,6 @@ function Player:init( basePosition, gunPosition)
     self.cannonBaseSprite:add() -- This is critical!
     self.cannonGunSprite:add() -- This is critical!
     self.weapons = {}
-    table.insert(self.weapons,SimpleCannon(350, gunPosition.x, gunPosition.y))
 end
 
 function Player:update()

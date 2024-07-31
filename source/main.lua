@@ -8,10 +8,10 @@ import "mathExtensions.lua"
 import "tableExtensions.lua"
 import "sequence.lua"
 import "screenShake.lua"
-import "weapon.lua"
-import "simpleCannon.lua"
-import "bullet.lua"
 import "player.lua"
+import "weapon.lua"
+import "bullet.lua"
+import "simpleCannon.lua"
 import "enemy.lua"
 import "spawner.lua"
 import "saucer.lua"
@@ -27,11 +27,16 @@ import "uiManager.lua"
 import "pdParticles.lua"
 
 particles = {}
+upgrades = {}
 player = Player({x=200,y=190}, {x=200,y=175})
+table.insert(upgrades, UpgradeStat("attackSpeedBonus", 10, "+10% Attack \n       Speed", "images/attackSpeedUp"))
+table.insert(upgrades, UpgradeStat("damageBonus", 10, "+10% Damage", "images/damageUp"))
+table.insert(upgrades, UpgradeWeapon("simpleCannon", "SimpleCannon", "Cannon", "", "images/simpleCannon"))
 shake = ScreenShake()
 local spawnPositionX = 32
 SaucerSpawner(math.random(500,1000), spawnPositionX, 0)
 uiManager = UiManager()
+table.insert(player.weapons,SimpleCannon(350, player.cannonGunSprite.x, player.cannonGunSprite.y, 1))
 gfx.setBackgroundColor(gfx.kColorBlack)
 gfx.clear()
 
@@ -59,4 +64,3 @@ levelUpUpdate = function()
 end
 
 playdate.update = levelUpUpdate
-

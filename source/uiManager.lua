@@ -8,7 +8,8 @@ local levelUpDistance = 15
 local levelUpCellNumber = 3
 local _pick_anim_y = sequence.new():from(20):to(13, 1, "easeOutSine"):mirror():start()
 local font = gfx.font.new("font/Asheville-Sans-24-Light")
-local upgrades =  {}
+local smallFont = gfx.font.new("font/font-pixieval-large-white")
+local ups = {}
 
 function UiManager:init()
     self.horizontalLayoutHPCell = HorizontalLayout(22, -4, player.hpMax, 200)
@@ -19,16 +20,27 @@ function UiManager:init()
 end
 
 function UiManager:generateUpgrades()
+    ups = {}
+    local rand =  {}
     for i = 1, levelUpCellNumber do
-        printTable(table.random(Upgrade.types))
+        repeat
+            rand = table.random(upgrades)
+        until (table.contains(ups, rand) == false)
+        table.insert(ups, rand)
     end
 end
 
 function UiManager:levelUpDisplay()
     gfx.setColor(gfx.kColorWhite)
-    for i = 0, 3 -1 do
+    local i = 0
+    for key, value in pairs(ups) do
         gfx.setColor(gfx.kColorWhite)
         gfx.fillRoundRect(self.horizontalLayoutLevelUp.positionBaseX + (i*(levelUpCellWidth+levelUpDistance)),self.horizontalLayoutLevelUp.positionBaseY + _pick_anim_y:get() , levelUpCellWidth, levelUpCellHeight,10)
+        gfx.setImageDrawMode(gfx.kDrawModeFillBlack)
+        gfx.setFont(smallFont,gfx.kVariantBold)
+        gfx.drawText(value.descriptionText , self.horizontalLayoutLevelUp.positionBaseX + (i*(levelUpCellWidth+levelUpDistance)) + 10,self.horizontalLayoutLevelUp.positionBaseY + _pick_anim_y:get() + 150)
+        value.image:scaledImage(0.3):draw( self.horizontalLayoutLevelUp.positionBaseX + (i*(levelUpCellWidth+levelUpDistance)) + 20,self.horizontalLayoutLevelUp.positionBaseY + _pick_anim_y:get() + 50)
+        i += 1
     end
     gfx.setImageDrawMode(gfx.kDrawModeFillWhite)
     gfx.setFont(font,gfx.kVariantBold)
