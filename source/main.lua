@@ -29,14 +29,14 @@ import "pdParticles.lua"
 particles = {}
 upgrades = {}
 player = Player({x=200,y=190}, {x=200,y=175})
-table.insert(upgrades, UpgradeStat("attackSpeedBonus", 10, "+10% Attack \n       Speed", "images/attackSpeedUp"))
-table.insert(upgrades, UpgradeStat("damageBonus", 10, "+10% Damage", "images/damageUp"))
-table.insert(upgrades, UpgradeWeapon("simpleCannon", "SimpleCannon", "Cannon", "", "images/simpleCannon"))
 shake = ScreenShake()
 local spawnPositionX = 32
 SaucerSpawner(math.random(500,1000), spawnPositionX, 0)
 uiManager = UiManager()
 table.insert(player.weapons,SimpleCannon(350, player.cannonGunSprite.x, player.cannonGunSprite.y, 1))
+table.insert(upgrades, UpgradeStat("attackSpeedBonus", 10, "+10% Attack \n       Speed", "images/attackSpeedUp"))
+table.insert(upgrades, UpgradeStat("damageBonus", 10, "+10% Damage", "images/damageUp"))
+table.insert(upgrades, UpgradeWeapon("simpleCannon", "SimpleCannon", "Cannon", "", "images/simpleCannon"))
 gfx.setBackgroundColor(gfx.kColorBlack)
 gfx.clear()
 
@@ -63,4 +63,4 @@ levelUpUpdate = function()
     sequence.update()
 end
 
-playdate.update = game
+playdate.update = levelUpUpdate

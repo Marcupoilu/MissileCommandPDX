@@ -54,3 +54,11 @@ function table.contains(table, element)
   end
     return false
 end
+
+function table.findByParam(table, param, paramValue)
+  for key, value in pairs(table) do
+    if value[param] == paramValue then
+      return value
+    end
+  end
+end

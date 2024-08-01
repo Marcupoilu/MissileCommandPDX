@@ -10,5 +10,4 @@ end
 function SimpleCannon:shoot()
     SimpleCannon.super.shoot()
     bullet = Bullet(self.x, self.y, 5, self.damage+((player.damageBonus*self.damage)/100))
-    -- bullet:init(self.x, self.y, 1)
 end
