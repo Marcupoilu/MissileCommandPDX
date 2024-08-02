@@ -12,6 +12,7 @@ function Player:init( basePosition, gunPosition)
     self.damageBonus = 0
     self.attackSpeedBonus = 0
     self.scaleBonus = 0 
+    self.projectileAmount = 0
     self.cannonBaseSprite = gfx.sprite.new( cannonBase )
     self.cannonBaseSprite:setTag(1)
     self.cannonBaseSprite:setCollideRect(0,0,self.cannonBaseSprite:getSize())

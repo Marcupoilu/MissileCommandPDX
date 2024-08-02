@@ -1,3 +1,0 @@
-{"dsn":"https://2535d31f722b4034a8936a4da68830e5@sentry.panic.com/18"}
-{"type":"session","length":216}
-{"init":true,"sid":"b99b3035-b04c-4e3c-1d67-5c92c292ed12","status":"crashed","errors":1,"started":"2024-08-02T03:17:50.568Z","duration":2.418,"attrs":{"release":"playdate-simulator@2.5.0","environment":"production"}}

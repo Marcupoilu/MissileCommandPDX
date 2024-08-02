@@ -13,18 +13,20 @@ function Game:startGame()
 end
 
 function Game:update()
-    self:ChangeWave()
+    print(playdate.getElapsedTime())
+    self:changeWave()
     if playdate.getElapsedTime() >= self.gameTime then
         print("game win")
     end
 end
 
-function ChangeWave()
+function Game:changeWave()
     -- current_time est le temps écoulé en millisecondes
     local interval = 1 * 60 * 1000 -- 1 minute en millisecondes
 
-    if self.gameTime % interval == 0 then
+    if playdate.getElapsedTime() % interval == 0 then
         self.waveNumber += 1
+        print("new wave"..self.waveNumber)
         self.waves[self.waveNumber]:startWave()
         -- Placez ici l'action que vous souhaitez exécuter
     end

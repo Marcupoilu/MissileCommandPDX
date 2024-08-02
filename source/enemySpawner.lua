@@ -13,7 +13,17 @@ function EnemySpawner:spawn(enemy)
     repeat 
         position = math.random(32,playdate.display.getWidth()-32)
         enemy:moveTo(position, 0)
-    until(self:countTable(enemy:overlappingSprites()) == 0)
+    until(self:isThereAnEnemyAtSpawn(enemy) == 0)
+end
+
+function EnemySpawner:isThereAnEnemyAtSpawn(enemy)
+    local result = 0
+    for key, sprite in pairs(enemy:overlappingSprites()) do
+        if sprite:isa(Enemy) then
+            result += 1
+        end
+    end
+    return result
 end
 
 function EnemySpawner:countTable(table)

@@ -61,3 +61,24 @@ function math.sign(v)
     local milliseconds = minutes * 60 * 1000
     return milliseconds
 end
+
+function cutAngle(X)
+    -- Si X est 1, retourne un seul angle 0
+    if X == 1 then
+        return {0}
+    end
+
+    -- Table pour stocker les angles
+    local angles = {}
+
+    -- Calcul de l'intervalle en excluant -90 et 90
+    local intervalAngle = 90 / (X - 1)
+
+    -- Génération des angles en répartissant autour de 0
+    for i = 0, X-1 do
+        local angle = -((X-1)/2) * intervalAngle + i * intervalAngle
+        table.insert(angles, angle)
+    end
+    
+    return angles
+end

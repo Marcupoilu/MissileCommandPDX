@@ -13,6 +13,7 @@ import "player.lua"
 import "weapon.lua"
 import "bullet.lua"
 import "simpleCannon.lua"
+import "enemiesData.lua"
 import "enemy.lua"
 import "spawner.lua"
 import "saucer.lua"
@@ -37,7 +38,6 @@ spawners = {}
 -- // 
 player = Player({x=200,y=190}, {x=200,y=175})
 shake = ScreenShake()
--- table.insert(spawners,SaucerSpawner(math.random(500,1000), spawnPositionX, 0))
 uiManager = UiManager()
 table.insert(player.weapons,SimpleCannon(500, player.cannonGunSprite.x, player.cannonGunSprite.y, 1, 1, 0.2))
 table.insert(upgrades, UpgradeStat("attackSpeedBonus", 10, "+10% Attack \n       Speed", "images/attackSpeedUp"))
@@ -54,7 +54,7 @@ gameUpdate = function()
     gfx.sprite.update()
     Particles:update()
     playdate.timer.updateTimers()
-    game.update()
+    game:update()
 end
 
 generate = false

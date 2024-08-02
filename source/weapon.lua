@@ -10,6 +10,12 @@ function Weapon:init(attackSpeed, damage, projectileAmount, scale)
     self:startShooting()
 end
 
+function Weapon:debugLevel(level)
+    for i = 1, level-1, 1 do
+        self:changeLevel()
+    end
+end
+
 function Weapon:startShooting()
     playdate.timer.performAfterDelay(self.attackSpeed-((player.attackSpeedBonus*self.attackSpeed)/100), function()
         self:shoot()

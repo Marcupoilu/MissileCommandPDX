@@ -15,5 +15,5 @@ function UpgradeStat:update()
 end
 
 function UpgradeStat:applyUpgrade()
-    player[self.stat] = value
+    player[self.stat] += self.value
 end
