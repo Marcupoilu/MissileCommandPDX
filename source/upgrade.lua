@@ -7,9 +7,12 @@ function Upgrade:init(descriptionText, image)
     self.image = gfx.image.new(image)
 end
 
+function Upgrade:updateDescriptionText()
+end
+
 function Upgrade:update()
     Upgrade.super.update(self)
 end
 
-function Upgrade:ApplyUpgrade()
+function Upgrade:applyUpgrade()
 end

@@ -1,10 +1,12 @@
 class("Weapon").extends()
 
 
-function Weapon:init(attackSpeed, damage)
+function Weapon:init(attackSpeed, damage, projectileAmount, scale)
     self.attackSpeed = attackSpeed
     self.level = 1
+    self.scale = scale
     self.damage = damage
+    self.projectileAmount = projectileAmount
     self:startShooting()
 end
 

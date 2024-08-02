@@ -7,10 +7,13 @@ function UpgradeStat:init(stat,value, descriptionText, image)
     self.value = value
 end
 
+function UpgradeStat:updateDescriptionText()
+end
+
 function UpgradeStat:update()
     UpgradeStat.super.update(self)
 end
 
-function UpgradeStat:ApplyUpgrade()
+function UpgradeStat:applyUpgrade()
     player[self.stat] = value
 end

@@ -1,9 +1,12 @@
 class("Enemy").extends(gfx.sprite)
 
 local enemyImage = gfx.image.new("images/enemy")
+local p = ParticleCircle(0,0)
+-- local pDeath = ParticleCircle(0,0)
 
 function Enemy:init(x,y,speed,hp, xp, damage, enemyImage)
     Enemy.super.init(self)
+    table.insert(enemies, self)
     self.speed = speed
     self.hp = hp
     self.damage = damage
@@ -22,13 +25,17 @@ function Enemy:update()
     local collisions = self:overlappingSprites()
     for index, value in pairs(collisions) do
         if value:isa(Bullet) then
-            local p = ParticleCircle(value.x,value.y)
+            -- local p = ParticleCircle(value.x,value.y)
+            p:moveTo(value.x, value.y)
             p:setSize(4,4)
             p:setColor(gfx.kColorWhite)
             p:setMode(Particles.modes.DECAY)
             p:setSpeed(3, 5)
             p:add(10)
             self:loseHp(value.damage)
+            if self.hp <= 0 then
+                player:gainXP(self.xpReward)
+            end
             value:remove()
         end
         if value:isa(UISprite) or value:getTag() == 1 then
@@ -48,12 +55,11 @@ end
 
 function Enemy:death()
     shake:setShakeAmount(5)
-    local p = ParticleCircle(self.x,self.y)
+    p:moveTo(self.x, self.y)
     p:setSize(7,7)
     p:setColor(gfx.kColorWhite)
     p:setMode(Particles.modes.DECAY)
     p:setSpeed(3, 7)
     p:add(20)
-    player:gainXP(self.xpReward)
     self:remove()
 end

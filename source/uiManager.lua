@@ -26,6 +26,7 @@ function UiManager:generateUpgrades()
     for i = 1, levelUpCellNumber do
         repeat
             rand = table.random(upgrades)
+            rand:updateDescriptionText()
         until (table.contains(ups, rand) == false)
         table.insert(ups, rand)
     end
@@ -60,6 +61,11 @@ function UiManager:levelUpDisplay()
         if levelUpIndex == -1 then
             levelUpIndex = 2
         end
+    end
+    if playdate.buttonJustPressed(playdate.kButtonA) then
+        generate = false
+        ups[levelUpIndex +1]:applyUpgrade()
+        playdate.update = gameUpdate
     end
 end
 

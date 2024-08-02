@@ -7,6 +7,7 @@ import "CoreLibs/timer"
 import "mathExtensions.lua"
 import "tableExtensions.lua"
 import "sequence.lua"
+import "pdParticles.lua"
 import "screenShake.lua"
 import "player.lua"
 import "weapon.lua"
@@ -17,6 +18,9 @@ import "spawner.lua"
 import "saucer.lua"
 import "enemySpawner.lua"
 import "saucerSpawner.lua"
+import "wave.lua"
+import "wavesData.lua"
+import "game.lua"
 import "horizontalLayout.lua"
 import "uiSprite.lua"
 import "ui.lua"
@@ -24,38 +28,42 @@ import "upgrade.lua"
 import "upgradeStat.lua"
 import "upgradeWeapon.lua"
 import "uiManager.lua"
-import "pdParticles.lua"
 
+-- Collections
 particles = {}
 upgrades = {}
+enemies = {}
+spawners = {}
+-- // 
 player = Player({x=200,y=190}, {x=200,y=175})
 shake = ScreenShake()
-local spawnPositionX = 32
-SaucerSpawner(math.random(500,1000), spawnPositionX, 0)
+-- table.insert(spawners,SaucerSpawner(math.random(500,1000), spawnPositionX, 0))
 uiManager = UiManager()
-table.insert(player.weapons,SimpleCannon(350, player.cannonGunSprite.x, player.cannonGunSprite.y, 1))
+table.insert(player.weapons,SimpleCannon(500, player.cannonGunSprite.x, player.cannonGunSprite.y, 1, 1, 0.2))
 table.insert(upgrades, UpgradeStat("attackSpeedBonus", 10, "+10% Attack \n       Speed", "images/attackSpeedUp"))
 table.insert(upgrades, UpgradeStat("damageBonus", 10, "+10% Damage", "images/damageUp"))
-table.insert(upgrades, UpgradeWeapon("simpleCannon", "SimpleCannon", "Cannon", "", "images/simpleCannon"))
+table.insert(upgrades, UpgradeWeapon("simpleCannon", "SimpleCannon", "Cannon", "", "images/simpleCannon" ))
+game = Game()
+game:startGame()
 gfx.setBackgroundColor(gfx.kColorBlack)
 gfx.clear()
 
-game = function()
-    -- for key, value in pairs(gfx.sprite.getAllSprites()) do
-    --     value:setImageDrawMode(gfx.kDrawModeInverted)
-    -- end
+gameUpdate = function()
     crankPosition = playdate.getCrankPosition()
     player:update()
     gfx.sprite.update()
     Particles:update()
     playdate.timer.updateTimers()
+    game.update()
 end
 
-test = false
+generate = false
 
 levelUpUpdate = function()
-    if(test == false) then
-        test = true
+    if(generate == false) then
+        -- kill all enemies at level up
+        table.each(enemies, function(x)x:remove() end)
+        generate = true
         uiManager:generateUpgrades()
     end
     gfx.clear()
@@ -63,4 +71,4 @@ levelUpUpdate = function()
     sequence.update()
 end
 
-playdate.update = levelUpUpdate
+playdate.update = gameUpdate

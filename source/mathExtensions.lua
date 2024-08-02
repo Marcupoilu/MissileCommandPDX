@@ -56,3 +56,8 @@ function math.sign(v)
     local bracket = bracket or 1
     return math.floor(v/bracket + math.sign(v) * 0.5) * bracket
   end
+
+  function minutes_to_milliseconds(minutes)
+    local milliseconds = minutes * 60 * 1000
+    return milliseconds
+end

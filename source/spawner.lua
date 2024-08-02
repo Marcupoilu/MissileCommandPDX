@@ -3,7 +3,7 @@ class("Spawner").extends()
 
 function Spawner:init(spawnTime)
     self.spawnTime = spawnTime
-    self:startSpawn()
+    -- self:startSpawn()
 end
 
 function Spawner:startSpawn()
