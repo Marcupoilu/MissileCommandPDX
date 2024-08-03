@@ -47,7 +47,7 @@ function UiManager:levelUpDisplay()
         gfx.setImageDrawMode(gfx.kDrawModeFillBlack)
         gfx.setFont(smallFont,gfx.kVariantBold)
         gfx.drawText(value.descriptionText , self.horizontalLayoutLevelUp.positionBaseX + (i*(levelUpCellWidth+levelUpDistance)) + 10,self.horizontalLayoutLevelUp.positionBaseY + _pick_anim_y:get() + 150)
-        value.image:scaledImage(0.3):draw( self.horizontalLayoutLevelUp.positionBaseX + (i*(levelUpCellWidth+levelUpDistance)) + 20,self.horizontalLayoutLevelUp.positionBaseY + _pick_anim_y:get() + 50)
+        value.image:scaledImage(0.1):draw( self.horizontalLayoutLevelUp.positionBaseX + (i*(levelUpCellWidth+levelUpDistance)) + 20,self.horizontalLayoutLevelUp.positionBaseY + _pick_anim_y:get() + 50)
         i += 1
     end
     gfx.setImageDrawMode(gfx.kDrawModeFillWhite)
@@ -66,6 +66,12 @@ function UiManager:levelUpDisplay()
         generate = false
         ups[levelUpIndex +1]:applyUpgrade()
         playdate.update = gameUpdate
+        hpCells = self:createHPBar(hpCells, "images/hpbar_cell", self.horizontalLayoutHPCell.positionBaseX + 10, self.horizontalLayoutHPCell.positionBaseY, self.horizontalLayoutHPCell.cellSize, self.horizontalLayoutHPCell.distance, 0.85)
+        hpFillCells = self:createHPBar(hpFillCells, "images/hpbar_cellfill", self.horizontalLayoutHPFillCell.positionBaseX + 7, self.horizontalLayoutHPFillCell.positionBaseY, self.horizontalLayoutHPFillCell.cellSize, self.horizontalLayoutHPFillCell.distance, 0.85)
+        self:updateHPDisplay()
+    end
+    if playdate.buttonJustPressed(playdate.kButtonB) then
+        self:generateUpgrades()
     end
 end
 
@@ -83,6 +89,7 @@ function UiManager:createHPBar(tableToClear, image, positionBaseX, positionBaseY
     for key, value in pairs(tableToClear) do
         value:remove()
     end
+    tableToClear = {}
     local offset = 0
     for i = 0, player.hpMax -1 do
         local hpCell = UISprite(image, 2, 0.5, 0, positionBaseX + offset, positionBaseY)
@@ -90,4 +97,6 @@ function UiManager:createHPBar(tableToClear, image, positionBaseX, positionBaseY
         hpCell:moveTo(positionBaseX + (i*(cellSize+marge)), positionBaseY)
         table.insert(tableToClear,hpCell)
     end
+    return tableToClear
+
 end

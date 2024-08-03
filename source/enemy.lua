@@ -1,25 +1,46 @@
 class("Enemy").extends(gfx.sprite)
 
-local enemyImage = gfx.image.new("images/enemy")
-
 local p = ParticleCircle(0,0)
--- local pDeath = ParticleCircle(0,0)
 
 function Enemy:init(x,y,speed,hp, xp, damage, enemyImage)
     Enemy.super.init(self)
+    self.animations = {}
+    if animationsData[self["className"]] ~= nil then
+        for key, animationData in pairs(animationsData[self["className"]]) do
+            table.insert(self.animations, {Name=animationData.Name, Animation=gfx.animation.loop.new(animationData.Delay, animationData.Source, animationData.Loop)})
+        end
+    end
     table.insert(enemies, self)
     self.speed = speed
     self.hp = hp
     self.damage = damage
     self.xpReward = xp
+    self.state = "Idle"
     self:setScale(0.8)
-    self:setImage(enemyImage)
+    if table.getsize(self.animations) <= 0 then
+        self:setImage(enemyImage)
+    else
+        self.currentAnimation = table.findByParam(self.animations, "Name", self.state).Animation
+        self:setImage(self.currentAnimation:image())
+    end
+
     self:setCollideRect(0,0,self:getSize())
     self:moveTo(x,y)
     self:add()
 end
 
+function Enemy:changeState(state)
+    if self.state == state then
+        return
+    end
+    self.state = state
+end
+
 function Enemy:update()
+    if table.getsize(self.animations) > 0 then
+        self.currentAnimation = table.findByParam(self.animations, "Name", self.state).Animation
+        self:setImage(self.currentAnimation:image())
+    end
     if self.x > playdate.display.getWidth() or self.y > playdate.display.getHeight() or self.x < 0 or self.y < 0 then
         self:remove()
     end

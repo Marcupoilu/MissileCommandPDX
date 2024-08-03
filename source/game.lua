@@ -2,6 +2,17 @@ class("Game").extends()
 
 
 function Game:init()
+    -- Collections --
+    particles = {}
+    upgrades = upgradesData
+    enemies = {}
+    spawners = {}
+    player = Player({x=200,y=190}, {x=200,y=175})
+    shake = ScreenShake()
+    uiManager = UiManager()
+    gfx.setBackgroundColor(gfx.kColorBlack)
+    gfx.clear()
+    generate = false
     playdate.resetElapsedTime()
     self.gameTime = minutes_to_milliseconds(30)
     self.waves = wavesData
@@ -9,6 +20,7 @@ function Game:init()
 end
 
 function Game:startGame()
+    table.insert(player.weapons,SimpleCannon(500, player.cannonGunSprite.x, player.cannonGunSprite.y, 1, 1, 0.2))
     self.waves[self.waveNumber]:startWave()
 end
 
@@ -25,7 +37,6 @@ function Game:changeWave()
 
     if playdate.getElapsedTime() % interval == 0 then
         self.waveNumber += 1
-        print("new wave"..self.waveNumber)
         self.waves[self.waveNumber]:startWave()
         -- Placez ici l'action que vous souhaitez exécuter
     end

@@ -11,6 +11,9 @@ function UpgradeWeapon:init(weapon, type, name, descriptionText, image)
 end
 
 function UpgradeWeapon:updateDescriptionText()
+    if player == nil then
+        return
+    end
     for key, value in pairs(player.weapons) do
         if value["className"] == self.type then
             self.weapon = value

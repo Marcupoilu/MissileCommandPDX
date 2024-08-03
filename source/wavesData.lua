@@ -1,9 +1,9 @@
 wavesData = 
 {
-    Wave({SaucerSpawner(math.random(4000,5000), 34, 0)}),
-    Wave({SaucerSpawner(math.random(1000,2500), 34, 0)}),
-    Wave({SaucerSpawner(math.random(1000,2300), 34, 0)}),
-    Wave({SaucerSpawner(math.random(1000,2100), 34, 0)}),
+    Wave({xWingSpawner(math.random(1500,2000), 34, 0)}),
+    Wave({xWingSpawner(math.random(1000,1500), 34, 0)}),
+    Wave({xWingSpawner(math.random(1000,1000), 34, 0)}),
+    Wave({SaucerSpawner(math.random(3000,3000), 34, 0), xWingSpawner(math.random(1000,1500), 34, 0) }),
     Wave({SaucerSpawner(math.random(1000,1900), 34, 0)}),
     Wave({SaucerSpawner(math.random(900,1900), 34, 0)}),
     Wave({SaucerSpawner(math.random(800,1900), 34, 0)}),

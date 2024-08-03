@@ -9,10 +9,13 @@ function Player:init( basePosition, gunPosition)
     self.hp = self.hpMax
     self.xp = 0
     self.xpMax = 10
+    self.xpBonus = 0
     self.damageBonus = 0
     self.attackSpeedBonus = 0
     self.scaleBonus = 0 
     self.projectileAmount = 0
+    self.regenerationRate = 0
+    self.projectileSpeedBonus = 0
     self.cannonBaseSprite = gfx.sprite.new( cannonBase )
     self.cannonBaseSprite:setTag(1)
     self.cannonBaseSprite:setCollideRect(0,0,self.cannonBaseSprite:getSize())
@@ -27,6 +30,14 @@ end
 
 function Player:update()
     self.cannonGunSprite:setRotation(crankPosition)
+    if self.regenerationRate == 0 then return end
+    self:Regeneration()
+end
+
+function Player:Regeneration()
+    local interval = 0.5 - (((self.regenerationRate*0.5)/100))  * 60 * 1000 -- 1 minute en millisecondes
+    if playdate.getElapsedTime() % interval == 0 then
+    end
 end
 
 function Player:gainXP(xp)
@@ -37,7 +48,7 @@ function Player:gainXP(xp)
 end
 
 function Player:levelUp()
-    self.xpMax *= 1.5
+    self.xpMax *= 1.5 - (((player.xpBonus*self.xpMax)/100))
     self.xp = 0
     playdate.update = levelUpUpdate
 end

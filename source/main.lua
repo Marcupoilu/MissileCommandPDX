@@ -14,6 +14,7 @@ import "player.lua"
 import "weapon.lua"
 import "bullet.lua"
 import "simpleCannon.lua"
+import "animationsData.lua"
 import "enemiesData.lua"
 import "enemy.lua"
 import "spawner.lua"
@@ -32,24 +33,11 @@ import "upgrade.lua"
 import "upgradeStat.lua"
 import "upgradeWeapon.lua"
 import "uiManager.lua"
+import "upgradesData.lua"
 
--- Collections
-particles = {}
-upgrades = {}
-enemies = {}
-spawners = {}
--- // 
-player = Player({x=200,y=190}, {x=200,y=175})
-shake = ScreenShake()
-uiManager = UiManager()
-table.insert(player.weapons,SimpleCannon(500, player.cannonGunSprite.x, player.cannonGunSprite.y, 1, 1, 0.2))
-table.insert(upgrades, UpgradeStat("attackSpeedBonus", 10, "+10% Attack \n       Speed", "images/attackSpeedUp"))
-table.insert(upgrades, UpgradeStat("damageBonus", 10, "+10% Damage", "images/damageUp"))
-table.insert(upgrades, UpgradeWeapon("simpleCannon", "SimpleCannon", "Cannon", "", "images/simpleCannon" ))
 game = Game()
 game:startGame()
-gfx.setBackgroundColor(gfx.kColorBlack)
-gfx.clear()
+
 
 gameUpdate = function()
     crankPosition = playdate.getCrankPosition()
@@ -60,7 +48,6 @@ gameUpdate = function()
     game:update()
 end
 
-generate = false
 
 levelUpUpdate = function()
     if(generate == false) then
@@ -74,4 +61,4 @@ levelUpUpdate = function()
     sequence.update()
 end
 
-playdate.update = gameUpdate
+playdate.update = levelUpUpdate
