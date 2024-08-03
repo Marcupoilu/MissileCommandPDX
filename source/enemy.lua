@@ -1,6 +1,7 @@
 class("Enemy").extends(gfx.sprite)
 
 local enemyImage = gfx.image.new("images/enemy")
+
 local p = ParticleCircle(0,0)
 -- local pDeath = ParticleCircle(0,0)
 
@@ -25,9 +26,8 @@ function Enemy:update()
     local collisions = self:overlappingSprites()
     for index, value in pairs(collisions) do
         if value:isa(Bullet) then
-            -- local p = ParticleCircle(value.x,value.y)
             p:moveTo(value.x, value.y)
-            p:setSize(4,4)
+            p:setSize(4,8)
             p:setColor(gfx.kColorWhite)
             p:setMode(Particles.modes.DECAY)
             p:setSpeed(3, 5)

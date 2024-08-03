@@ -1,6 +1,6 @@
 wavesData = 
 {
-    Wave({SaucerSpawner(math.random(1000,3000), 34, 0)}),
+    Wave({SaucerSpawner(math.random(4000,5000), 34, 0)}),
     Wave({SaucerSpawner(math.random(1000,2500), 34, 0)}),
     Wave({SaucerSpawner(math.random(1000,2300), 34, 0)}),
     Wave({SaucerSpawner(math.random(1000,2100), 34, 0)}),

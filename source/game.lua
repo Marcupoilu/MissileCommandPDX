@@ -13,7 +13,6 @@ function Game:startGame()
 end
 
 function Game:update()
-    print(playdate.getElapsedTime())
     self:changeWave()
     if playdate.getElapsedTime() >= self.gameTime then
         print("game win")
