@@ -5,10 +5,11 @@ function Player:init( basePosition, gunPosition)
     local cannonGun = gfx.image.new("images/cannon_gun")
     assert( cannonBase ) -- make sure <he image was where we thought
     assert( cannonGun ) -- make sure the image was where we thought
+    self.level = 1
     self.hpMax = 10
     self.hp = self.hpMax
     self.xp = 0
-    self.xpMax = 10
+    self.xpMax = 5
     self.xpBonus = 0
     self.damageBonus = 0
     self.attackSpeedBonus = 0
@@ -26,17 +27,20 @@ function Player:init( basePosition, gunPosition)
     self.cannonBaseSprite:add() -- This is critical!
     self.cannonGunSprite:add() -- This is critical!
     self.weapons = {}
+    self.timer = playdate.timer.new(30000 - (((self.regenerationRate*30000)/100)), self.regeneration, self)
+    self.timer.repeats = true
 end
 
 function Player:update()
     self.cannonGunSprite:setRotation(crankPosition)
-    if self.regenerationRate == 0 then return end
-    self:Regeneration()
 end
 
-function Player:Regeneration()
-    local interval = 0.5 - (((self.regenerationRate*0.5)/100))  * 60 * 1000 -- 1 minute en millisecondes
-    if playdate.getElapsedTime() % interval == 0 then
+function Player:regeneration()
+    if(self.regenerationRate == 0) then return end
+    if(self.hp < self.hpMax) then
+        self.hp += 1
+        uiManager:updateHPDisplay()
+        print("regen")
     end
 end
 
@@ -48,7 +52,19 @@ function Player:gainXP(xp)
 end
 
 function Player:levelUp()
-    self.xpMax *= 1.5 - (((player.xpBonus*self.xpMax)/100))
+    self.level += 1
+    if math.between(self.level, 1,2) then
+        self.xpMax += 5
+    end
+    if math.between(self.level, 3,20) then
+        self.xpMax += 10
+    end
+    if math.between(self.level, 21,40) then
+        self.xpMax += 13
+    end
+    if self.level >= 41 then
+        self.xpMax += 16
+    end
     self.xp = 0
     playdate.update = levelUpUpdate
 end

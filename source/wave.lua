@@ -6,6 +6,9 @@ function Wave:init(spawners)
 end
 
 function Wave:startWave()
+    table.each(spawners, function(x) 
+        x:stopSpawn()
+    end)
     spawners = {}
     table.each(self.spawners, function(x) 
         x:startSpawn()

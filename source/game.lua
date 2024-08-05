@@ -1,5 +1,7 @@
 class("Game").extends()
 
+local interval = minutes_to_milliseconds(0.5)
+
 
 function Game:init()
     -- Collections --
@@ -20,24 +22,20 @@ function Game:init()
 end
 
 function Game:startGame()
-    table.insert(player.weapons,SimpleCannon(500, player.cannonGunSprite.x, player.cannonGunSprite.y, 1, 1, 0.2))
+    -- table.insert(player.weapons,SimpleCannon(500, player.cannonGunSprite.x, player.cannonGunSprite.y, 1, 1, 0.2))
+    table.insert(player.weapons,Beam(500, player.cannonGunSprite.x, player.cannonGunSprite.y, 1, 1, 0.2))
     self.waves[self.waveNumber]:startWave()
+    playdate.timer.new(interval, self.changeWave, self).repeats = true
 end
 
 function Game:update()
-    self:changeWave()
+    -- playdate.timer.new(1000, function() self:changeWave() end)
     if playdate.getElapsedTime() >= self.gameTime then
         print("game win")
     end
 end
 
 function Game:changeWave()
-    -- current_time est le temps écoulé en millisecondes
-    local interval = 1 * 60 * 1000 -- 1 minute en millisecondes
-
-    if playdate.getElapsedTime() % interval == 0 then
         self.waveNumber += 1
         self.waves[self.waveNumber]:startWave()
-        -- Placez ici l'action que vous souhaitez exécuter
-    end
 end

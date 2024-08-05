@@ -55,7 +55,7 @@ function Enemy:update()
             p:add(10)
             self:loseHp(value.damage)
             if self.hp <= 0 then
-                player:gainXP(self.xpReward)
+                player:gainXP(self.xpReward + (((player.xpBonus*self.xpReward)/100)))
             end
             value:remove()
         end

@@ -1,14 +1,13 @@
-class("SimpleCannon").extends(Weapon)
+class("Beam").extends(Weapon)
 
-
-function SimpleCannon:init(attackSpeed, x, y, damage, projectileAmount, scale)
-    SimpleCannon.super.init(self, attackSpeed, damage, projectileAmount, scale)
-    self:debugLevel(10)
+function Beam:init(attackSpeed, x, y, damage, projectileAmount, scale)
+    Beam.super.init(self, attackSpeed, damage, projectileAmount, scale)
+    -- self:debugLevel(10)
     self.x = x
     self.y = y
 end
 
-function SimpleCannon:changeLevel()
+function Beam:changeLevel()
     self.level += 1
     if self.level == 2 then
         self.attackSpeed -= 10
@@ -47,10 +46,10 @@ function SimpleCannon:changeLevel()
     end
 end
 
-function SimpleCannon:shoot()
-    SimpleCannon.super.shoot()
+function Beam:shoot()
+    Beam.super.shoot()
     local angles = cutAngle(self.projectileAmount + player.projectileAmount)
     for key, angle in ipairs(angles) do
-        bullet = Bullet(self.x, self.y, 5, self.damage+((player.damageBonus*self.damage)/100), angle, self.scale+((player.scaleBonus*self.scale)/100))
+        bulletBeam = BulletBeam(self.x, self.y - 20, 5, self.damage+((player.damageBonus*self.damage)/100), angle, self.scale+((player.scaleBonus*self.scale)/100))
     end
 end

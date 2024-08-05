@@ -13,6 +13,8 @@ import "screenShake.lua"
 import "player.lua"
 import "weapon.lua"
 import "bullet.lua"
+import "bulletBeam.lua"
+import "beam.lua"
 import "simpleCannon.lua"
 import "animationsData.lua"
 import "enemiesData.lua"
@@ -61,4 +63,4 @@ levelUpUpdate = function()
     sequence.update()
 end
 
-playdate.update = levelUpUpdate
+playdate.update = gameUpdate

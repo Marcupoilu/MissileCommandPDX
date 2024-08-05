@@ -7,10 +7,15 @@ function Spawner:init(spawnTime)
 end
 
 function Spawner:startSpawn()
-    playdate.timer.performAfterDelay(self.spawnTime, function()
+    self.timer = playdate.timer.performAfterDelay(self.spawnTime, function()
         self:spawn()
         self:startSpawn()
     end)
+end
+
+function Spawner:stopSpawn()
+    self.timer:remove()
+    self = nil
 end
 
 function Spawner:spawn()

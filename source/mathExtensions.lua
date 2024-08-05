@@ -48,6 +48,13 @@ function math.approach( value, target, step)
     end
 end
 
+function math.between(v, t1, t2)
+    if v >= t1 and v <= t2 then
+        return true
+    end
+    return false
+end
+
 function math.sign(v)
     return (v >= 0 and 1) or -1
   end
