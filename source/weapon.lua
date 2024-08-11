@@ -7,7 +7,7 @@ function Weapon:init(attackSpeed, damage, projectileAmount, scale)
     self.scale = scale
     self.damage = damage
     self.projectileAmount = projectileAmount
-    self:startShooting()
+    -- self:startShooting()
 end
 
 function Weapon:debugLevel(level)
@@ -17,7 +17,7 @@ function Weapon:debugLevel(level)
 end
 
 function Weapon:startShooting()
-    playdate.timer.performAfterDelay(self.attackSpeed-((player.attackSpeedBonus*self.attackSpeed)/100), function()
+    playdate.timer.new(self.attackSpeed-((player.attackSpeedBonus*self.attackSpeed)/100), function()
         self:shoot()
         self:startShooting()
     end)

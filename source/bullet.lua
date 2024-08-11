@@ -1,17 +1,15 @@
-class("Bullet").extends(gfx.sprite)
+class("Bullet").extends(Projectile)
 
 local bulletImage = gfx.image.new("images/bullet" )
 
-function Bullet:init(x,y,speed, damage, offsetCrank, scale)
-    Bullet.super.init(self)
-    self.speed = speed
-    self.damage = damage
+function Bullet:init(x,y,speed, damage, offsetCrank, scale, image)
+    Bullet.super.init(self,x,y,speed, damage, offsetCrank, scale)
+    self.image = image
+    if self.image == nil then
+        self.image = bulletImage
+    end
     self:setImage(bulletImage)
     self:setScale(scale)
-    self.originAngle = crankPosition - 90
-    self.originPosition = {x=x,y=y}
-    self.radius = 0
-    self.offset = offsetCrank
     self:setCollideRect(0,0,self:getSize())
     self:moveTo(x,y)
     self:add()

@@ -5,6 +5,8 @@ local p = ParticleCircle(0,0)
 function Enemy:init(x,y,speed,hp, xp, damage, enemyImage)
     Enemy.super.init(self)
     self.animations = {}
+    self:setGroups({3})
+    self:setCollidesWithGroups({1,2})
     if animationsData[self["className"]] ~= nil then
         for key, animationData in pairs(animationsData[self["className"]]) do
             table.insert(self.animations, {Name=animationData.Name, Animation=gfx.animation.loop.new(animationData.Delay, animationData.Source, animationData.Loop)})
@@ -53,11 +55,27 @@ function Enemy:update()
             p:setMode(Particles.modes.DECAY)
             p:setSpeed(3, 5)
             p:add(10)
-            self:loseHp(value.damage)
-            if self.hp <= 0 then
-                player:gainXP(self.xpReward + (((player.xpBonus*self.xpReward)/100)))
+            self:loseHp(value.damage + ((player.damageBonus*value.damage)/100))
+            value:loseHp(1)
+        end
+        if value:isa(BulletPlasma) then
+            local actual_x, actual_y, collisions, length = self:checkCollisions(value.x, value.y)
+            for index, collision in ipairs(collisions) do
+                -- Récupérer la normale de collision
+                local normalX = collision.normal.x
+                local normalY = collision.normal.y
+                -- Convertir la vitesse actuelle en composantes X et Y
+                local speedX = math.cos(math.rad(value.originAngle))
+                local speedY = math.sin(math.rad(value.originAngle))
+                
+                -- Calculer la réflexion en ajustant les composantes de vitesse
+                local dot = (speedX * normalX + speedY * normalY) * 2
+                local reflectedX = speedX - dot * normalX
+                local reflectedY = speedY - dot * normalY
+                
+                -- Mettre à jour l'angle d'origine en fonction des nouvelles composantes de vitesse
+                value.originAngle = math.deg(math.atan(reflectedY, reflectedX))
             end
-            value:remove()
         end
         if value:isa(UISprite) or value:getTag() == 1 then
             shake:setShakeAmount(15)
@@ -70,6 +88,7 @@ end
 function Enemy:loseHp(value)
     self.hp -= value
     if(self.hp <= 0) then
+        player:gainXP(self.xpReward + (((player.xpBonus*self.xpReward)/100)))
         self:death()
     end
 end

@@ -22,5 +22,6 @@ function UISprite:init( image, zIndex, centerX, centerY, posX, posY, collider  )
     self:add()
     if collider == true then
         self:setCollideRect(0,0,self:getSize())
+        self:setGroups({1})
     end
 end

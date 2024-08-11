@@ -12,10 +12,14 @@ import "pdParticles.lua"
 import "screenShake.lua"
 import "player.lua"
 import "weapon.lua"
+import "projectile.lua"
 import "bullet.lua"
 import "bulletBeam.lua"
 import "beam.lua"
 import "simpleCannon.lua"
+import "wiper.lua"
+import "plasma.lua"
+import "serpentine.lua"
 import "animationsData.lua"
 import "enemiesData.lua"
 import "enemy.lua"
@@ -36,12 +40,16 @@ import "upgradeStat.lua"
 import "upgradeWeapon.lua"
 import "uiManager.lua"
 import "upgradesData.lua"
+import "weaponsData.lua"
 
+deltaTime = 0
 game = Game()
 game:startGame()
 
 
 gameUpdate = function()
+    deltaTime = playdate.getElapsedTime()
+    playdate.resetElapsedTime()
     crankPosition = playdate.getCrankPosition()
     player:update()
     gfx.sprite.update()
@@ -52,6 +60,8 @@ end
 
 
 levelUpUpdate = function()
+    deltaTime = playdate.getElapsedTime()
+    playdate.resetElapsedTime()
     if(generate == false) then
         -- kill all enemies at level up
         table.each(enemies, function(x)x:remove() end)

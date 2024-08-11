@@ -7,5 +7,6 @@ upgradesData =
     UpgradeStat("regenerationRate", 10, "+10% hp regen \nspeed", "images/regen"),
     UpgradeStat("projectileSpeedBonus", 10, "+10% projectile \nspeed", "images/projectileSpeed"),
     UpgradeStat("hpMax", 1, "+1 HP MAX", "images/hpMax"),
-    UpgradeWeapon("simpleCannon", "SimpleCannon", "Cannon", "", "images/simpleCannon" )
+    UpgradeWeapon("simpleCannon", "SimpleCannon", "Cannon", "", "images/simpleCannon" ),
+    UpgradeWeapon("beam", "Beam", "Laser Beam", "", "images/beam" )
 }

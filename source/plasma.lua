@@ -1,7 +1,9 @@
-class("Beam").extends(Weapon)
+import "bulletPlasma.lua"
 
-function Beam:init(attackSpeed, x, y, damage, projectileAmount, scale, duration)
-    Beam.super.init(self, attackSpeed, damage, projectileAmount, scale)
+class("Plasma").extends(Weapon)
+
+function Plasma:init(attackSpeed, x, y, damage, projectileAmount, scale, duration)
+    Plasma.super.init(self, attackSpeed, damage, projectileAmount, scale)
     self.speed = 4
     self.x = x
     self.duration = duration
@@ -9,7 +11,7 @@ function Beam:init(attackSpeed, x, y, damage, projectileAmount, scale, duration)
     -- self:debugLevel(10)
 end
 
-function Beam:changeLevel()
+function Plasma:changeLevel()
     self.level += 1
     if self.level == 2 then
         self.attackSpeed -= 10
@@ -49,10 +51,10 @@ function Beam:changeLevel()
     end
 end
 
-function Beam:shoot()
-    Beam.super.shoot()
+function Plasma:shoot()
+    Plasma.super.shoot()
     local angles = cutAngle(self.projectileAmount + player.projectileAmount)
     for key, angle in ipairs(angles) do
-        bulletBeam = BulletBeam(self.x, self.y - 20, self.speed, self.damage+((player.damageBonus*self.damage)/100), angle, self.scale+((player.scaleBonus*self.scale)/100), self.duration)
+        plasmaBullet = BulletPlasma(self.x, self.y - 20, self.speed, self.damage+((player.damageBonus*self.damage)/100), angle, self.scale+((player.scaleBonus*self.scale)/100), self.duration)
     end
 end

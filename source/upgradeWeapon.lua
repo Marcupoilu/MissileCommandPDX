@@ -21,7 +21,7 @@ function UpgradeWeapon:updateDescriptionText()
             return
         end
     end
-        self.descriptionText = "New weapon : "..string.char(10)..self.name
+    self.descriptionText = "New weapon : "..string.char(10)..self.name
 end
 
 function UpgradeWeapon:update()
@@ -33,6 +33,7 @@ function UpgradeWeapon:applyUpgrade()
     if self.weapon ~= nil then
         table.findByParam(player.weapons,"className", self.type):changeLevel()
     else
-        table.insert(player.weapons, _G[type]())
+        player:addWeapon(table.findByParam(weaponsData, "className", self.type))
+        table.findByParam(weaponsData, "className", self.type):shoot()
     end
 end

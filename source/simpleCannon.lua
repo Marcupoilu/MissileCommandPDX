@@ -3,7 +3,7 @@ class("SimpleCannon").extends(Weapon)
 
 function SimpleCannon:init(attackSpeed, x, y, damage, projectileAmount, scale)
     SimpleCannon.super.init(self, attackSpeed, damage, projectileAmount, scale)
-    self:debugLevel(10)
+    -- self:debugLevel(10)
     self.x = x
     self.y = y
 end

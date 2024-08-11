@@ -9,6 +9,7 @@ function Game:init()
     upgrades = upgradesData
     enemies = {}
     spawners = {}
+    beams = {}
     player = Player({x=200,y=190}, {x=200,y=175})
     shake = ScreenShake()
     uiManager = UiManager()
@@ -23,13 +24,21 @@ end
 
 function Game:startGame()
     -- table.insert(player.weapons,SimpleCannon(500, player.cannonGunSprite.x, player.cannonGunSprite.y, 1, 1, 0.2))
-    table.insert(player.weapons,Beam(500, player.cannonGunSprite.x, player.cannonGunSprite.y, 1, 1, 0.2))
+    -- player:addWeapon(table.findByParam(weaponsData, "className", "SimpleCannon"))
+    -- player:addWeapon(table.findByParam(weaponsData, "className", "Beam"))
+    -- player:addWeapon(table.findByParam(weaponsData, "className", "Wiper"))
+    -- player:addWeapon(table.findByParam(weaponsData, "className", "Plasma"))
+    player:addWeapon(table.findByParam(weaponsData, "className", "Serpentine"))
+
     self.waves[self.waveNumber]:startWave()
     playdate.timer.new(interval, self.changeWave, self).repeats = true
 end
 
 function Game:update()
     -- playdate.timer.new(1000, function() self:changeWave() end)
+    table.each(beams, function(beam)
+        beam:update()
+    end)
     if playdate.getElapsedTime() >= self.gameTime then
         print("game win")
     end
