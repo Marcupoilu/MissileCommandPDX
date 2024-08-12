@@ -49,33 +49,7 @@ function Enemy:update()
     local collisions = self:overlappingSprites()
     for index, value in pairs(collisions) do
         if value:isa(Bullet) then
-            p:moveTo(value.x, value.y)
-            p:setSize(4,8)
-            p:setColor(gfx.kColorWhite)
-            p:setMode(Particles.modes.DECAY)
-            p:setSpeed(3, 5)
-            p:add(10)
-            self:loseHp(value.damage + ((player.damageBonus*value.damage)/100))
-            value:loseHp(1)
-        end
-        if value:isa(BulletPlasma) then
-            local actual_x, actual_y, collisions, length = self:checkCollisions(value.x, value.y)
-            for index, collision in ipairs(collisions) do
-                -- Récupérer la normale de collision
-                local normalX = collision.normal.x
-                local normalY = collision.normal.y
-                -- Convertir la vitesse actuelle en composantes X et Y
-                local speedX = math.cos(math.rad(value.originAngle))
-                local speedY = math.sin(math.rad(value.originAngle))
-                
-                -- Calculer la réflexion en ajustant les composantes de vitesse
-                local dot = (speedX * normalX + speedY * normalY) * 2
-                local reflectedX = speedX - dot * normalX
-                local reflectedY = speedY - dot * normalY
-                
-                -- Mettre à jour l'angle d'origine en fonction des nouvelles composantes de vitesse
-                value.originAngle = math.deg(math.atan(reflectedY, reflectedX))
-            end
+            self:touchEnemy(value)
         end
         if value:isa(UISprite) or value:getTag() == 1 then
             shake:setShakeAmount(15)
@@ -83,6 +57,17 @@ function Enemy:update()
             self:death()
         end
     end
+end
+
+function Enemy:touchEnemy(value)
+    p:moveTo(value.x, value.y)
+    p:setSize(4,8)
+    p:setColor(gfx.kColorWhite)
+    p:setMode(Particles.modes.DECAY)
+    p:setSpeed(3, 5)
+    p:add(10)
+    self:loseHp(value.damage + ((player.damageBonus*value.damage)/100))
+    value:loseHp(1)
 end
 
 function Enemy:loseHp(value)
@@ -101,5 +86,6 @@ function Enemy:death()
     p:setMode(Particles.modes.DECAY)
     p:setSpeed(3, 7)
     p:add(20)
+    table.remove(enemies, indexOf(enemies, self))
     self:remove()
 end

@@ -23,7 +23,6 @@ function Game:init()
 end
 
 function Game:startGame()
-    -- table.insert(player.weapons,SimpleCannon(500, player.cannonGunSprite.x, player.cannonGunSprite.y, 1, 1, 0.2))
     -- player:addWeapon(table.findByParam(weaponsData, "className", "SimpleCannon"))
     -- player:addWeapon(table.findByParam(weaponsData, "className", "Beam"))
     -- player:addWeapon(table.findByParam(weaponsData, "className", "Wiper"))

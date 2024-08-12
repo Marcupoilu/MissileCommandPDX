@@ -7,7 +7,7 @@ function Projectile:init(x,y,speed, damage, offsetCrank, scale)
     self.y = y
     self.hp = 1
     self:setGroups({2})
-    self:setCollidesWithGroups({2})
+    self:setCollidesWithGroups({3})
     self.speed = speed
     self.damage = damage
     self.scale = scale
