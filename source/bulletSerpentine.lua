@@ -1,6 +1,6 @@
 class("BulletSerpentine").extends(Bullet)
 
-local bulletImage = gfx.image.new("images/bullet" )
+local bulletImage = gfx.image.new("images/bulletSerpentine" )
 
 function BulletSerpentine:init(x,y,speed, damage, offsetCrank, scale)
     BulletSerpentine.super.init(self,x,y,speed, damage, offsetCrank, scale,bulletImage)
@@ -9,13 +9,18 @@ function BulletSerpentine:init(x,y,speed, damage, offsetCrank, scale)
     self.rot = 0
     self.amp = 10
     self.freq = 0.16
+    self:setRotation(self.originAngle + 90)
 end
 function BulletSerpentine:update()
     self.radius += self.speed + (((player.projectileSpeedBonus*self.speed)/100))
     local time = playdate.getCurrentTimeMilliseconds()
-    local sinusoidalOffset = self.amp * math.sin(math.rad(self.originAngle)*self.freq*time)
-    print(sinusoidalOffset)
-    local cosOffset = self.amp * math.cos(math.rad(self.originAngle)*self.freq*time)
+    local waveOffset = self.amp * math.sin(time * self.freq)
 
-    self:moveTo(self.radius*math.cos(math.rad(self.originAngle + self.offset)) + self.originPosition.x + cosOffset, self.radius*math.sin(math.rad(self.originAngle + self.offset)) + self.originPosition.y + sinusoidalOffset)
+    local angleRad = math.rad(self.originAngle)
+    local baseX = self.radius * math.cos(angleRad) + self.originPosition.x
+    local baseY = self.radius * math.sin(angleRad) + self.originPosition.y
+
+    local waveX = waveOffset * math.cos(angleRad + math.pi / 2)
+    local waveY = waveOffset * math.sin(angleRad + math.pi / 2)
+    self:moveTo(baseX + waveX, baseY + waveY)
 end
