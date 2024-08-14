@@ -7,8 +7,8 @@ function BulletSerpentine:init(x,y,speed, damage, offsetCrank, scale)
     self:setImage(bulletImage)
     self.hp = 3
     self.rot = 0
-    self.amp = 10
-    self.freq = 0.16
+    self.amp = 20
+    self.freq = 0.2
     self:setRotation(self.originAngle + 90)
 end
 function BulletSerpentine:update()

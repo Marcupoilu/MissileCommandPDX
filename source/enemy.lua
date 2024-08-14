@@ -86,7 +86,7 @@ end
 
 function Enemy:touchEnemy(value)
     p:moveTo(value.x, value.y)
-    p:setSize(4,8)
+    p:setSize(8,8)
     p:setColor(gfx.kColorWhite)
     p:setMode(Particles.modes.DECAY)
     p:setSpeed(3, 5)

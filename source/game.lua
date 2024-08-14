@@ -23,11 +23,11 @@ function Game:init()
 end
 
 function Game:startGame()
-    -- player:addWeapon(table.findByParam(weaponsData, "className", "SimpleCannon"))
-    -- player:addWeapon(table.findByParam(weaponsData, "className", "Beam"))
-    -- player:addWeapon(table.findByParam(weaponsData, "className", "Wiper"))
-    -- player:addWeapon(table.findByParam(weaponsData, "className", "Plasma"))
-    -- player:addWeapon(table.findByParam(weaponsData, "className", "Serpentine"))
+    player:addWeapon(table.findByParam(weaponsData, "className", "SimpleCannon"))
+    player:addWeapon(table.findByParam(weaponsData, "className", "Beam"))
+    player:addWeapon(table.findByParam(weaponsData, "className", "Wiper"))
+    player:addWeapon(table.findByParam(weaponsData, "className", "Plasma"))
+    player:addWeapon(table.findByParam(weaponsData, "className", "Serpentine"))
     player:addWeapon(table.findByParam(weaponsData, "className", "Shockwave"))
 
     self.waves[self.waveNumber]:startWave()
