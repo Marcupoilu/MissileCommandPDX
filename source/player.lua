@@ -35,7 +35,10 @@ function Player:init( basePosition, gunPosition)
 end
 
 function Player:update()
-    self.cannonGunSprite:setRotation(crankPosition)
+    local na = normalizeAngle(crankPosition)
+    if math.between(na, 0, 180) then
+        self.cannonGunSprite:setRotation(crankPosition)
+    end
 end
 
 function Player:addWeapon(weapon)

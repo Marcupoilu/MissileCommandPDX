@@ -25,7 +25,7 @@ function Enemy:init(x,y,speed,hp, xp, damage, enemyImage)
     self.xpReward = xp
     self.state = "Idle"
     self.currentOverlappingSprites = {} 
-    self:setScale(0.8)
+    -- self:setScale(1)
     if table.getsize(self.animations) <= 0 then
         self:setImage(enemyImage)
     else

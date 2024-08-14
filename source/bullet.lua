@@ -6,7 +6,7 @@ function Bullet:init(x,y,speed, damage, offsetCrank, scale, duration)
     Bullet.super.init(self,x,y,speed, damage, offsetCrank, scale, duration)
     self.image = bulletImage
     self:setImage(bulletImage)
-    self:setScale(scale)
+    -- self:setScale(scale)
     self:setCollideRect(0,0,self:getSize())
     self:moveTo(x,y)
     self:add()

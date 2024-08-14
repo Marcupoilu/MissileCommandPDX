@@ -98,3 +98,11 @@ function indexOf(array, value)
     end
     return nil
 end
+
+function normalizeAngle(angle)
+    if angle >= 270 then
+        return angle - 270
+    else
+        return angle + 90
+    end
+end

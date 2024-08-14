@@ -39,12 +39,17 @@ function Game:update()
     table.each(beams, function(beam)
         beam:update()
     end)
-    if playdate.getElapsedTime() >= self.gameTime then
-        print("game win")
-    end
 end
 
 function Game:changeWave()
         self.waveNumber += 1
+        if self.waveNumber >= table.count(self.waves) then
+            self:endGame()
+            return
+        end
         self.waves[self.waveNumber]:startWave()
+end
+
+function Game:endGame()
+    print("fin de game")
 end
