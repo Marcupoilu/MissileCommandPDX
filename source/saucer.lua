@@ -6,13 +6,12 @@ local animationIdle = gfx.animation.loop.new(50, sourceIdle, true)
 
 function Saucer:init(x,y,speed,hp,xp,damage)
     Saucer.super.init(self,x,y,speed,hp,xp, damage, enemyImage)
-    -- self.animatedSprite = gfx.sprite.new(animationIdle:image())
-    -- self.animatedSprite:add()
+    self.angle = 180 - self.offset
+    self.originAngle = self.angle
 end
 
 function Saucer:update()
-    self:moveTo(self.x, self.y + self.speed)
     Saucer.super.update(self)
-    -- self.animatedSprite:moveTo(self.x,self.y)
-    -- self.animatedSprite:setImage(animationIdle:image())
+    self.radius += self.speed
+    self:moveTo(self.radius*math.cos(math.rad(self.angle)) + self.originPosition.x, self.radius*math.sin(math.rad(self.angle)) + self.originPosition.y)
 end

@@ -13,6 +13,10 @@ function EnemySpawner:spawn(enemy)
     repeat 
         position = math.random(32,playdate.display.getWidth()-32)
         enemy:moveTo(position, 0)
+        enemy.x = position
+        enemy.y = 0
+        enemy.originPosition.x = position
+        enemy.originPosition.y = 0
     until(self:isThereAnEnemyAtSpawn(enemy) == 0)
 end
 

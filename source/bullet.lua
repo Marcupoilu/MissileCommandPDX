@@ -2,12 +2,9 @@ class("Bullet").extends(Projectile)
 
 local bulletImage = gfx.image.new("images/bullet" )
 
-function Bullet:init(x,y,speed, damage, offsetCrank, scale, image)
-    Bullet.super.init(self,x,y,speed, damage, offsetCrank, scale)
-    self.image = image
-    if self.image == nil then
-        self.image = bulletImage
-    end
+function Bullet:init(x,y,speed, damage, offsetCrank, scale, duration)
+    Bullet.super.init(self,x,y,speed, damage, offsetCrank, scale, duration)
+    self.image = bulletImage
     self:setImage(bulletImage)
     self:setScale(scale)
     self:setCollideRect(0,0,self:getSize())

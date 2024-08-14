@@ -1,7 +1,7 @@
 class("Projectile").extends(gfx.sprite)
 
 
-function Projectile:init(x,y,speed, damage, offsetCrank, scale)
+function Projectile:init(x,y,speed, damage, offsetCrank, scale, duration)
     Projectile.super.init(self)
     self.x = x
     self.y = y
@@ -11,10 +11,14 @@ function Projectile:init(x,y,speed, damage, offsetCrank, scale)
     self.speed = speed
     self.damage = damage
     self.scale = scale
+    self.duration = duration
     self.originAngle = crankPosition - 90
     self.originPosition = {x=x,y=y}
     self.radius = 0
     self.offset = offsetCrank
+    if self.duration ~= nil then
+        playdate.timer.new(toMilliseconds(self.duration), function() self:remove() end) 
+    end    
 end
 
 function Projectile:update()

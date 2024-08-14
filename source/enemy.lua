@@ -14,10 +14,17 @@ function Enemy:init(x,y,speed,hp, xp, damage, enemyImage)
     end
     table.insert(enemies, self)
     self.speed = speed
+    self.originalSpeed = self.speed
+    self.radius = 0
+    self.angle = 0
+    self.offset = 90
+    self.originAngle = 0
+    self.originPosition = {}
     self.hp = hp
     self.damage = damage
     self.xpReward = xp
     self.state = "Idle"
+    self.currentOverlappingSprites = {} 
     self:setScale(0.8)
     if table.getsize(self.animations) <= 0 then
         self:setImage(enemyImage)
@@ -48,8 +55,26 @@ function Enemy:update()
     end
     local collisions = self:overlappingSprites()
     for index, value in pairs(collisions) do
-        if value:isa(Bullet) then
+        if value:isa(Bullet) and table.contains(self.currentOverlappingSprites, value) == false then
             self:touchEnemy(value)
+            if value:isa(BulletShockwave) then
+                self.radius = 0
+                self.originPosition.x = self.x
+                self.originPosition.y = self.y
+                self.angle = value.originAngle
+                self.speed *= value.power
+                playdate.timer.new(100, function() 
+                    self.speed = self.originalSpeed 
+                    self.radius = 0
+                    self.originPosition.x = self.x
+                    self.originPosition.y = self.y
+                    self.angle = self.originAngle 
+                end)
+            end
+            table.insert(self.currentOverlappingSprites, value)
+            if value.tick ~= nil then
+                playdate.timer.new(value.tick, function() table.remove(self.currentOverlappingSprites, indexOf(self.currentOverlappingSprites, value)) end)
+            end
         end
         if value:isa(UISprite) or value:getTag() == 1 then
             shake:setShakeAmount(15)
