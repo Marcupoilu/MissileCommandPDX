@@ -10,7 +10,7 @@ function Game:init()
     enemies = {}
     spawners = {}
     beams = {}
-    player = Player({x=200,y=190}, {x=200,y=175})
+    player = Player({x=200,y=207}, {x=200,y=197})
     shake = ScreenShake()
     uiManager = UiManager()
     gfx.setBackgroundColor(gfx.kColorBlack)
