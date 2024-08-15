@@ -24,7 +24,7 @@ function Player:init( basePosition, gunPosition)
     self.cannonBaseSprite:setCollideRect(0,0,self.cannonBaseSprite:getSize())
     self.cannonBaseSprite:setGroups({1})
     self.cannonGunSprite = gfx.sprite.new( cannonGun )
-    self.cannonGunSprite:setCenter(0.5, 0.875)
+    self.cannonGunSprite:setCenter(0.5, 1)
     self.cannonBaseSprite:moveTo( basePosition.x, basePosition.y ) -- this is where the center of the sprite is placed; (200,120) is the center of the Playdate screen
     self.cannonGunSprite:moveTo( gunPosition.x, gunPosition.y ) -- this is where the center of the sprite is placed; (200,120) is the center of the Playdate screen
     self.cannonBaseSprite:add() -- This is critical!
@@ -38,7 +38,28 @@ function Player:update()
     local na = normalizeAngle(crankPosition)
     if math.between(na, 0, 180) then
         self.cannonGunSprite:setRotation(crankPosition)
+        -- self:updateCannonPosition()
     end
+    if math.between(na, 181, 270) then
+        self.cannonGunSprite:setRotation(90)
+        -- self:updateCannonPosition()
+    end
+    if math.between(na, 271, 360) then
+        self.cannonGunSprite:setRotation(270)
+        -- self:updateCannonPosition()
+    end
+end
+
+function Player:updateCannonPosition()
+    local width, gunLength = self.cannonGunSprite:getSize()
+    local baseX, baseY = self.cannonBaseSprite:getPosition()
+
+    -- Calculer la position du canon pour qu'il soit positionné correctement par rapport à la base
+    local angleRad = math.rad(self.cannonGunSprite:getRotation())
+    local offsetX = gunLength * math.sin(angleRad)
+    local offsetY = gunLength * math.cos(angleRad)
+    
+    self.cannonGunSprite:moveTo(baseX + offsetX, baseY - offsetY)
 end
 
 function Player:addWeapon(weapon)

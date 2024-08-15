@@ -13,6 +13,7 @@ function Bullet:init(x,y,speed, damage, offsetCrank, scale, duration)
 end
 
 function Bullet:update()
+    Bullet.super.update(self)
     self.radius += self.speed + (((player.projectileSpeedBonus*self.speed)/100))
     self:moveTo(self.radius*math.cos(math.rad(self.originAngle + self.offset)) + self.originPosition.x, self.radius*math.sin(math.rad(self.originAngle + self.offset)) + self.originPosition.y)
     if self.x > playdate.display.getWidth() or self.y > playdate.display.getHeight() or self.x < 0 or self.y < 0 then

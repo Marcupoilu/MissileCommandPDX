@@ -71,6 +71,9 @@ function Enemy:update()
                     self.angle = self.originAngle 
                 end)
             end
+            if value:isa(BulletRocket) then
+                BulletExplosion(value.x, value.y - 20, value.speed, value.damage+((player.damageBonus*value.damage)/100), angle, value.scale+((player.scaleBonus*value.scale)/100), value.duration)
+            end
             table.insert(self.currentOverlappingSprites, value)
             if value.tick ~= nil then
                 playdate.timer.new(value.tick, function() table.remove(self.currentOverlappingSprites, indexOf(self.currentOverlappingSprites, value)) end)
@@ -86,11 +89,11 @@ end
 
 function Enemy:touchEnemy(value)
     p:moveTo(value.x, value.y)
-    p:setSize(8,8)
+    p:setSize(10,10)
     p:setColor(gfx.kColorWhite)
     p:setMode(Particles.modes.DECAY)
     p:setSpeed(3, 5)
-    p:add(10)
+    p:add(30)
     self:loseHp(value.damage + ((player.damageBonus*value.damage)/100))
     value:loseHp(1)
 end

@@ -9,7 +9,6 @@ function BulletSerpentine:init(x,y,speed, damage, offsetCrank, scale)
     self.rot = 0
     self.amp = 20
     self.freq = 0.2
-    self:setRotation(self.originAngle + 90)
 end
 function BulletSerpentine:update()
     self.radius += self.speed + (((player.projectileSpeedBonus*self.speed)/100))

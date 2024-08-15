@@ -1,5 +1,6 @@
 class("Projectile").extends(gfx.sprite)
 
+local p = ParticleCircle(0,0)
 
 function Projectile:init(x,y,speed, damage, offsetCrank, scale, duration)
     Projectile.super.init(self)
@@ -10,25 +11,41 @@ function Projectile:init(x,y,speed, damage, offsetCrank, scale, duration)
     self:setCollidesWithGroups({3})
     self.speed = speed
     self.damage = damage
-    -- self.scale = scale
+    self.scale = scale + ((player.scaleBonus*scale)/100)
     self.duration = duration
     self.originAngle = player.cannonGunSprite:getRotation() - 90
     self.originPosition = {x=x,y=y}
     self.radius = 0
     self.offset = offsetCrank
-    -- self:moveTo()
+    self.width, self.height = player.cannonGunSprite:getSize()
+    self.originPosition.x = player.cannonGunSprite.x +(self.height+10) * math.cos(math.rad(self.originAngle))
+    self.originPosition.y = player.cannonGunSprite.y +(self.height+10) * math.sin(math.rad(self.originAngle))
+    self:moveTo(self.originPosition.x,self.originPosition.y)
+    self:setRotation(self.originAngle + 90)
+
     if self.duration ~= nil then
-        playdate.timer.new(toMilliseconds(self.duration), function() self:remove() end) 
+        self.timer = playdate.timer.new(toMilliseconds(self.duration), function() self:destroy() end) 
     end    
 end
 
 function Projectile:update()
 end
 
+function Projectile:destroy()
+    p:moveTo(self.x, self.y)
+    p:setSize(5,6)
+    p:setColor(gfx.kColorWhite)
+    p:setMode(Particles.modes.DECAY)
+    p:setSpeed(3, 7)
+    p:add(20)
+    playdate.timer.remove(self.timer)
+    self:remove()
+end
+
 function  Projectile:loseHp(damage)
     self.hp -= damage
     if self.hp <= 0 then
-        self:remove()
+        self:destroy()
     end
 end
 
