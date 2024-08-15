@@ -38,7 +38,9 @@ function Projectile:destroy()
     p:setMode(Particles.modes.DECAY)
     p:setSpeed(3, 7)
     p:add(20)
-    playdate.timer.remove(self.timer)
+    if self.timer ~= nil then
+        playdate.timer.remove(self.timer)
+    end
     self:remove()
 end
 

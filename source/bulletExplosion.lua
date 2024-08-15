@@ -9,6 +9,7 @@ function BulletExplosion:init(x,y,speed, damage, offsetCrank, scale, duration)
     BulletExplosion.super.init(self, x,y,speed, damage, offsetCrank, scale, duration)
     self.hp = 1000
     self.tick = 100
+    self:setCenter(0.5,0.5)
     p:moveTo(x, y)
     p:setSize(20,20)
     p:setColor(gfx.kColorWhite)
