@@ -5,15 +5,17 @@ local bulletImage = gfx.image.new("images/bulletPlasma" )
 function BulletPlasma:init(x,y,speed, damage, offsetCrank, scale, duration)
     BulletPlasma.super.init(self,x,y,speed, damage, offsetCrank, scale, duration)
     self:setImage(bulletImage)
+    self:setCollideRect(0,0,self:getSize())
     self.hp = 1000
     self.rot = 0
     self.tick = 300
     self.currentCollision = false
+    self.particleSystem = {}
 end
 
 function BulletPlasma:update()
-    self.rot += self.speed
-    self:setRotation(self.rot)
+    -- self.rot += self.speed
+    -- self:setRotation(self.rot)
     if self.x <= 0 or self.x >= 400 then
         self.originAngle = 180-self.originAngle
         self:resetPosAndRot()

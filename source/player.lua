@@ -48,6 +48,8 @@ function Player:update()
         self.cannonGunSprite:setRotation(270)
         -- self:updateCannonPosition()
     end
+    -- c'est la que tu fais ton truc de ouf en rotation
+    -- self.cannonGunSprite:moveTo(self.cannonBaseSprite.x + 40 * math.cos(self.cannonGunSprite:getRotation()), self.cannonBaseSprite.y + 40 * math.sin(self.cannonGunSprite:getRotation()))
 end
 
 function Player:updateCannonPosition()
