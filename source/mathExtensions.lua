@@ -106,3 +106,7 @@ function normalizeAngle(angle)
         return angle + 90
     end
 end
+
+function lerp(a, b, t)
+    return a + (b - a) * t
+end

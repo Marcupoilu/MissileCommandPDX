@@ -18,20 +18,18 @@ function BulletGuided:update()
 
     if self.target ~= nil then
         local targetAngle = math.deg(math.atan(self.target.y - self.y, self.target.x - self.x))
+        local distanceToTarget = math.sqrt((self.target.x - self.x)^2 + (self.target.y - self.y)^2)
 
         -- Calculer la différence d'angle en tenant compte de la circularité
-        local angleDiff = (targetAngle - self.originAngle + 180) % 360 - 180
+        local angleDiff = (targetAngle - self.originAngle + 540) % 360 - 180
 
-        -- Limiter la vitesse de rotation
-        local maxRotationSpeed = 20 -- Ajuste cette valeur selon ton besoin
-        if angleDiff > maxRotationSpeed then
-            angleDiff = maxRotationSpeed
-        elseif angleDiff < -maxRotationSpeed then
-            angleDiff = -maxRotationSpeed
-        end
+        -- Appliquer l'interpolation pour lisser le changement d'angle
+        local interpolationSpeed = 0.1 -- Ajuste cette valeur selon ton besoin
+        self.originAngle = self.originAngle + angleDiff * interpolationSpeed
 
-        self.originAngle = self.originAngle + angleDiff
+        -- Mettre à jour la rotation de la balle
         self:setRotation(self.originAngle + 90)
+
         return
     end
     for key, value in pairs(gfx.sprite.getAllSprites()) do
