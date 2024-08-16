@@ -24,10 +24,9 @@ function Projectile:init(x,y,speed, damage, offsetCrank, scale, duration)
     if self:isa(BulletPlasma) == false then
         self:setRotation(self.originAngle + 90)
     end
-
     if self.duration ~= nil then
         self.timer = playdate.timer.new(toMilliseconds(self.duration), function() self:destroy() end) 
-    end    
+    end
 end
 
 function Projectile:update()

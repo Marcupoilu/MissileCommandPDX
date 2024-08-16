@@ -12,7 +12,6 @@ function Enemy:init(x,y,speed,hp, xp, damage, enemyImage)
             table.insert(self.animations, {Name=animationData.Name, Animation=gfx.animation.loop.new(animationData.Delay, animationData.Source, animationData.Loop)})
         end
     end
-    table.insert(enemies, self)
     self.speed = speed
     self.originalSpeed = self.speed
     self.radius = 0
@@ -32,10 +31,11 @@ function Enemy:init(x,y,speed,hp, xp, damage, enemyImage)
         self.currentAnimation = table.findByParam(self.animations, "Name", self.state).Animation
         self:setImage(self.currentAnimation:image())
     end
-
+    
     self:setCollideRect(0,0,self:getSize())
     self:moveTo(x,y)
     self:add()
+    table.insert(enemies, self)
 end
 
 function Enemy:changeState(state)
@@ -107,7 +107,7 @@ function Enemy:loseHp(value)
 end
 
 function Enemy:death()
-    shake:setShakeAmount(5)
+    -- shake:setShakeAmount(5)
     p:moveTo(self.x, self.y)
     p:setSize(7,7)
     p:setColor(gfx.kColorWhite)

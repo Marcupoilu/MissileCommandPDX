@@ -3,8 +3,7 @@ class("BulletGuided").extends(Bullet)
 local bulletImage = gfx.image.new("images/BulletRocket" )
 
 function BulletGuided:init(x,y,speed, damage, offsetCrank, scale)
-    BulletGuided.super.init(self,x,y,speed, damage, offsetCrank, scale)
-    self:setImage(bulletImage)
+    BulletGuided.super.init(self,x,y,speed, damage, offsetCrank, scale, 10000, bulletImage)
     self.hp = 1
     self.rot = 0
     self.power = 5
@@ -13,6 +12,7 @@ function BulletGuided:init(x,y,speed, damage, offsetCrank, scale)
     self:setRotation(self.originAngle + 90)
 end
 function BulletGuided:update()
+    self:animate()
     self.radius += self.speed + (((player.projectileSpeedBonus*self.speed)/100))
     self:moveTo(self.radius*math.cos(math.rad(self.originAngle + self.offset)) + self.originPosition.x, self.radius*math.sin(math.rad(self.originAngle + self.offset)) + self.originPosition.y)
 

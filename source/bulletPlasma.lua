@@ -3,9 +3,7 @@ class("BulletPlasma").extends(Bullet)
 local bulletImage = gfx.image.new("images/bulletPlasma" )
 
 function BulletPlasma:init(x,y,speed, damage, offsetCrank, scale, duration)
-    BulletPlasma.super.init(self,x,y,speed, damage, offsetCrank, scale, duration)
-    self:setImage(bulletImage)
-    self:setCollideRect(0,0,self:getSize())
+    BulletPlasma.super.init(self,x,y,speed, damage, offsetCrank, scale, duration, bulletImage)
     self.hp = 1000
     self.rot = 0
     self.tick = 300
@@ -14,6 +12,7 @@ function BulletPlasma:init(x,y,speed, damage, offsetCrank, scale, duration)
 end
 
 function BulletPlasma:update()
+    self:animate()
     -- self.rot += self.speed
     -- self:setRotation(self.rot)
     if self.x <= 0 or self.x >= 400 then

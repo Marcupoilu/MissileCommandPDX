@@ -3,14 +3,15 @@ class("BulletSerpentine").extends(Bullet)
 local bulletImage = gfx.image.new("images/bulletSerpentine" )
 
 function BulletSerpentine:init(x,y,speed, damage, offsetCrank, scale)
-    BulletSerpentine.super.init(self,x,y,speed, damage, offsetCrank, scale)
-    self:setImage(bulletImage)
+    BulletSerpentine.super.init(self,x,y,speed, damage, offsetCrank, scale, 10000, bulletImage)
+    -- self:setImage(bulletImage)
     self.hp = 3
     self.rot = 0
     self.amp = 20
     self.freq = 0.2
 end
 function BulletSerpentine:update()
+    self:animate()
     self.radius += self.speed + (((player.projectileSpeedBonus*self.speed)/100))
     local time = playdate.getCurrentTimeMilliseconds()
     local waveOffset = self.amp * math.sin(time * self.freq)

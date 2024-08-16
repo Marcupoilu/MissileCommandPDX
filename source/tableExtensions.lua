@@ -12,6 +12,13 @@
     return t[math.ceil(math.random(#t))]
 end
 
+function deep_copy(obj)
+  if type(obj) ~= 'table' then return obj end
+  local res = {}
+  for k, v in pairs(obj) do res[deep_copy(k)] = deep_copy(v) end
+  return res
+end
+
 function table.each( t, fn )
 	if type(fn)~="function" then return end
 	for _, e in pairs(t) do

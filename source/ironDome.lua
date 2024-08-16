@@ -1,7 +1,7 @@
-class("Wiper").extends(Weapon)
+class("IronDome").extends(Weapon)
 
-function Wiper:init(attackSpeed, x, y, damage, projectileAmount, scale, duration)
-    Wiper.super.init(self, attackSpeed, damage, projectileAmount, scale)
+function IronDome:init(attackSpeed, x, y, damage, projectileAmount, scale, duration)
+    IronDome.super.init(self, attackSpeed, damage, projectileAmount, scale)
     self.speed = 4
     self.x = x
     self.duration = duration
@@ -9,7 +9,7 @@ function Wiper:init(attackSpeed, x, y, damage, projectileAmount, scale, duration
     -- self:debugLevel(10)
 end
 
-function Wiper:changeLevel()
+function IronDome:changeLevel()
     self.level += 1
     if self.level == 2 then
         self.attackSpeed -= 10
@@ -41,13 +41,9 @@ function Wiper:changeLevel()
     end
 end
 
-function Wiper:shoot()
-    Wiper.super.shoot()
+function IronDome:shoot()
+    IronDome.super.shoot()
     shake:setShakeAmount(30)
     gfx.clear(gfx.kColorWhite)
-    enemiesCopy = table.shallowcopy(enemies)
-    for key, value in pairs(enemiesCopy) do
-        print(value.className)
-        value:loseHp(self.damage)
-    end
+    
 end

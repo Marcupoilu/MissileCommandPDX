@@ -1,15 +1,32 @@
 class("Bullet").extends(Projectile)
 
-local bulletImage = gfx.image.new("images/bullet" )
+-- local bulletImage = gfx.image.new("images/bullet" )
 
-function Bullet:init(x,y,speed, damage, offsetCrank, scale, duration)
+function Bullet:init(x,y,speed, damage, offsetCrank, scale, duration, bulletImage)
     Bullet.super.init(self,x,y,speed, damage, offsetCrank, scale, duration)
-    self.image = bulletImage
-    self:setImage(bulletImage)
-    -- self:setScale(scale)
-    self:setCollideRect(0,0,self:getSize())
     self:moveTo(x,y)
     self:add()
+    self.animations = {}
+    if animationsData[self["className"]] ~= nil then
+        for key, animationData in pairs(animationsData[self["className"]]) do
+            table.insert(self.animations, {Name=animationData.Name, Animation=gfx.animation.loop.new(animationData.Delay, animationData.Source, animationData.Loop)})
+        end
+    end
+    self.state = "Idle"
+    if table.getsize(self.animations) <= 0 then
+        self:setImage(bulletImage)
+    else
+        self.currentAnimation = table.findByParam(self.animations, "Name", self.state).Animation
+        self:setImage(self.currentAnimation:image())
+    end
+    self:setCollideRect(0,0,self:getSize())
+end
+
+function Bullet:animate()
+    if table.getsize(self.animations) > 0 then
+        self.currentAnimation = table.findByParam(self.animations, "Name", self.state).Animation
+        self:setImage(self.currentAnimation:image())
+    end
 end
 
 function Bullet:update()

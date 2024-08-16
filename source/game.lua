@@ -23,14 +23,15 @@ function Game:init()
 end
 
 function Game:startGame()
-    -- player:addWeapon(table.findByParam(weaponsData, "className", "SimpleCannon"))
-    -- player:addWeapon(table.findByParam(weaponsData, "className", "Beam"))
-    -- player:addWeapon(table.findByParam(weaponsData, "className", "Wiper"))
-    -- player:addWeapon(table.findByParam(weaponsData, "className", "Plasma"))
-    -- player:addWeapon(table.findByParam(weaponsData, "className", "Serpentine"))
-    -- player:addWeapon(table.findByParam(weaponsData, "className", "Shockwave"))
-    -- player:addWeapon(table.findByParam(weaponsData, "className", "Rocket"))
+    player:addWeapon(table.findByParam(weaponsData, "className", "SimpleCannon"))
+    player:addWeapon(table.findByParam(weaponsData, "className", "Beam"))
+    player:addWeapon(table.findByParam(weaponsData, "className", "Wiper"))
+    player:addWeapon(table.findByParam(weaponsData, "className", "Plasma"))
+    player:addWeapon(table.findByParam(weaponsData, "className", "Serpentine"))
+    player:addWeapon(table.findByParam(weaponsData, "className", "Shockwave"))
+    player:addWeapon(table.findByParam(weaponsData, "className", "Rocket"))
     player:addWeapon(table.findByParam(weaponsData, "className", "Guided"))
+    -- player:addWeapon(table.findByParam(weaponsData, "className", "IronDome"))
 
     self.waves[self.waveNumber]:startWave()
     playdate.timer.new(interval, self.changeWave, self).repeats = true

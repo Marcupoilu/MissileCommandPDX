@@ -100,7 +100,9 @@ function Player:levelUp()
         self.xpMax += 16
     end
     self.xp = 0
-    playdate.update = levelUpUpdate
+    playdate.timer.new(toMilliseconds(.5), function ()
+        playdate.update = levelUpUpdate
+    end)
 end
 
 function Player:loseHp(value)
