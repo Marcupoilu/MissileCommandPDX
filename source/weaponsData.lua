@@ -9,5 +9,5 @@ weaponsData =
     Shockwave(toMilliseconds(1.5), 200, 175, 1, 1, 1),
     Rocket(toMilliseconds(1.5), 200, 175, 1, 1, 1,2),
     Guided(toMilliseconds(1.5), 200, 175, 1, 1, 1,2),
-    IronDome(toMilliseconds(1.5), 200, 175, 1, 1, 1,2)
+    Flamethrower(toMilliseconds(3), 200, 175, 1, 1, 1,1.5)
 }
