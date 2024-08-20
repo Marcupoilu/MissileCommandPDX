@@ -15,7 +15,7 @@ function Player:init( basePosition, gunPosition)
     self.xpBonus = 0
     self.damageBonus = 0
     self.attackSpeedBonus = 0
-    self.scaleBonus = 0 
+    self.scaleBonus = 50 
     self.projectileAmount = 0
     self.regenerationRate = 0
     self.projectileSpeedBonus = 0

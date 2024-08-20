@@ -12,18 +12,23 @@ function Enemy:init(x,y,speed,hp, xp, damage, enemyImage)
             table.insert(self.animations, {Name=animationData.Name, Animation=gfx.animation.loop.new(animationData.Delay, animationData.Source, animationData.Loop)})
         end
     end
+    self.dotValues = {}
+    self.spritePos = {}
     self.speed = speed
-    self.originalSpeed = self.speed
+    self.originSpeed = self.speed
     self.radius = 0
     self.angle = 0
+    self.shakeAmount = 0
     self.offset = 90
     self.originAngle = 0
     self.originPosition = {}
     self.hp = hp
     self.damage = damage
     self.xpReward = xp
+    self.dead = false
     self.state = "Idle"
     self.currentOverlappingSprites = {} 
+    self.timer = nil
     -- self:setScale(1)
     if table.getsize(self.animations) <= 0 then
         self:setImage(enemyImage)
@@ -72,11 +77,7 @@ function Enemy:update()
                 end)
             end
             if value:isa(BulletRocket) then
-                BulletExplosion(value.x, value.y - 20, value.speed, value.damage+((player.damageBonus*value.damage)/100), angle, value.scale+((player.scaleBonus*value.scale)/100), value.duration)
-            end
-            table.insert(self.currentOverlappingSprites, value)
-            if value.tick ~= nil then
-                playdate.timer.new(value.tick, function() table.remove(self.currentOverlappingSprites, indexOf(self.currentOverlappingSprites, value)) end)
+                BulletExplosion(value.x, value.y - 20, value.speed, value.damage+((player.damageBonus*value.damage)/100), angle, value.scale+((player.scaleBonus*value.scale)/100), value.duration, value.explosionDamage)
             end
         end
         if value:isa(UISprite) or value:getTag() == 1 then
@@ -88,7 +89,8 @@ function Enemy:update()
 end
 
 function Enemy:touchEnemy(value)
-    p:moveTo(value.x, value.y)
+    if table.contains(self.currentOverlappingSprites, value) == true then return end
+    p:moveTo(self.x, self.y)
     p:setSize(10,10)
     p:setColor(gfx.kColorWhite)
     p:setMode(Particles.modes.DECAY)
@@ -96,6 +98,42 @@ function Enemy:touchEnemy(value)
     p:add(30)
     self:loseHp(value.damage + ((player.damageBonus*value.damage)/100))
     value:loseHp(1)
+    table.insert(self.currentOverlappingSprites, value)
+    if value.tick ~= nil then
+        playdate.timer.new(value.tick, function() table.remove(self.currentOverlappingSprites, indexOf(self.currentOverlappingSprites, value)) end)
+    end
+end
+
+function Enemy:dotEnemy(value)
+    if table.contains(self.currentOverlappingSprites, value) == true then return end
+    p:moveTo(self.x, self.y)
+    p:setSize(10,10)
+    p:setColor(gfx.kColorWhite)
+    p:setMode(Particles.modes.DECAY)
+    p:setSpeed(3, 5)
+    p:add(30)
+    table.insert(self.currentOverlappingSprites, value)
+    table.insert(self.dotValues, value.tickNumber)
+    self:dotTimer(value)
+end
+function Enemy:dotTimer(value)
+    for key, dotValue in pairs(self.dotValues) do
+        playdate.timer.new(toMilliseconds(1),
+        function()
+            if dotValue <= 0 or self.dead == true then   
+                return   
+            end
+            p:moveTo(self.x, self.y)
+            p:setSize(10,10)
+            p:setColor(gfx.kColorWhite)
+            p:setMode(Particles.modes.DECAY)
+            p:setSpeed(3, 5)
+            p:add(30)
+            self:loseHp(value.damage + ((player.damageBonus*value.damage)/100))
+            dotValue -= 1
+            self:dotTimer(value)
+        end)
+    end
 end
 
 function Enemy:loseHp(value)
@@ -115,5 +153,13 @@ function Enemy:death()
     p:setSpeed(3, 7)
     p:add(20)
     table.remove(enemies, indexOf(enemies, self))
+    self.dead = true
     self:remove()
+end
+
+function Enemy:stop(value)
+    self.speed = 0
+    if value ~= nil then
+        playdate.timer.new(toMilliseconds(value), function() self.speed = self.originSpeed end)
+    end
 end

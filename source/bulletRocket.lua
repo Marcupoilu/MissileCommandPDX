@@ -2,14 +2,12 @@ class("BulletRocket").extends(Bullet)
 
 local bulletImage = gfx.image.new("images/bulletRocket" )
 
-function BulletRocket:init(x,y,speed, damage, offsetCrank, scale, duration)
+function BulletRocket:init(x,y,speed, damage, offsetCrank, scale, duration, explosionDamage)
     BulletRocket.super.init(self,x,y,speed, damage, offsetCrank, scale, duration, bulletImage)
     self:clearCollideRect()
-    -- self:setImage(bulletImage)
     self.lineS = {}
     self.hp = 1
-    self.rot = 0
-    self.power = 5
+    self.explosionDamage = explosionDamage
     self:setRotation(self.originAngle + 90)
     playdate.timer.new(50, function() self:setCollideRect(0,0,self:getSize()) end)
 end

@@ -1,18 +1,16 @@
-import "bulletRocket.lua"
+import "bulletFreezer.lua"
+class("Freezer").extends(Weapon)
 
-class("Rocket").extends(Weapon)
-
-function Rocket:init(attackSpeed, x, y, damage, projectileAmount, scale, duration)
-    Rocket.super.init(self, attackSpeed, damage, projectileAmount, scale)
-    self.speed = 6
+function Freezer:init(attackSpeed, x, y, damage, projectileAmount, scale, duration)
+    Freezer.super.init(self, attackSpeed, damage, projectileAmount, scale)
+    self.speed = 100
     self.x = x
     self.duration = duration
-    self.explosionDamage = 2
     self.y = y
     -- self:debugLevel(10)
 end
 
-function Rocket:changeLevel()
+function Freezer:changeLevel()
     self.level += 1
     if self.level == 2 then
         self.attackSpeed -= 10
@@ -52,10 +50,10 @@ function Rocket:changeLevel()
     end
 end
 
-function Rocket:shoot()
-    Rocket.super.shoot()
+function Freezer:shoot()
+    Freezer.super.shoot()
     local angles = cutAngle(self.projectileAmount + player.projectileAmount)
     for key, angle in ipairs(angles) do
-        bulletRocket = BulletRocket(self.x, self.y - 20, self.speed, self.damage+((player.damageBonus*self.damage)/100), angle, self.scale+((player.scaleBonus*self.scale)/100), self.duration, self.explosionDamage)
+        bulletFreezer = BulletFreezer(self.x, self.y - 20, self.speed, self.damage+((player.damageBonus*self.damage)/100), angle, self.scale+((player.scaleBonus*self.scale)/100), self.duration)
     end
 end

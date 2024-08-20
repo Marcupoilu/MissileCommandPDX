@@ -11,6 +11,7 @@ import "tableExtensions.lua"
 import "sequence.lua"
 import "pdParticles.lua"
 import "screenShake.lua"
+import "spriteShake.lua"
 import "player.lua"
 import "weapon.lua"
 import "projectile.lua"
@@ -25,8 +26,10 @@ import "serpentine.lua"
 import "shockwave.lua"
 import "rocket.lua"
 import "guided.lua"
-import "ironDome.lua"
+import "laserDome.lua"
 import "flamethrower.lua"
+import "freezer.lua"
+import "toxicVape.lua"
 import "enemiesData.lua"
 import "enemy.lua"
 import "spawner.lua"
@@ -70,7 +73,7 @@ levelUpUpdate = function()
     playdate.resetElapsedTime()
     if(generate == false) then
         -- kill all enemies at level up
-        table.each(enemies, function(x)x:remove() end)
+        table.each(enemies, function(x) x.dead = true x:remove() end)
         generate = true
         uiManager:generateUpgrades()
     end

@@ -5,12 +5,16 @@ local p = ParticleCircle(0,0)
 
 function BulletFlamethrower:init(x,y,speed, damage, offsetCrank, scale, duration)
     BulletPlasma.super.init(self,x,y,speed, damage, offsetCrank, scale, duration)
-    duration = duration
+    self.duration = duration
     self.hp = 100000
-    self.tick = 50
+    self.tick = 10
     self:setCenter(0.5,0.5)
     local w,h = self:getSize()
     p:setSize(10 + ((player.scaleBonus*10)/100), 10+ ((player.scaleBonus*10)/100))
+    p:setColor(gfx.kColorWhite)
+    p:setMode(Particles.modes.DECAY)
+    p:setDecay(1)
+    p:setSpeed(4 + ((player.projectileSpeedBonus*4)/100), 4 + ((player.projectileSpeedBonus*4)/100))
     self:setImage(bulletImage)
 end
 
@@ -22,11 +26,6 @@ function BulletFlamethrower:update()
     local particleX = player.cannonGunSprite.x  +(50 ) * math.cos(math.rad(player.cannonGunSprite:getRotation() - 90))
     local particleY = player.cannonGunSprite.y  +(50 ) * math.sin(math.rad(player.cannonGunSprite:getRotation() - 90))
     p:moveTo(particleX, particleY)
-    self:moveTo(p.x, p.y)
-    self:setSize(10 + ((player.scaleBonus*10)/100), 50+ ((player.scaleBonus*10)/100))
-    p:setColor(gfx.kColorWhite)
-    p:setMode(Particles.modes.DECAY)
-    p:setSpeed(7, 7)
 
     local spreadAngle = 90 
     local halfSpread = spreadAngle / 2
@@ -45,18 +44,25 @@ function BulletFlamethrower:update()
 
     if angleMin > angleMax then
         p:setSpread(angleMin, 360)
-        p:add(5) 
+        p:add(10) 
         p:setSpread(0, angleMax)
-        p:add(5) 
+        p:add(10) 
     else
         p:setSpread(angleMin, angleMax)
-        p:add(10) 
+        p:add(20) 
     end
     for key, particle in pairs(p:getParticles()) do
-        printTable(particle)
+        local rect = playdate.geometry.rect.new(particle.x, particle.y, 10 + ((player.scaleBonus*10)/100),10 + ((player.scaleBonus*10)/100))
+        table.insert(debugRects, rect)
+        for key, value in pairs(gfx.sprite.getAllSprites()) do
+            if value:isa(Enemy) then
+                local width, height = value:getSize()
+                local enemyRect = playdate.geometry.rect.new(value.x - width/2, value.y - height/2, width, height)
+                table.insert(debugRects, enemyRect)
+                if rect:intersects(enemyRect) then
+                    value:touchEnemy(self)
+                end
+            end
+        end
     end
-    local width, height = self:getSize()
-    width = width +((player.scaleBonus*width)/100)
-    height = height +((player.scaleBonus*height)/100)
-    self:setCollideRect(0 ,0 ,width,height)
 end

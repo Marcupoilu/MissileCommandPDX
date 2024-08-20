@@ -11,7 +11,7 @@ function Projectile:init(x,y,speed, damage, offsetCrank, scale, duration)
     self:setCollidesWithGroups({3})
     self.speed = speed
     self.damage = damage
-    self.scale = scale + ((player.scaleBonus*scale)/100)
+    self:setScale(scale + ((player.scaleBonus*scale)/100))
     self.duration = duration
     self.originAngle = player.cannonGunSprite:getRotation() - 90
     self.originPosition = {x=x,y=y}
@@ -24,7 +24,7 @@ function Projectile:init(x,y,speed, damage, offsetCrank, scale, duration)
     if self:isa(BulletPlasma) == false then
         self:setRotation(self.originAngle + 90)
     end
-    if self.duration ~= nil then
+    if self.duration ~= nil or self.duration ~= 0 then
         self.timer = playdate.timer.new(toMilliseconds(self.duration), function() self:destroy() end) 
     end
 end
@@ -33,6 +33,7 @@ function Projectile:update()
 end
 
 function Projectile:destroy()
+    print("destroy")
     p:moveTo(self.x, self.y)
     p:setSize(5,6)
     p:setColor(gfx.kColorWhite)

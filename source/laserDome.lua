@@ -1,18 +1,18 @@
-import "bulletRocket.lua"
+import "bulletLaserDome.lua"
 
-class("Rocket").extends(Weapon)
+class("LaserDome").extends(Weapon)
 
-function Rocket:init(attackSpeed, x, y, damage, projectileAmount, scale, duration)
-    Rocket.super.init(self, attackSpeed, damage, projectileAmount, scale)
-    self.speed = 6
+function LaserDome:init(attackSpeed, x, y, damage, projectileAmount, scale, duration)
+    LaserDome.super.init(self, attackSpeed, damage, projectileAmount, scale)
+    self.speed = 100
     self.x = x
     self.duration = duration
-    self.explosionDamage = 2
     self.y = y
+    self.spawned = false
     -- self:debugLevel(10)
 end
 
-function Rocket:changeLevel()
+function LaserDome:changeLevel()
     self.level += 1
     if self.level == 2 then
         self.attackSpeed -= 10
@@ -52,10 +52,13 @@ function Rocket:changeLevel()
     end
 end
 
-function Rocket:shoot()
-    Rocket.super.shoot()
-    local angles = cutAngle(self.projectileAmount + player.projectileAmount)
-    for key, angle in ipairs(angles) do
-        bulletRocket = BulletRocket(self.x, self.y - 20, self.speed, self.damage+((player.damageBonus*self.damage)/100), angle, self.scale+((player.scaleBonus*self.scale)/100), self.duration, self.explosionDamage)
+function LaserDome:shoot()
+    LaserDome.super.shoot()
+    if self.spawned == true then
+        return 
     end
+    local angle = 0
+    bulletLaserDome = BulletLaserDome(self.x, self.y - 20, self.speed, self.damage+((player.damageBonus*self.damage)/100), angle, self.scale+((player.scaleBonus*self.scale)/100), 270)
+    bulletLaserDome = BulletLaserDome(self.x, self.y - 20, self.speed, self.damage+((player.damageBonus*self.damage)/100), angle, self.scale+((player.scaleBonus*self.scale)/100), 90)
+    self.spawned = true
 end

@@ -8,6 +8,7 @@ function Game:init()
     particles = {}
     upgrades = upgradesData
     enemies = {}
+    debugRects = {}
     spawners = {}
     beams = {}
     player = Player({x=200,y=207}, {x=200,y=197})
@@ -23,25 +24,33 @@ function Game:init()
 end
 
 function Game:startGame()
-    -- player:addWeapon(table.findByParam(weaponsData, "className", "SimpleCannon"))
-    -- player:addWeapon(table.findByParam(weaponsData, "className", "Beam"))
-    -- player:addWeapon(table.findByParam(weaponsData, "className", "Wiper"))
-    -- player:addWeapon(table.findByParam(weaponsData, "className", "Plasma"))
+    player:addWeapon(table.findByParam(weaponsData, "className", "SimpleCannon"))
+    player:addWeapon(table.findByParam(weaponsData, "className", "Beam"))
+    player:addWeapon(table.findByParam(weaponsData, "className", "Wiper"))
+    player:addWeapon(table.findByParam(weaponsData, "className", "Plasma"))
     -- player:addWeapon(table.findByParam(weaponsData, "className", "Serpentine"))
     -- player:addWeapon(table.findByParam(weaponsData, "className", "Shockwave"))
     -- player:addWeapon(table.findByParam(weaponsData, "className", "Rocket"))
     -- player:addWeapon(table.findByParam(weaponsData, "className", "Guided"))
-    player:addWeapon(table.findByParam(weaponsData, "className", "Flamethrower"))
+    -- player:addWeapon(table.findByParam(weaponsData, "className", "Flamethrower"))
+    -- player:addWeapon(table.findByParam(weaponsData, "className", "Freezer"))
+    -- player:addWeapon(table.findByParam(weaponsData, "className", "LaserDome"))
+    -- player:addWeapon(table.findByParam(weaponsData, "className", "ToxicVape"))
+
 
     self.waves[self.waveNumber]:startWave()
     playdate.timer.new(interval, self.changeWave, self).repeats = true
 end
 
 function Game:update()
-    -- playdate.timer.new(1000, function() self:changeWave() end)
     table.each(beams, function(beam)
         beam:update()
     end)
+    -- table.each(debugRects, function(rect)
+    --     gfx.setColor(gfx.kColorWhite)
+    --     gfx.drawRect(rect)
+    -- end)
+    debugRects = {}
 end
 
 function Game:changeWave()
