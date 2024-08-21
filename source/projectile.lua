@@ -11,7 +11,8 @@ function Projectile:init(x,y,speed, damage, offsetCrank, scale, duration)
     self:setCollidesWithGroups({3})
     self.speed = speed
     self.damage = damage
-    self:setScale(scale + ((player.scaleBonus*scale)/100))
+    self.scale = scale + ((player.scaleBonus*scale)/100)
+    self:setScale(self.scale)
     self.duration = duration
     self.originAngle = player.cannonGunSprite:getRotation() - 90
     self.originPosition = {x=x,y=y}

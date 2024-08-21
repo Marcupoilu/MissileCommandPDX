@@ -3,8 +3,6 @@ class("Player").extends()
 function Player:init( basePosition, gunPosition)
     local cannonBase = gfx.image.new("images/cannon_base")
     local cannonGun = gfx.image.new("images/cannon_gun")
-    assert( cannonBase ) -- make sure <he image was where we thought
-    assert( cannonGun ) -- make sure the image was where we thought
     self.x = gunPosition.x
     self.y = gunPosition.y
     self.level = 1
@@ -16,7 +14,7 @@ function Player:init( basePosition, gunPosition)
     self.damageBonus = 0
     self.attackSpeedBonus = 0
     self.scaleBonus = 0 
-    self.projectileAmount = 0
+    self.projectileAmount = 2
     self.regenerationRate = 0
     self.projectileSpeedBonus = 0
     self.cannonBaseSprite = gfx.sprite.new( cannonBase )
@@ -67,6 +65,7 @@ end
 
 function Player:addWeapon(weapon)
     table.insert(self.weapons, weapon)
+    weapon:shoot()
     weapon:startShooting()
 end
 

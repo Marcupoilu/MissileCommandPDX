@@ -1,17 +1,17 @@
-class("BulletBeam").extends(Projectile)
+class("BulletDroneLaser").extends(Projectile)
 
 local p = ParticleCircle(0,0)
 
-function BulletBeam:init(x,y,speed, damage, offsetCrank, scale, duration)
-    BulletBeam.super.init(self, x,y,speed, damage, offsetCrank, scale)
+function BulletDroneLaser:init(x,y,speed, damage, offsetCrank, scale,duration, angle)
+    BulletDroneLaser.super.init(self, x,y,speed, damage, offsetCrank, scale, duration)
     self.scale = scale
     self.maxLength = 240
     self.currentLength = 0
     self.startPos = {x=x,y=y}
     self.endPos = {x=0,y=0}
-    self.angle = crankPosition
-    self.startPos.x = player.x 
-    self.startPos.y = player.y
+    self.angle = angle
+    self.startPos.x = x
+    self.startPos.y = y
     self.radius += self.speed + (((player.projectileSpeedBonus*self.speed)/100)) * deltaTime
     self.direction = {x=0, y=1}
     self.direction.x = self.radius*math.cos(math.rad(self.angle + self.offset))* deltaTime
@@ -23,17 +23,16 @@ function BulletBeam:init(x,y,speed, damage, offsetCrank, scale, duration)
     table.insert(beams, self)
 end
 
-function BulletBeam:endBeam()
+function BulletDroneLaser:endBeam()
     table.remove(beams, indexOf(beams, self))
 end
 
-function BulletBeam:update()
-    self.angle = player.cannonGunSprite:getRotation()
+function BulletDroneLaser:update()
     self.radius += self.speed + (((player.projectileSpeedBonus*self.speed)/100)) * deltaTime
-    self.direction.x = self.radius*math.cos(math.rad((self.angle - 90) + self.offset)) * deltaTime
-    self.direction.y = self.radius*math.sin(math.rad((self.angle - 90) + self.offset)) * deltaTime
+    self.direction.x = self.radius*math.cos(math.rad(self.angle - 90 + self.offset)) * deltaTime
+    self.direction.y = self.radius*math.sin(math.rad(self.angle - 90 + self.offset)) * deltaTime
+    self.angle += self.speed
     self.currentLength = self.currentLength + self.speed + (((player.projectileSpeedBonus*self.speed)/100)) * deltaTime
-
     if self.currentLength > self.maxLength then
         self.currentLength = self.maxLength
     end

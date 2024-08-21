@@ -30,6 +30,10 @@ import "laserDome.lua"
 import "flamethrower.lua"
 import "freezer.lua"
 import "toxicVape.lua"
+import "aura.lua"
+import "blackhole.lua"
+import "drone.lua"
+import "bulletDroneLaser.lua"
 import "enemiesData.lua"
 import "enemy.lua"
 import "spawner.lua"
@@ -53,6 +57,7 @@ import "weaponsData.lua"
 
 deltaTime = 0
 game = Game()
+crankPosition = playdate.getCrankPosition()
 game:startGame()
 
 

@@ -15,7 +15,7 @@ function Enemy:init(x,y,speed,hp, xp, damage, enemyImage)
     self.dotValues = {}
     self.spritePos = {}
     self.speed = speed
-    self.originSpeed = self.speed
+    self.originSpeed = speed
     self.radius = 0
     self.angle = 0
     self.shakeAmount = 0
@@ -61,6 +61,34 @@ function Enemy:update()
     local collisions = self:overlappingSprites()
     for index, value in pairs(collisions) do
         if value:isa(Bullet) and table.contains(self.currentOverlappingSprites, value) == false then
+            if value:isa(BulletAura) then
+                if self:alphaCollision(value) == false then
+                    return
+                end
+            end
+            if value:isa(bulletBlackhole) then
+                local dx = value.x - self.x
+                local dy = value.y - self.y
+                local distance = math.sqrt(dx * dx + dy * dy)
+                self.radius = 0
+                self.originPosition.x = self.x
+                self.originPosition.y = self.y
+                if distance < 1 + self:getSize()/2 then
+                    self.angle = self.angle
+                else
+                    self.speed = self.originSpeed
+                    self.angle = math.deg(math.atan(dy, dx))
+                end
+                return
+            end
+            if value:isa(BulletDrone) then
+                local angles = cutAngle(value.projectileAmount + player.projectileAmount)
+                for key, angle in ipairs(angles) do
+                    local bulletDroneLaser = BulletDroneLaser(value.x, value.y, value.speed, 0.1+((player.damageBonus*value.damage)/100), angle, value.scale+((player.scaleBonus*value.scale)/100), value.duration, 0)
+                end
+                value:loseHp(1)
+                return
+            end
             self:touchEnemy(value)
             if value:isa(BulletShockwave) then
                 self.radius = 0
