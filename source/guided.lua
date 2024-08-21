@@ -2,9 +2,8 @@ import "bulletGuided.lua"
 
 class("Guided").extends(Weapon)
 
-function Guided:init(attackSpeed, x, y, damage, projectileAmount, scale, duration)
-    Guided.super.init(self, attackSpeed, damage, projectileAmount, scale)
-    self.speed = 4
+function Guided:init(attackSpeed, x, y, speed, damage, projectileAmount, scale, duration)
+    Guided.super.init(self, attackSpeed, speed, damage, projectileAmount, scale)
     self.x = x
     self.duration = duration
     self.y = y

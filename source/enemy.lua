@@ -1,6 +1,6 @@
 class("Enemy").extends(gfx.sprite)
 
-local p = ParticleCircle(0,0)
+-- local p = ParticleCircle(0,0)
 
 function Enemy:init(x,y,speed,hp, xp, damage, enemyImage)
     Enemy.super.init(self)
@@ -82,10 +82,16 @@ function Enemy:update()
                 return
             end
             if value:isa(BulletDrone) then
+                -- value:updateDurationTimer(value.duration)
+                local sprite = gfx.sprite.new(gfx.image.new("images/bullet" ))
+                sprite:moveTo(value.x, value.y)
+                sprite:add()
+                playdate.timer.new(toMilliseconds(value.duration), function() sprite:remove() end)
                 local angles = cutAngle(value.projectileAmount + player.projectileAmount)
                 for key, angle in ipairs(angles) do
-                    local bulletDroneLaser = BulletDroneLaser(value.x, value.y, value.speed, 0.1+((player.damageBonus*value.damage)/100), angle, value.scale+((player.scaleBonus*value.scale)/100), value.duration, 0)
+                     BulletDroneLaser(value.x, value.y, value.speed, 0.1+((player.damageBonus*value.damage)/100), angle, value.scale+((player.scaleBonus*value.scale)/100), value.duration, 0)
                 end
+                -- value.speed = 0
                 value:loseHp(1)
                 return
             end

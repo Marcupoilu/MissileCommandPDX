@@ -1,6 +1,6 @@
 class("BulletFreezer").extends(Projectile)
 
-local p = ParticleCircle(0,0)
+-- local p = ParticleCircle(0,0)
 
 function BulletFreezer:init(x,y,speed, damage, offsetCrank, scale, duration)
     BulletFreezer.super.init(self, x,y,speed, damage, offsetCrank, scale)

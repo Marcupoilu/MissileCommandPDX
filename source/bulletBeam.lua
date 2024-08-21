@@ -1,6 +1,5 @@
 class("BulletBeam").extends(Projectile)
 
-local p = ParticleCircle(0,0)
 
 function BulletBeam:init(x,y,speed, damage, offsetCrank, scale, duration)
     BulletBeam.super.init(self, x,y,speed, damage, offsetCrank, scale)
@@ -28,6 +27,9 @@ function BulletBeam:endBeam()
 end
 
 function BulletBeam:update()
+    self.startPos.x = player.cannonGunSprite.x +(self.height+50) * math.cos(math.rad((self.angle - 90) + self.offset))
+    self.startPos.y = player.cannonGunSprite.y +(self.height+50) * math.sin(math.rad((self.angle - 90) + self.offset))
+
     self.angle = player.cannonGunSprite:getRotation()
     self.radius += self.speed + (((player.projectileSpeedBonus*self.speed)/100)) * deltaTime
     self.direction.x = self.radius*math.cos(math.rad((self.angle - 90) + self.offset)) * deltaTime

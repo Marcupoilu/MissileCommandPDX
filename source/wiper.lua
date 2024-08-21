@@ -1,8 +1,7 @@
 class("Wiper").extends(Weapon)
 
-function Wiper:init(attackSpeed, x, y, damage, projectileAmount, scale, duration)
-    Wiper.super.init(self, attackSpeed, damage, projectileAmount, scale)
-    self.speed = 4
+function Wiper:init(attackSpeed, x, y, speed, damage, projectileAmount, scale, duration)
+    Wiper.super.init(self, attackSpeed, speed, damage, projectileAmount, scale)
     self.x = x
     self.duration = duration
     self.y = y

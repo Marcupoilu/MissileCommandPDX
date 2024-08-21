@@ -1,9 +1,8 @@
 import "bulletFreezer.lua"
 class("Freezer").extends(Weapon)
 
-function Freezer:init(attackSpeed, x, y, damage, projectileAmount, scale, duration)
-    Freezer.super.init(self, attackSpeed, damage, projectileAmount, scale)
-    self.speed = 100
+function Freezer:init(attackSpeed, x, y, speed, damage, projectileAmount, scale, duration)
+    Freezer.super.init(self, attackSpeed, speed, damage, projectileAmount, scale)
     self.x = x
     self.duration = duration
     self.y = y

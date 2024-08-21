@@ -2,9 +2,8 @@ import "bulletRocket.lua"
 
 class("Rocket").extends(Weapon)
 
-function Rocket:init(attackSpeed, x, y, damage, projectileAmount, scale, duration)
-    Rocket.super.init(self, attackSpeed, damage, projectileAmount, scale)
-    self.speed = 6
+function Rocket:init(attackSpeed, x, y, speed, damage, projectileAmount, scale, duration)
+    Rocket.super.init(self, attackSpeed, speed, damage, projectileAmount, scale)
     self.x = x
     self.duration = duration
     self.explosionDamage = 2

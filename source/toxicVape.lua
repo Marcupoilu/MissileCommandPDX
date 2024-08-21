@@ -2,9 +2,8 @@ import "bulletToxicVape.lua"
 
 class("ToxicVape").extends(Weapon)
 
-function ToxicVape:init(attackSpeed, x, y, damage, projectileAmount, scale, duration)
-    ToxicVape.super.init(self, attackSpeed, damage, projectileAmount, scale)
-    self.speed = 4
+function ToxicVape:init(attackSpeed, x, y, speed, damage, projectileAmount, scale, duration)
+    ToxicVape.super.init(self, attackSpeed, speed, damage, projectileAmount, scale)
     self.x = x
     self.duration = duration
     self.tickNumber = 3

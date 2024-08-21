@@ -36,9 +36,10 @@ function Game:startGame()
     -- player:addWeapon(table.findByParam(weaponsData, "className", "Freezer"))
     -- player:addWeapon(table.findByParam(weaponsData, "className", "LaserDome"))
     -- player:addWeapon(table.findByParam(weaponsData, "className", "ToxicVape"))
-    player:addWeapon(table.findByParam(weaponsData, "className", "Aura"))
+    -- player:addWeapon(table.findByParam(weaponsData, "className", "Aura"))
     -- player:addWeapon(table.findByParam(weaponsData, "className", "Blackhole"))
     -- player:addWeapon(table.findByParam(weaponsData, "className", "Drone"))
+    player:addWeapon(table.findByParam(weaponsData, "className", "Orbital"))
 
 
     self.waves[self.waveNumber]:startWave()

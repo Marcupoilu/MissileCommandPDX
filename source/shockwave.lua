@@ -2,9 +2,8 @@ import "bulletShockwave.lua"
 
 class("Shockwave").extends(Weapon)
 
-function Shockwave:init(attackSpeed, x, y, damage, projectileAmount, scale, duration)
-    Shockwave.super.init(self, attackSpeed, damage, projectileAmount, scale)
-    self.speed = 4
+function Shockwave:init(attackSpeed, x, y, speed, damage, projectileAmount, scale, duration)
+    Shockwave.super.init(self, attackSpeed, speed, damage, projectileAmount, scale)
     self.x = x
     self.duration = duration
     self.y = y

@@ -2,9 +2,8 @@ import "bulletLaserDome.lua"
 
 class("LaserDome").extends(Weapon)
 
-function LaserDome:init(attackSpeed, x, y, damage, projectileAmount, scale, duration)
-    LaserDome.super.init(self, attackSpeed, damage, projectileAmount, scale)
-    self.speed = 100
+function LaserDome:init(attackSpeed, x, y, speed, damage, projectileAmount, scale, duration)
+    LaserDome.super.init(self, attackSpeed, speed, damage, projectileAmount, scale)
     self.x = x
     self.duration = duration
     self.y = y

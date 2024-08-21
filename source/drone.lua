@@ -2,8 +2,8 @@ import "bulletDrone.lua"
 class("Drone").extends(Weapon)
 
 
-function Drone:init(attackSpeed, x, y, damage, projectileAmount, scale, duration)
-    Drone.super.init(self, attackSpeed, damage, projectileAmount, scale)
+function Drone:init(attackSpeed, x, y, speed, damage, projectileAmount, scale, duration)
+    Drone.super.init(self, attackSpeed, speed, damage, projectileAmount, scale)
     -- self:debugLevel(10)
     self.duration = duration
     self.x = x
@@ -53,6 +53,6 @@ function Drone:shoot()
     Drone.super.shoot()
     local angles = cutAngle(self.projectileAmount + player.projectileAmount)
     for key, angle in ipairs(angles) do
-        bulletDrone = BulletDrone(self.x, self.y, 5, self.damage+((player.damageBonus*self.damage)/100), angle, self.scale+((player.scaleBonus*self.scale)/100), self.duration, self.projectileAmount)
+        bulletDrone = BulletDrone(self.x, self.y, self.speed, self.damage+((player.damageBonus*self.damage)/100), angle, self.scale+((player.scaleBonus*self.scale)/100), self.duration, self.projectileAmount)
     end
 end

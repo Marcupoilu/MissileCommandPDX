@@ -1,6 +1,6 @@
 class("Projectile").extends(gfx.sprite)
 
-local p = ParticleCircle(0,0)
+-- local p = ParticleCircle(0,0)
 
 function Projectile:init(x,y,speed, damage, offsetCrank, scale, duration)
     Projectile.super.init(self)
@@ -28,6 +28,11 @@ function Projectile:init(x,y,speed, damage, offsetCrank, scale, duration)
     if self.duration ~= nil or self.duration ~= 0 then
         self.timer = playdate.timer.new(toMilliseconds(self.duration), function() self:destroy() end) 
     end
+end
+
+function Projectile:updateDurationTimer(newDuration)
+    self.timer:remove()
+    self.timer = playdate.timer.new(toMilliseconds(newDuration), function() self:destroy() end) 
 end
 
 function Projectile:update()

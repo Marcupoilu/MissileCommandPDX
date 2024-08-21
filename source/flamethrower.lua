@@ -2,9 +2,8 @@ import "bulletFlamethrower.lua"
 
 class("Flamethrower").extends(Weapon)
 
-function Flamethrower:init(attackSpeed, x, y, damage, projectileAmount, scale, duration)
-    Flamethrower.super.init(self, attackSpeed, damage, projectileAmount, scale)
-    self.speed = 4
+function Flamethrower:init(attackSpeed, x, y, speed, damage, projectileAmount, scale, duration)
+    Flamethrower.super.init(self, attackSpeed, speed, damage, projectileAmount, scale)
     self.x = x
     self.duration = duration
     self.y = y

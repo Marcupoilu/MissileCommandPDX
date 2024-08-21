@@ -1,6 +1,6 @@
 class("BulletLaserDome").extends(Projectile)
 
-local p = ParticleCircle(0,0)
+-- local p = ParticleCircle(0,0)
 
 function BulletLaserDome:init(x,y,speed, damage, offsetCrank, scale, angle)
     BulletLaserDome.super.init(self, x,y,speed, damage, offsetCrank, scale)

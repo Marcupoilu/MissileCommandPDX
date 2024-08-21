@@ -1,7 +1,6 @@
-class("BulletDroneLaser").extends(Projectile)
+class("BulletDroneLaser").extends(Bullet)
 
-local p = ParticleCircle(0,0)
-
+-- local p = ParticleCircle(0,0)
 function BulletDroneLaser:init(x,y,speed, damage, offsetCrank, scale,duration, angle)
     BulletDroneLaser.super.init(self, x,y,speed, damage, offsetCrank, scale, duration)
     self.scale = scale

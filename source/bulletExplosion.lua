@@ -2,7 +2,7 @@ class("BulletExplosion").extends(Bullet)
 
 local bulletImage = gfx.image.new("images/bulletExplosion" )
 
-local p = ParticleCircle(0,0)
+-- local p = ParticleCircle(0,0)
 
 function BulletExplosion:init(x,y,speed, damage, offsetCrank, scale, duration, explosionDamage)
     duration = .5

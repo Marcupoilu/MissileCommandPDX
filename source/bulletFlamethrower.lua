@@ -1,7 +1,7 @@
 class("BulletFlamethrower").extends(Bullet)
 
 local bulletImage = gfx.image.new("images/bulletExplosion" )
-local p = ParticleCircle(0,0)
+-- local p = ParticleCircle(0,0)
 
 function BulletFlamethrower:init(x,y,speed, damage, offsetCrank, scale, duration)
     BulletPlasma.super.init(self,x,y,speed, damage, offsetCrank, scale, duration)

@@ -1,6 +1,6 @@
 class("BulletToxicVape").extends(Bullet)
 
-local p = ParticleCircle(0,0)
+-- local p = ParticleCircle(0,0)
 
 function BulletToxicVape:init(x,y,speed, damage, offsetCrank, scale, duration, tickNumber, spread)
     BulletToxicVape.super.init(self,x,y,speed, damage, offsetCrank, scale, duration)

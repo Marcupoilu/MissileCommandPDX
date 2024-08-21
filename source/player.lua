@@ -14,7 +14,7 @@ function Player:init( basePosition, gunPosition)
     self.damageBonus = 0
     self.attackSpeedBonus = 0
     self.scaleBonus = 0 
-    self.projectileAmount = 2
+    self.projectileAmount = 0
     self.regenerationRate = 0
     self.projectileSpeedBonus = 0
     self.cannonBaseSprite = gfx.sprite.new( cannonBase )
