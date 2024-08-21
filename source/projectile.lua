@@ -22,7 +22,7 @@ function Projectile:init(x,y,speed, damage, offsetCrank, scale, duration)
     self.originPosition.x = player.cannonGunSprite.x +(self.height+10) * math.cos(math.rad(self.originAngle))
     self.originPosition.y = player.cannonGunSprite.y +(self.height+10) * math.sin(math.rad(self.originAngle))
     self:moveTo(self.originPosition.x,self.originPosition.y)
-    if self:isa(BulletPlasma) == false then
+    if self:isa(BulletPlasma) == false and self:isa(BulletAura) == false then
         self:setRotation(self.originAngle + 90)
     end
     if self.duration ~= nil or self.duration ~= 0 then
@@ -34,13 +34,14 @@ function Projectile:update()
 end
 
 function Projectile:destroy()
-    print("destroy")
-    p:moveTo(self.x, self.y)
-    p:setSize(5,6)
-    p:setColor(gfx.kColorWhite)
-    p:setMode(Particles.modes.DECAY)
-    p:setSpeed(3, 7)
-    p:add(20)
+    if self:isa(Plasma) == true then 
+        p:moveTo(self.x, self.y)
+        p:setSize(5,6)
+        p:setColor(gfx.kColorWhite)
+        p:setMode(Particles.modes.DECAY)
+        p:setSpeed(3, 7)
+        p:add(20)
+    end
     if self.timer ~= nil then
         playdate.timer.remove(self.timer)
     end
