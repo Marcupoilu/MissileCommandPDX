@@ -46,7 +46,6 @@ function Wiper:shoot()
     gfx.clear(gfx.kColorWhite)
     enemiesCopy = table.shallowcopy(enemies)
     for key, value in pairs(enemiesCopy) do
-        print(value.className)
         value:loseHp(self.damage)
     end
 end

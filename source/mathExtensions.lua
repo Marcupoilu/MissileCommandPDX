@@ -110,3 +110,20 @@ end
 function lerp(a, b, t)
     return a + (b - a) * t
 end
+
+function getMinDistanceValue(spriteSource, sprites)
+    local target = nil
+    local minDistance = 100000
+    for key, sprite in pairs(sprites) do
+        if sprite:isa(Enemy) == true and sprite ~= spriteSource then
+            local dx = spriteSource.x - sprite.x
+            local dy = spriteSource.y - sprite.y
+            local distance = math.sqrt(dx * dx + dy * dy)
+            if distance < minDistance then
+                minDistance = distance
+                target = sprite
+            end
+        end
+    end
+    return target
+end

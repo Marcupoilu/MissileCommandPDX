@@ -39,7 +39,8 @@ function Game:startGame()
     -- player:addWeapon(table.findByParam(weaponsData, "className", "Aura"))
     -- player:addWeapon(table.findByParam(weaponsData, "className", "Blackhole"))
     -- player:addWeapon(table.findByParam(weaponsData, "className", "Drone"))
-    player:addWeapon(table.findByParam(weaponsData, "className", "Orbital"))
+    -- player:addWeapon(table.findByParam(weaponsData, "className", "Orbital"))
+    player:addWeapon(table.findByParam(weaponsData, "className", "BeamReflect"))
 
 
     self.waves[self.waveNumber]:startWave()
@@ -50,10 +51,10 @@ function Game:update()
     table.each(beams, function(beam)
         beam:update()
     end)
-    -- table.each(debugRects, function(rect)
-    --     gfx.setColor(gfx.kColorWhite)
-    --     gfx.drawRect(rect)
-    -- end)
+    table.each(debugRects, function(rect)
+        gfx.setColor(gfx.kColorWhite)
+        gfx.drawRect(rect)
+    end)
     debugRects = {}
 end
 

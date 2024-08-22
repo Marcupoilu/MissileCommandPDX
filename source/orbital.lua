@@ -6,7 +6,6 @@ class("Orbital").extends(Weapon)
 function Orbital:init(attackSpeed, x, y, speed, damage, projectileAmount, scale, duration)
     Orbital.super.init(self, attackSpeed, speed, damage, projectileAmount, scale, duration)
     -- self:debugLevel(10)
-    print(self.duration)
     self.x = x
     self.y = y
 end
