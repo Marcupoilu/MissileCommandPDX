@@ -3,7 +3,7 @@ class("BulletFreezer").extends(Projectile)
 -- local p = ParticleCircle(0,0)
 
 function BulletFreezer:init(x,y,speed, damage, offsetCrank, scale, duration)
-    BulletFreezer.super.init(self, x,y,speed, damage, offsetCrank, scale)
+    BulletFreezer.super.init(self, x,y,speed, damage, offsetCrank, scale, duration)
     self.scale = scale
     self.maxLength = 240
     self.currentLength = 0
@@ -55,7 +55,7 @@ function BulletFreezer:update()
             p:setColor(gfx.kColorWhite)
             p:setMode(Particles.modes.DECAY)
             p:setSpeed(3, 7)
-            p:add(20)
+            p:add(1)
         end
     end)
     gfx.setLineCapStyle(gfx.kLineCapStyleRound)

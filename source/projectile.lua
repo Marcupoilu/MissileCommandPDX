@@ -13,7 +13,7 @@ function Projectile:init(x,y,speed, damage, offsetCrank, scale, duration)
     self.damage = damage
     self.scale = scale + ((player.scaleBonus*scale)/100)
     self:setScale(self.scale)
-    self.duration = duration
+    self.duration = duration + ((player.durationBonus*duration)/100)
     self.originAngle = player.cannonGunSprite:getRotation() - 90
     self.originPosition = {x=x,y=y}
     self.radius = 0
@@ -45,7 +45,7 @@ function Projectile:destroy()
         p:setColor(gfx.kColorWhite)
         p:setMode(Particles.modes.DECAY)
         p:setSpeed(3, 7)
-        p:add(5)
+        p:add(1)
     end
     if table.contains(beams, self) then
         table.remove(beams, indexOf(beams, self))

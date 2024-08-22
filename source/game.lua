@@ -11,6 +11,7 @@ function Game:init()
     debugRects = {}
     spawners = {}
     beams = {}
+    enemyPoolLimit = 25
     player = Player({x=200,y=207}, {x=200,y=197})
     shake = ScreenShake()
     uiManager = UiManager()
@@ -24,7 +25,7 @@ function Game:init()
 end
 
 function Game:startGame()
-    -- player:addWeapon(table.findByParam(weaponsData, "className", "SimpleCannon"))
+    player:addWeapon(table.findByParam(weaponsData, "className", "SimpleCannon"))
     -- player:addWeapon(table.findByParam(weaponsData, "className", "Beam"))
     -- player:addWeapon(table.findByParam(weaponsData, "className", "Wiper"))
     -- player:addWeapon(table.findByParam(weaponsData, "className", "Plasma"))
@@ -35,7 +36,7 @@ function Game:startGame()
     -- player:addWeapon(table.findByParam(weaponsData, "className", "Flamethrower"))
     -- player:addWeapon(table.findByParam(weaponsData, "className", "Freezer"))
     -- player:addWeapon(table.findByParam(weaponsData, "className", "LaserDome"))
-    player:addWeapon(table.findByParam(weaponsData, "className", "ToxicVape"))
+    -- player:addWeapon(table.findByParam(weaponsData, "className", "ToxicVape"))
     -- player:addWeapon(table.findByParam(weaponsData, "className", "Aura"))
     -- player:addWeapon(table.findByParam(weaponsData, "className", "Blackhole"))
     -- player:addWeapon(table.findByParam(weaponsData, "className", "Drone"))

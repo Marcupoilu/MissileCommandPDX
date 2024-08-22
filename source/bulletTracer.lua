@@ -77,7 +77,7 @@ function BulletTracer:update()
             p:setColor(gfx.kColorWhite)
             p:setMode(Particles.modes.DECAY)
             p:setSpeed(3, 7)
-            p:add(20)
+            p:add(1)
         end
     end)
     gfx.setLineCapStyle(gfx.kLineCapStyleRound)

@@ -2,8 +2,8 @@ class("BulletGuided").extends(Bullet)
 
 local bulletImage = gfx.image.new("images/BulletRocket" )
 
-function BulletGuided:init(x,y,speed, damage, offsetCrank, scale)
-    BulletGuided.super.init(self,x,y,speed, damage, offsetCrank, scale, 10000, bulletImage)
+function BulletGuided:init(x,y,speed, damage, offsetCrank, scale, duration)
+    BulletGuided.super.init(self,x,y,speed, damage, offsetCrank, scale, duration, bulletImage)
     self.hp = 1
     self.rot = 0
     self.power = 5

@@ -17,7 +17,7 @@ function BulletExplosion:init(x,y,speed, damage, offsetCrank, scale, duration, e
     p:setMode(Particles.modes.DECAY)
     p:setSpeed(2+math.round(((player.scaleBonus*2)/100)), 2+math.round(((player.scaleBonus*2)/100)))
     p:setSpread(0,359)
-    p:add(300)
+    p:add(10)
 end
 
 function BulletExplosion:update()

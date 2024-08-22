@@ -36,8 +36,11 @@ import "uiManager.lua"
 import "upgradesData.lua"
 import "weaponsData.lua"
 
-playdate.display.setRefreshRate(50)
+-- playdate.display.setRefreshRate(50)
 p = ParticleCircle(0,0)
+pWeapon = ParticleCircle(0,0)
+pFlamethrower = ParticleCircle(0,0)
+
 deltaTime = 0
 game = Game()
 crankPosition = playdate.getCrankPosition()

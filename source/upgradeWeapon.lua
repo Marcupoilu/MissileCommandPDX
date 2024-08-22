@@ -2,7 +2,7 @@ class("UpgradeWeapon").extends(Upgrade)
 table.insert(Upgrade.types, UpgradeWeapon)
 
 
-function UpgradeWeapon:init(weapon, type, name, descriptionText, image)
+function UpgradeWeapon:init(type, name, descriptionText, image)
     UpgradeWeapon.super.init(self, descriptionText, image)
     self.weapon = nil
     self.type = type
