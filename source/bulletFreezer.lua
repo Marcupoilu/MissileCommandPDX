@@ -49,7 +49,6 @@ function BulletFreezer:update()
         if collision.sprite:isa(Enemy) then
             -- self.endPos.x = collision.entryPoint.x
             -- self.endPos.y = collision.entryPoint.y
-            print(collision.sprite.className)
             collision.sprite:stop(self.freezeDuration)
             p:moveTo(self.endPos.x, self.endPos.y)
             p:setSize(5,6)

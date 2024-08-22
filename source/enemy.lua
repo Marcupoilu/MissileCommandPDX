@@ -74,7 +74,6 @@ function Enemy:update()
                 self.originPosition.x = self.x
                 self.originPosition.y = self.y
                 self.angle = math.deg(math.atan(dy, dx))
-                print(self.radius)
                 return
             end
             if value:isa(BulletDrone) then
@@ -99,7 +98,7 @@ function Enemy:update()
                 self.angle = value.originAngle
                 self.speed *= value.power
                 playdate.timer.new(100, function() 
-                    self.speed = self.originalSpeed 
+                    self.speed = self.originSpeed 
                     self.radius = 0
                     self.originPosition.x = self.x
                     self.originPosition.y = self.y
@@ -125,7 +124,7 @@ function Enemy:touchEnemy(value)
     p:setColor(gfx.kColorWhite)
     p:setMode(Particles.modes.DECAY)
     p:setSpeed(3, 5)
-    p:add(30)
+    p:add(5)
     self:loseHp(value.damage + ((player.damageBonus*value.damage)/100))
     value:loseHp(1)
     table.insert(self.currentOverlappingSprites, value)
@@ -141,7 +140,7 @@ function Enemy:dotEnemy(value)
     p:setColor(gfx.kColorWhite)
     p:setMode(Particles.modes.DECAY)
     p:setSpeed(3, 5)
-    p:add(30)
+    p:add(5)
     table.insert(self.currentOverlappingSprites, value)
     table.insert(self.dotValues, value.tickNumber)
     self:dotTimer(value)
@@ -158,7 +157,7 @@ function Enemy:dotTimer(value)
             p:setColor(gfx.kColorWhite)
             p:setMode(Particles.modes.DECAY)
             p:setSpeed(3, 5)
-            p:add(30)
+            p:add(5)
             self:loseHp(value.damage + ((player.damageBonus*value.damage)/100))
             dotValue -= 1
             self:dotTimer(value)
@@ -181,7 +180,7 @@ function Enemy:death()
     p:setColor(gfx.kColorWhite)
     p:setMode(Particles.modes.DECAY)
     p:setSpeed(3, 7)
-    p:add(20)
+    p:add(5)
     table.remove(enemies, indexOf(enemies, self))
     self.dead = true
     self:remove()
@@ -189,8 +188,6 @@ end
 
 function Enemy:stop(value)
     self.speed = 0
-    print(self.className)
-    print(self.speed)
     if value ~= nil then
         playdate.timer.new(toMilliseconds(value), function() self.speed = self.originSpeed end)
     end

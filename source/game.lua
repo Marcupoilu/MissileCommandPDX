@@ -33,9 +33,9 @@ function Game:startGame()
     -- player:addWeapon(table.findByParam(weaponsData, "className", "Rocket"))
     -- player:addWeapon(table.findByParam(weaponsData, "className", "Guided"))
     -- player:addWeapon(table.findByParam(weaponsData, "className", "Flamethrower"))
-    player:addWeapon(table.findByParam(weaponsData, "className", "Freezer"))
+    -- player:addWeapon(table.findByParam(weaponsData, "className", "Freezer"))
     -- player:addWeapon(table.findByParam(weaponsData, "className", "LaserDome"))
-    -- player:addWeapon(table.findByParam(weaponsData, "className", "ToxicVape"))
+    player:addWeapon(table.findByParam(weaponsData, "className", "ToxicVape"))
     -- player:addWeapon(table.findByParam(weaponsData, "className", "Aura"))
     -- player:addWeapon(table.findByParam(weaponsData, "className", "Blackhole"))
     -- player:addWeapon(table.findByParam(weaponsData, "className", "Drone"))
@@ -55,7 +55,7 @@ function Game:update()
     --     gfx.setColor(gfx.kColorWhite)
     --     gfx.drawRect(rect)
     -- end)
-    -- debugRects = {}
+    debugRects = {}
 end
 
 function Game:changeWave()

@@ -53,6 +53,7 @@ gameUpdate = function()
     Particles:update()
     playdate.timer.updateTimers()
     game:update()
+    playdate.drawFPS(0, 0)
 end
 
 
@@ -61,7 +62,7 @@ levelUpUpdate = function()
     playdate.resetElapsedTime()
     if(generate == false) then
         -- kill all enemies at level up
-        table.each(enemies, function(x) x.dead = true x:remove() end)
+        -- table.each(enemies, function(x) x.dead = true x:remove() end)
         generate = true
         uiManager:generateUpgrades()
     end

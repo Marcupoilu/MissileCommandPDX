@@ -45,7 +45,7 @@ function Projectile:destroy()
         p:setColor(gfx.kColorWhite)
         p:setMode(Particles.modes.DECAY)
         p:setSpeed(3, 7)
-        p:add(20)
+        p:add(5)
     end
     if table.contains(beams, self) then
         table.remove(beams, indexOf(beams, self))
