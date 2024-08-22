@@ -35,8 +35,8 @@ end
 
 function BulletTracer:update()
     
-    self.startPos.x = self.playerPos.x +(self.height+self.offsetHeight) * math.cos(math.rad((self.originAngle) + self.offset))
-    self.startPos.y = self.playerPos.y +(self.height+self.offsetHeight) * math.sin(math.rad((self.originAngle) + self.offset))
+    self.startPos.x = self.playerPos.x +(self.height+self.offsetHeight) * math.cos(math.rad((self.originAngle)))
+    self.startPos.y = self.playerPos.y +(self.height+self.offsetHeight) * math.sin(math.rad((self.originAngle)))
     
     self.angle = player.cannonGunSprite:getRotation()
     self.radius += self.speed + (((player.projectileSpeedBonus*self.speed)/100)) * deltaTime

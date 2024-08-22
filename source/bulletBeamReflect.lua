@@ -37,8 +37,8 @@ function BulletBeamReflect:update()
     if self.target ~= nil then
         self.currentAngle = math.deg(math.atan(self.target.y - self.playerY, self.target.x - self.playerX))
     end
-    self.startPos.x = self.playerX +(self.radius) * math.cos(math.rad((self.currentAngle) + self.offset))
-    self.startPos.y = self.playerY +(self.radius) * math.sin(math.rad((self.currentAngle) + self.offset))
+    self.startPos.x = self.playerX +(self.radius) * math.cos(math.rad((self.currentAngle)))
+    self.startPos.y = self.playerY +(self.radius) * math.sin(math.rad((self.currentAngle)))
 
     self.radius += self.speed + (((player.projectileSpeedBonus*self.speed)/100)) * deltaTime
     self.direction.x = self.radius*math.cos(math.rad((self.currentAngle) + self.offset)) * deltaTime

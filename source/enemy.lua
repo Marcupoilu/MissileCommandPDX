@@ -66,19 +66,15 @@ function Enemy:update()
                     return
                 end
             end
-            if value:isa(bulletBlackhole) then
+            if value:isa(BulletBlackhole) then
                 local dx = value.x - self.x
                 local dy = value.y - self.y
                 local distance = math.sqrt(dx * dx + dy * dy)
                 self.radius = 0
                 self.originPosition.x = self.x
                 self.originPosition.y = self.y
-                if distance < 1 + self:getSize()/2 then
-                    self.angle = self.angle
-                else
-                    self.speed = self.originSpeed
-                    self.angle = math.deg(math.atan(dy, dx))
-                end
+                self.angle = math.deg(math.atan(dy, dx))
+                print(self.radius)
                 return
             end
             if value:isa(BulletDrone) then
@@ -193,6 +189,8 @@ end
 
 function Enemy:stop(value)
     self.speed = 0
+    print(self.className)
+    print(self.speed)
     if value ~= nil then
         playdate.timer.new(toMilliseconds(value), function() self.speed = self.originSpeed end)
     end

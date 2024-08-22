@@ -12,6 +12,6 @@ end
 
 function Saucer:update()
     Saucer.super.update(self)
-    self.radius += self.speed
+    self.radius += self.speed * deltaTime
     self:moveTo(self.radius*math.cos(math.rad(self.angle)) + self.originPosition.x, self.radius*math.sin(math.rad(self.angle)) + self.originPosition.y)
 end

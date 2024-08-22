@@ -30,6 +30,8 @@ end
 
 function BulletFreezer:update()
     self.angle = player.cannonGunSprite:getRotation()
+    self.startPos.x = player.cannonGunSprite.x +(self.height+50) * math.cos(math.rad((self.angle - 90) ))
+    self.startPos.y = player.cannonGunSprite.y +(self.height+50) * math.sin(math.rad((self.angle - 90) ))
     self.radius += self.speed + (((player.projectileSpeedBonus*self.speed)/100)) * deltaTime
     self.direction.x = self.radius*math.cos(math.rad((self.angle - 90) + self.offset)) * deltaTime
     self.direction.y = self.radius*math.sin(math.rad((self.angle - 90) + self.offset)) * deltaTime
@@ -47,8 +49,8 @@ function BulletFreezer:update()
         if collision.sprite:isa(Enemy) then
             -- self.endPos.x = collision.entryPoint.x
             -- self.endPos.y = collision.entryPoint.y
+            print(collision.sprite.className)
             collision.sprite:stop(self.freezeDuration)
-            collision.sprite.shakeAmount = self.freezeDuration
             p:moveTo(self.endPos.x, self.endPos.y)
             p:setSize(5,6)
             p:setColor(gfx.kColorWhite)

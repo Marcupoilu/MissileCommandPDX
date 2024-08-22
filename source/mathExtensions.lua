@@ -127,3 +127,19 @@ function getMinDistanceValue(spriteSource, sprites)
     end
     return target
 end
+
+function atan2(dy, dx)
+    dy = -dy
+
+    if dx > 0 then
+        return math.atan(dy / dx) - math.pi / 2
+    elseif dx < 0 then
+        return math.atan(dy / dx) + math.pi / 2
+    elseif dx == 0 and dy > 0 then
+        return math.pi
+    elseif dx == 0 and dy < 0 then
+        return 0
+    else
+        return 0 -- Cas où dx == 0 et dy == 0
+    end
+end

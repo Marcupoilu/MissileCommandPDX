@@ -10,7 +10,7 @@ weaponsData =
     Rocket(toMilliseconds(1.5), 200, 175, 2,1, 1, 1,2),
     Guided(toMilliseconds(1.5), 200, 175, 2,1, 1, 1,2),
     Flamethrower(toMilliseconds(3), 200, 175, 1,0.3, 1, 1,1.5),
-    Freezer(toMilliseconds(3), 200, 175, 100, 100, 1, 2, 0.5),
+    Freezer(toMilliseconds(.5), 200, 175, 100, 100, 1, 2, 0.5),
     LaserDome(toMilliseconds(3), 200, 175, 100, 1, 1, 2),
     ToxicVape(toMilliseconds(3), 200, 175, 1, 1, 1, 1, 3),
     Aura(toMilliseconds(3), 200, 175, 1, 1, 1, 1, 3),
@@ -18,5 +18,5 @@ weaponsData =
     Drone(toMilliseconds(5), 200, 175, 2, 0, 1, 1, 3),
     Orbital(toMilliseconds(2), 200, 175, 2, 1, 1, 1),
     BeamReflect(toMilliseconds(2), 200, 175, 2, 1, 1, 1, 5),
-    Tracer(toMilliseconds(10), 200, 175, 2, 1, 1, 1,10)
+    Tracer(toMilliseconds(5), 200, 175, 2, 1, 1, 4,5)
 }

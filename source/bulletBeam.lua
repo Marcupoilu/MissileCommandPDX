@@ -27,8 +27,8 @@ function BulletBeam:endBeam()
 end
 
 function BulletBeam:update()
-    self.startPos.x = player.cannonGunSprite.x +(self.height+50) * math.cos(math.rad((self.angle - 90) + self.offset))
-    self.startPos.y = player.cannonGunSprite.y +(self.height+50) * math.sin(math.rad((self.angle - 90) + self.offset))
+    self.startPos.x = player.cannonGunSprite.x +(self.height+50) * math.cos(math.rad((self.angle - 90) ))
+    self.startPos.y = player.cannonGunSprite.y +(self.height+50) * math.sin(math.rad((self.angle - 90) ))
 
     self.angle = player.cannonGunSprite:getRotation()
     self.radius += self.speed + (((player.projectileSpeedBonus*self.speed)/100)) * deltaTime
