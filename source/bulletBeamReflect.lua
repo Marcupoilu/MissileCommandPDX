@@ -2,7 +2,7 @@ class("BulletBeamReflect").extends(Projectile)
 
 
 function BulletBeamReflect:init(x,y,speed, damage, offsetCrank, scale, duration, hp)
-    BulletBeamReflect.super.init(self, x,y,speed, damage, offsetCrank, scale)
+    BulletBeamReflect.super.init(self, x,y,speed, damage, offsetCrank, scale, duration)
     self.hp = hp
     self.scale = scale
     self.maxLength = 30
@@ -25,7 +25,7 @@ function BulletBeamReflect:init(x,y,speed, damage, offsetCrank, scale, duration,
     self.currentAngle = self.originAngle
     self.currentEnemy = nil
     self.tick = 200
-    playdate.timer.new(toMilliseconds(self.duration), self.endBeam, self)
+    -- playdate.timer.new(toMilliseconds(self.duration), self.endBeam, self)
     table.insert(beams, self)
 end
 

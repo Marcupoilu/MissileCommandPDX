@@ -17,5 +17,6 @@ weaponsData =
     Blackhole(toMilliseconds(5), 200, 175, 1, 1, 1, 1, 3),
     Drone(toMilliseconds(5), 200, 175, 2, 0, 1, 1, 3),
     Orbital(toMilliseconds(2), 200, 175, 2, 1, 1, 1),
-    BeamReflect(toMilliseconds(2), 200, 175, 3, 1, 1, 1)
+    BeamReflect(toMilliseconds(2), 200, 175, 2, 1, 1, 1, 5),
+    Tracer(toMilliseconds(10), 200, 175, 2, 1, 1, 1,10)
 }

@@ -25,6 +25,7 @@ function Projectile:init(x,y,speed, damage, offsetCrank, scale, duration)
     if self:isa(BulletPlasma) == false and self:isa(BulletAura) == false then
         self:setRotation(self.originAngle + 90)
     end
+    print(self.duration)
     if self.duration ~= nil or self.duration ~= 0 then
         self.timer = playdate.timer.new(toMilliseconds(self.duration), function() self:destroy() end) 
     end
@@ -39,13 +40,16 @@ function Projectile:update()
 end
 
 function Projectile:destroy()
-    if self:isa(Plasma) == true then 
+    if self:isa(BulletPlasma) == true then 
         p:moveTo(self.x, self.y)
         p:setSize(5,6)
         p:setColor(gfx.kColorWhite)
         p:setMode(Particles.modes.DECAY)
         p:setSpeed(3, 7)
         p:add(20)
+    end
+    if table.contains(beams, self) then
+        table.remove(beams, indexOf(beams, self))
     end
     if self.timer ~= nil then
         playdate.timer.remove(self.timer)
