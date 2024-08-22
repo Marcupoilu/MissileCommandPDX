@@ -18,10 +18,12 @@ function Player:init( basePosition, gunPosition)
     self.regenerationRate = 0
     self.projectileSpeedBonus = 0
     self.cannonBaseSprite = gfx.sprite.new( cannonBase )
+    self.cannonBaseSprite:setZIndex(0)
     self.cannonBaseSprite:setTag(1)
     self.cannonBaseSprite:setCollideRect(0,0,self.cannonBaseSprite:getSize())
     self.cannonBaseSprite:setGroups({1})
     self.cannonGunSprite = gfx.sprite.new( cannonGun )
+    self.cannonGunSprite:setZIndex(-1)
     self.cannonGunSprite:setCenter(0.5, 1)
     self.cannonBaseSprite:moveTo( basePosition.x, basePosition.y ) -- this is where the center of the sprite is placed; (200,120) is the center of the Playdate screen
     self.cannonGunSprite:moveTo( gunPosition.x, gunPosition.y ) -- this is where the center of the sprite is placed; (200,120) is the center of the Playdate screen
