@@ -1,10 +1,12 @@
 class("Upgrade").extends()
 Upgrade.types = {}
 
-function Upgrade:init(descriptionText, image)
+function Upgrade:init(descriptionText, image, count, rarity)
     Upgrade.super.init(self)
     self.descriptionText = descriptionText
     self.image = gfx.image.new(image)
+    self.count = count
+    self.rarity = rarity
 end
 
 function Upgrade:updateDescriptionText()
@@ -15,4 +17,5 @@ function Upgrade:update()
 end
 
 function Upgrade:applyUpgrade()
+    self.count -= 1
 end

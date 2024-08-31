@@ -69,12 +69,10 @@ function Enemy:update()
             if value:isa(BulletBlackhole) then
                 local dx = value.x - self.x
                 local dy = value.y - self.y
-                local distance = math.sqrt(dx * dx + dy * dy)
                 self.radius = 0
                 self.originPosition.x = self.x
                 self.originPosition.y = self.y
                 self.angle = math.deg(math.atan(dy, dx))
-                return
             end
             if value:isa(BulletDrone) then
                 -- value:updateDurationTimer(value.duration)
@@ -90,7 +88,9 @@ function Enemy:update()
                 value:loseHp(1)
                 return
             end
-            self:touchEnemy(value)
+            if value:isa(bulletBlackhole) == false then
+                self:touchEnemy(value)
+            end
             if value:isa(BulletShockwave) then
                 self.radius = 0
                 self.originPosition.x = self.x

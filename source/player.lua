@@ -8,6 +8,7 @@ function Player:init( basePosition, gunPosition)
     self.level = 1
     self.hpMax = 10
     self.hp = self.hpMax
+    self.shield = 0
     self.xp = 0
     self.xpMax = 5
     self.xpBonus = 0
@@ -18,6 +19,12 @@ function Player:init( basePosition, gunPosition)
     self.regenerationRate = 0
     self.projectileSpeedBonus = 0
     self.durationBonus = 0
+    self.lives = 1
+    self.rerolls = 100
+    self.weaponNumber = 1
+    self.passiveNumber = 1
+    self.weaponNumberMax = 4
+    self.passiveNumberMax = 4
     self.cannonBaseSprite = gfx.sprite.new( cannonBase )
     self.cannonBaseSprite:setZIndex(0)
     self.cannonBaseSprite:setTag(1)
@@ -31,6 +38,7 @@ function Player:init( basePosition, gunPosition)
     self.cannonBaseSprite:add() -- This is critical!
     self.cannonGunSprite:add() -- This is critical!
     self.weapons = {}
+    self.passives = {}
     self.timer = playdate.timer.new(30000 - (((self.regenerationRate*30000)/100)), self.regeneration, self)
     self.timer.repeats = true
 end
@@ -77,7 +85,6 @@ function Player:regeneration()
     if(self.hp < self.hpMax) then
         self.hp += 1
         uiManager:updateHPDisplay()
-        print("regen")
     end
 end
 
@@ -109,10 +116,20 @@ function Player:levelUp()
 end
 
 function Player:loseHp(value)
-    self.hp -= value
+    local trueValue = value - self.shield
+    if trueValue < 0 then
+        trueValue = 0
+    end
+    self.hp -= trueValue
     uiManager:updateHPDisplay()
     if(self.hp <= 0) then
-        self:death()
+        self.lives -= 1
+        if self.lives <= 0 then
+            self:death()
+            return
+        end
+        self.hp = self.hpMax
+        uiManager:updateHPDisplay()
     end
 end
 

@@ -11,7 +11,7 @@ weaponsData =
     Guided(toMilliseconds(1.5), 200, 175, 2,1, 1, 1,3),
     Flamethrower(toMilliseconds(3), 200, 175, 1,0.3, 1, 1,1.5),
     Freezer(toMilliseconds(.5), 200, 175, 100, 100, 1, 2, 0.5),
-    LaserDome(toMilliseconds(3), 200, 175, 100, 1, 1, 2),
+    LaserDome(toMilliseconds(3), 200, 175, 100, 1, 1, 2, 3),
     ToxicVape(toMilliseconds(3), 200, 175, 1, 1, 1, 1, 3),
     Aura(toMilliseconds(3), 200, 175, 1, 1, 1, 1, 3),
     Blackhole(toMilliseconds(5), 200, 175, 1, 1, 1, 1, 3),

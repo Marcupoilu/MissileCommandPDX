@@ -22,13 +22,48 @@ end
 
 function UiManager:generateUpgrades()
     ups = {}
+    local discardedUps = {}
     local rand =  {}
+    local rarity = math.random(5,10)
+    local passiveCheck = false
+    local weaponCheck = false
+    local pass = false
     for i = 1, levelUpCellNumber do
         repeat
+            if table.count(discardedUps) >= table.count(upgradesData) then
+                pass = true
+                break
+            end
+            passiveCheck = false
+            weaponCheck = false
             rand = table.random(upgrades)
+            if table.contains(discardedUps, rand) == false then
+                table.insert(discardedUps, rand)
+            end
             rand:updateDescriptionText()
-        until (table.contains(ups, rand) == false)
-        table.insert(ups, rand)
+            -- si c'est une new passive on check si on a de la place dans l'inventaire
+            if rand.className == "UpgradeStat" then
+                if table.contains(player.passives, rand) == false and rand.inventory == nil then
+                    if player.passiveNumber >= player.passiveNumberMax then
+                        passiveCheck = true
+                    end
+                end
+            end
+            -- si c'est une new weapon on check si on a de la place dans l'inventaire
+            if rand.className == "UpgradeWeapon" then
+                if rand.weapon == nil then
+                    if player.weaponNumber >= player.weaponNumberMax then
+                        weaponCheck = true
+                    end
+                end
+            end
+        until (table.contains(ups, rand) == false and rand.count > 0 and rand.rarity <= rarity and passiveCheck == false and weaponCheck == false)
+        passiveCheck = false
+        weaponCheck = false
+        if pass == false then 
+            table.remove(discardedUps, indexOf(discardedUps,rand))
+            table.insert(ups, rand)
+        end
     end
     levelUpIndex = 0
 end
@@ -70,7 +105,8 @@ function UiManager:levelUpDisplay()
         hpFillCells = self:createHPBar(hpFillCells, "images/hpbar_cellfill", self.horizontalLayoutHPFillCell.positionBaseX + 7, self.horizontalLayoutHPFillCell.positionBaseY, self.horizontalLayoutHPFillCell.cellSize, self.horizontalLayoutHPFillCell.distance, 0.85)
         self:updateHPDisplay()
     end
-    if playdate.buttonJustPressed(playdate.kButtonB) then
+    if playdate.buttonJustPressed(playdate.kButtonB) and player.rerolls > 0 then
+        player.rerolls -= 1
         self:generateUpgrades()
     end
 end

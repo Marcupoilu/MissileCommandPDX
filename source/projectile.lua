@@ -13,7 +13,9 @@ function Projectile:init(x,y,speed, damage, offsetCrank, scale, duration)
     self.damage = damage
     self.scale = scale + ((player.scaleBonus*scale)/100)
     self:setScale(self.scale)
-    self.duration = duration + ((player.durationBonus*duration)/100)
+    if duration ~= nil then
+        self.duration = duration + ((player.durationBonus*duration)/100)
+    end
     self.originAngle = player.cannonGunSprite:getRotation() - 90
     self.originPosition = {x=x,y=y}
     self.radius = 0

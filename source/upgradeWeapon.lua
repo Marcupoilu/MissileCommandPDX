@@ -2,8 +2,8 @@ class("UpgradeWeapon").extends(Upgrade)
 table.insert(Upgrade.types, UpgradeWeapon)
 
 
-function UpgradeWeapon:init(type, name, descriptionText, image)
-    UpgradeWeapon.super.init(self, descriptionText, image)
+function UpgradeWeapon:init(type, name, descriptionText, image, count, rarity)
+    UpgradeWeapon.super.init(self, descriptionText, image, count, rarity)
     self.weapon = nil
     self.type = type
     self.name = name
@@ -29,11 +29,13 @@ function UpgradeWeapon:update()
 end
 
 function UpgradeWeapon:applyUpgrade()
-    
+    UpgradeWeapon.super.applyUpgrade(self)
+
     if self.weapon ~= nil then
         table.findByParam(player.weapons,"className", self.type):changeLevel()
     else
         player:addWeapon(table.findByParam(weaponsData, "className", self.type))
+        player.weaponNumber += 1
         table.findByParam(weaponsData, "className", self.type):shoot()
     end
 end
