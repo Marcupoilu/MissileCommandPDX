@@ -152,17 +152,22 @@ function UiManager:winScreenUpdate()
     local rectX = (screenWidth - rectWidth) / 2
     local rectY = (screenHeight - rectHeight) / 2
     gfx.fillRoundRect(rectX, rectY, rectWidth, rectHeight, 10)
-    gfx.setColor(gfx.kColorBlack)
-    gfx.setLineWidth(4)
-    gfx.drawRoundRect(rectX+4, rectY+4, rectWidth-7, rectHeight-7, 10)
     gfx.setImageDrawMode(gfx.kDrawModeFillWhite)
     gfx.setFont(font,gfx.kVariantBold)
-    gfx.drawTextAligned("SUCCESS", rectWidth, 10, kTextAlignment.center)
+    gfx.drawTextAligned("ASSAULT SUCCESS", rectWidth, 10, kTextAlignment.center)
     gfx.setImageDrawMode(gfx.kDrawModeFillBlack)
     gfx.setFont(smallFontAmmolite,gfx.kVariantItalic)
-    gfx.drawTextAligned("RUN FINISH", rectWidth, 50, kTextAlignment.center)
-    gfx.drawTextAligned("RUN LEVEL "..player.runLevel, rectX + 40, 80, kTextAlignment.center)
-    core:scaledImage(0.08):draw( 120,100)
+    gfx.drawTextAligned("ASSAULT "..player.runLevel.." FINISH", rectWidth, 50, kTextAlignment.center)
+    gfx.setFont(smallFontVariant,gfx.kVariantItalic)
+    core:scaledImage(0.07):draw( 110,70)
+    gfx.setFont(smallFontAmmolite,gfx.kVariantItalic)
+    gfx.drawTextAligned("X"..player.core, 150, 90, kTextAlignment.center)
+    gfx.setColor(gfx.kColorBlack)
+    local width = rectWidth - 10
+    local height = rectHeight - 90
+    local offset = 20
+    gfx.setLineWidth(2)
+    gfx.drawRect(rectX + rectWidth/2 - width/2, rectY +  rectHeight/2 - height/2 + offset, width, height)
 end
 
 function UiManager:createBar(x,y,max, current, height)

@@ -40,7 +40,7 @@ import "weaponsData.lua"
 p = ParticleCircle(0,0)
 pWeapon = ParticleCircle(0,0)
 pFlamethrower = ParticleCircle(0,0)
-targetTime = 120
+targetTime = 5
 time = 0
 deltaTime = 0
 game = Game()
