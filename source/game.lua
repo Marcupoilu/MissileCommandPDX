@@ -11,6 +11,7 @@ function Game:init()
     debugRects = {}
     spawners = {}
     beams = {}
+    bullets = {}
     enemyPoolLimit = 25
     player = Player({x=200,y=207}, {x=200,y=197})
     shake = ScreenShake()
@@ -22,6 +23,7 @@ function Game:init()
     self.gameTime = minutes_to_milliseconds(30)
     self.waves = wavesData
     self.waveNumber = 1
+    self.finish = false
     time = 0
 end
 
@@ -63,6 +65,9 @@ function timeLeft(x)
 end
 
 function Game:update()
+    if self.finish == true then
+        return
+    end
     if time >= targetTime then
         self:endGame()
         return
@@ -83,5 +88,19 @@ function Game:changeWave()
 end
 
 function Game:endGame()
-    print("fin de game")
+    self.finish = true
+    table.each(spawners, function (s)
+        s:stopSpawn()
+    end)
+    enemiesCopy = table.shallowcopy(enemies)
+    for key, value in pairs(enemiesCopy) do
+        value:death()
+    end
+    bulletsCopy = table.shallowcopy(bullets)
+    for key, value in pairs(bulletsCopy) do
+        value:destroyWithParticles()
+    end   
+    playdate.timer.new(300, function ()
+        playdate.update = winScreenUpdate
+    end)
 end

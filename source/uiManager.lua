@@ -17,6 +17,7 @@ smallFontAmmolite:setTracking(1)
 smallFontAmmolite:setLeading(5)
 local ups = {}
 local levelUpIndex = 0
+local core = gfx.image.new("images/player/planet-core")
 
 function UiManager:init()
     self.inventoryWeapons = {}
@@ -138,6 +139,30 @@ function UiManager:update()
     gfx.drawTextAligned(timeLeft(time),387,227, kTextAlignment.center)
     self:createBar(121,220,player.hpMax, player.hp, 5)
     self:createBar(121,235,player.xpMax, player.xp,1)
+end
+
+function UiManager:winScreenUpdate()
+    gfx.setColor(gfx.kColorWhite)
+    local screenWidth = playdate.display.getWidth()
+    local screenHeight = playdate.display.getHeight()
+    
+    local rectWidth = 200
+    local rectHeight = 150
+    
+    local rectX = (screenWidth - rectWidth) / 2
+    local rectY = (screenHeight - rectHeight) / 2
+    gfx.fillRoundRect(rectX, rectY, rectWidth, rectHeight, 10)
+    gfx.setColor(gfx.kColorBlack)
+    gfx.setLineWidth(4)
+    gfx.drawRoundRect(rectX+4, rectY+4, rectWidth-7, rectHeight-7, 10)
+    gfx.setImageDrawMode(gfx.kDrawModeFillWhite)
+    gfx.setFont(font,gfx.kVariantBold)
+    gfx.drawTextAligned("SUCCESS", rectWidth, 10, kTextAlignment.center)
+    gfx.setImageDrawMode(gfx.kDrawModeFillBlack)
+    gfx.setFont(smallFontAmmolite,gfx.kVariantItalic)
+    gfx.drawTextAligned("RUN FINISH", rectWidth, 50, kTextAlignment.center)
+    gfx.drawTextAligned("RUN LEVEL "..player.runLevel, rectX + 40, 80, kTextAlignment.center)
+    core:scaledImage(0.08):draw( 120,100)
 end
 
 function UiManager:createBar(x,y,max, current, height)

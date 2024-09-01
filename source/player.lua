@@ -26,6 +26,7 @@ function Player:init( basePosition, gunPosition)
     self.weaponNumberMax = 4
     self.passiveNumberMax = 4
     self.core = 0
+    self.runLevel = 1
     self.cannonBaseSprite = gfx.sprite.new( cannonBase )
     self.cannonBaseSprite:setZIndex(0)
     self.cannonBaseSprite:setTag(1)
@@ -106,7 +107,6 @@ function Player:regeneration()
     if(self.regenerationRate == 0) then return end
     if(self.hp < self.hpMax) then
         self.hp += 1
-        uiManager:updateHPDisplay()
     end
 end
 
@@ -143,7 +143,6 @@ function Player:loseHp(value)
         trueValue = 0
     end
     self.hp -= trueValue
-    uiManager:updateHPDisplay()
     if(self.hp <= 0) then
         self.lives -= 1
         if self.lives <= 0 then
@@ -151,7 +150,6 @@ function Player:loseHp(value)
             return
         end
         self.hp = self.hpMax
-        uiManager:updateHPDisplay()
     end
 end
 

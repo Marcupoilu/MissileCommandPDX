@@ -30,6 +30,7 @@ function Projectile:init(x,y,speed, damage, offsetCrank, scale, duration)
     if self.duration ~= nil or self.duration ~= 0 then
         self.timer = playdate.timer.new(toMilliseconds(self.duration), function() self:destroy() end) 
     end
+    table.insert(bullets, self)
 end
 
 function Projectile:updateDurationTimer(newDuration)
@@ -49,6 +50,22 @@ function Projectile:destroy()
         p:setSpeed(3, 7)
         p:add(1)
     end
+    if table.contains(beams, self) then
+        table.remove(beams, indexOf(beams, self))
+    end
+    if self.timer ~= nil then
+        playdate.timer.remove(self.timer)
+    end
+    self:remove()
+end
+
+function Projectile:destroyWithParticles()
+        p:moveTo(self.x, self.y)
+        p:setSize(5,6)
+        p:setColor(gfx.kColorWhite)
+        p:setMode(Particles.modes.DECAY)
+        p:setSpeed(3, 7)
+        p:add(1)
     if table.contains(beams, self) then
         table.remove(beams, indexOf(beams, self))
     end

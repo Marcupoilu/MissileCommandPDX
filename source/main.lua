@@ -67,14 +67,18 @@ levelUpUpdate = function()
     deltaTime = playdate.getElapsedTime()
     playdate.resetElapsedTime()
     if(generate == false) then
-        -- kill all enemies at level up
-        -- table.each(enemies, function(x) x.dead = true x:remove() end)
         generate = true
         uiManager:generateUpgrades()
     end
     gfx.clear()
     uiManager:levelUpDisplay()
     sequence.update()
+end
+
+winScreenUpdate = function()
+    deltaTime = playdate.getElapsedTime()
+    playdate.resetElapsedTime()
+    uiManager:winScreenUpdate()
 end
 
 playdate.update = gameUpdate
