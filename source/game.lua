@@ -25,7 +25,11 @@ function Game:init()
 end
 
 function Game:startGame()
+    local weaponUpgrades =  {}
     player:addWeapon(table.findByParam(weaponsData, "className", "SimpleCannon"))
+    local passive = getUpgradePassive("attackSpeedBonus")
+    passive.count -= 1
+    player:addPassive(passive)
     -- player:addWeapon(table.findByParam(weaponsData, "className", "Beam"))
     -- player:addWeapon(table.findByParam(weaponsData, "className", "Wiper"))
     -- player:addWeapon(table.findByParam(weaponsData, "className", "Plasma"))
@@ -38,12 +42,13 @@ function Game:startGame()
     -- player:addWeapon(table.findByParam(weaponsData, "className", "LaserDome"))
     -- player:addWeapon(table.findByParam(weaponsData, "className", "ToxicVape"))
     -- player:addWeapon(table.findByParam(weaponsData, "className", "Aura"))
-    player:addWeapon(table.findByParam(weaponsData, "className", "Blackhole"))
+    -- player:addWeapon(table.findByParam(weaponsData, "className", "Blackhole"))
     -- player:addWeapon(table.findByParam(weaponsData, "className", "Drone"))
     -- player:addWeapon(table.findByParam(weaponsData, "className", "Orbital"))
     -- player:addWeapon(table.findByParam(weaponsData, "className", "BeamReflect"))
     -- player:addWeapon(table.findByParam(weaponsData, "className", "Tracer"))
-
+    -- uiManager:createInventory(12,225,21,weaponUpgrades)
+    
     self.waves[self.waveNumber]:startWave()
     playdate.timer.new(interval, self.changeWave, self).repeats = true
 end

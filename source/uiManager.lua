@@ -2,6 +2,8 @@ class("UiManager").extends()
 
 local hpCells = {} 
 local hpFillCells = {}
+local inventoryWeaponTexts = {}
+local inventoryPassiveTexts = {}
 local levelUpCellWidth = 100
 local levelUpCellHeight = 200
 local levelUpDistance = 15
@@ -9,10 +11,13 @@ local levelUpCellNumber = 3
 local _pick_anim_y = sequence.new():from(20):to(13, 1, "easeOutSine"):mirror():start()
 local font = gfx.font.new("font/Asheville-Sans-24-Light")
 local smallFont = gfx.font.new("font/font-pixieval-large-white")
+local verySmallFont = gfx.font.new("font/Pico8")
 local ups = {}
 local levelUpIndex = 0
 
 function UiManager:init()
+    self.inventoryWeapons = {}
+    self.inventoryPassives = {}
     self.horizontalLayoutHPCell = HorizontalLayout(22, -4, player.hpMax, 200)
     self.horizontalLayoutHPFillCell = HorizontalLayout(16, 2, player.hp, 203)
     self.horizontalLayoutLevelUp = HorizontalLayout(levelUpCellWidth, levelUpDistance, levelUpCellNumber, 20)
@@ -111,6 +116,25 @@ function UiManager:levelUpDisplay()
     end
 end
 
+function UiManager:update()
+    local offset = 0
+    table.each(inventoryWeaponTexts, function (iw)
+        local level = tostring(table.findByParam(player.weapons, "className", iw.type).level)
+        gfx.setImageDrawMode(gfx.kDrawModeFillWhite)
+        gfx.setFont(verySmallFont,gfx.kVariantBold)
+        gfx.drawText("Lv."..level,2 + offset,235)
+        offset += 21
+    end)
+    offset = 0
+    table.each(inventoryPassiveTexts, function (ip)
+        local level = tostring(ip.countMax - ip.count)
+        gfx.setImageDrawMode(gfx.kDrawModeFillWhite)
+        gfx.setFont(verySmallFont,gfx.kVariantBold)
+        gfx.drawText("Lv."..level,287 + offset,235)
+        offset += 21
+    end)
+end
+
 function UiManager:updateHPDisplay()
     -- for i = 1, player.hpMax do
     --     if(i <= player.hp) then
@@ -135,4 +159,29 @@ function UiManager:createHPBar(tableToClear, image, positionBaseX, positionBaseY
     -- end
     -- return tableToClear
 
+end
+
+function UiManager:createInventory(x,y, offset, inventoryTable)
+    local offs = 0
+    local type = ""
+    for key, value in pairs(inventoryTable) do
+        local item = gfx.sprite.new(value.image)
+        item:moveTo(x + offs, y)
+        item:setCenter(0.5,0.5)
+        item:setScale(0.03)
+        item:setZIndex(1000)
+        item:setImageDrawMode(gfx.kDrawModeFillWhite)
+        item:add()
+        offs += offset
+        if value.className == "UpgradeWeapon" then
+            type = "weapon"
+        else
+            type = "passive"
+        end
+    end
+    if type == "weapon" then
+        inventoryWeaponTexts = inventoryTable
+    else
+        inventoryPassiveTexts = inventoryTable
+    end
 end

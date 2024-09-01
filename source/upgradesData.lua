@@ -17,6 +17,7 @@ upgradesData =
     UpgradeWeapon("SimpleCannon", "Cannon", "", "images/ui/icons/simpleCannon",10, 2 ),
     UpgradeWeapon("Beam", "Laser Beam", "", "images/ui/icons/beam",10, 3 ),
     UpgradeWeapon("Aura", "Offensive Aura", "", "images/ui/icons/aura" ,10, 3),
+    UpgradeWeapon("Wiper", "Wiper", "", "images/ui/icons/wiper" ,10, 3),
     UpgradeWeapon("BeamReflect", "Reflective Beam", "", "images/ui/icons/BeamReflect",10 ,5),
     UpgradeWeapon("Blackhole", "Blackhole Vortex", "", "images/ui/icons/BlackHole",10 ,7),
     UpgradeWeapon("Drone", "Laser Drone", "", "images/ui/icons/droneLaser",10 , 7),
@@ -34,3 +35,13 @@ upgradesData =
 
 
 }
+
+function getUpgradePassive(passiveName)
+    for key, upgrade in pairs(upgradesData) do
+        for key, stat in pairs(upgrade.stats) do            
+            if stat.name == passiveName then
+                return upgrade
+            end
+        end
+    end
+end

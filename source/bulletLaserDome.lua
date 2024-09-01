@@ -4,6 +4,7 @@ class("BulletLaserDome").extends(Projectile)
 
 function BulletLaserDome:init(x,y,speed, damage, offsetCrank, scale, angle)
     BulletLaserDome.super.init(self, x,y,speed, damage, offsetCrank, scale)
+    self.hp = 999999999999
     self.scale = scale
     self.maxLength = 240
     self.currentLength = 0

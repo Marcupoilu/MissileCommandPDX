@@ -56,6 +56,7 @@ gameUpdate = function()
     Particles:update()
     playdate.timer.updateTimers()
     game:update()
+    uiManager:update()
     playdate.drawFPS(0, 0)
 end
 

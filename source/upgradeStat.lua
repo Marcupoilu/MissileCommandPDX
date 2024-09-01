@@ -16,11 +16,5 @@ end
 
 function UpgradeStat:applyUpgrade()
     UpgradeStat.super.applyUpgrade(self)
-    table.each(self.stats, function (stat)
-        player[stat.name] += stat.value
-    end)
-    if table.contains(player.passives, self) == false and self.inventory == nil then
-        table.insert(player.passives, self)
-        player.passiveNumber += 1
-    end
+    player:addPassive(self)
 end

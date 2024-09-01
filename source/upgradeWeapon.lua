@@ -35,7 +35,6 @@ function UpgradeWeapon:applyUpgrade()
         table.findByParam(player.weapons,"className", self.type):changeLevel()
     else
         player:addWeapon(table.findByParam(weaponsData, "className", self.type))
-        player.weaponNumber += 1
         table.findByParam(weaponsData, "className", self.type):shoot()
     end
 end

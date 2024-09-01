@@ -5,6 +5,7 @@ function Upgrade:init(descriptionText, image, count, rarity)
     Upgrade.super.init(self)
     self.descriptionText = descriptionText
     self.image = gfx.image.new(image)
+    self.countMax = count
     self.count = count
     self.rarity = rarity
 end

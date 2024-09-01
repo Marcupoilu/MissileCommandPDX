@@ -11,6 +11,7 @@ function BulletBlackhole:init(x,y,speed, damage, offsetCrank, scale, duration)
     self.particleSystem = {}
     self.radius = 70
     self:setCenter(0.5,0.5)
+    self:setZIndex(-1000)
     -- local width,height = self:getSize()
     -- local scale = 1.5
     -- local newWidth = width * scale

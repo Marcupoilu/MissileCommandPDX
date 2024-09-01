@@ -21,8 +21,8 @@ function Player:init( basePosition, gunPosition)
     self.durationBonus = 0
     self.lives = 1
     self.rerolls = 100
-    self.weaponNumber = 1
-    self.passiveNumber = 1
+    self.weaponNumber = 0
+    self.passiveNumber = 0
     self.weaponNumberMax = 4
     self.passiveNumberMax = 4
     self.cannonBaseSprite = gfx.sprite.new( cannonBase )
@@ -75,9 +75,30 @@ function Player:updateCannonPosition()
 end
 
 function Player:addWeapon(weapon)
+    player.weaponNumber += 1
     table.insert(self.weapons, weapon)
     weapon:shoot()
     weapon:startShooting()
+    local weaponUpgrades = {}
+    table.each(self.weapons, function(w) 
+        table.insert(weaponUpgrades, table.findByParam(upgradesData, "type", w.className))
+     end)
+     table.each(uiManager.inventoryWeapons, function(i) i:remove() end)
+     uiManager.inventoryWeapons = {}
+    uiManager:createInventory(13,225,20,weaponUpgrades)
+end
+
+function Player:addPassive(passive)
+    table.each(passive.stats, function (stat)
+        self[stat.name] += stat.value
+    end)
+    if table.contains(self.passives, passive) == false and passive.inventory == nil then
+        table.insert(self.passives, passive)
+        self.passiveNumber += 1
+    end
+    table.each(uiManager.inventoryPassives, function(i) i:remove() end)
+    uiManager.inventoryPassives = {}
+    uiManager:createInventory(297,224,21,self.passives)
 end
 
 function Player:regeneration()
