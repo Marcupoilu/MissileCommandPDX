@@ -40,7 +40,8 @@ import "weaponsData.lua"
 p = ParticleCircle(0,0)
 pWeapon = ParticleCircle(0,0)
 pFlamethrower = ParticleCircle(0,0)
-
+targetTime = 120
+time = 0
 deltaTime = 0
 game = Game()
 crankPosition = playdate.getCrankPosition()
@@ -49,6 +50,7 @@ game:startGame()
 
 gameUpdate = function()
     deltaTime = playdate.getElapsedTime()
+    time += deltaTime
     playdate.resetElapsedTime()
     crankPosition = playdate.getCrankPosition()
     player:update()

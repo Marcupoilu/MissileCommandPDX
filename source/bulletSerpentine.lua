@@ -8,7 +8,7 @@ function BulletSerpentine:init(x,y,speed, damage, offsetCrank, scale, duration)
     self.hp = 3
     self.rot = 0
     self.amp = 20
-    self.freq = 0.3
+    self.freq = 0.2
 end
 function BulletSerpentine:update()
     self:animate()

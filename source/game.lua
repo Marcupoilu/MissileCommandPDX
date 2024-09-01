@@ -22,6 +22,7 @@ function Game:init()
     self.gameTime = minutes_to_milliseconds(30)
     self.waves = wavesData
     self.waveNumber = 1
+    time = 0
 end
 
 function Game:startGame()
@@ -53,7 +54,19 @@ function Game:startGame()
     playdate.timer.new(interval, self.changeWave, self).repeats = true
 end
 
+function timeLeft(x)
+    local remaining_time = targetTime - x
+    if remaining_time < 0 then remaining_time = 0 end  -- S'assurer que le temps restant ne soit pas négatif
+    local minutes = math.floor(remaining_time / 60)
+    local secondes = math.floor(remaining_time % 60)
+    return string.format("%02d:%02d", minutes, secondes)
+end
+
 function Game:update()
+    if time >= targetTime then
+        self:endGame()
+        return
+    end
     table.each(beams, function(beam)
         beam:update()
     end)
@@ -66,10 +79,6 @@ end
 
 function Game:changeWave()
         self.waveNumber += 1
-        if self.waveNumber >= table.count(self.waves) then
-            self:endGame()
-            return
-        end
         self.waves[self.waveNumber]:startWave()
 end
 

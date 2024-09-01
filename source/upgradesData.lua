@@ -8,7 +8,7 @@ upgradesData =
     UpgradeStat({{name="xpBonus",value=10}}, "+10% XP", "images/xpUp",5,4),
     UpgradeStat({{name="regenerationRate",value=10}}, "+10% hp regen \nspeed", "images/regen",5,6),
     UpgradeStat({{name="projectileSpeedBonus",value=10}}, "+10% projectile \nspeed", "images/projectileSpeed",5,4),
-    UpgradeStat({{name="hpMax",value=1}}, "+1 HP MAX", "images/hpMax",5,3),
+    UpgradeStat({{name="hpMax",value=10}}, "+1 HP MAX", "images/hpMax",5,3),
     UpgradeStat({{name="durationBonus",value=10}}, "+10% duration", "images/ui/icons/duration",5,4),
     UpgradeStat({{name="lives",value=1}}, "+1 Life", "images/ui/icons/lifeUp",5,9, true),
     UpgradeStat({{name="shield",value=1}}, "+1 Shield", "images/ui/icons/shield",5,4),

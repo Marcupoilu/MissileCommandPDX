@@ -6,7 +6,7 @@ function Player:init( basePosition, gunPosition)
     self.x = gunPosition.x
     self.y = gunPosition.y
     self.level = 1
-    self.hpMax = 10
+    self.hpMax = 100
     self.hp = self.hpMax
     self.shield = 0
     self.xp = 0

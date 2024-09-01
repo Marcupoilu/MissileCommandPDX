@@ -4,8 +4,14 @@ class("Projectile").extends(gfx.sprite)
 
 function Projectile:init(x,y,speed, damage, offsetCrank, scale, duration)
     Projectile.super.init(self)
-    self.x = x
-    self.y = y
+    self.originPosition = {}
+    self.width, self.height = player.cannonGunSprite:getSize()
+    self.originAngle = player.cannonGunSprite:getRotation() - 90
+    self.originPosition.x = player.cannonGunSprite.x +(self.height+10) * math.cos(math.rad(self.originAngle))
+    self.originPosition.y = player.cannonGunSprite.y +(self.height+10) * math.sin(math.rad(self.originAngle))
+    self:moveTo(self.originPosition.x,self.originPosition.y)
+    self.x = self.originPosition.x
+    self.y = self.originPosition.y
     self.hp = 1
     self:setGroups({2})
     self:setCollidesWithGroups({3})
@@ -16,14 +22,8 @@ function Projectile:init(x,y,speed, damage, offsetCrank, scale, duration)
     if duration ~= nil then
         self.duration = duration + ((player.durationBonus*duration)/100)
     end
-    self.originAngle = player.cannonGunSprite:getRotation() - 90
-    self.originPosition = {x=x,y=y}
     self.radius = 0
     self.offset = offsetCrank
-    self.width, self.height = player.cannonGunSprite:getSize()
-    self.originPosition.x = player.cannonGunSprite.x +(self.height+10) * math.cos(math.rad(self.originAngle))
-    self.originPosition.y = player.cannonGunSprite.y +(self.height+10) * math.sin(math.rad(self.originAngle))
-    self:moveTo(self.originPosition.x,self.originPosition.y)
     if self:isa(BulletPlasma) == false and self:isa(BulletAura) == false and self:isa(BulletBlackHole) == false then
         self:setRotation(self.originAngle + 90)
     end

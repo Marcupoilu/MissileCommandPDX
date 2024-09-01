@@ -4,7 +4,7 @@ class("Bullet").extends(Projectile)
 
 function Bullet:init(x,y,speed, damage, offsetCrank, scale, duration, bulletImage)
     Bullet.super.init(self,x,y,speed, damage, offsetCrank, scale, duration)
-    self:moveTo(x,y)
+    self:moveTo(self.x,self.y)
     self:add()
     self.animations = {}
     if animationsData[self["className"]] ~= nil then

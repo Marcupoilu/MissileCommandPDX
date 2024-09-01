@@ -11,7 +11,10 @@ local levelUpCellNumber = 3
 local _pick_anim_y = sequence.new():from(20):to(13, 1, "easeOutSine"):mirror():start()
 local font = gfx.font.new("font/Asheville-Sans-24-Light")
 local smallFont = gfx.font.new("font/font-pixieval-large-white")
+smallFont:setTracking(1)
 local verySmallFont = gfx.font.new("font/Pico8")
+local smallFontVariant = gfx.font.new("font/dpaint_8")
+smallFontVariant:setTracking(0)
 local ups = {}
 local levelUpIndex = 0
 
@@ -21,8 +24,6 @@ function UiManager:init()
     self.horizontalLayoutHPCell = HorizontalLayout(22, -4, player.hpMax, 200)
     self.horizontalLayoutHPFillCell = HorizontalLayout(16, 2, player.hp, 203)
     self.horizontalLayoutLevelUp = HorizontalLayout(levelUpCellWidth, levelUpDistance, levelUpCellNumber, 20)
-    hpCells = self:createHPBar(hpCells, "images/hpbar_cell", self.horizontalLayoutHPCell.positionBaseX + 10, self.horizontalLayoutHPCell.positionBaseY, self.horizontalLayoutHPCell.cellSize, self.horizontalLayoutHPCell.distance, 0.85)
-    hpFillCells = self:createHPBar(hpFillCells, "images/hpbar_cellfill", self.horizontalLayoutHPFillCell.positionBaseX + 7, self.horizontalLayoutHPFillCell.positionBaseY, self.horizontalLayoutHPFillCell.cellSize, self.horizontalLayoutHPFillCell.distance, 0.85)
 end
 
 function UiManager:generateUpgrades()
@@ -106,14 +107,14 @@ function UiManager:levelUpDisplay()
         generate = false
         ups[levelUpIndex +1]:applyUpgrade()
         playdate.update = gameUpdate
-        hpCells = self:createHPBar(hpCells, "images/hpbar_cell", self.horizontalLayoutHPCell.positionBaseX + 10, self.horizontalLayoutHPCell.positionBaseY, self.horizontalLayoutHPCell.cellSize, self.horizontalLayoutHPCell.distance, 0.85)
-        hpFillCells = self:createHPBar(hpFillCells, "images/hpbar_cellfill", self.horizontalLayoutHPFillCell.positionBaseX + 7, self.horizontalLayoutHPFillCell.positionBaseY, self.horizontalLayoutHPFillCell.cellSize, self.horizontalLayoutHPFillCell.distance, 0.85)
         self:updateHPDisplay()
     end
     if playdate.buttonJustPressed(playdate.kButtonB) and player.rerolls > 0 then
         player.rerolls -= 1
         self:generateUpgrades()
     end
+
+    -- HP DRAWING
 end
 
 function UiManager:update()
@@ -122,7 +123,7 @@ function UiManager:update()
         local level = tostring(table.findByParam(player.weapons, "className", iw.type).level)
         gfx.setImageDrawMode(gfx.kDrawModeFillWhite)
         gfx.setFont(verySmallFont,gfx.kVariantBold)
-        gfx.drawText("Lv."..level,2 + offset,235)
+        gfx.drawTextAligned("Lv."..level,10 + offset,235, kTextAlignment.center)
         offset += 21
     end)
     offset = 0
@@ -130,9 +131,16 @@ function UiManager:update()
         local level = tostring(ip.countMax - ip.count)
         gfx.setImageDrawMode(gfx.kDrawModeFillWhite)
         gfx.setFont(verySmallFont,gfx.kVariantBold)
-        gfx.drawText("Lv."..level,287 + offset,235)
+        gfx.drawTextAligned("Lv."..level,295 + offset,235, kTextAlignment.center)
         offset += 21
     end)
+    gfx.setImageDrawMode(gfx.kDrawModeFillWhite)
+    gfx.setFont(smallFont,gfx.kVariantBold)
+    gfx.drawTextAligned(player.level,100,225, kTextAlignment.center)
+    gfx.setFont(smallFontVariant)
+    gfx.drawTextAligned(timeLeft(time),387,227, kTextAlignment.center)
+    self:createBar(121,220,player.hpMax, player.hp, 5)
+    self:createBar(121,235,player.xpMax, player.xp,1)
 end
 
 function UiManager:updateHPDisplay()
@@ -145,20 +153,14 @@ function UiManager:updateHPDisplay()
     -- end
 end
 
-function UiManager:createHPBar(tableToClear, image, positionBaseX, positionBaseY, cellSize, marge, scale)
-    -- for key, value in pairs(tableToClear) do
-    --     value:remove()
-    -- end
-    -- tableToClear = {}
-    -- local offset = 0
-    -- for i = 0, player.hpMax -1 do
-    --     local hpCell = UISprite(image, 2, 0.5, 0, positionBaseX + offset, positionBaseY)
-    --     hpCell:setScale(scale)
-    --     hpCell:moveTo(positionBaseX + (i*(cellSize+marge)), positionBaseY)
-    --     table.insert(tableToClear,hpCell)
-    -- end
-    -- return tableToClear
+function UiManager:createBar(x,y,max, current, height)
+    local maxHP = max 
+    local maxWidth = 158
 
+    local currentWidth = (current * maxWidth) / maxHP
+    currentWidth = math.max(0, math.min(currentWidth, maxWidth))
+    gfx.setColor(gfx.kColorWhite)
+    gfx.fillRoundRect(x, y, currentWidth, height, 10)
 end
 
 function UiManager:createInventory(x,y, offset, inventoryTable)
