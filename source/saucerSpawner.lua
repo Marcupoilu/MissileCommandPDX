@@ -9,5 +9,5 @@ function SaucerSpawner:spawn()
     if table.getsize(enemies) >= enemyPoolLimit then
         return
     end
-    SaucerSpawner.super.spawn(self, Saucer(self.x, self.y, enemiesData.Saucer.speed, enemiesData.Saucer.hp, enemiesData.Saucer.xp, enemiesData.Saucer.damage))
+    SaucerSpawner.super.spawn(self, Saucer(self.x, self.y, enemiesData.Saucer.speed, enemiesData.Saucer.hp, enemiesData.Saucer.xp, enemiesData.Saucer.damage, enemiesData.Saucer.core))
 end

@@ -1,7 +1,4 @@
 class("UiManager").extends()
-
-local hpCells = {} 
-local hpFillCells = {}
 local inventoryWeaponTexts = {}
 local inventoryPassiveTexts = {}
 local levelUpCellWidth = 100
@@ -15,14 +12,15 @@ smallFont:setTracking(1)
 local verySmallFont = gfx.font.new("font/Pico8")
 local smallFontVariant = gfx.font.new("font/dpaint_8")
 smallFontVariant:setTracking(0)
+local smallFontAmmolite = gfx.font.new("font/onyx_9")
+smallFontAmmolite:setTracking(1)
+smallFontAmmolite:setLeading(5)
 local ups = {}
 local levelUpIndex = 0
 
 function UiManager:init()
     self.inventoryWeapons = {}
     self.inventoryPassives = {}
-    self.horizontalLayoutHPCell = HorizontalLayout(22, -4, player.hpMax, 200)
-    self.horizontalLayoutHPFillCell = HorizontalLayout(16, 2, player.hp, 203)
     self.horizontalLayoutLevelUp = HorizontalLayout(levelUpCellWidth, levelUpDistance, levelUpCellNumber, 20)
 end
 
@@ -86,8 +84,8 @@ function UiManager:levelUpDisplay()
             gfx.drawRoundRect(self.horizontalLayoutLevelUp.positionBaseX + (i*(levelUpCellWidth+levelUpDistance)) +5 ,self.horizontalLayoutLevelUp.positionBaseY + _pick_anim_y:get() +5, levelUpCellWidth -10, levelUpCellHeight-10, 10)
         end
         gfx.setImageDrawMode(gfx.kDrawModeFillBlack)
-        gfx.setFont(smallFont,gfx.kVariantBold)
-        gfx.drawText(value.descriptionText , self.horizontalLayoutLevelUp.positionBaseX + (i*(levelUpCellWidth+levelUpDistance)) + 10,self.horizontalLayoutLevelUp.positionBaseY + _pick_anim_y:get() + 150)
+        gfx.setFont(smallFontAmmolite,gfx.kVariantBold)
+        gfx.drawTextAligned(string.upper(value.descriptionText) , 75 + (i*(levelUpCellWidth+levelUpDistance)) + 10,self.horizontalLayoutLevelUp.positionBaseY + _pick_anim_y:get() + 150, kTextAlignment.center)
         value.image:scaledImage(0.1):draw( self.horizontalLayoutLevelUp.positionBaseX + (i*(levelUpCellWidth+levelUpDistance)) + 20,self.horizontalLayoutLevelUp.positionBaseY + _pick_anim_y:get() + 50)
         i += 1
     end
@@ -107,17 +105,16 @@ function UiManager:levelUpDisplay()
         generate = false
         ups[levelUpIndex +1]:applyUpgrade()
         playdate.update = gameUpdate
-        self:updateHPDisplay()
     end
     if playdate.buttonJustPressed(playdate.kButtonB) and player.rerolls > 0 then
         player.rerolls -= 1
         self:generateUpgrades()
     end
-
-    -- HP DRAWING
 end
 
 function UiManager:update()
+
+    -- texts layout
     local offset = 0
     table.each(inventoryWeaponTexts, function (iw)
         local level = tostring(table.findByParam(player.weapons, "className", iw.type).level)
@@ -141,16 +138,6 @@ function UiManager:update()
     gfx.drawTextAligned(timeLeft(time),387,227, kTextAlignment.center)
     self:createBar(121,220,player.hpMax, player.hp, 5)
     self:createBar(121,235,player.xpMax, player.xp,1)
-end
-
-function UiManager:updateHPDisplay()
-    -- for i = 1, player.hpMax do
-    --     if(i <= player.hp) then
-    --         hpFillCells[i]:setVisible(true)
-    --     else
-    --         hpFillCells[i]:setVisible(false)
-    --     end
-    -- end
 end
 
 function UiManager:createBar(x,y,max, current, height)

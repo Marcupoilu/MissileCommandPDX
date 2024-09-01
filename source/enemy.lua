@@ -2,9 +2,10 @@ class("Enemy").extends(gfx.sprite)
 
 -- local p = ParticleCircle(0,0)
 
-function Enemy:init(x,y,speed,hp, xp, damage, enemyImage)
+function Enemy:init(x,y,speed,hp, xp, damage, enemyImage, core)
     Enemy.super.init(self)
     self.animations = {}
+    self.core = core
     self:setGroups({3})
     self:setCollidesWithGroups({1,2})
     if animationsData[self["className"]] ~= nil then
@@ -169,6 +170,7 @@ function Enemy:loseHp(value)
     self.hp -= value
     if(self.hp <= 0) then
         player:gainXP(self.xpReward + (((player.xpBonus*self.xpReward)/100)))
+        player.core += self.core
         self:death()
     end
 end
