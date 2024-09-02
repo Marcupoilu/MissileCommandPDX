@@ -149,7 +149,7 @@ function UiManager:update()
 end
 
 function UiManager:winScreenUpdate()
-    gfx.setColor(gfx.kColorWhite)
+    gfx.setColor(gfx.kColorBlack)
     local screenWidth = playdate.display.getWidth()
     local screenHeight = playdate.display.getHeight()
     
@@ -161,7 +161,7 @@ function UiManager:winScreenUpdate()
     -- rect part
     gfx.fillRect(0, 0, 400, 210 + endScreenTweet:get())
     gfx.setFont(diamond_20,gfx.kVariantItalic)
-    gfx.setImageDrawMode(gfx.kDrawModeFillBlack)
+    gfx.setImageDrawMode(gfx.kDrawModeFillWhite)
     gfx.drawTextAligned("DEFENSE "..player.runLevel.." SUCCESS", rectWidth, 20+ endScreenTweet:get(), kTextAlignment.center)
     -- middle part
     core:scaledImage(0.07):draw( 50,70 + endScreenTweet:get())
@@ -173,24 +173,24 @@ function UiManager:winScreenUpdate()
     local imageWidth, imageHeight = enemyImage:getSize()
     local imageX = (screenWidth - imageWidth) / 2
     local imageY = (screenHeight - imageHeight) / 2
-    gfx.setImageDrawMode(gfx.kDrawModeInverted)
+    gfx.setImageDrawMode(gfx.kDrawModeCopy)
     enemyImage:draw(imageX, imageY - 32 + endScreenTweet:get())
-    gfx.setImageDrawMode(gfx.kDrawModeFillBlack)
+    gfx.setImageDrawMode(gfx.kDrawModeFillWhite)
     gfx.drawTextAligned("X"..player.enemiesKilled, imageX + 40, 90 + endScreenTweet:get(), kTextAlignment.center)
-    gfx.setImageDrawMode(gfx.kDrawModeFillBlack)
+    gfx.setImageDrawMode(gfx.kDrawModeFillWhite)
     gfx.setFont(diamond_20,gfx.kVariantItalic)
     gfx.drawTextAligned("LV", 310, 85 + endScreenTweet:get(), kTextAlignment.center)
     gfx.setFont(smallFontAmmolite,gfx.kVariantItalic)
     gfx.drawTextAligned("X"..player.level, 330, 91 + endScreenTweet:get(), kTextAlignment.center)
     -- unlock part
-    gfx.setColor(gfx.kColorBlack)
+    gfx.setColor(gfx.kColorWhite)
     local width = rectWidth + 50 
     local height = rectHeight - 80
     local offset = 35
     gfx.setLineWidth(2)
     gfx.drawRect(rectX + rectWidth/2 - width/2, rectY +  rectHeight/2 - height/2 + offset + endScreenTweet:get(), width, height)
     gfx.setFont(smallFontAmmolite,gfx.kVariantItalic)
-    gfx.setImageDrawMode(gfx.kDrawModeFillBlack)
+    gfx.setImageDrawMode(gfx.kDrawModeFillWhite)
     gfx.drawTextAligned("UNLOCKS", rectWidth, 125 + endScreenTweet:get(), kTextAlignment.center)
     gfx.setFont(verySmallFont,gfx.kVariantItalic)
     gfx.drawTextAligned("PRESS BUTTON TO CONTINUE", rectWidth, 200 + endScreenTweet:get(), kTextAlignment.center)
