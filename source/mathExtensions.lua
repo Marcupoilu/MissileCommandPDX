@@ -143,3 +143,9 @@ function atan2(dy, dx)
         return 0 -- Cas où dx == 0 et dy == 0
     end
 end
+
+function GetXYCenteredFromRect(rectX, rectY, rectWidth, rectHeight, width, height)
+    local imageX = rectX + (rectWidth - width) / 2
+    local imageY = rectY + (rectHeight - height) / 2
+    return {x=imageX, y=imageY}
+end

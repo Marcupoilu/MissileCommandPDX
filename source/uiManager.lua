@@ -1,7 +1,7 @@
 class("UiManager").extends()
 local inventoryWeaponTexts = {}
 local inventoryPassiveTexts = {}
-local levelUpCellWidth = 100
+local levelUpCellWidth = 115
 local levelUpCellHeight = 200
 local levelUpDistance = 15
 local levelUpCellNumber = 3
@@ -21,6 +21,7 @@ local diamond_20 = gfx.font.new("font/diamond_20")
 local ups = {}
 local levelUpIndex = 0
 local mainMenuIndex = 0
+local cannonIndex = 0
 local core = gfx.image.new("images/player/planet-core")
 local enemy = gfx.image.new("images/enemies/large/enemy_large_01")
 local mainMenu = gfx.image.new("images/ui/menus/main_menu")
@@ -95,8 +96,8 @@ function UiManager:levelUpDisplay()
         end
         gfx.setImageDrawMode(gfx.kDrawModeFillBlack)
         gfx.setFont(smallFontAmmolite,gfx.kVariantBold)
-        gfx.drawTextAligned(string.upper(value.descriptionText) , 75 + (i*(levelUpCellWidth+levelUpDistance)) + 10,self.horizontalLayoutLevelUp.positionBaseY + _pick_anim_y:get() + 150, kTextAlignment.center)
-        value.image:scaledImage(0.1):draw( self.horizontalLayoutLevelUp.positionBaseX + (i*(levelUpCellWidth+levelUpDistance)) + 20,self.horizontalLayoutLevelUp.positionBaseY + _pick_anim_y:get() + 50)
+        gfx.drawTextAligned(string.upper(value.descriptionText) , self.horizontalLayoutLevelUp.positionBaseX + 50 + (i*(levelUpCellWidth+levelUpDistance)) + 10,self.horizontalLayoutLevelUp.positionBaseY + _pick_anim_y:get() + 150, kTextAlignment.center)
+        value.image:scaledImage(0.1):draw( self.horizontalLayoutLevelUp.positionBaseX + 10 + (i*(levelUpCellWidth+levelUpDistance)) + 20,self.horizontalLayoutLevelUp.positionBaseY + _pick_anim_y:get() + 50)
         gfx.setImageDrawMode(gfx.kDrawModeCopy)
         upgradeContour:draw(self.horizontalLayoutLevelUp.positionBaseX + (i*(levelUpCellWidth+levelUpDistance)),self.horizontalLayoutLevelUp.positionBaseY + _pick_anim_y:get())
         i += 1
@@ -208,6 +209,7 @@ function UiManager:winScreenUpdate()
         return
     end
 end
+local chooseCannonBool = false
 
 function UiManager:mainMenuUpdate()
     gfx.setImageDrawMode(gfx.kDrawModeCopy)
@@ -217,21 +219,22 @@ function UiManager:mainMenuUpdate()
     gfx.drawTextAligned("MACHINA", 335, 132, kTextAlignment.center)
     gfx.drawTextAligned("STORAGE", 335, 176, kTextAlignment.center)
     
-    if playdate.buttonJustPressed(playdate.kButtonDown) then
-        mainMenuIndex = math.ring_int(mainMenuIndex +1, 0, 2)
-    end
-    if playdate.buttonJustPressed(playdate.kButtonUp) then
-        mainMenuIndex -= 1
-        if mainMenuIndex == -1 then
-            mainMenuIndex = 2
+    if chooseCannonBool == false then
+        if playdate.buttonJustPressed(playdate.kButtonDown) then
+            mainMenuIndex = math.ring_int(mainMenuIndex +1, 0, 2)
+        end
+        if playdate.buttonJustPressed(playdate.kButtonUp) then
+            mainMenuIndex -= 1
+            if mainMenuIndex == -1 then
+                mainMenuIndex = 2
+            end
         end
     end
     gfx.setColor(gfx.kColorWhite)
     gfx.fillCircleAtPoint(mainMenuPositions[mainMenuIndex+1].x, mainMenuPositions[mainMenuIndex+1].y, 8.5)
     if playdate.buttonJustPressed(playdate.kButtonA) then
         if mainMenuIndex == 0 then
-            playdate.update = gameUpdate
-            -- chooseCanon()
+            chooseCannonBool = true
         end
         if mainMenuIndex == 1 then
             
@@ -240,9 +243,56 @@ function UiManager:mainMenuUpdate()
             
         end
     end
+    if chooseCannonBool == true then
+        self:chooseCannon()
+        if playdate.buttonJustPressed(playdate.kButtonB) then
+            chooseCannonBool = false
+        end
+    end
+    self:chooseCannon()
 end
 
-function UiManager:chooseCanon()
+function UiManager:chooseCannon()
+    gfx.setColor(gfx.kColorWhite)
+    gfx.fillRect(104, 76, 140, 132)
+    if chooseCannonBool == false then
+        if playdate.buttonJustPressed(playdate.kButtonRight) then
+            cannonIndex = math.ring_int(cannonIndex +1, 0, table.count(cannonsData)-1)
+        end
+        if playdate.buttonJustPressed(playdate.kButtonLeft) then
+            cannonIndex -= 1
+            if cannonIndex == -1 then
+                cannonIndex = table.count(cannonsData)-1
+            end
+        end
+    end
+    print(cannonIndex)
+    local cannon = cannonsData[cannonIndex+1]
+    local width, height = cannon.image:getSize()
+    local x = GetXYCenteredFromRect(104,76,140,132, width, height).x
+    local y = GetXYCenteredFromRect(104,76,140,132, width, height).y
+    cannon.image:draw(x,y)
+    gfx.setFont(smallFontAmmolite,gfx.kVariantBold)
+    gfx.drawTextAligned("CHOOSE CANNON", x + 11, 80, kTextAlignment.center)
+    gfx.drawTextAligned(cannon.name, x + 11, 94, kTextAlignment.center)
+    local offset = 0
+    local offsetAdd = 10
+    local totalWidth = 0
+    local scaledImageWidth = 0
+
+    table.each(cannon.weapons, function (w)
+        local wpUpgrade = table.findByParam(upgradesData, "type", w.className)
+        scaledImageWidth = wpUpgrade.image:scaledImage(0.05):getSize()
+        totalWidth = totalWidth + scaledImageWidth + offsetAdd
+    end)
+    totalWidth = totalWidth - offsetAdd
+    local startX = x + (width - totalWidth) / 2
+
+    table.each(cannon.weapons, function (w)
+        local wpUpgrade = table.findByParam(upgradesData, "type", w.className)
+        wpUpgrade.image:scaledImage(0.05):draw(startX + offset, 170)
+        offset = offset + scaledImageWidth + offsetAdd
+    end)
 end
 
 function UiManager:createBar(x,y,max, current, height)

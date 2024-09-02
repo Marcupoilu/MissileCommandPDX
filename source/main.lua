@@ -98,4 +98,4 @@ mainMenuUpdate = function()
     sequence.update()
 end
 
-playdate.update = levelUpUpdate
+playdate.update = mainMenuUpdate

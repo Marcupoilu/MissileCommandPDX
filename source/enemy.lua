@@ -126,7 +126,7 @@ function Enemy:touchEnemy(value)
     p:setMode(Particles.modes.DECAY)
     p:setSpeed(3, 5)
     p:add(1)
-    self:loseHp(value.damage + ((player.damageBonus*value.damage)/100))
+    self:loseHp(value.damage + ((player.damageBonus*value.damage)/100), value.className)
     value:loseHp(1)
     table.insert(self.currentOverlappingSprites, value)
     if value.tick ~= nil then
@@ -166,7 +166,7 @@ function Enemy:dotTimer(value)
     end
 end
 
-function Enemy:loseHp(value)
+function Enemy:loseHp(value, className)
     self.hp -= value
     if(self.hp <= 0) then
         player:gainXP(self.xpReward + (((player.xpBonus*self.xpReward)/100)))

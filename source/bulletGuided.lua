@@ -4,6 +4,7 @@ local bulletImage = gfx.image.new("images/BulletRocket" )
 
 function BulletGuided:init(x,y,speed, damage, offsetCrank, scale, duration)
     BulletGuided.super.init(self,x,y,speed, damage, offsetCrank, scale, duration, bulletImage)
+    self.baseAngle = self.originAngle
     self.hp = 1
     self.rot = 0
     self.power = 5
@@ -29,14 +30,18 @@ function BulletGuided:update()
         
         -- Mettre à jour la rotation de la balle
         self:setRotation(self.originAngle + 90)
+        if self.target.dead == true then
+            self.target = nil
+        end
         return
+    end
+    if self.target == nil then
+        self.originAngle = self.baseAngle
     end
     for key, value in pairs(gfx.sprite.getAllSprites()) do
         if value:isa(Enemy) then
             local distance = math.sqrt((value.x - self.x)^2 + (value.y - self.y)^2)
             if distance <= self.guidedHitBox then
-                -- self.originPosition.x = self.x
-                -- self.originPosition.y = self.y
                 self.target = value
                 return
             end
