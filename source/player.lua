@@ -1,8 +1,8 @@
 class("Player").extends()
 
 function Player:init( basePosition, gunPosition)
-    local cannonBase = gfx.image.new("images/cannon_base")
-    local cannonGun = gfx.image.new("images/cannon_gun")
+    local cannonBase = gfx.image.new("images/player/bases/base_cannon")
+    local cannonGun = gfx.image.new("images/player/guns/gun_cannon")
     self.x = gunPosition.x
     self.y = gunPosition.y
     self.level = 1
@@ -62,7 +62,7 @@ function Player:update()
     end
 
     -- c'est la que tu fais ton truc de ouf en rotation
-    self.cannonGunSprite:moveTo(self.cannonBaseSprite.x + 10 * math.sin(math.rad(self.cannonGunSprite:getRotation())), self.cannonBaseSprite.y - 10 * math.cos(math.rad(self.cannonGunSprite:getRotation())) + 5)
+    self.cannonGunSprite:moveTo(self.cannonBaseSprite.x + 10 * math.sin(math.rad(self.cannonGunSprite:getRotation())), self.cannonBaseSprite.y - 10 * math.cos(math.rad(self.cannonGunSprite:getRotation())) + 13)
 end
 
 function Player:updateCannonPosition()

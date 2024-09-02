@@ -13,7 +13,7 @@ function Game:init()
     beams = {}
     bullets = {}
     enemyPoolLimit = 25
-    player = Player({x=200,y=207}, {x=200,y=197})
+    player = Player({x=200,y=202}, {x=200,y=200})
     shake = ScreenShake()
     uiManager = UiManager()
     gfx.setBackgroundColor(gfx.kColorBlack)
