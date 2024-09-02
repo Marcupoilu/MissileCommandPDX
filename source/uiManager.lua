@@ -25,6 +25,8 @@ local core = gfx.image.new("images/player/planet-core")
 local enemy = gfx.image.new("images/enemies/large/enemy_large_01")
 local mainMenu = gfx.image.new("images/ui/menus/main_menu")
 local endScreenContour = gfx.image.new("images/ui/menus/end_screen")
+local upgradeContour = gfx.image.new("images/ui/menus/upgrade_panel")
+
 local mainMenuPositions = {{x=264,y=95.5},{x=264,y=139.5},{x=264,y=183.5}}
 function UiManager:init()
     self.inventoryWeapons = {}
@@ -95,6 +97,8 @@ function UiManager:levelUpDisplay()
         gfx.setFont(smallFontAmmolite,gfx.kVariantBold)
         gfx.drawTextAligned(string.upper(value.descriptionText) , 75 + (i*(levelUpCellWidth+levelUpDistance)) + 10,self.horizontalLayoutLevelUp.positionBaseY + _pick_anim_y:get() + 150, kTextAlignment.center)
         value.image:scaledImage(0.1):draw( self.horizontalLayoutLevelUp.positionBaseX + (i*(levelUpCellWidth+levelUpDistance)) + 20,self.horizontalLayoutLevelUp.positionBaseY + _pick_anim_y:get() + 50)
+        gfx.setImageDrawMode(gfx.kDrawModeCopy)
+        upgradeContour:draw(self.horizontalLayoutLevelUp.positionBaseX + (i*(levelUpCellWidth+levelUpDistance)),self.horizontalLayoutLevelUp.positionBaseY + _pick_anim_y:get())
         i += 1
     end
     gfx.setImageDrawMode(gfx.kDrawModeFillWhite)

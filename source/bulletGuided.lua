@@ -29,7 +29,6 @@ function BulletGuided:update()
         
         -- Mettre à jour la rotation de la balle
         self:setRotation(self.originAngle + 90)
-        
         return
     end
     for key, value in pairs(gfx.sprite.getAllSprites()) do

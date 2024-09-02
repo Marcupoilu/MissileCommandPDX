@@ -42,7 +42,7 @@ import "cannonsData.lua"
 p = ParticleCircle(0,0)
 pWeapon = ParticleCircle(0,0)
 pFlamethrower = ParticleCircle(0,0)
-targetTime = 2
+targetTime = 120
 time = 0
 deltaTime = 0
 game = Game()
@@ -98,4 +98,4 @@ mainMenuUpdate = function()
     sequence.update()
 end
 
-playdate.update = gameUpdate
+playdate.update = levelUpUpdate
