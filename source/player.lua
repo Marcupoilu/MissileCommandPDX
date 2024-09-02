@@ -27,6 +27,7 @@ function Player:init( basePosition, gunPosition)
     self.passiveNumberMax = 4
     self.core = 0
     self.runLevel = 1
+    self.enemiesKilled = 0
     self.cannonBaseSprite = gfx.sprite.new( cannonBase )
     self.cannonBaseSprite:setZIndex(0)
     self.cannonBaseSprite:setTag(1)

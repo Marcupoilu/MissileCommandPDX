@@ -171,6 +171,7 @@ function Enemy:loseHp(value)
     if(self.hp <= 0) then
         player:gainXP(self.xpReward + (((player.xpBonus*self.xpReward)/100)))
         player.core += self.core
+        player.enemiesKilled += 1
         self:death()
     end
 end

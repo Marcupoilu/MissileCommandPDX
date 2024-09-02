@@ -18,7 +18,6 @@ function BulletBeam:init(x,y,speed, damage, offsetCrank, scale, duration)
     self.duration = duration
     self.lineS = playdate.geometry.lineSegment.new(self.startPos.x, self.startPos.y, self.endPos.x, self.endPos.y)
     self.lasers = {}
-    playdate.timer.new(toMilliseconds(self.duration), self.endBeam, self)
     table.insert(beams, self)
 end
 

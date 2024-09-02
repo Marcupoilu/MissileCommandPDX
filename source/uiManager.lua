@@ -6,6 +6,8 @@ local levelUpCellHeight = 200
 local levelUpDistance = 15
 local levelUpCellNumber = 3
 local _pick_anim_y = sequence.new():from(20):to(13, 1, "easeOutSine"):mirror():start()
+endScreenTweet = sequence.new():from(-240):to(0, 1, "outSine")
+
 local font = gfx.font.new("font/Asheville-Sans-24-Light")
 local smallFont = gfx.font.new("font/font-pixieval-large-white")
 smallFont:setTracking(1)
@@ -15,10 +17,14 @@ smallFontVariant:setTracking(0)
 local smallFontAmmolite = gfx.font.new("font/onyx_9")
 smallFontAmmolite:setTracking(1)
 smallFontAmmolite:setLeading(5)
+local diamond_20 = gfx.font.new("font/diamond_20")
 local ups = {}
 local levelUpIndex = 0
+local mainMenuIndex = 0
 local core = gfx.image.new("images/player/planet-core")
-
+local enemy = gfx.image.new("images/enemies/large/enemy_large_01")
+local mainMenu = gfx.image.new("images/ui/menus/main_menu")
+local mainMenuPositions = {{x=264,y=95.5},{x=264,y=139.5},{x=264,y=183.5}}
 function UiManager:init()
     self.inventoryWeapons = {}
     self.inventoryPassives = {}
@@ -111,10 +117,10 @@ function UiManager:levelUpDisplay()
         player.rerolls -= 1
         self:generateUpgrades()
     end
+    
 end
 
 function UiManager:update()
-
     -- texts layout
     local offset = 0
     table.each(inventoryWeaponTexts, function (iw)
@@ -151,23 +157,86 @@ function UiManager:winScreenUpdate()
     
     local rectX = (screenWidth - rectWidth) / 2
     local rectY = (screenHeight - rectHeight) / 2
-    gfx.fillRoundRect(rectX, rectY, rectWidth, rectHeight, 10)
-    gfx.setImageDrawMode(gfx.kDrawModeFillWhite)
-    gfx.setFont(font,gfx.kVariantBold)
-    gfx.drawTextAligned("ASSAULT SUCCESS", rectWidth, 10, kTextAlignment.center)
+    -- rect part
+    gfx.fillRect(0, 0, 400, 210 + endScreenTweet:get())
+    gfx.setFont(diamond_20,gfx.kVariantItalic)
     gfx.setImageDrawMode(gfx.kDrawModeFillBlack)
+    gfx.drawTextAligned("DEFENSE "..player.runLevel.." SUCCESS", rectWidth, 20+ endScreenTweet:get(), kTextAlignment.center)
+    -- middle part
+    core:scaledImage(0.07):draw( 50,70 + endScreenTweet:get())
     gfx.setFont(smallFontAmmolite,gfx.kVariantItalic)
-    gfx.drawTextAligned("ASSAULT "..player.runLevel.." FINISH", rectWidth, 50, kTextAlignment.center)
-    gfx.setFont(smallFontVariant,gfx.kVariantItalic)
-    core:scaledImage(0.07):draw( 110,70)
+    gfx.drawTextAligned("X"..player.core, 90, 90 + endScreenTweet:get(), kTextAlignment.center)
+    local screenWidth = playdate.display.getWidth()
+    local screenHeight = playdate.display.getHeight()
+    local enemyImage = enemy:scaledImage(1)
+    local imageWidth, imageHeight = enemyImage:getSize()
+    local imageX = (screenWidth - imageWidth) / 2
+    local imageY = (screenHeight - imageHeight) / 2
+    gfx.setImageDrawMode(gfx.kDrawModeInverted)
+    enemyImage:draw(imageX, imageY - 32 + endScreenTweet:get())
+    gfx.setImageDrawMode(gfx.kDrawModeFillBlack)
+    gfx.drawTextAligned("X"..player.enemiesKilled, imageX + 40, 90 + endScreenTweet:get(), kTextAlignment.center)
+    gfx.setImageDrawMode(gfx.kDrawModeFillBlack)
+    gfx.setFont(diamond_20,gfx.kVariantItalic)
+    gfx.drawTextAligned("LV", 310, 85 + endScreenTweet:get(), kTextAlignment.center)
     gfx.setFont(smallFontAmmolite,gfx.kVariantItalic)
-    gfx.drawTextAligned("X"..player.core, 150, 90, kTextAlignment.center)
+    gfx.drawTextAligned("X"..player.level, 330, 91 + endScreenTweet:get(), kTextAlignment.center)
+    -- unlock part
     gfx.setColor(gfx.kColorBlack)
-    local width = rectWidth - 10
-    local height = rectHeight - 90
-    local offset = 20
+    local width = rectWidth + 50 
+    local height = rectHeight - 80
+    local offset = 35
     gfx.setLineWidth(2)
-    gfx.drawRect(rectX + rectWidth/2 - width/2, rectY +  rectHeight/2 - height/2 + offset, width, height)
+    gfx.drawRect(rectX + rectWidth/2 - width/2, rectY +  rectHeight/2 - height/2 + offset + endScreenTweet:get(), width, height)
+    gfx.setFont(smallFontAmmolite,gfx.kVariantItalic)
+    gfx.setImageDrawMode(gfx.kDrawModeFillBlack)
+    gfx.drawTextAligned("UNLOCKS", rectWidth, 125 + endScreenTweet:get(), kTextAlignment.center)
+    gfx.setFont(verySmallFont,gfx.kVariantItalic)
+    gfx.drawTextAligned("PRESS BUTTON TO CONTINUE", rectWidth, 200 + endScreenTweet:get(), kTextAlignment.center)
+    local current, pressed, released = playdate.getButtonState()
+    if current ~= 0 then
+        tween = false
+        mainMenuIndex = 0
+        playdate.update = mainMenuUpdate
+        return
+    end
+end
+
+function UiManager:mainMenuUpdate()
+    gfx.setImageDrawMode(gfx.kDrawModeCopy)
+    mainMenu:draw(0,0)
+    gfx.setFont(diamond_20,gfx.kVariantBold)
+    gfx.drawTextAligned("DEFENSE", 335, 88, kTextAlignment.center)
+    gfx.drawTextAligned("MACHINA", 335, 132, kTextAlignment.center)
+    gfx.drawTextAligned("STORAGE", 335, 176, kTextAlignment.center)
+    
+    if playdate.buttonJustPressed(playdate.kButtonDown) then
+        mainMenuIndex = math.ring_int(mainMenuIndex +1, 0, 2)
+    end
+    if playdate.buttonJustPressed(playdate.kButtonUp) then
+        mainMenuIndex -= 1
+        if mainMenuIndex == -1 then
+            mainMenuIndex = 2
+        end
+    end
+    print(mainMenuIndex)
+    gfx.setColor(gfx.kColorWhite)
+    gfx.fillCircleAtPoint(mainMenuPositions[mainMenuIndex+1].x, mainMenuPositions[mainMenuIndex+1].y, 8.5)
+    if playdate.buttonJustPressed(playdate.kButtonA) then
+        if mainMenuIndex == 0 then
+            playdate.update = gameUpdate
+            -- chooseCanon()
+        end
+        if mainMenuIndex == 1 then
+            
+        end
+        if mainMenuIndex == 2 then
+            
+        end
+    end
+end
+
+function UiManager:chooseCanon()
 end
 
 function UiManager:createBar(x,y,max, current, height)

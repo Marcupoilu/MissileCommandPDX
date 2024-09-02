@@ -35,12 +35,14 @@ import "upgradeWeapon.lua"
 import "uiManager.lua"
 import "upgradesData.lua"
 import "weaponsData.lua"
+import "cannon.lua"
+import "cannonsData.lua"
 
 -- playdate.display.setRefreshRate(50)
 p = ParticleCircle(0,0)
 pWeapon = ParticleCircle(0,0)
 pFlamethrower = ParticleCircle(0,0)
-targetTime = 5
+targetTime = 2
 time = 0
 deltaTime = 0
 game = Game()
@@ -60,13 +62,14 @@ gameUpdate = function()
     game:update()
     uiManager:update()
     playdate.drawFPS(0, 0)
+    sequence.update()
 end
 
 
 levelUpUpdate = function()
     deltaTime = playdate.getElapsedTime()
     playdate.resetElapsedTime()
-    if(generate == false) then
+    if generate == false then
         generate = true
         uiManager:generateUpgrades()
     end
@@ -75,10 +78,24 @@ levelUpUpdate = function()
     sequence.update()
 end
 
+tween = false
+
 winScreenUpdate = function()
     deltaTime = playdate.getElapsedTime()
     playdate.resetElapsedTime()
+    if tween == false then
+        endScreenTweet:restart()
+        tween = true
+    end
     uiManager:winScreenUpdate()
+    sequence.update()
 end
 
-playdate.update = gameUpdate
+mainMenuUpdate = function()
+    deltaTime = playdate.getElapsedTime()
+    playdate.resetElapsedTime()
+    uiManager:mainMenuUpdate()
+    sequence.update()
+end
+
+playdate.update = mainMenuUpdate

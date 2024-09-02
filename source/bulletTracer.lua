@@ -17,15 +17,10 @@ function BulletTracer:init(x,y,speed, damage, offsetCrank, scale, duration)
     self.direction.y = self.radius*math.sin(math.rad(self.angle + self.offset))* deltaTime
     self.duration = duration
     self.lineS = playdate.geometry.lineSegment.new(self.startPos.x, self.startPos.y, self.endPos.x, self.endPos.y)
-    self.started = false
     self.playerPos = {}
     self.playerPos.x = player.cannonGunSprite.x
     self.playerPos.y = player.cannonGunSprite.y
     self.offsetHeight = 50
-    playdate.timer.new(toMilliseconds(self.duration), self.endBeam, self)
-    playdate.timer.new(100, function ()
-        self.started = true
-    end)
     table.insert(beams, self)
 end
 
