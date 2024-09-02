@@ -27,6 +27,9 @@ local enemy = gfx.image.new("images/enemies/large/enemy_large_01")
 local mainMenu = gfx.image.new("images/ui/menus/main_menu")
 local endScreenContour = gfx.image.new("images/ui/menus/end_screen")
 local upgradeContour = gfx.image.new("images/ui/menus/upgrade_panel")
+local chooseCannonArrowLeft = gfx.image.new("images/ui/arrow_left")
+local chooseCannonArrowRight = gfx.image.new("images/ui/arrow_right")
+
 
 local mainMenuPositions = {{x=264,y=95.5},{x=264,y=139.5},{x=264,y=183.5}}
 function UiManager:init()
@@ -253,7 +256,7 @@ function UiManager:mainMenuUpdate()
 end
 
 function UiManager:chooseCannon()
-    gfx.setColor(gfx.kColorWhite)
+    gfx.setColor(gfx.kColorBlack)
     gfx.fillRect(104, 76, 140, 132)
     if chooseCannonBool == false then
         if playdate.buttonJustPressed(playdate.kButtonRight) then
@@ -266,15 +269,18 @@ function UiManager:chooseCannon()
             end
         end
     end
-    print(cannonIndex)
     local cannon = cannonsData[cannonIndex+1]
     local width, height = cannon.image:getSize()
     local x = GetXYCenteredFromRect(104,76,140,132, width, height).x
     local y = GetXYCenteredFromRect(104,76,140,132, width, height).y
+    gfx.setImageDrawMode(gfx.kDrawModeCopy)
     cannon.image:draw(x,y)
     gfx.setFont(smallFontAmmolite,gfx.kVariantBold)
+    gfx.setImageDrawMode(gfx.kDrawModeFillWhite)
     gfx.drawTextAligned("CHOOSE CANNON", x + 11, 80, kTextAlignment.center)
     gfx.drawTextAligned(cannon.name, x + 11, 94, kTextAlignment.center)
+    chooseCannonArrowLeft:draw(110,y + 15)
+    chooseCannonArrowRight:draw(220,y + 15)
     local offset = 0
     local offsetAdd = 10
     local totalWidth = 0
@@ -290,6 +296,7 @@ function UiManager:chooseCannon()
 
     table.each(cannon.weapons, function (w)
         local wpUpgrade = table.findByParam(upgradesData, "type", w.className)
+        gfx.setImageDrawMode(gfx.kDrawModeInverted)
         wpUpgrade.image:scaledImage(0.05):draw(startX + offset, 170)
         offset = offset + scaledImageWidth + offsetAdd
     end)
