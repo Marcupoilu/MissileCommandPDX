@@ -24,6 +24,7 @@ local mainMenuIndex = 0
 local core = gfx.image.new("images/player/planet-core")
 local enemy = gfx.image.new("images/enemies/large/enemy_large_01")
 local mainMenu = gfx.image.new("images/ui/menus/main_menu")
+local endScreenContour = gfx.image.new("images/ui/menus/end_screen")
 local mainMenuPositions = {{x=264,y=95.5},{x=264,y=139.5},{x=264,y=183.5}}
 function UiManager:init()
     self.inventoryWeapons = {}
@@ -193,6 +194,8 @@ function UiManager:winScreenUpdate()
     gfx.drawTextAligned("UNLOCKS", rectWidth, 125 + endScreenTweet:get(), kTextAlignment.center)
     gfx.setFont(verySmallFont,gfx.kVariantItalic)
     gfx.drawTextAligned("PRESS BUTTON TO CONTINUE", rectWidth, 200 + endScreenTweet:get(), kTextAlignment.center)
+    gfx.setImageDrawMode(gfx.kDrawModeCopy)
+    endScreenContour:draw(0,0 + endScreenTweet:get())
     local current, pressed, released = playdate.getButtonState()
     if current ~= 0 then
         tween = false
@@ -219,7 +222,6 @@ function UiManager:mainMenuUpdate()
             mainMenuIndex = 2
         end
     end
-    print(mainMenuIndex)
     gfx.setColor(gfx.kColorWhite)
     gfx.fillCircleAtPoint(mainMenuPositions[mainMenuIndex+1].x, mainMenuPositions[mainMenuIndex+1].y, 8.5)
     if playdate.buttonJustPressed(playdate.kButtonA) then

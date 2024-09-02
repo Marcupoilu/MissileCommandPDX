@@ -22,20 +22,22 @@ function BulletGuided:update()
 
         -- Calculer la différence d'angle en tenant compte de la circularité
         local angleDiff = (targetAngle - self.originAngle + 540) % 360 - 180
-
+        
         -- Appliquer l'interpolation pour lisser le changement d'angle
         local interpolationSpeed = 0.1 -- Ajuste cette valeur selon ton besoin
         self.originAngle = self.originAngle + angleDiff * interpolationSpeed
-
+        
         -- Mettre à jour la rotation de la balle
         self:setRotation(self.originAngle + 90)
-
+        
         return
     end
     for key, value in pairs(gfx.sprite.getAllSprites()) do
         if value:isa(Enemy) then
             local distance = math.sqrt((value.x - self.x)^2 + (value.y - self.y)^2)
             if distance <= self.guidedHitBox then
+                -- self.originPosition.x = self.x
+                -- self.originPosition.y = self.y
                 self.target = value
                 return
             end

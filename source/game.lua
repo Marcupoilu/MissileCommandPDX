@@ -29,7 +29,7 @@ end
 
 function Game:startGame()
     local weaponUpgrades =  {}
-    player:addWeapon(table.findByParam(weaponsData, "className", "SimpleCannon"))
+    -- player:addWeapon(table.findByParam(weaponsData, "className", "SimpleCannon"))
     local passive = getUpgradePassive("attackSpeedBonus")
     passive.count -= 1
     player:addPassive(passive)
@@ -39,7 +39,7 @@ function Game:startGame()
     -- player:addWeapon(table.findByParam(weaponsData, "className", "Serpentine"))
     -- player:addWeapon(table.findByParam(weaponsData, "className", "Shockwave"))
     -- player:addWeapon(table.findByParam(weaponsData, "className", "Rocket"))
-    -- player:addWeapon(table.findByParam(weaponsData, "className", "Guided"))
+    player:addWeapon(table.findByParam(weaponsData, "className", "Guided"))
     -- player:addWeapon(table.findByParam(weaponsData, "className", "Flamethrower"))
     -- player:addWeapon(table.findByParam(weaponsData, "className", "Freezer"))
     -- player:addWeapon(table.findByParam(weaponsData, "className", "LaserDome"))
