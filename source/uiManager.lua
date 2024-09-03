@@ -95,11 +95,11 @@ function UiManager:levelUpDisplay()
         if i == levelUpIndex then
             gfx.setColor(gfx.kColorBlack)
             gfx.setLineWidth(4)
-            gfx.drawRoundRect(self.horizontalLayoutLevelUp.positionBaseX + (i*(levelUpCellWidth+levelUpDistance)) +5 ,self.horizontalLayoutLevelUp.positionBaseY + _pick_anim_y:get() +5, levelUpCellWidth -10, levelUpCellHeight-10, 10)
+            gfx.drawRect(self.horizontalLayoutLevelUp.positionBaseX + (i*(levelUpCellWidth+levelUpDistance)) +12 ,self.horizontalLayoutLevelUp.positionBaseY + _pick_anim_y:get() +12, levelUpCellWidth -24, levelUpCellHeight-24)
         end
         gfx.setImageDrawMode(gfx.kDrawModeFillBlack)
         gfx.setFont(smallFontAmmolite,gfx.kVariantBold)
-        gfx.drawTextAligned(string.upper(value.descriptionText) , self.horizontalLayoutLevelUp.positionBaseX + 50 + (i*(levelUpCellWidth+levelUpDistance)) + 10,self.horizontalLayoutLevelUp.positionBaseY + _pick_anim_y:get() + 150, kTextAlignment.center)
+        gfx.drawTextAligned(string.upper(value.descriptionText) , self.horizontalLayoutLevelUp.positionBaseX + 50 + (i*(levelUpCellWidth+levelUpDistance)) + 6,self.horizontalLayoutLevelUp.positionBaseY + _pick_anim_y:get() + 150, kTextAlignment.center)
         value.image:scaledImage(0.1):draw( self.horizontalLayoutLevelUp.positionBaseX + 10 + (i*(levelUpCellWidth+levelUpDistance)) + 20,self.horizontalLayoutLevelUp.positionBaseY + _pick_anim_y:get() + 50)
         gfx.setImageDrawMode(gfx.kDrawModeCopy)
         upgradeContour:draw(self.horizontalLayoutLevelUp.positionBaseX + (i*(levelUpCellWidth+levelUpDistance)),self.horizontalLayoutLevelUp.positionBaseY + _pick_anim_y:get())

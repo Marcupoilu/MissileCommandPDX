@@ -29,7 +29,7 @@ function Player:start()
     self.hp = self.hpMax
     self.shield = 0
     self.xp = 0
-    self.xpMax = 5
+    self.xpMax = 1
     self.xpBonus = 0
     self.damageBonus = 0
     self.attackSpeedBonus = 0
