@@ -35,6 +35,7 @@ import "upgradeWeapon.lua"
 import "uiManager.lua"
 import "upgradesData.lua"
 import "weaponsData.lua"
+CreateWeaponsData()
 import "cannon.lua"
 import "cannonsData.lua"
 
@@ -42,12 +43,24 @@ import "cannonsData.lua"
 p = ParticleCircle(0,0)
 pWeapon = ParticleCircle(0,0)
 pFlamethrower = ParticleCircle(0,0)
-targetTime = 120
+-- Collections --
+particles = {}
+upgrades = upgradesData
+enemies = {}
+debugRects = {}
+beams = {}
+bullets = {}
+-- Managers -- 
+shake = ScreenShake()
+uiManager = UiManager()
+player = Player({x=200,y=202}, {x=200,y=200})
+
+targetTime = 15*60
 time = 0
 deltaTime = 0
-game = Game()
 crankPosition = playdate.getCrankPosition()
-game:startGame()
+game = nil
+-- game:startGame()
 
 
 gameUpdate = function()

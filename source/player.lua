@@ -2,11 +2,30 @@ class("Player").extends()
 
 function Player:init( basePosition, gunPosition)
     local cannonBase = gfx.image.new("images/player/bases/base_cannon")
-    local cannonGun = gfx.image.new("images/player/guns/gun_cannon")
+    self.cannonGun = gfx.image.new("images/player/guns/gun_cannon")
     self.x = gunPosition.x
     self.y = gunPosition.y
+    self.cannonBaseSprite = gfx.sprite.new( cannonBase )
+    self.cannonBaseSprite:setZIndex(0)
+    self.cannonBaseSprite:setTag(1)
+    self.cannonBaseSprite:setCollideRect(0,0,self.cannonBaseSprite:getSize())
+    self.cannonBaseSprite:setGroups({1})
+    self.cannonGunSprite = gfx.sprite.new( self.cannonGun )
+    self.cannonGunSprite:setZIndex(-1)
+    self.cannonGunSprite:setCenter(0.5, 1)
+    self.cannonBaseSprite:moveTo( basePosition.x, basePosition.y ) -- this is where the center of the sprite is placed; (200,120) is the center of the Playdate screen
+    self.cannonGunSprite:moveTo( gunPosition.x, gunPosition.y ) -- this is where the center of the sprite is placed; (200,120) is the center of the Playdate screen
+    self.cannonBaseSprite:add() -- This is critical!
+    self.cannonGunSprite:add() -- This is critical!
+    self.cannons = {table.findByParam(cannonsData, "name", "Defender"),table.findByParam(cannonsData, "name", "Blaster")}
+    self.weapons = {}
+    self.passives = {}
+    self.chosenCanon = nil
+end
+
+function Player:start()
     self.level = 1
-    self.hpMax = 100
+    self.hpMax = 1
     self.hp = self.hpMax
     self.shield = 0
     self.xp = 0
@@ -28,22 +47,15 @@ function Player:init( basePosition, gunPosition)
     self.core = 0
     self.runLevel = 1
     self.enemiesKilled = 0
-    self.cannonBaseSprite = gfx.sprite.new( cannonBase )
-    self.cannonBaseSprite:setZIndex(0)
-    self.cannonBaseSprite:setTag(1)
-    self.cannonBaseSprite:setCollideRect(0,0,self.cannonBaseSprite:getSize())
-    self.cannonBaseSprite:setGroups({1})
-    self.cannonGunSprite = gfx.sprite.new( cannonGun )
-    self.cannonGunSprite:setZIndex(-1)
-    self.cannonGunSprite:setCenter(0.5, 1)
-    self.cannonBaseSprite:moveTo( basePosition.x, basePosition.y ) -- this is where the center of the sprite is placed; (200,120) is the center of the Playdate screen
-    self.cannonGunSprite:moveTo( gunPosition.x, gunPosition.y ) -- this is where the center of the sprite is placed; (200,120) is the center of the Playdate screen
-    self.cannonBaseSprite:add() -- This is critical!
-    self.cannonGunSprite:add() -- This is critical!
-    self.weapons = {}
-    self.passives = {}
+    self.success = false
+    self.cannonGunSprite:setVisible(true)
     self.timer = playdate.timer.new(30000 - (((self.regenerationRate*30000)/100)), self.regeneration, self)
     self.timer.repeats = true
+end
+
+function Player:updateCannon()
+    self.cannonGun = self.chosenCanon.image
+    self.cannonGunSprite:setImage(self.cannonGun)
 end
 
 function Player:update()
@@ -155,5 +167,5 @@ function Player:loseHp(value)
 end
 
 function Player:death()
-    playdate.restart()
+    game:loseGame()
 end

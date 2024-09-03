@@ -3,43 +3,41 @@ class("Game").extends()
 local interval = minutes_to_milliseconds(0.5)
 
 
-function Game:init()
-    -- Collections --
-    particles = {}
-    upgrades = upgradesData
-    enemies = {}
-    debugRects = {}
-    spawners = {}
-    beams = {}
-    bullets = {}
-    enemyPoolLimit = 25
-    player = Player({x=200,y=202}, {x=200,y=200})
-    shake = ScreenShake()
-    uiManager = UiManager()
+function Game:init(maxPool, level)
+    enemyPoolLimit = maxPool
     gfx.setBackgroundColor(gfx.kColorBlack)
     gfx.clear()
     generate = false
     playdate.resetElapsedTime()
-    self.gameTime = minutes_to_milliseconds(30)
-    self.waves = wavesData
+    self.waves = table.findByParam(wavesData, "Level", level).Waves
     self.waveNumber = 1
     self.finish = false
     time = 0
+    self:startGame()
 end
 
 function Game:startGame()
-    local weaponUpgrades =  {}
+    spawners = {}
+    for key, value in pairs(playdate.timer.allTimers()) do
+        value:remove()
+    end
+    player.weapons = {}
+    CreateWeaponsData()
+    table.each(player.chosenCanon.weapons, function (w)
+        player:addWeapon(w)
+    end)
+    player:updateCannon()
     -- player:addWeapon(table.findByParam(weaponsData, "className", "SimpleCannon"))
-    local passive = getUpgradePassive("attackSpeedBonus")
-    passive.count -= 1
-    player:addPassive(passive)
+    -- local passive = getUpgradePassive("attackSpeedBonus")
+    -- passive.count -= 1
+    -- player:addPassive(passive)
     -- player:addWeapon(table.findByParam(weaponsData, "className", "Beam"))
     -- player:addWeapon(table.findByParam(weaponsData, "className", "Wiper"))
     -- player:addWeapon(table.findByParam(weaponsData, "className", "Plasma"))
     -- player:addWeapon(table.findByParam(weaponsData, "className", "Serpentine"))
     -- player:addWeapon(table.findByParam(weaponsData, "className", "Shockwave"))
     -- player:addWeapon(table.findByParam(weaponsData, "className", "Rocket"))
-    player:addWeapon(table.findByParam(weaponsData, "className", "Guided"))
+    -- player:addWeapon(table.findByParam(weaponsData, "className", "Guided"))
     -- player:addWeapon(table.findByParam(weaponsData, "className", "Flamethrower"))
     -- player:addWeapon(table.findByParam(weaponsData, "className", "Freezer"))
     -- player:addWeapon(table.findByParam(weaponsData, "className", "LaserDome"))
@@ -100,7 +98,35 @@ function Game:endGame()
     for key, value in pairs(bulletsCopy) do
         value:destroyWithParticles()
     end   
+    player.success = true
     playdate.timer.new(300, function ()
+        playdate.update = winScreenUpdate
+    end)    
+end
+
+function Game:loseGame()
+    self.finish = true
+    table.each(spawners, function (s)
+        s:stopSpawn()
+    end)
+    p:moveTo(player.x, player.y)
+    p:setSize(10,10)
+    p:setColor(gfx.kColorWhite)
+    p:setMode(Particles.modes.DECAY)
+    p:setSpeed(3, 7)
+    p:add(5)
+    player.cannonGunSprite:setVisible(false)  
+    enemiesCopy = table.shallowcopy(enemies)
+    for key, value in pairs(enemiesCopy) do
+        value:death()
+    end
+    bulletsCopy = table.shallowcopy(bullets)
+    for key, value in pairs(bulletsCopy) do
+        value:destroyWithParticles()
+    end 
+    player.success = false
+    playdate.timer.new(500, function ()
+        playdate.display.setOffset(0, 0)
         playdate.update = winScreenUpdate
     end)
 end

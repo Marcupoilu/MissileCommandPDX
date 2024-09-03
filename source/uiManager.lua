@@ -170,7 +170,11 @@ function UiManager:winScreenUpdate()
     gfx.fillRect(0, 0, 400, 210 + endScreenTweet:get())
     gfx.setFont(diamond_20,gfx.kVariantItalic)
     gfx.setImageDrawMode(gfx.kDrawModeFillWhite)
-    gfx.drawTextAligned("DEFENSE "..player.runLevel.." SUCCESS", rectWidth, 20+ endScreenTweet:get(), kTextAlignment.center)
+    if player.success == true then
+        gfx.drawTextAligned("DEFENSE "..player.runLevel.." SUCCESS", rectWidth, 20+ endScreenTweet:get(), kTextAlignment.center)
+    else
+        gfx.drawTextAligned("DEFENSE "..player.runLevel.." FAILED", rectWidth, 20+ endScreenTweet:get(), kTextAlignment.center)
+    end
     -- middle part
     core:scaledImage(0.07):draw( 50,70 + endScreenTweet:get())
     gfx.setFont(smallFontAmmolite,gfx.kVariantItalic)
@@ -213,7 +217,7 @@ function UiManager:winScreenUpdate()
     end
 end
 local chooseCannonBool = false
-
+local A = false
 function UiManager:mainMenuUpdate()
     gfx.setImageDrawMode(gfx.kDrawModeCopy)
     mainMenu:draw(0,0)
@@ -235,7 +239,8 @@ function UiManager:mainMenuUpdate()
     end
     gfx.setColor(gfx.kColorWhite)
     gfx.fillCircleAtPoint(mainMenuPositions[mainMenuIndex+1].x, mainMenuPositions[mainMenuIndex+1].y, 8.5)
-    if playdate.buttonJustPressed(playdate.kButtonA) then
+    if playdate.buttonJustPressed(playdate.kButtonA) and chooseCannonBool == false then
+        A = true
         if mainMenuIndex == 0 then
             chooseCannonBool = true
         end
@@ -246,30 +251,30 @@ function UiManager:mainMenuUpdate()
             
         end
     end
+    if playdate.buttonJustReleased(playdate.kButtonA) then
+        A = false
+    end
     if chooseCannonBool == true then
         self:chooseCannon()
         if playdate.buttonJustPressed(playdate.kButtonB) then
             chooseCannonBool = false
         end
     end
-    self:chooseCannon()
 end
 
 function UiManager:chooseCannon()
     gfx.setColor(gfx.kColorBlack)
     gfx.fillRect(104, 76, 140, 132)
-    if chooseCannonBool == false then
-        if playdate.buttonJustPressed(playdate.kButtonRight) then
-            cannonIndex = math.ring_int(cannonIndex +1, 0, table.count(cannonsData)-1)
-        end
-        if playdate.buttonJustPressed(playdate.kButtonLeft) then
-            cannonIndex -= 1
-            if cannonIndex == -1 then
-                cannonIndex = table.count(cannonsData)-1
-            end
+    if playdate.buttonJustPressed(playdate.kButtonRight) then
+        cannonIndex = math.ring_int(cannonIndex +1, 0, table.count(player.cannons)-1)
+    end
+    if playdate.buttonJustPressed(playdate.kButtonLeft) then
+        cannonIndex -= 1
+        if cannonIndex == -1 then
+            cannonIndex = table.count(player.cannons)-1
         end
     end
-    local cannon = cannonsData[cannonIndex+1]
+    local cannon = player.cannons[cannonIndex+1]
     local width, height = cannon.image:getSize()
     local x = GetXYCenteredFromRect(104,76,140,132, width, height).x
     local y = GetXYCenteredFromRect(104,76,140,132, width, height).y
@@ -300,6 +305,13 @@ function UiManager:chooseCannon()
         wpUpgrade.image:scaledImage(0.05):draw(startX + offset, 170)
         offset = offset + scaledImageWidth + offsetAdd
     end)
+    if playdate.buttonJustPressed(playdate.kButtonA) and A == false then
+        player.chosenCanon = cannon
+        player:start()
+        game = Game(25,1)
+        chooseCannonBool = false
+        playdate.update = gameUpdate
+    end
 end
 
 function UiManager:createBar(x,y,max, current, height)

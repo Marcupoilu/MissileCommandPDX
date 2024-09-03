@@ -49,6 +49,8 @@ end
 
 function SimpleCannon:shoot()
     SimpleCannon.super.shoot()
+    print("simplecannon")
+  
     local angles = cutAngle(self.projectileAmount + player.projectileAmount)
     for key, angle in ipairs(angles) do
         bullet = Bullet(self.x, self.y, self.speed, self.damage+((player.damageBonus*self.damage)/100), angle, self.scale+((player.scaleBonus*self.scale)/100), 100000, gfx.image.new("images/bullet" ))
