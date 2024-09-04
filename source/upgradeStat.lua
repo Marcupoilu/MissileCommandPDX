@@ -1,10 +1,11 @@
 class("UpgradeStat").extends(Upgrade)
 table.insert(Upgrade.types, UpgradeStat)
 
-function UpgradeStat:init(stats, descriptionText, image, count, rarity, inventory)
+function UpgradeStat:init(stats, descriptionText, image, count, rarity, inventory, name)
     UpgradeStat.super.init(self, descriptionText, image, count, rarity)
     self.stats = stats
     self.inventory = inventory
+    self.name = name
 end
 
 function UpgradeStat:updateDescriptionText()

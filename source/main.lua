@@ -38,6 +38,13 @@ import "weaponsData.lua"
 CreateWeaponsData()
 import "cannon.lua"
 import "cannonsData.lua"
+import "condition.lua"
+import "unlock.lua"
+import "unlockWeapon.lua"
+import "unlockPassive.lua"
+import "unlockCannon.lua"
+import "unlocksData.lua"
+import "playerBonus.lua"
 
 -- playdate.display.setRefreshRate(50)
 p = ParticleCircle(0,0)
@@ -60,6 +67,7 @@ time = 0
 deltaTime = 0
 crankPosition = playdate.getCrankPosition()
 game = nil
+playerBonus = PlayerBonus()
 -- game:startGame()
 
 

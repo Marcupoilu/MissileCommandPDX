@@ -99,6 +99,15 @@ function Game:endGame()
         value:destroyWithParticles()
     end   
     player.success = true
+    table.each(unlocksData, function (unlock)
+        if table.contains(player.unlocks, unlock) == false then
+            printTable(unlock)
+            if unlock.condition:checkCondition() == true then
+                unlock:applyUnlock()
+                table.insert(player.currentUnlocks, unlock)
+            end
+        end
+    end)
     playdate.timer.new(300, function ()
         playdate.update = winScreenUpdate
     end)    
@@ -125,6 +134,14 @@ function Game:loseGame()
         value:destroyWithParticles()
     end 
     player.success = false
+    table.each(unlocksData, function (unlock)
+        if table.contains(player.unlocks, unlock) == false then
+            if unlock.condition.checkCondition() == true then
+                unlock.applyUnlock()
+                table.insert(player.currentUnlocks, unlock)
+            end
+        end
+    end)
     playdate.timer.new(500, function ()
         playdate.display.setOffset(0, 0)
         playdate.update = winScreenUpdate
