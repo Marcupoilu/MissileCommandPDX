@@ -1,11 +1,11 @@
 class("Player").extends()
 
 function Player:init( basePosition, gunPosition)
-    local cannonBase = gfx.image.new("images/player/bases/base_cannon")
+    self.cannonBase = gfx.image.new("images/player/bases/base_cannon")
     self.cannonGun = gfx.image.new("images/player/guns/gun_cannon")
     self.x = gunPosition.x
     self.y = gunPosition.y
-    self.cannonBaseSprite = gfx.sprite.new( cannonBase )
+    self.cannonBaseSprite = gfx.sprite.new( self.cannonBase )
     self.cannonBaseSprite:setZIndex(0)
     self.cannonBaseSprite:setTag(1)
     self.cannonBaseSprite:setCollideRect(0,0,self.cannonBaseSprite:getSize())
@@ -17,7 +17,7 @@ function Player:init( basePosition, gunPosition)
     self.cannonGunSprite:moveTo( gunPosition.x, gunPosition.y )
     self.cannonBaseSprite:add()
     self.cannonGunSprite:add()
-    self.cannons = {table.findByParam(cannonsData, "name", "Defender"),table.findByParam(cannonsData, "name", "Blaster")}
+    self.cannons = {table.findByParam(cannonsData, "id", "blaster"),table.findByParam(cannonsData, "id", "laser")}
     self.weapons = {}
     self.passives = {}
     self.unlocks = {}
@@ -62,7 +62,9 @@ end
 
 function Player:updateCannon()
     self.cannonGun = self.chosenCanon.image
+    self.cannonBase = self.chosenCanon.imageBase
     self.cannonGunSprite:setImage(self.cannonGun)
+    self.cannonBaseSprite:setImage(self.cannonBase)
 end
 
 function Player:update()

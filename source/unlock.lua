@@ -13,7 +13,7 @@ end
 function Unlock:applyUnlock()
     self.unlocked = true
     table.insert(playerBonus.gameData.unlocks, self)
-    if upgrade ~= nil then
+    if upgrade ~= nil and self.className ~= "UnlockCannon" then
         table.insert(playerBonus.gameData.shopUnlocks, upgrade)
     end
 end

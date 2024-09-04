@@ -39,6 +39,7 @@ CreateWeaponsData()
 import "cannon.lua"
 import "cannonsData.lua"
 import "condition.lua"
+import "conditionWeaponLevel.lua"
 import "unlock.lua"
 import "unlockWeapon.lua"
 import "unlockPassive.lua"
@@ -69,7 +70,6 @@ crankPosition = playdate.getCrankPosition()
 game = nil
 playerBonus = PlayerBonus()
 -- game:startGame()
-
 
 gameUpdate = function()
     deltaTime = playdate.getElapsedTime()
@@ -119,4 +119,11 @@ mainMenuUpdate = function()
     sequence.update()
 end
 
-playdate.update = mainMenuUpdate
+unlockScreenUpdate = function()
+    deltaTime = playdate.getElapsedTime()
+    playdate.resetElapsedTime()
+    uiManager:unlockScreenUpdate()
+    sequence.update()
+end
+
+playdate.update = unlockScreenUpdate

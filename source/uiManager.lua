@@ -25,6 +25,10 @@ local cannonIndex = 0
 local core = gfx.image.new("images/player/planet-core")
 local enemy = gfx.image.new("images/enemies/large/enemy_large_01")
 local mainMenu = gfx.image.new("images/ui/menus/main_menu")
+local unlockMenu = gfx.image.new("images/ui/menus/achievement_panel")
+local unlockHeader = gfx.image.new("images/ui/menus/achievement_header")
+local unlockItem = gfx.image.new("images/ui/menus/achievement_item")
+
 local endScreenContour = gfx.image.new("images/ui/menus/end_screen")
 local upgradeContour = gfx.image.new("images/ui/menus/upgrade_panel")
 local chooseCannonArrowLeft = gfx.image.new("images/ui/arrow_left")
@@ -245,6 +249,7 @@ local chooseCannonBool = false
 local A = false
 
 function UiManager:mainMenuUpdate()
+    gfx.clear()
     gfx.setImageDrawMode(gfx.kDrawModeCopy)
     mainMenu:draw(0,0)
     gfx.setFont(diamond_20,gfx.kVariantBold)
@@ -271,10 +276,9 @@ function UiManager:mainMenuUpdate()
             chooseCannonBool = true
         end
         if mainMenuIndex == 1 then
-            
         end
         if mainMenuIndex == 2 then
-            
+            playdate.update = unlockScreenUpdate
         end
     end
     if playdate.buttonJustReleased(playdate.kButtonA) then
@@ -338,6 +342,114 @@ function UiManager:chooseCannon()
         chooseCannonBool = false
         playdate.update = gameUpdate
     end
+end
+
+local unlockHeader = gfx.image.new("images/ui/menus/achievement_header")
+local unlockItem = gfx.image.new("images/ui/menus/achievement_item")
+local selectedItem = 1
+
+function UiManager:unlockScreenUpdate()
+    gfx.clear(gfx.kColorBlack)
+    if playdate.buttonJustPressed(playdate.kButtonB) then
+        mainMenuIndex = 2
+        playdate.update = mainMenuUpdate
+    end
+    local unlockType = nil
+    local offsetBetweenHeaderAndItems = 35
+    local offsetBetweenItems = 5
+    local offsetBetweenCategories = 20
+    local itemNumber = 5
+    local offsetBetweenHeaders = 0  -- Ajouté pour l'offset entre les headers
+    local marginX = 5
+
+    local currentX = 0
+    local currentY = 0
+    local currentHeaderY = 0
+    local rowItemCount = 0
+    local rows = 1
+    local headers = {}
+    local itemCount = 0
+    local categories = {}
+    local currentCategoryNumber = {}
+    table.each(unlocksData, function(unlock)
+        
+        if unlock.className ~= unlockType then
+            currentX = 0
+            local header = {name = unlock.className, completion = 0}
+            table.insert(headers, header)
+            -- nouvelle catégorie ici
+            if unlockType ~= nil then
+                table.insert(categories, table.shallowcopy(currentCategoryNumber))
+                currentCategoryNumber = {}
+                offsetBetweenHeaders = unlockItem:getSize()*rows - unlockItem:getSize() + offsetBetweenCategories
+                currentY = currentY + unlockHeader.height + offsetBetweenHeaders
+                currentHeaderY = currentY
+            end
+            currentX = 0  
+            rowItemCount = 0
+            rows = 1
+            unlockType = unlock.className
+        end
+        itemCount += 1
+        table.insert(currentCategoryNumber, itemCount)
+        table.each(headers, function (header)
+            unlockHeader:draw(0 + marginX, currentHeaderY + 5)
+        end)
+        unlockItem:draw(currentX + marginX, currentY + offsetBetweenHeaderAndItems)
+        gfx.setColor(gfx.kColorWhite)
+        gfx.setLineWidth(3)
+        if itemCount == selectedItem then
+            gfx.drawRect(currentX + marginX + 5, currentY + offsetBetweenHeaderAndItems + 5,unlockItem:getSize()-10, unlockItem:getSize()-10)
+        end
+        
+        currentX = currentX + unlockItem.width + offsetBetweenItems
+        rowItemCount = rowItemCount + 1
+        
+        if rowItemCount >= itemNumber then
+            rows += 1
+            currentX = 0 
+            currentY = currentY + unlockItem.height + offsetBetweenItems 
+            rowItemCount = 0 
+        end
+    end)
+    table.insert(categories, table.shallowcopy(currentCategoryNumber))
+    local x,y = gfx.getDrawOffset()
+    unlockMenu:draw(0 + x,0 - y)
+    if playdate.buttonJustPressed(playdate.kButtonLeft) then
+        selectedItem -= 1
+        if selectedItem <= 0 then
+            selectedItem = 1
+        end
+    end
+    if playdate.buttonJustPressed(playdate.kButtonRight) then
+        selectedItem = math.ring_int(selectedItem +1, 0, table.count(unlocksData)-1)
+        if selectedItem <= 0 then
+            selectedItem = 1
+        end
+    end
+        if playdate.buttonJustPressed(playdate.kButtonDown) then
+            local numberOfItemCategory = 0
+            local i = 1
+            for key, value in pairs(categories) do
+                if selectedItem == value[i] then
+                    numberOfItemCategory = table.count(categories[i])
+                end
+                i += 1
+            end
+            selectedItem += itemNumber
+            local modulo = numberOfItemCategory%5
+            selectedItem -= modulo
+        if selectedItem >= table.count(unlocksData)-1 then
+            selectedItem -= itemNumber
+        end
+    end
+    if playdate.buttonJustPressed(playdate.kButtonUp) then
+        selectedItem -= itemNumber
+        if selectedItem <= 0 then
+            selectedItem += itemNumber
+        end
+    end
+    -- gfx.setDrawOffset(0, y - 1)
 end
 
 function UiManager:createBar(x,y,max, current, height)
