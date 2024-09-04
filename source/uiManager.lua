@@ -48,13 +48,13 @@ function UiManager:generateUpgrades()
     local pass = false
     for i = 1, levelUpCellNumber do
         repeat
-            if table.count(discardedUps) >= table.count(upgradesData) then
+            if table.count(discardedUps) >= table.count(player.shopUnlocks) then
                 pass = true
                 break
             end
             passiveCheck = false
             weaponCheck = false
-            rand = table.random(upgrades)
+            rand = table.random(player.shopUnlocks)
             if table.contains(discardedUps, rand) == false then
                 table.insert(discardedUps, rand)
             end
@@ -204,7 +204,31 @@ function UiManager:winScreenUpdate()
     gfx.setFont(smallFontAmmolite,gfx.kVariantItalic)
     gfx.setImageDrawMode(gfx.kDrawModeFillWhite)
     gfx.drawTextAligned("UNLOCKS", rectWidth, 125 + endScreenTweet:get(), kTextAlignment.center)
+    local offset = 0
+    local offsetAdd = 10
+    local totalWidth = 0
+    local scaledImageWidth = 0
+    local imageWidth = 30
+    local imageHeight = 30
+    
+    local rectCenterX = rectX + rectWidth / 2
+    local rectCenterY = rectY + rectHeight / 2 + offset + endScreenTweet:get()
+    
+    table.each(player.currentUnlocks, function (w)
+        scaledImageWidth = w.image:scaledImage(0.05):getSize()
+        totalWidth = totalWidth + scaledImageWidth + offsetAdd
+    end)
+    totalWidth = totalWidth - offsetAdd 
+    
+    local startX = rectCenterX - totalWidth / 2
+    
+    table.each(player.currentUnlocks, function (w)
+        gfx.setImageDrawMode(gfx.kDrawModeInverted)
+        w.image:scaledImage(0.05):draw(startX + offset, rectCenterY - imageHeight / 2 + 40)
+        offset = offset + scaledImageWidth + offsetAdd
+    end)
     gfx.setFont(verySmallFont,gfx.kVariantItalic)
+    gfx.setImageDrawMode(gfx.kDrawModeFillWhite)
     gfx.drawTextAligned("PRESS BUTTON TO CONTINUE", rectWidth, 200 + endScreenTweet:get(), kTextAlignment.center)
     gfx.setImageDrawMode(gfx.kDrawModeCopy)
     endScreenContour:draw(0,0 + endScreenTweet:get())
@@ -216,8 +240,10 @@ function UiManager:winScreenUpdate()
         return
     end
 end
+
 local chooseCannonBool = false
 local A = false
+
 function UiManager:mainMenuUpdate()
     gfx.setImageDrawMode(gfx.kDrawModeCopy)
     mainMenu:draw(0,0)

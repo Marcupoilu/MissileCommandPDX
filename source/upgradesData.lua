@@ -13,7 +13,7 @@ upgradesData =
     UpgradeStat({{name="lives",value=1}}, "+1 Life", "images/ui/icons/lifeUp",5,9, true),
     UpgradeStat({{name="shield",value=1}}, "+1 Shield", "images/ui/icons/shield",5,4),
     UpgradeStat({{name="rerolls",value=1}}, "+1 Reroll", "images/ui/icons/rerolls",5,2, true),
-    UpgradeStat({{name="damageBonus",value=4},{name="scaleBonus",value=4}, {name="projectileSpeedBonus",value=4}, {name="attackSpeedBonus",value=4}}, "+4% Omni", "images/ui/icons/omni",5, 10),
+    UpgradeStat({{name="damageBonus",value=4},{name="scaleBonus",value=4}, {name="projectileSpeedBonus",value=4}, {name="attackSpeedBonus",value=4}}, "+4% Omni", "images/ui/icons/omni",5, 10, nil, "omni"),
     UpgradeWeapon("SimpleCannon", "Cannon", "", "images/ui/icons/simpleCannon",10, 2 ),
     UpgradeWeapon("Beam", "Laser Beam", "", "images/ui/icons/beam",10, 3 ),
     UpgradeWeapon("Aura", "Aura", "", "images/ui/icons/aura" ,10, 3),
@@ -42,6 +42,14 @@ function getUpgradePassive(passiveName)
             if stat.name == passiveName then
                 return upgrade
             end
+        end
+    end
+end
+
+function getUpgradePassiveByName(passiveName)
+    for key, upgrade in pairs(upgradesData) do
+        if upgrade.name == passiveName then
+            return upgrade
         end
     end
 end

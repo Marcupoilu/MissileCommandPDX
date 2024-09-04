@@ -13,33 +13,36 @@ function Player:init( basePosition, gunPosition)
     self.cannonGunSprite = gfx.sprite.new( self.cannonGun )
     self.cannonGunSprite:setZIndex(-1)
     self.cannonGunSprite:setCenter(0.5, 1)
-    self.cannonBaseSprite:moveTo( basePosition.x, basePosition.y ) -- this is where the center of the sprite is placed; (200,120) is the center of the Playdate screen
-    self.cannonGunSprite:moveTo( gunPosition.x, gunPosition.y ) -- this is where the center of the sprite is placed; (200,120) is the center of the Playdate screen
-    self.cannonBaseSprite:add() -- This is critical!
-    self.cannonGunSprite:add() -- This is critical!
+    self.cannonBaseSprite:moveTo( basePosition.x, basePosition.y )
+    self.cannonGunSprite:moveTo( gunPosition.x, gunPosition.y )
+    self.cannonBaseSprite:add()
+    self.cannonGunSprite:add()
     self.cannons = {table.findByParam(cannonsData, "name", "Defender"),table.findByParam(cannonsData, "name", "Blaster")}
     self.weapons = {}
     self.passives = {}
+    self.unlocks = {}
+    self.shopUnlocks = {}
+    self.currentUnlocks = {}
     self.chosenCanon = nil
 end
 
 function Player:start()
     self.level = 1
-    self.hpMax = 100
+    self.hpMax = 100 + playerBonus.gameData.hpMax
     self.hp = self.hpMax
-    self.shield = 0
+    self.shield = 0 + playerBonus.gameData.shield
     self.xp = 0
     self.xpMax = 5
-    self.xpBonus = 0
-    self.damageBonus = 0
-    self.attackSpeedBonus = 0
-    self.scaleBonus = 0 
-    self.projectileAmount = 0
-    self.regenerationRate = 0
-    self.projectileSpeedBonus = 0
-    self.durationBonus = 0
-    self.lives = 1
-    self.rerolls = 100
+    self.xpBonus = 0 + playerBonus.gameData.xpBonus
+    self.damageBonus = 0 + playerBonus.gameData.damageBonus
+    self.attackSpeedBonus = 0 + playerBonus.gameData.attackSpeedBonus
+    self.scaleBonus = 0 + playerBonus.gameData.scaleBonus
+    self.projectileAmount = 0 + playerBonus.gameData.projectileAmount
+    self.regenerationRate = 0 + playerBonus.gameData.regenerationRate
+    self.projectileSpeedBonus = 0 + playerBonus.gameData.projectileSpeedBonus
+    self.durationBonus = 0 + playerBonus.gameData.durationBonus
+    self.lives = 1 + playerBonus.gameData.lives
+    self.rerolls = 100 + playerBonus.gameData.rerolls
     self.weaponNumber = 0
     self.passiveNumber = 0
     self.weaponNumberMax = 4
@@ -48,6 +51,10 @@ function Player:start()
     self.runLevel = 1
     self.enemiesKilled = 0
     self.success = false
+    self.unlocks = playerBonus.gameData.unlocks
+    self.shopUnlocks = playerBonus.gameData.shopUnlocks
+    self.cannons = playerBonus.gameData.cannons
+    self.currentUnlocks = {}
     self.cannonGunSprite:setVisible(true)
     self.timer = playdate.timer.new(30000 - (((self.regenerationRate*30000)/100)), self.regeneration, self)
     self.timer.repeats = true
@@ -119,7 +126,7 @@ end
 function Player:regeneration()
     if(self.regenerationRate == 0) then return end
     if(self.hp < self.hpMax) then
-        self.hp += 1
+        self.hp += 10
     end
 end
 
