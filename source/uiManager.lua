@@ -414,7 +414,7 @@ function UiManager:unlockScreenUpdate()
     end)
     table.insert(categories, table.shallowcopy(currentCategoryNumber))
     local x,y = gfx.getDrawOffset()
-    unlockMenu:draw(0 + x,0 - y)
+    -- unlockMenu:draw(0 + x,0 - y)
     if playdate.buttonJustPressed(playdate.kButtonLeft) then
         selectedItem -= 1
         if selectedItem <= 0 then
@@ -428,20 +428,34 @@ function UiManager:unlockScreenUpdate()
         end
     end
         if playdate.buttonJustPressed(playdate.kButtonDown) then
-            local numberOfItemCategory = 0
+            local missingItems = 0
             local i = 1
+            local currentCategoryIndex = 0
             for key, value in pairs(categories) do
-                if selectedItem == value[i] then
-                    numberOfItemCategory = table.count(categories[i])
-                end
+                table.each(value, function (v)
+                    if selectedItem + itemNumber == v then
+                        currentCategoryIndex = i
+                    end
+                end)
                 i += 1
             end
-            selectedItem += itemNumber
-            local modulo = numberOfItemCategory%5
-            selectedItem -= modulo
+            for i = currentCategoryIndex, 1, -1 do
+                print("new selected Item"..selectedItem + itemNumber)
+                print("Current category item count"..categories[i][table.count(categories[i])])
+                if selectedItem + itemNumber > categories[i][table.count(categories[i])] then
+                    missingItems = modulo5(table.count(categories[i]))
+                    if selectedItem + itemNumber - table.count(categories[i]) < missingItems then
+                        missingItems -= selectedItem + itemNumber - table.count(categories[i])
+                    end
+                end
+            end
+            -- print(selectedItem + itemNumber)
+            -- print(missingItems)
+            selectedItem += itemNumber - missingItems
         if selectedItem >= table.count(unlocksData)-1 then
             selectedItem -= itemNumber
         end
+        gfx.setDrawOffset(0, y - 50)
     end
     if playdate.buttonJustPressed(playdate.kButtonUp) then
         selectedItem -= itemNumber
@@ -449,7 +463,6 @@ function UiManager:unlockScreenUpdate()
             selectedItem += itemNumber
         end
     end
-    -- gfx.setDrawOffset(0, y - 1)
 end
 
 function UiManager:createBar(x,y,max, current, height)

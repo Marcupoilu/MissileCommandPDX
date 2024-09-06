@@ -149,3 +149,12 @@ function GetXYCenteredFromRect(rectX, rectY, rectWidth, rectHeight, width, heigh
     local imageY = rectY + (rectHeight - height) / 2
     return {x=imageX, y=imageY}
 end
+
+function modulo5(n)
+    local reste = n % 5
+    if reste == 0 then
+        return 0
+    else
+        return 5 - reste
+    end
+end
