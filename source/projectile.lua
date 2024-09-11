@@ -21,7 +21,7 @@ function Projectile:init(x,y,speed, damage, offsetCrank, scale, duration)
     local baseSize = self:getSize()
     self.scale = math.ceil(baseSize  * self.scale) / baseSize
     self:setScale(self.scale)
-
+    self:setCenter(0.5, 0.5)
     
 
     if duration ~= nil then
@@ -29,7 +29,7 @@ function Projectile:init(x,y,speed, damage, offsetCrank, scale, duration)
     end
     self.radius = 0
     self.offset = offsetCrank
-    if self:isa(BulletPlasma) == false and self:isa(BulletAura) == false and self:isa(BulletBlackHole) == false then
+    if self:isa(BulletAura) == false and self:isa(BulletBlackHole) == false then
         self:setRotation(self.originAngle + 90)
     end
     if self.duration ~= nil or self.duration ~= 0 then

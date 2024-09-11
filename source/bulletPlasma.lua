@@ -13,8 +13,8 @@ end
 
 function BulletPlasma:update()
     self:animate()
-    -- self.rot += self.speed
-    -- self:setRotation(self.rot)
+    self.rot += self.speed
+    self:setRotation(self.rot)
     if self.x <= 0 or self.x >= 400 then
         self.originAngle = 180-self.originAngle
         self:resetPosAndRot()
