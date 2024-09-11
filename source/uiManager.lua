@@ -366,7 +366,7 @@ function UiManager:unlockScreenUpdate()
     local currentY = 0
     local currentHeaderY = 0
     local rowItemCount = 0
-    local rows = 1
+    local rows = {}
     local headers = {}
     local itemCount = 0
     local items = {}
@@ -378,6 +378,7 @@ function UiManager:unlockScreenUpdate()
             currentX = 0
             local header = {name = unlock.className, completion = 0}
             table.insert(headers, header)
+            table.insert(rows, {})
             -- nouvelle catégorie ici
             if unlockType ~= nil then
                 table.insert(categories, table.shallowcopy(currentCategoryNumber))
@@ -388,7 +389,6 @@ function UiManager:unlockScreenUpdate()
             end
             currentX = 0  
             rowItemCount = 0
-            rows = 1
             unlockType = unlock.className
         end
         itemCount += 1
@@ -408,7 +408,6 @@ function UiManager:unlockScreenUpdate()
         rowItemCount = rowItemCount + 1
         
         if rowItemCount >= itemNumber then
-            rows += 1
             currentX = 0 
             currentY = currentY + unlockItem.height + offsetBetweenItems 
             rowItemCount = 0 
@@ -476,17 +475,14 @@ function UiManager:unlockScreenUpdate()
                     xOffset += 63
                 end
             end
-        gfx.setDrawOffset(0, y - 50)
+        gfx.setDrawOffset(0, y - 55)
     end
 
     if playdate.buttonJustPressed(playdate.kButtonUp) then
-        local lastItemCount = lastLineItemCount(table.count(categories[table.count(categories)]))
-        local rangeOfItem = itemCount - lastItemCount
-        for i = rangeOfItem , itemCount do
-            if selectedItem == i then
-                return
-            end
+        if selectedItem - 5 <= 0 then
+            return
         end
+    
         local positionTest = {x=items[selectedItem].x,y=items[selectedItem].y-63}
         local contains = false
         for key, item in pairs(items) do
@@ -515,9 +511,10 @@ function UiManager:unlockScreenUpdate()
         if contains == false then
             local xOffset = 63
             local found = false
+
             while(found == false) do
                 for key, item in pairs(items) do
-                    if positionTest.x + xOffset == item.x and positionTest.y == item.y then
+                    if positionTest.x - xOffset == item.x and positionTest.y - 43 == item.y then
                         selectedItem = indexOf(items, item) or 0
                         found = true
                     end
@@ -525,7 +522,7 @@ function UiManager:unlockScreenUpdate()
                 xOffset += 63
             end
         end
-        gfx.setDrawOffset(0, y + 50)
+        gfx.setDrawOffset(0, y + 55)
     end
 end
 
