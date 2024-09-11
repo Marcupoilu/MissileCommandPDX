@@ -15,10 +15,11 @@ function Bullet:init(x,y,speed, damage, offsetCrank, scale, duration, bulletImag
 
     self:updateImage(bulletImage)
     
-    self:setCollideRect(0,0,self:getSize())
     Bullet.super.init(self,x,y,speed, damage, offsetCrank, scale, duration)
-
+    
     self:updateImage(bulletImage)
+    
+    self:setCollideRect(0,0,self:getSize())
 end
 
 function Bullet:animate()
