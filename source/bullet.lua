@@ -12,15 +12,13 @@ function Bullet:init(x,y,speed, damage, offsetCrank, scale, duration, bulletImag
         end
     end
     self.state = "Idle"
-    if table.getsize(self.animations) <= 0 then
-        self:setImage(bulletImage)
-    else
-        self.currentAnimation = table.findByParam(self.animations, "Name", self.state).Animation
-        self:setImage(self.currentAnimation:image())
-    end
+
+    self:updateImage(bulletImage)
     
     self:setCollideRect(0,0,self:getSize())
     Bullet.super.init(self,x,y,speed, damage, offsetCrank, scale, duration)
+
+    self:updateImage(bulletImage)
 end
 
 function Bullet:animate()
@@ -36,5 +34,14 @@ function Bullet:update()
     self:moveTo(self.radius*math.cos(math.rad(self.originAngle + self.offset)) + self.originPosition.x, self.radius*math.sin(math.rad(self.originAngle + self.offset)) + self.originPosition.y)
     if self.x > playdate.display.getWidth() or self.y > playdate.display.getHeight() or self.x < 0 or self.y < 0 then
         self:remove()
+    end
+end
+
+function Bullet:updateImage(bulletImage)
+    if table.getsize(self.animations) <= 0 then
+        self:setImage(bulletImage)
+    else
+        self.currentAnimation = table.findByParam(self.animations, "Name", self.state).Animation
+        self:setImage(self.currentAnimation:image())
     end
 end
