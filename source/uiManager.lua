@@ -438,21 +438,8 @@ function UiManager:unlockScreenUpdate()
                     return
                 end
             end
-            -- if table.count(categories[table.count(categories)]) <= 5 then
-            --     for key, number in pairs(categories[table.count(categories)]) do
-            --         table.insert(maxSelectedItems, number)
-            --     end
-            -- end 
-            -- if table.count(categories[table.count(categories)]) > 5 then
-            --     for i = 1, 10, 1 do
-                    
-            --     end
-            -- end 
-
             local positionTest = {x=items[selectedItem].x,y=items[selectedItem].y+63}
             local contains = false
-            -- printTable(positionTest)
-            -- printTable(items)
             for key, item in pairs(items) do
                 if positionTest.x == item.x and positionTest.y == item.y then
                     contains = true
@@ -464,7 +451,6 @@ function UiManager:unlockScreenUpdate()
             end
 
             if contains == false then
-                -- check si y'a la next category qui start (si on est sur la derniere ligne)
                 local newY = positionTest.y + offsetBetweenHeaders + offsetBetweenCategories - 55
                 for key, item in pairs(items) do                  
                     if positionTest.x == item.x and newY == item.y then
@@ -480,52 +466,64 @@ function UiManager:unlockScreenUpdate()
             if contains == false then
                 local xOffset = 63
                 local found = false
-                -- printTable(items)
                 while(found == false) do
                     for key, item in pairs(items) do
                         if positionTest.x - xOffset == item.x and positionTest.y == item.y then
                             selectedItem = indexOf(items, item) or 0
                             found = true
-                            -- break
                         end
                     end
                     xOffset += 63
                 end
             end
-
-        --     local missingItems = 0
-        --     local i = 1
-        --     local currentCategoryIndex = 0
-        --     for key, value in pairs(categories) do
-        --         table.each(value, function (v)
-        --             if selectedItem + itemNumber == v then
-        --                 currentCategoryIndex = i
-        --             end
-        --         end)
-        --         i += 1
-        --     end
-        --     for i = currentCategoryIndex, 1, -1 do
-        --         print("new selected Item"..selectedItem + itemNumber)
-        --         print("Current category item count"..categories[i][table.count(categories[i])])
-        --         if selectedItem + itemNumber > categories[i][table.count(categories[i])] then
-        --             missingItems = modulo5(table.count(categories[i]))
-        --             if selectedItem + itemNumber - table.count(categories[i]) < missingItems then
-        --                 missingItems -= selectedItem + itemNumber - table.count(categories[i])
-        --             end
-        --         end
-        --     end
-        --     -- print(selectedItem + itemNumber)
-        --     -- print(missingItems)
-        --     selectedItem += itemNumber - missingItems
-        -- if selectedItem >= table.count(unlocksData)-1 then
-        --     selectedItem -= itemNumber
-        -- end
         gfx.setDrawOffset(0, y - 50)
     end
+
     if playdate.buttonJustPressed(playdate.kButtonUp) then
-        selectedItem -= itemNumber
-        if selectedItem <= 0 then
-            selectedItem += itemNumber
+        local lastItemCount = lastLineItemCount(table.count(categories[table.count(categories)]))
+        local rangeOfItem = itemCount - lastItemCount
+        for i = rangeOfItem , itemCount do
+            if selectedItem == i then
+                return
+            end
+        end
+        local positionTest = {x=items[selectedItem].x,y=items[selectedItem].y-63}
+        local contains = false
+        for key, item in pairs(items) do
+            if positionTest.x == item.x and positionTest.y == item.y then
+                contains = true
+                selectedItem = indexOf(items, item) or 0
+                break
+            else
+                contains = false
+            end
+        end
+
+        if contains == false then
+            local newY = positionTest.y - (offsetBetweenHeaders + offsetBetweenCategories) + 55
+            for key, item in pairs(items) do                  
+                if positionTest.x == item.x and newY == item.y then
+                    contains = true
+                    selectedItem = indexOf(items, item) or 0
+                    break
+                else
+                    contains = false
+                end
+            end
+        end
+        
+        if contains == false then
+            local xOffset = 63
+            local found = false
+            while(found == false) do
+                for key, item in pairs(items) do
+                    if positionTest.x + xOffset == item.x and positionTest.y == item.y then
+                        selectedItem = indexOf(items, item) or 0
+                        found = true
+                    end
+                end
+                xOffset += 63
+            end
         end
         gfx.setDrawOffset(0, y + 50)
     end
