@@ -5,9 +5,9 @@ local bulletImage = gfx.image.new("images/bulletShockwave" )
 function BulletShockwave:init(x,y,speed, damage, offsetCrank, scale, duration)
     BulletShockwave.super.init(self,x,y,speed, damage, offsetCrank, scale, duration, bulletImage)
     -- self:setImage(bulletImage)
-    self.hp = 1
+    self.hp = 6
     self.rot = 0
-    self.power = 5
+    self.power = 10
     self:setRotation(self.originAngle + 90)
 end
 function BulletShockwave:update()

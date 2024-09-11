@@ -53,15 +53,15 @@ function Orbital:shoot()
     Orbital.super.shoot()
     local angles = cutAngle(self.projectileAmount + player.projectileAmount)
     for key, angle in ipairs(angles) do
-        bulletOrbital = BulletOrbital(self.x, self.y, self.speed, self.damage+((player.damageBonus*self.damage)/100), angle, self.scale+((player.scaleBonus*self.scale)/100), self.duration, gfx.image.new("images/bullet" ))
+        bulletOrbital = BulletOrbital(self.x, self.y, self.speed, self.damage, angle, self.scale, self.duration, gfx.image.new("images/bullets/bullet_cannon" ))
     end
     playdate.timer.new(200, function ()
         for key, angle in ipairs(angles) do
-            BulletOrbital(self.x, self.y, self.speed, self.damage+((player.damageBonus*self.damage)/100), angle, self.scale+((player.scaleBonus*self.scale)/100), self.duration, gfx.image.new("images/bullet" ), bulletOrbital.originAngle, bulletOrbital.originPosition)
+            BulletOrbital(self.x, self.y, self.speed, self.damage, angle, self.scale, self.duration, gfx.image.new("images/bullets/bullet_cannon" ), bulletOrbital.originAngle, bulletOrbital.originPosition)
         end
         playdate.timer.new(200, function ()
             for key, angle in ipairs(angles) do
-                BulletOrbital(self.x, self.y, self.speed, self.damage+((player.damageBonus*self.damage)/100), angle, self.scale+((player.scaleBonus*self.scale)/100), self.duration, gfx.image.new("images/bullet" ),bulletOrbital.originAngle, bulletOrbital.originPosition)
+                BulletOrbital(self.x, self.y, self.speed, self.damage, angle, self.scale, self.duration, gfx.image.new("images/bullets/bullet_cannon" ),bulletOrbital.originAngle, bulletOrbital.originPosition)
             end
         end)
     end)

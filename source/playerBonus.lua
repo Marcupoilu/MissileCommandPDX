@@ -1,7 +1,7 @@
 class("PlayerBonus").extends()
 
 function PlayerBonus:init()
-    -- playdate.datastore.delete()
+    playdate.datastore.delete()
     self:start()
 end
 
@@ -58,11 +58,11 @@ function PlayerBonus:start()
         local shopUnlocks = table.shallowcopy(self.gameData.shopUnlocks)
         self.gameData.shopUnlocks = {}
         table.each(shopUnlocks, function (upgrade)
-            if upgrade.className == "UpgradeWeapon" then
+            if upgrade.super.className == "UpgradeWeapon" then
                 table.insert(self.gameData.shopUnlocks, table.findByParam(upgradesData, "type", upgrade.type ))
             end
-            if upgrade.className == "UpgradeStat" then
-                getUpgradePassiveByName(upgrade.name)
+            if upgrade.super.className == "UpgradeStat" then
+                table.insert(self.gameData.shopUnlocks, getUpgradePassiveByName(upgrade.name))
             end
         end)
     end

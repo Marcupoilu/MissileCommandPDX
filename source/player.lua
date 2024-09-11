@@ -32,11 +32,11 @@ function Player:start()
     self.hp = self.hpMax
     self.shield = 0 + playerBonus.gameData.shield
     self.xp = 0
-    self.xpMax = 5
+    self.xpMax = 1
     self.xpBonus = 0 + playerBonus.gameData.xpBonus
     self.damageBonus = 0 + playerBonus.gameData.damageBonus
     self.attackSpeedBonus = 0 + playerBonus.gameData.attackSpeedBonus
-    self.scaleBonus = 0 + playerBonus.gameData.scaleBonus
+    self.scaleBonus = 10 + playerBonus.gameData.scaleBonus
     self.projectileAmount = 0 + playerBonus.gameData.projectileAmount
     self.regenerationRate = 0 + playerBonus.gameData.regenerationRate
     self.projectileSpeedBonus = 0 + playerBonus.gameData.projectileSpeedBonus
@@ -65,6 +65,7 @@ function Player:updateCannon()
     self.cannonBase = self.chosenCanon.imageBase
     self.cannonGunSprite:setImage(self.cannonGun)
     self.cannonBaseSprite:setImage(self.cannonBase)
+    self.cannonBaseSprite:setCollideRect(0,0, self.cannonBaseSprite:getSize())
 end
 
 function Player:update()

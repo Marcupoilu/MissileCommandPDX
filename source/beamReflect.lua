@@ -55,6 +55,6 @@ function BeamReflect:shoot()
     BeamReflect.super.shoot()
     local angles = cutAngle(self.projectileAmount + player.projectileAmount)
     for key, angle in ipairs(angles) do
-        bulletBeamReflect = BulletBeamReflect(self.x, self.y - 20, self.speed, self.damage+((player.damageBonus*self.damage)/100), angle, self.scale+((player.scaleBonus*self.scale)/100), self.duration, self.hp)
+        bulletBeamReflect = BulletBeamReflect(self.x, self.y - 20, self.speed, self.damage, angle, self.scale, self.duration, self.hp)
     end
 end

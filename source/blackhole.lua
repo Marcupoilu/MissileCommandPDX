@@ -54,6 +54,6 @@ function Blackhole:shoot()
     Blackhole.super.shoot()
     local angles = cutAngle(self.projectileAmount + player.projectileAmount)
     for key, angle in ipairs(angles) do
-        bulletBlackhole = BulletBlackhole(self.x, self.y - 20, self.speed, self.damage+((player.damageBonus*self.damage)/100), angle, self.scale+((player.scaleBonus*self.scale)/100), self.duration)
+        bulletBlackhole = BulletBlackhole(self.x, self.y - 20, self.speed, self.damage, angle, self.scale, self.duration)
     end
 end

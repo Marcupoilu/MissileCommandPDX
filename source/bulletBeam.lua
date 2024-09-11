@@ -3,7 +3,6 @@ class("BulletBeam").extends(Projectile)
 
 function BulletBeam:init(x,y,speed, damage, offsetCrank, scale, duration)
     BulletBeam.super.init(self, x,y,speed, damage, offsetCrank, scale,duration)
-    self.scale = scale
     self.maxLength = 240
     self.currentLength = 0
     self.startPos = {x=x,y=y}
@@ -18,6 +17,7 @@ function BulletBeam:init(x,y,speed, damage, offsetCrank, scale, duration)
     self.duration = duration
     self.lineS = playdate.geometry.lineSegment.new(self.startPos.x, self.startPos.y, self.endPos.x, self.endPos.y)
     self.lasers = {}
+    self.tick = 150
     table.insert(beams, self)
 end
 
@@ -47,13 +47,14 @@ function BulletBeam:update()
         if collision.sprite:isa(Enemy) then
             self.endPos.x = collision.entryPoint.x
             self.endPos.y = collision.entryPoint.y
-            collision.sprite:loseHp(self.damage + ((player.damageBonus*self.damage)/100))
-            p:moveTo(self.endPos.x, self.endPos.y)
-            p:setSize(5,6)
-            p:setColor(gfx.kColorWhite)
-            p:setMode(Particles.modes.DECAY)
-            p:setSpeed(3, 7)
-            p:add(1)
+            collision.sprite:touchEnemy(self, false)
+            -- collision.sprite:loseHp(self.damage + ((player.damageBonus*self.damage)/100))
+            -- p:moveTo(self.endPos.x, self.endPos.y)
+            -- p:setSize(5,6)
+            -- p:setColor(gfx.kColorWhite)
+            -- p:setMode(Particles.modes.DECAY)
+            -- p:setSpeed(3, 7)
+            -- p:add(1)
         end
     end)
     gfx.setLineCapStyle(gfx.kLineCapStyleRound)

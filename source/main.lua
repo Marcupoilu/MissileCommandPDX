@@ -126,4 +126,4 @@ unlockScreenUpdate = function()
     sequence.update()
 end
 
-playdate.update = unlockScreenUpdate
+playdate.update = mainMenuUpdate

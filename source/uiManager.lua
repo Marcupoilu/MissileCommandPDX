@@ -94,17 +94,17 @@ function UiManager:levelUpDisplay()
     gfx.setColor(gfx.kColorWhite)
     local i = 0
     for key, value in pairs(ups) do
-        gfx.setColor(gfx.kColorWhite)
+        gfx.setColor(gfx.kColorBlack)
         gfx.fillRoundRect(self.horizontalLayoutLevelUp.positionBaseX + (i*(levelUpCellWidth+levelUpDistance)),self.horizontalLayoutLevelUp.positionBaseY + _pick_anim_y:get() , levelUpCellWidth, levelUpCellHeight,10)
         if i == levelUpIndex then
-            gfx.setColor(gfx.kColorBlack)
+            gfx.setColor(gfx.kColorWhite)
             gfx.setLineWidth(4)
-            gfx.drawRect(self.horizontalLayoutLevelUp.positionBaseX + (i*(levelUpCellWidth+levelUpDistance)) +12 ,self.horizontalLayoutLevelUp.positionBaseY + _pick_anim_y:get() +12, levelUpCellWidth -24, levelUpCellHeight-24)
+            gfx.drawRect(self.horizontalLayoutLevelUp.positionBaseX + (i*(levelUpCellWidth+levelUpDistance)) +10 ,self.horizontalLayoutLevelUp.positionBaseY + _pick_anim_y:get() +10, levelUpCellWidth -20, levelUpCellHeight-20)
         end
-        gfx.setImageDrawMode(gfx.kDrawModeFillBlack)
+        gfx.setImageDrawMode(gfx.kDrawModeFillWhite)
         gfx.setFont(smallFontAmmolite,gfx.kVariantBold)
         gfx.drawTextAligned(string.upper(value.descriptionText) , self.horizontalLayoutLevelUp.positionBaseX + 50 + (i*(levelUpCellWidth+levelUpDistance)) + 6,self.horizontalLayoutLevelUp.positionBaseY + _pick_anim_y:get() + 150, kTextAlignment.center)
-        value.image:scaledImage(0.1):draw( self.horizontalLayoutLevelUp.positionBaseX + 10 + (i*(levelUpCellWidth+levelUpDistance)) + 20,self.horizontalLayoutLevelUp.positionBaseY + _pick_anim_y:get() + 50)
+        value.image:scaledImage(1):draw( self.horizontalLayoutLevelUp.positionBaseX + 21 + (i*(levelUpCellWidth+levelUpDistance)) + 20,self.horizontalLayoutLevelUp.positionBaseY + _pick_anim_y:get() + 50)
         gfx.setImageDrawMode(gfx.kDrawModeCopy)
         upgradeContour:draw(self.horizontalLayoutLevelUp.positionBaseX + (i*(levelUpCellWidth+levelUpDistance)),self.horizontalLayoutLevelUp.positionBaseY + _pick_anim_y:get())
         i += 1
@@ -219,7 +219,7 @@ function UiManager:winScreenUpdate()
     local rectCenterY = rectY + rectHeight / 2 + offset + endScreenTweet:get()
     
     table.each(player.currentUnlocks, function (w)
-        scaledImageWidth = w.image:scaledImage(0.05):getSize()
+        scaledImageWidth = w.image:scaledImage(1):getSize()
         totalWidth = totalWidth + scaledImageWidth + offsetAdd
     end)
     totalWidth = totalWidth - offsetAdd 
@@ -228,7 +228,7 @@ function UiManager:winScreenUpdate()
     
     table.each(player.currentUnlocks, function (w)
         gfx.setImageDrawMode(gfx.kDrawModeInverted)
-        w.image:scaledImage(0.05):draw(startX + offset, rectCenterY - imageHeight / 2 + 40)
+        w.image:scaledImage(1):draw(startX + offset, rectCenterY - imageHeight / 2 + 40)
         offset = offset + scaledImageWidth + offsetAdd
     end)
     gfx.setFont(verySmallFont,gfx.kVariantItalic)
@@ -323,7 +323,7 @@ function UiManager:chooseCannon()
 
     table.each(cannon.weapons, function (w)
         local wpUpgrade = table.findByParam(upgradesData, "type", w.className)
-        scaledImageWidth = wpUpgrade.image:scaledImage(0.05):getSize()
+        scaledImageWidth = wpUpgrade.image:scaledImage(1):getSize()
         totalWidth = totalWidth + scaledImageWidth + offsetAdd
     end)
     totalWidth = totalWidth - offsetAdd
@@ -331,8 +331,8 @@ function UiManager:chooseCannon()
 
     table.each(cannon.weapons, function (w)
         local wpUpgrade = table.findByParam(upgradesData, "type", w.className)
-        gfx.setImageDrawMode(gfx.kDrawModeInverted)
-        wpUpgrade.image:scaledImage(0.05):draw(startX + offset, 170)
+        gfx.setImageDrawMode(gfx.kDrawModeCopy)
+        wpUpgrade.image:scaledImage(1):draw(startX + offset, 170)
         offset = offset + scaledImageWidth + offsetAdd
     end)
     if playdate.buttonJustPressed(playdate.kButtonA) and A == false then
@@ -369,6 +369,7 @@ function UiManager:unlockScreenUpdate()
     local rows = 1
     local headers = {}
     local itemCount = 0
+    local items = {}
     local categories = {}
     local currentCategoryNumber = {}
     table.each(unlocksData, function(unlock)
@@ -381,7 +382,7 @@ function UiManager:unlockScreenUpdate()
             if unlockType ~= nil then
                 table.insert(categories, table.shallowcopy(currentCategoryNumber))
                 currentCategoryNumber = {}
-                offsetBetweenHeaders = unlockItem:getSize()*rows - unlockItem:getSize() + offsetBetweenCategories
+                offsetBetweenHeaders = unlockItem:getSize() + offsetBetweenCategories
                 currentY = currentY + unlockHeader.height + offsetBetweenHeaders
                 currentHeaderY = currentY
             end
@@ -396,6 +397,7 @@ function UiManager:unlockScreenUpdate()
             unlockHeader:draw(0 + marginX, currentHeaderY + 5)
         end)
         unlockItem:draw(currentX + marginX, currentY + offsetBetweenHeaderAndItems)
+        table.insert(items, {x=currentX + marginX, y=currentY + offsetBetweenHeaderAndItems})
         gfx.setColor(gfx.kColorWhite)
         gfx.setLineWidth(3)
         if itemCount == selectedItem then
@@ -422,39 +424,102 @@ function UiManager:unlockScreenUpdate()
         end
     end
     if playdate.buttonJustPressed(playdate.kButtonRight) then
-        selectedItem = math.ring_int(selectedItem +1, 0, table.count(unlocksData)-1)
-        if selectedItem <= 0 then
-            selectedItem = 1
+        selectedItem += 1
+        if selectedItem >= table.count(unlocksData) then
+            selectedItem = table.count(unlocksData)
+            return
         end
     end
         if playdate.buttonJustPressed(playdate.kButtonDown) then
-            local missingItems = 0
-            local i = 1
-            local currentCategoryIndex = 0
-            for key, value in pairs(categories) do
-                table.each(value, function (v)
-                    if selectedItem + itemNumber == v then
-                        currentCategoryIndex = i
-                    end
-                end)
-                i += 1
+            local lastItemCount = lastLineItemCount(table.count(categories[table.count(categories)]))
+            local rangeOfItem = itemCount - lastItemCount
+            for i = rangeOfItem , itemCount do
+                if selectedItem == i then
+                    return
+                end
             end
-            for i = currentCategoryIndex, 1, -1 do
-                print("new selected Item"..selectedItem + itemNumber)
-                print("Current category item count"..categories[i][table.count(categories[i])])
-                if selectedItem + itemNumber > categories[i][table.count(categories[i])] then
-                    missingItems = modulo5(table.count(categories[i]))
-                    if selectedItem + itemNumber - table.count(categories[i]) < missingItems then
-                        missingItems -= selectedItem + itemNumber - table.count(categories[i])
+            -- if table.count(categories[table.count(categories)]) <= 5 then
+            --     for key, number in pairs(categories[table.count(categories)]) do
+            --         table.insert(maxSelectedItems, number)
+            --     end
+            -- end 
+            -- if table.count(categories[table.count(categories)]) > 5 then
+            --     for i = 1, 10, 1 do
+                    
+            --     end
+            -- end 
+
+            local positionTest = {x=items[selectedItem].x,y=items[selectedItem].y+63}
+            local contains = false
+            -- printTable(positionTest)
+            -- printTable(items)
+            for key, item in pairs(items) do
+                if positionTest.x == item.x and positionTest.y == item.y then
+                    contains = true
+                    selectedItem = indexOf(items, item) or 0
+                    break
+                else
+                    contains = false
+                end
+            end
+
+            if contains == false then
+                -- check si y'a la next category qui start (si on est sur la derniere ligne)
+                local newY = positionTest.y + offsetBetweenHeaders + offsetBetweenCategories - 55
+                for key, item in pairs(items) do                  
+                    if positionTest.x == item.x and newY == item.y then
+                        contains = true
+                        selectedItem = indexOf(items, item) or 0
+                        break
+                    else
+                        contains = false
                     end
                 end
             end
-            -- print(selectedItem + itemNumber)
-            -- print(missingItems)
-            selectedItem += itemNumber - missingItems
-        if selectedItem >= table.count(unlocksData)-1 then
-            selectedItem -= itemNumber
-        end
+            
+            if contains == false then
+                local xOffset = 63
+                local found = false
+                -- printTable(items)
+                while(found == false) do
+                    for key, item in pairs(items) do
+                        if positionTest.x - xOffset == item.x and positionTest.y == item.y then
+                            selectedItem = indexOf(items, item) or 0
+                            found = true
+                            -- break
+                        end
+                    end
+                    xOffset += 63
+                end
+            end
+
+        --     local missingItems = 0
+        --     local i = 1
+        --     local currentCategoryIndex = 0
+        --     for key, value in pairs(categories) do
+        --         table.each(value, function (v)
+        --             if selectedItem + itemNumber == v then
+        --                 currentCategoryIndex = i
+        --             end
+        --         end)
+        --         i += 1
+        --     end
+        --     for i = currentCategoryIndex, 1, -1 do
+        --         print("new selected Item"..selectedItem + itemNumber)
+        --         print("Current category item count"..categories[i][table.count(categories[i])])
+        --         if selectedItem + itemNumber > categories[i][table.count(categories[i])] then
+        --             missingItems = modulo5(table.count(categories[i]))
+        --             if selectedItem + itemNumber - table.count(categories[i]) < missingItems then
+        --                 missingItems -= selectedItem + itemNumber - table.count(categories[i])
+        --             end
+        --         end
+        --     end
+        --     -- print(selectedItem + itemNumber)
+        --     -- print(missingItems)
+        --     selectedItem += itemNumber - missingItems
+        -- if selectedItem >= table.count(unlocksData)-1 then
+        --     selectedItem -= itemNumber
+        -- end
         gfx.setDrawOffset(0, y - 50)
     end
     if playdate.buttonJustPressed(playdate.kButtonUp) then
@@ -462,6 +527,7 @@ function UiManager:unlockScreenUpdate()
         if selectedItem <= 0 then
             selectedItem += itemNumber
         end
+        gfx.setDrawOffset(0, y + 50)
     end
 end
 

@@ -1,6 +1,6 @@
 class("BulletPlasma").extends(Bullet)
 
-local bulletImage = gfx.image.new("images/bulletPlasma" )
+local bulletImage = gfx.image.new("images/bullets/bullet_Plasma" )
 
 function BulletPlasma:init(x,y,speed, damage, offsetCrank, scale, duration)
     BulletPlasma.super.init(self,x,y,speed, damage, offsetCrank, scale, duration, bulletImage)

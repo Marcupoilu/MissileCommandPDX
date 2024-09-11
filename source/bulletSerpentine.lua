@@ -1,14 +1,14 @@
 class("BulletSerpentine").extends(Bullet)
 
-local bulletImage = gfx.image.new("images/bulletSerpentine" )
+local bulletImage = gfx.image.new("images/bullets/bulletSerpentine" )
 
 function BulletSerpentine:init(x,y,speed, damage, offsetCrank, scale, duration)
     BulletSerpentine.super.init(self,x,y,speed, damage, offsetCrank, scale, duration, bulletImage)
     -- self:setImage(bulletImage)
     self.hp = 3
     self.rot = 0
-    self.amp = 20
-    self.freq = 5
+    self.amp = 10
+    self.freq = 20
     self.time = 0
 end
 function BulletSerpentine:update()

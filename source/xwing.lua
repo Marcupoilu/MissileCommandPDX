@@ -8,10 +8,14 @@ function Xwing:init(x,y,speed,hp,xp,damage, core)
     self.originPosition.y = self.y
     self.playerX = player.cannonBaseSprite.x
     self.playerY = player.cannonBaseSprite.y
+    self.overrideDirection = false
 end
 
 function Xwing:update()
-    self.angle = math.deg(math.atan(self.playerY - self.y, self.playerX - self.x) )
+    if self.overrideDirection == false then
+        self.angle = math.deg(math.atan(self.playerY - self.y, self.playerX - self.x) )
+    end
+    
     Xwing.super.update(self)
 
     self.originPosition.x = self.x

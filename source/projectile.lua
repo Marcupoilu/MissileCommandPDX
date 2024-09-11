@@ -15,9 +15,11 @@ function Projectile:init(x,y,speed, damage, offsetCrank, scale, duration)
     self.hp = 1
     self:setGroups({2})
     self:setCollidesWithGroups({3})
-    self.speed = speed
+    self.speed = speed + ((player.projectileSpeedBonus*speed)/100)
     self.damage = damage
-    self.scale = scale + ((player.scaleBonus*scale)/100)
+    self.scale =  scale+ ((player.scaleBonus*scale)/100)
+    -- local baseSize = self:getSize()
+    -- self.scale = math.ceil(baseSize + ((player.scaleBonus*scale)/100)) / baseSize
     self:setScale(self.scale)
     if duration ~= nil then
         self.duration = duration + ((player.durationBonus*duration)/100)

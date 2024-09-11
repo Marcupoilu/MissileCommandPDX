@@ -51,5 +51,5 @@ function Aura:changeLevel()
 end
 
 function Aura:shoot()
-    bulletAura = BulletAura(self.x, self.y, self.speed, self.damage+((player.damageBonus*self.damage)/100), angle, self.scale+((player.scaleBonus*self.scale)/100), self.duration)
+    bulletAura = BulletAura(self.x, self.y, self.speed, self.damage, angle, self.scale, self.duration)
 end

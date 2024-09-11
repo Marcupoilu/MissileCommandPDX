@@ -21,6 +21,7 @@ function BulletTracer:init(x,y,speed, damage, offsetCrank, scale, duration)
     self.playerPos.x = player.cannonGunSprite.x
     self.playerPos.y = player.cannonGunSprite.y
     self.offsetHeight = 50
+    self.tick = 150
     table.insert(beams, self)
 end
 
@@ -66,7 +67,8 @@ function BulletTracer:update()
     table.each(gfx.sprite.querySpriteInfoAlongLine(self.startPos.x, self.startPos.y, self.endPos.x, self.endPos.y), 
     function(collision)
         if collision.sprite:isa(Enemy) then
-            collision.sprite:loseHp(self.damage + ((player.damageBonus*self.damage)/100))
+            collision.sprite:touchEnemy(self, false)
+            -- collision.sprite:loseHp(self.damage + ((player.damageBonus*self.damage)/100))
             p:moveTo(self.endPos.x, self.endPos.y)
             p:setSize(5,6)
             p:setColor(gfx.kColorWhite)

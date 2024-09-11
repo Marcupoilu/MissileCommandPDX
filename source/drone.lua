@@ -53,6 +53,6 @@ function Drone:shoot()
     Drone.super.shoot()
     local angles = cutAngle(self.projectileAmount + player.projectileAmount)
     for key, angle in ipairs(angles) do
-        bulletDrone = BulletDrone(self.x, self.y, self.speed, self.damage+((player.damageBonus*self.damage)/100), angle, self.scale+((player.scaleBonus*self.scale)/100), self.duration, self.projectileAmount)
+        bulletDrone = BulletDrone(self.x, self.y, self.speed, self.damage+((player.damageBonus*self.damage)/100), angle, self.scale, self.duration, self.projectileAmount)
     end
 end

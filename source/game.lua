@@ -101,7 +101,6 @@ function Game:endGame()
     player.success = true
     table.each(unlocksData, function (unlock)
         if table.contains(player.unlocks, unlock) == false then
-            printTable(unlock)
             if unlock.condition:checkCondition() == true then
                 unlock:applyUnlock()
                 table.insert(player.currentUnlocks, unlock)
@@ -136,8 +135,8 @@ function Game:loseGame()
     player.success = false
     table.each(unlocksData, function (unlock)
         if table.contains(player.unlocks, unlock) == false then
-            if unlock.condition.checkCondition() == true then
-                unlock.applyUnlock()
+            if unlock.condition:checkCondition() == true then
+                unlock:applyUnlock()
                 table.insert(player.currentUnlocks, unlock)
             end
         end

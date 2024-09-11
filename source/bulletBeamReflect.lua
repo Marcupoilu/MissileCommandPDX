@@ -4,8 +4,7 @@ class("BulletBeamReflect").extends(Projectile)
 function BulletBeamReflect:init(x,y,speed, damage, offsetCrank, scale, duration, hp)
     BulletBeamReflect.super.init(self, x,y,speed, damage, offsetCrank, scale, duration)
     self.hp = hp
-    self.scale = scale
-    self.maxLength = 30
+    self.maxLength = 10
     self.currentLength = 0
     self.startPos = {x=x,y=y}
     self.endPos = {x=0,y=0}

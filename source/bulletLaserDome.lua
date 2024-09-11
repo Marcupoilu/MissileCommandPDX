@@ -4,15 +4,13 @@ class("BulletLaserDome").extends(Projectile)
 
 function BulletLaserDome:init(x,y,speed, damage, offsetCrank, scale, angle)
     BulletLaserDome.super.init(self, x,y,speed, damage, offsetCrank, scale)
-    self.hp = 999999999999
-    self.scale = scale
     self.maxLength = 240
     self.currentLength = 0
     self.startPos = {x=x,y=y}
     self.endPos = {x=0,y=0}
     self.angle = angle
     self.startPos.x = player.x 
-    self.startPos.y = player.y
+    self.startPos.y = player.y - 10
     self.radius += self.speed + (((player.projectileSpeedBonus*self.speed)/100)) * deltaTime
     self.direction = {x=0, y=1}
     self.direction.x = self.radius*math.cos(math.rad(self.angle + self.offset))* deltaTime
@@ -20,6 +18,7 @@ function BulletLaserDome:init(x,y,speed, damage, offsetCrank, scale, angle)
     self.duration = nil
     self.lineS = playdate.geometry.lineSegment.new(self.startPos.x, self.startPos.y, self.endPos.x, self.endPos.y)
     self.lasers = {}
+    self.tick = 300
     playdate.timer.new(self.duration, self.endBeam, self)
     table.insert(beams, self)
 end
@@ -43,7 +42,7 @@ function BulletLaserDome:update()
     table.each(gfx.sprite.querySpriteInfoAlongLine(self.startPos.x, self.startPos.y, self.endPos.x, self.endPos.y), 
     function(collision)
         if collision.sprite:isa(Enemy) then
-            collision.sprite:touchEnemy(self)
+            collision.sprite:touchEnemy(self, false)
             p:moveTo(self.endPos.x, self.endPos.y)
             p:setSize(5,6)
             p:setColor(gfx.kColorWhite)

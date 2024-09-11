@@ -3,7 +3,7 @@ wavesData =
     {
         Level = 1,
         Waves = {
-            Wave({xWingSpawner(math.random(1000,1000), 34, 0)}),
+            Wave({xWingSpawner(math.random(1000,1000), 34, 0), SaucerSpawner(math.random(1000,1000), 34, 0)}),
             Wave({xWingSpawner(math.random(400,500), 34, 0)}),
             Wave({xWingSpawner(math.random(400,500), 34, 0)}),
             Wave({SaucerSpawner(math.random(1000,1000), 34, 0), xWingSpawner(math.random(500,500), 34, 0) }),

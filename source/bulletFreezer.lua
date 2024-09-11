@@ -4,7 +4,6 @@ class("BulletFreezer").extends(Projectile)
 
 function BulletFreezer:init(x,y,speed, damage, offsetCrank, scale, duration)
     BulletFreezer.super.init(self, x,y,speed, damage, offsetCrank, scale, duration)
-    self.scale = scale
     self.maxLength = 240
     self.currentLength = 0
     self.startPos = {x=x,y=y}

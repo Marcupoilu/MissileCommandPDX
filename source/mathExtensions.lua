@@ -158,3 +158,12 @@ function modulo5(n)
         return 5 - reste
     end
 end
+
+function lastLineItemCount(n)
+    local remainder = n % 5
+    if remainder == 0 then
+        return 5  -- La dernière ligne est complète
+    else
+        return remainder  -- Le nombre d'items dans la dernière ligne incomplète
+    end
+end

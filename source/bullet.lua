@@ -3,8 +3,7 @@ class("Bullet").extends(Projectile)
 -- local bulletImage = gfx.image.new("images/bullet" )
 
 function Bullet:init(x,y,speed, damage, offsetCrank, scale, duration, bulletImage)
-    Bullet.super.init(self,x,y,speed, damage, offsetCrank, scale, duration)
-    self:moveTo(self.x,self.y)
+    self:moveTo(x,y)
     self:add()
     self.animations = {}
     if animationsData[self["className"]] ~= nil then
@@ -19,7 +18,9 @@ function Bullet:init(x,y,speed, damage, offsetCrank, scale, duration, bulletImag
         self.currentAnimation = table.findByParam(self.animations, "Name", self.state).Animation
         self:setImage(self.currentAnimation:image())
     end
+    
     self:setCollideRect(0,0,self:getSize())
+    Bullet.super.init(self,x,y,speed, damage, offsetCrank, scale, duration)
 end
 
 function Bullet:animate()

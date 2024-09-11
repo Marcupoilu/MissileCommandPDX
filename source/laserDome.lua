@@ -57,7 +57,7 @@ function LaserDome:shoot()
         return 
     end
     local angle = 0
-    bulletLaserDome = BulletLaserDome(self.x, self.y - 20, self.speed, self.damage+((player.damageBonus*self.damage)/100), angle, self.scale+((player.scaleBonus*self.scale)/100), 270)
-    bulletLaserDome = BulletLaserDome(self.x, self.y - 20, self.speed, self.damage+((player.damageBonus*self.damage)/100), angle, self.scale+((player.scaleBonus*self.scale)/100), 90)
+    bulletLaserDome = BulletLaserDome(self.x, self.y - 20, self.speed, self.damage, angle, self.scale, 270)
+    bulletLaserDome = BulletLaserDome(self.x, self.y - 20, self.speed, self.damage, angle, self.scale, 90)
     self.spawned = true
 end

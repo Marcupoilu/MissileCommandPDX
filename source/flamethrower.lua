@@ -54,6 +54,6 @@ function Flamethrower:shoot()
     Flamethrower.super.shoot()
     local angles = cutAngle(self.projectileAmount + player.projectileAmount)
     for key, angle in ipairs(angles) do
-        bulletFlamethrower = BulletFlamethrower(self.x, self.y - 20, self.speed, self.damage+((player.damageBonus*self.damage)/100), angle, self.scale+((player.scaleBonus*self.scale)/100), self.duration)
+        bulletFlamethrower = BulletFlamethrower(self.x, self.y - 20, self.speed, self.damage+((player.damageBonus*self.damage)/100), angle, self.scale, self.duration)
     end
 end

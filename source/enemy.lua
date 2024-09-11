@@ -77,13 +77,13 @@ function Enemy:update()
             end
             if value:isa(BulletDrone) then
                 -- value:updateDurationTimer(value.duration)
-                local sprite = gfx.sprite.new(gfx.image.new("images/bullet" ))
+                local sprite = gfx.sprite.new(gfx.image.new("images/bullets/bullet_drone" ))
                 sprite:moveTo(value.x, value.y)
                 sprite:add()
                 playdate.timer.new(toMilliseconds(value.duration), function() sprite:remove() end)
                 local angles = cutAngle(value.projectileAmount + player.projectileAmount)
                 for key, angle in ipairs(angles) do
-                     BulletDroneLaser(value.x, value.y, value.speed, 0.1+((player.damageBonus*value.damage)/100), angle, value.scale+((player.scaleBonus*value.scale)/100), value.duration, 0)
+                     BulletDroneLaser(value.x, value.y, value.speed/2, 0.5, angle, 4, value.duration, 0)
                 end
                 -- value.speed = 0
                 value:loseHp(1)
@@ -98,12 +98,18 @@ function Enemy:update()
                 self.originPosition.y = self.y
                 self.angle = value.originAngle
                 self.speed *= value.power
+                if self.overrideDirection ~= nil then
+                    self.overrideDirection = true
+                end
                 playdate.timer.new(100, function() 
                     self.speed = self.originSpeed 
                     self.radius = 0
                     self.originPosition.x = self.x
                     self.originPosition.y = self.y
                     self.angle = self.originAngle 
+                    if self.overrideDirection ~= nil then
+                        self.overrideDirection = false
+                    end
                 end)
             end
             if value:isa(BulletRocket) then
@@ -118,7 +124,7 @@ function Enemy:update()
     end
 end
 
-function Enemy:touchEnemy(value)
+function Enemy:touchEnemy(value, bulletHp)
     if table.contains(self.currentOverlappingSprites, value) == true then return end
     p:moveTo(self.x, self.y)
     p:setSize(10,10)
@@ -127,7 +133,9 @@ function Enemy:touchEnemy(value)
     p:setSpeed(3, 5)
     p:add(1)
     self:loseHp(value.damage + ((player.damageBonus*value.damage)/100), value.className)
-    value:loseHp(1)
+    if bulletHp == nil then
+        value:loseHp(1)
+    end
     table.insert(self.currentOverlappingSprites, value)
     if value.tick ~= nil then
         playdate.timer.new(value.tick, function() table.remove(self.currentOverlappingSprites, indexOf(self.currentOverlappingSprites, value)) end)
