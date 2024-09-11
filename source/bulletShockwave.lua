@@ -1,6 +1,6 @@
 class("BulletShockwave").extends(Bullet)
 
-local bulletImage = gfx.image.new("images/bulletShockwave" )
+local bulletImage = gfx.image.new("images/bullets/bullet_shockwave" )
 
 function BulletShockwave:init(x,y,speed, damage, offsetCrank, scale, duration)
     BulletShockwave.super.init(self,x,y,speed, damage, offsetCrank, scale, duration, bulletImage)
