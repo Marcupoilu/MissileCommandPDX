@@ -356,6 +356,7 @@ function UiManager:unlockScreenUpdate()
         gfx.setDrawOffset(0,0)
         mainMenuIndex = 2
         playdate.update = mainMenuUpdate
+        return
     end
     local unlockType = nil
     local offsetBetweenHeaderAndItems = 35
