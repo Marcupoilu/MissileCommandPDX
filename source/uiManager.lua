@@ -412,8 +412,8 @@ function UiManager:unlockScreenUpdate()
                 currentCategoryName = "Cannons"
             end
             -- DRAW HEADER TITLE
-            -- gfx.setFont()
-            gfx.drawTextAligned(string.upper(currentCategoryName), 155 + marginX, currentHeaderY + 12, kTextAlignment.center)
+            gfx.setFont(diamond_20)
+            gfx.drawTextAligned(string.upper(currentCategoryName), 70 + marginX, currentHeaderY + 9, kTextAlignment.center)
         end)
         gfx.setImageDrawMode(gfx.kDrawModeCopy)
         unlockItem:draw(currentX + marginX, currentY + offsetBetweenHeaderAndItems)
