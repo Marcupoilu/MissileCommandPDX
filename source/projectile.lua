@@ -18,10 +18,6 @@ function Projectile:init(x,y,speed, damage, offsetCrank, scale, duration)
     self.speed = speed + ((player.projectileSpeedBonus*speed)/100)
     self.damage = damage
     self.scale =  scale + ((player.scaleBonus*scale)/100)
-    local baseSize = self:getSize()
-    self.scale = math.ceil(baseSize  * self.scale) / baseSize
-    self:setScale(self.scale)
-    self:setCenter(0.5, 0.5)
     
 
     if duration ~= nil then

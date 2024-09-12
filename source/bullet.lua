@@ -17,8 +17,12 @@ function Bullet:init(x,y,speed, damage, offsetCrank, scale, duration, bulletImag
     
     Bullet.super.init(self,x,y,speed, damage, offsetCrank, scale, duration)
     
+    local baseSize = self:getSize()
+    self.scale = math.ceil(baseSize  * self.scale) / baseSize
+    self:setScale(self.scale)
+
     self:updateImage(bulletImage)
-    
+    self:setCenter(0.5, 0.5)
     self:setCollideRect(0,0,self:getSize())
 end
 
