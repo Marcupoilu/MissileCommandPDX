@@ -356,6 +356,7 @@ function UiManager:unlockScreenUpdate()
         gfx.setDrawOffset(0,0)
         mainMenuIndex = 2
         playdate.update = mainMenuUpdate
+        return
     end
     local unlockType = nil
     local offsetBetweenHeaderAndItems = 35
@@ -375,12 +376,14 @@ function UiManager:unlockScreenUpdate()
     local items = {}
     local categories = {}
     local currentCategoryNumber = {}
+    local currentCategoryName = ""
     table.each(unlocksData, function(unlock)
         
         if unlock.className ~= unlockType then
             currentX = 0
             local header = {name = unlock.className, completion = 0}
             table.insert(headers, header)
+            currentCategoryName = unlock.className
             table.insert(rows, {})
             -- nouvelle catégorie ici
             if unlockType ~= nil then
@@ -398,7 +401,19 @@ function UiManager:unlockScreenUpdate()
         table.insert(currentCategoryNumber, itemCount)
         table.each(headers, function (header)
             unlockHeader:draw(0 + marginX, currentHeaderY + 5)
+            gfx.setImageDrawMode(gfx.kDrawModeFillWhite)
+            if currentCategoryName == "UnlockPassive" then
+                currentCategoryName = "Passives"
+            end
+            if currentCategoryName == "UnlockWeapon" then
+                currentCategoryName = "Weapons"
+            end
+            if currentCategoryName == "UnlockCannon" then
+                currentCategoryName = "Cannons"
+            end
+            gfx.drawTextAligned(currentCategoryName, 30 + marginX, currentHeaderY + 15, kTextAlignment.center)
         end)
+        gfx.setImageDrawMode(gfx.kDrawModeCopy)
         unlockItem:draw(currentX + marginX, currentY + offsetBetweenHeaderAndItems)
         if table.contains(playerBonus.gameData.unlocks, unlock) == false then
             questionMark:draw(currentX + marginX + 4, currentY + offsetBetweenHeaderAndItems + 5)
@@ -533,10 +548,13 @@ function UiManager:unlockScreenUpdate()
     end
     local unl = unlocksData[selectedItem]
     gfx.setImageDrawMode(gfx.kDrawModeFillWhite)
+    gfx.setFont(smallFont,gfx.kVariantBold)
     if table.contains(playerBonus.gameData.unlocks, unl) == false then
         gfx.drawTextAligned(unl.description, playdate.display.getWidth()/2, 205 - y, kTextAlignment.center)
     else
-        gfx.drawTextAligned(unl.descriptionUnlocked, playdate.display.getWidth()/2, 205- y, kTextAlignment.center)
+        gfx.drawTextAligned(unl.name, playdate.display.getWidth()/2, 195- y, kTextAlignment.center)
+        gfx.setFont(smallFontAmmolite,gfx.kVariantBold)
+        gfx.drawTextAligned(unl.descriptionUnlocked, playdate.display.getWidth()/2, 215- y, kTextAlignment.center)
     end
     gfx.setFont(smallFontAmmolite,gfx.kVariantBold)
     gfx.drawTextAligned(calculateUnlockPercentage(playerBonus.gameData.unlocks, unlocksData).."%", 370, 16 - y, kTextAlignment.center)

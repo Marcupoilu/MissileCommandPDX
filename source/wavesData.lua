@@ -2,6 +2,7 @@ wavesData =
 {
     {
         Level = 1,
+        Background = gfx.image.new("images/background/bg_01"),
         Waves = {
             Wave({xWingSpawner(math.random(1000,1000), 34, 0), SaucerSpawner(math.random(1000,1000), 34, 0)}),
             Wave({xWingSpawner(math.random(400,500), 34, 0)}),
