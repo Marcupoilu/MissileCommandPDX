@@ -167,3 +167,35 @@ function lastLineItemCount(n)
         return remainder  -- Le nombre d'items dans la dernière ligne incomplète
     end
 end
+
+function isLastItemInCategory(selectedItem, categories)
+    local totalItemsBeforeCategory = 0
+
+    for _, category in ipairs(categories) do
+        local categoryCount = #category
+        
+        -- Si selectedItem est dans cette catégorie
+        if selectedItem > totalItemsBeforeCategory and selectedItem <= totalItemsBeforeCategory + categoryCount then
+            -- Vérifier si selectedItem est le dernier de la catégorie
+            local lastItemInCategory = totalItemsBeforeCategory + categoryCount
+            return selectedItem == lastItemInCategory
+        end
+        
+        totalItemsBeforeCategory = totalItemsBeforeCategory + categoryCount
+    end
+    
+    -- Si selectedItem n'est pas trouvé dans les catégories (au cas où)
+    return false
+end
+
+function calculateUnlockPercentage(playerUnlocks, allUnlocks)
+    local totalUnlocks = #allUnlocks
+    local playerUnlockCount = #playerUnlocks
+    
+    if totalUnlocks == 0 then
+        return 0 -- Évite une division par zéro si la liste des unlocks est vide
+    end
+    
+    local percentageUnlocked = (playerUnlockCount / totalUnlocks) * 100
+    return math.round(percentageUnlocked)
+end

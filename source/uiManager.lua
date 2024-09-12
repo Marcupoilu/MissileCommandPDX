@@ -346,11 +346,14 @@ end
 
 local unlockHeader = gfx.image.new("images/ui/menus/achievement_header")
 local unlockItem = gfx.image.new("images/ui/menus/achievement_item")
+local questionMark = gfx.image.new("images/ui/question_mark")
+
 local selectedItem = 1
 
 function UiManager:unlockScreenUpdate()
     gfx.clear(gfx.kColorBlack)
     if playdate.buttonJustPressed(playdate.kButtonB) then
+        gfx.setDrawOffset(0,0)
         mainMenuIndex = 2
         playdate.update = mainMenuUpdate
     end
@@ -397,6 +400,11 @@ function UiManager:unlockScreenUpdate()
             unlockHeader:draw(0 + marginX, currentHeaderY + 5)
         end)
         unlockItem:draw(currentX + marginX, currentY + offsetBetweenHeaderAndItems)
+        if table.contains(playerBonus.gameData.unlocks, unlock) == false then
+            questionMark:draw(currentX + marginX + 4, currentY + offsetBetweenHeaderAndItems + 5)
+        else
+            unlock.image:draw(currentX + marginX + 13, currentY + offsetBetweenHeaderAndItems + 13)
+        end
         table.insert(items, {x=currentX + marginX, y=currentY + offsetBetweenHeaderAndItems})
         gfx.setColor(gfx.kColorWhite)
         gfx.setLineWidth(3)
@@ -415,7 +423,7 @@ function UiManager:unlockScreenUpdate()
     end)
     table.insert(categories, table.shallowcopy(currentCategoryNumber))
     local x,y = gfx.getDrawOffset()
-    -- unlockMenu:draw(0 + x,0 - y)
+    unlockMenu:draw(0 + x,0 - y)
     if playdate.buttonJustPressed(playdate.kButtonLeft) then
         selectedItem -= 1
         if selectedItem <= 0 then
@@ -428,6 +436,7 @@ function UiManager:unlockScreenUpdate()
             selectedItem = table.count(unlocksData)
             return
         end
+
     end
         if playdate.buttonJustPressed(playdate.kButtonDown) then
             local lastItemCount = lastLineItemCount(table.count(categories[table.count(categories)]))
@@ -475,7 +484,6 @@ function UiManager:unlockScreenUpdate()
                     xOffset += 63
                 end
             end
-        gfx.setDrawOffset(0, y - 55)
     end
 
     if playdate.buttonJustPressed(playdate.kButtonUp) then
@@ -522,9 +530,29 @@ function UiManager:unlockScreenUpdate()
                 xOffset += 63
             end
         end
-        gfx.setDrawOffset(0, y + 55)
+    end
+    local unl = unlocksData[selectedItem]
+    gfx.setImageDrawMode(gfx.kDrawModeFillWhite)
+    if table.contains(playerBonus.gameData.unlocks, unl) == false then
+        gfx.drawTextAligned(unl.description, playdate.display.getWidth()/2, 205 - y, kTextAlignment.center)
+    else
+        gfx.drawTextAligned(unl.descriptionUnlocked, playdate.display.getWidth()/2, 205- y, kTextAlignment.center)
+    end
+    gfx.setFont(smallFontAmmolite,gfx.kVariantBold)
+    gfx.drawTextAligned(calculateUnlockPercentage(playerBonus.gameData.unlocks, unlocksData).."%", 370, 16 - y, kTextAlignment.center)
+    gfx.setImageDrawMode(gfx.kDrawModeCopy)
+
+    if items[selectedItem].y +y> 150 then
+        gfx.setDrawOffset(0, y - 80)
+    end
+    if items[selectedItem].y +y < 0 then
+        gfx.setDrawOffset(0, y + 80)
+    end
+    if y > 0 then
+        gfx.setDrawOffset(0,0)
     end
 end
+
 
 function UiManager:createBar(x,y,max, current, height)
     local maxHP = max 
