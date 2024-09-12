@@ -1,7 +1,11 @@
 class("Game").extends()
 
 local interval = minutes_to_milliseconds(0.5)
-
+local bg = gfx.image.new("images/backgrounds/bg_01")
+local bgsprite = gfx.sprite.new(bg)
+bgsprite:setCenter(0,0)
+bgsprite:moveTo(0,0)
+bgsprite:setZIndex(-9999)
 
 function Game:init(maxPool, level)
     enemyPoolLimit = maxPool
@@ -13,6 +17,9 @@ function Game:init(maxPool, level)
     self.waveNumber = 1
     self.finish = false
     time = 0
+
+    bgsprite:add()
+
     self:startGame()
 end
 
@@ -78,6 +85,7 @@ function Game:update()
     --     gfx.drawRect(rect)
     -- end)
     debugRects = {}
+    
 end
 
 function Game:changeWave()
