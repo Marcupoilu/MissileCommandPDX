@@ -411,7 +411,9 @@ function UiManager:unlockScreenUpdate()
             if currentCategoryName == "UnlockCannon" then
                 currentCategoryName = "Cannons"
             end
-            gfx.drawTextAligned(currentCategoryName, 30 + marginX, currentHeaderY + 15, kTextAlignment.center)
+            -- DRAW HEADER TITLE
+            -- gfx.setFont()
+            gfx.drawTextAligned(string.upper(currentCategoryName), 155 + marginX, currentHeaderY + 12, kTextAlignment.center)
         end)
         gfx.setImageDrawMode(gfx.kDrawModeCopy)
         unlockItem:draw(currentX + marginX, currentY + offsetBetweenHeaderAndItems)
