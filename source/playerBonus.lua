@@ -22,6 +22,7 @@ function PlayerBonus:start()
         rerolls = 0,
         enemiesKilled = 0,
         levelMaxReached = 1,
+        core = 0,
         success = false,
         cannons = {table.findByParam(cannonsData, "id", "blaster"),table.findByParam(cannonsData, "id", "laser")},
         unlocks = {table.findByParam(unlocksData, "name", "Orbital"),table.findByParam(unlocksData, "name", "Aura"),table.findByParam(unlocksData, "name", "Duration"),table.findByParam(unlocksData, "name", "Life Up"),table.findByParam(unlocksData, "name", "Laser"), table.findByParam(unlocksData, "name", "Orbiter")},

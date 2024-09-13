@@ -22,12 +22,15 @@ local ups = {}
 local levelUpIndex = 0
 local mainMenuIndex = 0
 local cannonIndex = 0
-local core = gfx.image.new("images/player/planet-core")
+local core = gfx.image.new("images/ui/core")
+local coreShop = gfx.image.new("images/ui/core_small")
 local enemy = gfx.image.new("images/enemies/large/enemy_large_01")
 local mainMenu = gfx.image.new("images/ui/menus/main_menu")
 local unlockMenu = gfx.image.new("images/ui/menus/achievement_panel")
 local unlockHeader = gfx.image.new("images/ui/menus/achievement_header")
 local unlockItem = gfx.image.new("images/ui/menus/achievement_item")
+local shopMenu = gfx.image.new("images/ui/menus/shop_panel")
+local shopItem = gfx.image.new("images/ui/menus/shop_item")
 
 local endScreenContour = gfx.image.new("images/ui/menus/end_screen")
 local upgradeContour = gfx.image.new("images/ui/menus/upgrade_panel")
@@ -180,7 +183,7 @@ function UiManager:winScreenUpdate()
         gfx.drawTextAligned("DEFENSE "..player.runLevel.." FAILED", rectWidth, 20+ endScreenTweet:get(), kTextAlignment.center)
     end
     -- middle part
-    core:scaledImage(0.07):draw( 50,70 + endScreenTweet:get())
+    core:draw( 50,70 + endScreenTweet:get())
     gfx.setFont(smallFontAmmolite,gfx.kVariantItalic)
     gfx.drawTextAligned("X"..player.core, 90, 90 + endScreenTweet:get(), kTextAlignment.center)
     local screenWidth = playdate.display.getWidth()
@@ -276,6 +279,7 @@ function UiManager:mainMenuUpdate()
             chooseCannonBool = true
         end
         if mainMenuIndex == 1 then
+            playdate.update = shopUpdate
         end
         if mainMenuIndex == 2 then
             playdate.update = unlockScreenUpdate
@@ -571,6 +575,19 @@ function UiManager:unlockScreenUpdate()
     if y > 0 then
         gfx.setDrawOffset(0,0)
     end
+end
+
+function UiManager:shopUpdate()
+    gfx.clear(gfx.kColorBlack)
+    if playdate.buttonJustPressed(playdate.kButtonB) then
+        gfx.setDrawOffset(0,0)
+        mainMenuIndex = 1
+        playdate.update = mainMenuUpdate
+        return
+    end
+    local x,y = gfx.getDrawOffset()
+    shopMenu:draw(0 + x,0 - y)
+    coreShop:draw(10,0 - y)
 end
 
 
