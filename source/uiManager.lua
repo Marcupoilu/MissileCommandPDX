@@ -43,10 +43,10 @@ local core = gfx.image.new("images/ui/core")
 local coreShop = gfx.image.new("images/ui/core_small")
 local enemy = gfx.image.new("images/enemies/large/enemy_large_01")
 local mainMenu = gfx.animation.loop.new(animationsData.MainMenu.Delay, animationsData.MainMenu.Source, true)
-local unlockMenu = gfx.image.new("images/ui/menus/achievement_panel")
+local unlockMenu = gfx.animation.loop.new(animationsData.AchievementPanel.Delay, animationsData.AchievementPanel.Source, true)
+local shopMenu = gfx.animation.loop.new(animationsData.ShopBackground.Delay, animationsData.ShopBackground.Source, true)
 local unlockHeader = gfx.image.new("images/ui/menus/achievement_header")
 local unlockItem = gfx.image.new("images/ui/menus/achievement_item")
-local shopMenu = gfx.image.new("images/ui/menus/shop_panel")
 local shopItem = gfx.image.new("images/ui/menus/shop_item")
 
 local endScreenContour = gfx.image.new("images/ui/menus/end_screen")
@@ -304,7 +304,7 @@ local chooseCannonBool = false
 local A = false
 
 function UiManager:mainMenuUpdate()
-    gfx.clear()
+    gfx.clear(gfx.kColorBlack)
     gfx.setImageDrawMode(gfx.kDrawModeCopy)
     mainMenu:draw(0,0)
     gfx.setFont(font,gfx.kVariantBold)

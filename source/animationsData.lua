@@ -6,7 +6,7 @@ animationsData =
     BulletSerpentine = {{Name = "Idle", Source = gfx.imagetable.new("images/bullets/bullet_serpentine"), Delay = 30, Loop = true}},
     Saucer = {},
     Xwing = {},
-    MainMenu = {Name = "Idle", Source = gfx.imagetable.new("images/ui/menus/main_menu"), Delay = 30, Loop = true},
+    MainMenu = {Name = "Idle", Source = gfx.imagetable.new("images/ui/menus/main_menu"), Delay = 10, Loop = true},
     SelectionScreen = {Name = "Idle", Source = gfx.imagetable.new("images/ui/menus/selection_screen"), Delay = 30, Loop = true},
     ShopBackground = {Name = "Idle", Source = gfx.imagetable.new("images/ui/menus/shop_background"), Delay = 30, Loop = true},
     EndScreen = {Name = "Idle", Source = gfx.imagetable.new("images/ui/menus/end_screen"), Delay = 30, Loop = true},
