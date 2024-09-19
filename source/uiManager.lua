@@ -172,7 +172,7 @@ function UiManager:levelUpDisplay()
     end
     gfx.setImageDrawMode(gfx.kDrawModeFillWhite)
     gfx.setFont(font,gfx.kVariantBold)
-    gfx.drawText("Pick Upgrade", 130, 1)
+    gfx.drawTextAligned("Pick Upgrade", 200, 1, kTextAlignment.center)
     if playdate.buttonJustPressed(playdate.kButtonRight) then
         levelUpIndex = math.ring_int(levelUpIndex +1, 0, 2)
     end
