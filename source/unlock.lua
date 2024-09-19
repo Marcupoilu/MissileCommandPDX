@@ -1,6 +1,6 @@
 class("Unlock").extends()
 
-function Unlock:init(name, image, description, condition, upgrade, descriptionUnlocked)
+function Unlock:init(name, image, description, condition, upgrade, descriptionUnlocked, cost, level, levelMax, multiplyer)
     Unlock.super.init(self)
     self.name = name
     self.image = image
@@ -9,6 +9,10 @@ function Unlock:init(name, image, description, condition, upgrade, descriptionUn
     self.condition = condition
     self.unlocked = false
     self.upgrade = upgrade
+    self.cost = cost
+    self.level = level
+    self.levelMax = levelMax
+    self.multiplyer = multiplyer
 end
 
 function Unlock:applyUnlock()

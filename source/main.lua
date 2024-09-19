@@ -117,6 +117,7 @@ mainMenuUpdate = function()
     playdate.resetElapsedTime()
     uiManager:mainMenuUpdate()
     sequence.update()
+    uiManager:displayTitle()
 end
 
 unlockScreenUpdate = function()

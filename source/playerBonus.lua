@@ -25,7 +25,12 @@ function PlayerBonus:start()
         core = 0,
         success = false,
         cannons = {table.findByParam(cannonsData, "id", "blaster"),table.findByParam(cannonsData, "id", "laser")},
-        unlocks = {table.findByParam(unlocksData, "name", "Orbital"),table.findByParam(unlocksData, "name", "Aura"),table.findByParam(unlocksData, "name", "Duration"),table.findByParam(unlocksData, "name", "Life Up"),table.findByParam(unlocksData, "name", "Laser"), table.findByParam(unlocksData, "name", "Orbiter")},
+        unlocks = {table.findByParam(unlocksData, "name", "Orbital"),table.findByParam(unlocksData, "name", "Aura"),table.findByParam(unlocksData, "name", "Duration"),table.findByParam(unlocksData, "name", "Life Up"),table.findByParam(unlocksData, "name", "Laser"), table.findByParam(unlocksData, "name", "Orbiter"),
+            UnlockPassive("projectileSpeedBonus", gfx.image.new("images/ui/icons/projectileSpeed"), "Reach Level 5", Condition("level", 5), getUpgradePassive("projectileSpeedBonus"), "+10% Weapons Bullet Speed"),
+            UnlockPassive("scaleBonus", gfx.image.new("images/ui/icons/projectileScale"), "Reach Level 5", Condition("level", 5), getUpgradePassive("scaleBonus"), "+10% Weapons Bullet Scale"),
+            UnlockPassive("hpMax", gfx.image.new("images/ui/icons/hpMax"), "Reach Level 5", Condition("level", 5), getUpgradePassive("hpMax"), "+10 HP"),
+            UnlockPassive("damageBonus", gfx.image.new("images/ui/icons/damageUp"), "Reach Level 5", Condition("level", 5), getUpgradePassive("damageBonus"), "+10% Weapons Damage"),
+        },
         shopUnlocks = {
             table.findByParam(upgradesData, "type", "SimpleCannon"),
             table.findByParam(upgradesData, "type", "Beam"),

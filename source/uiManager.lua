@@ -22,6 +22,11 @@ local ups = {}
 local levelUpIndex = 0
 local mainMenuIndex = 0
 local cannonIndex = 0
+local titleTop = gfx.image.new("images/ui/ui_titleScreen_top")
+local titleBot = gfx.image.new("images/ui/ui_titleScreen_bot")
+local titleBotY = playdate.display.getHeight() / 2 - 13
+local titleTopOpen = sequence.new():from(0):to(-135, 1, "easeOutSine")
+local titleBotOpen = sequence.new():from(0):to(135, 1, "easeOutSine")
 local core = gfx.image.new("images/ui/core")
 local coreShop = gfx.image.new("images/ui/core_small")
 local enemy = gfx.image.new("images/enemies/large/enemy_large_01")
@@ -43,6 +48,16 @@ function UiManager:init()
     self.inventoryWeapons = {}
     self.inventoryPassives = {}
     self.horizontalLayoutLevelUp = HorizontalLayout(levelUpCellWidth, levelUpDistance, levelUpCellNumber, 20)
+end
+
+function UiManager:displayTitle()
+    titleTop:draw(0,0 + titleTopOpen:get())
+    titleBot:draw(0,titleBotY + titleBotOpen:get())
+
+    if playdate.buttonJustPressed(playdate.kButtonA) then
+        titleTopOpen:start()
+        titleBotOpen:start()
+    end
 end
 
 function UiManager:generateUpgrades()
@@ -262,6 +277,7 @@ function UiManager:mainMenuUpdate()
     
     if chooseCannonBool == false then
         if playdate.buttonJustPressed(playdate.kButtonDown) then
+            print("oui")
             mainMenuIndex = math.ring_int(mainMenuIndex +1, 0, 2)
         end
         if playdate.buttonJustPressed(playdate.kButtonUp) then
@@ -587,7 +603,12 @@ function UiManager:shopUpdate()
     end
     local x,y = gfx.getDrawOffset()
     shopMenu:draw(0 + x,0 - y)
-    coreShop:draw(10,0 - y)
+    coreShop:draw(15,8 - y)
+    gfx.setFont(smallFontAmmolite,gfx.kVariantBold)
+    gfx.setImageDrawMode(gfx.kDrawModeFillWhite)
+    gfx.drawTextAligned(playerBonus.gameData.core + 150, 45, 11-y, kTextAlignment.center)
+    gfx.setImageDrawMode(gfx.kDrawModeCopy)
+
 end
 
 
