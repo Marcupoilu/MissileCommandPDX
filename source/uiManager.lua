@@ -8,7 +8,7 @@ local levelUpCellNumber = 3
 local _pick_anim_y = sequence.new():from(20):to(13, 1, "easeOutSine"):mirror():start()
 endScreenTweet = sequence.new():from(-240):to(0, 1, "outSine")
 
-local font = gfx.font.new("font/Asheville-Sans-24-Light")
+local font = gfx.font.new("font/test")
 local smallFont = gfx.font.new("font/font-pixieval-large-white")
 smallFont:setTracking(1)
 local verySmallFont = gfx.font.new("font/Pico8")
@@ -27,6 +27,17 @@ local titleBot = gfx.image.new("images/ui/ui_titleScreen_bot")
 local titleBotY = playdate.display.getHeight() / 2 - 13
 local titleTopOpen = sequence.new():from(0):to(-135, 1, "easeOutSine")
 local titleBotOpen = sequence.new():from(0):to(135, 1, "easeOutSine")
+local titleTopClose = sequence.new():from(0):to(135, 1, "easeOutSine")
+local titleBotClose = sequence.new():from(0):to(-135, 1, "easeOutSine"):callback(function ()
+    print("callback")
+    titleTopOpen:set(0)
+    titleBotOpen:set(0)
+end)
+titleBotOpen:callback(function ()
+    print("callback")
+    titleTopOpen:set(-135)
+    titleBotOpen:set(135)
+end)
 local core = gfx.image.new("images/ui/core")
 local coreShop = gfx.image.new("images/ui/core_small")
 local enemy = gfx.image.new("images/enemies/large/enemy_large_01")
@@ -42,8 +53,8 @@ local upgradeContour = gfx.image.new("images/ui/menus/upgrade_panel")
 local chooseCannonArrowLeft = gfx.image.new("images/ui/arrow_left")
 local chooseCannonArrowRight = gfx.image.new("images/ui/arrow_right")
 
-
-local mainMenuPositions = {{x=264,y=95.5},{x=264,y=139.5},{x=264,y=183.5}}
+local closedMenu = true
+local mainMenuPositions = {{x=24,y=55},{x=24,y=120},{x=24,y=185}}
 function UiManager:init()
     self.inventoryWeapons = {}
     self.inventoryPassives = {}
@@ -51,13 +62,36 @@ function UiManager:init()
 end
 
 function UiManager:displayTitle()
-    titleTop:draw(0,0 + titleTopOpen:get())
-    titleBot:draw(0,titleBotY + titleBotOpen:get())
+    titleTop:draw(0, titleTopOpen:get() + titleTopClose:get())
+    titleBot:draw(0,titleBotY + titleBotOpen:get() + titleBotClose:get())
+end
 
-    if playdate.buttonJustPressed(playdate.kButtonA) then
-        titleTopOpen:start()
-        titleBotOpen:start()
-    end
+function UiManager:OpenMenu()
+    titleTopClose:set(0)
+    titleBotClose:set(0)
+    titleTopOpen:restart()
+    titleBotOpen:restart()
+    closedMenu = false
+end
+
+function UiManager:CloseMenu()
+    closedMenu = true
+    titleTopClose:restart()
+    titleBotClose:restart()
+end
+
+function UiManager:OpenAndCloseMenu()
+    self:OpenMenu()
+    playdate.timer.new(titleBotOpen.duration + 300, function ()
+        self:CloseMenu()
+    end)
+end
+
+function UiManager:CloseAndOpenMenu()
+    self:CloseMenu()
+    playdate.timer.new(titleBotClose.duration + 300, function ()
+        self:OpenMenu()
+    end)
 end
 
 function UiManager:generateUpgrades()
@@ -270,14 +304,20 @@ function UiManager:mainMenuUpdate()
     gfx.clear()
     gfx.setImageDrawMode(gfx.kDrawModeCopy)
     mainMenu:draw(0,0)
-    gfx.setFont(diamond_20,gfx.kVariantBold)
-    gfx.drawTextAligned("DEFENSE", 335, 88, kTextAlignment.center)
-    gfx.drawTextAligned("MACHINA", 335, 132, kTextAlignment.center)
-    gfx.drawTextAligned("STORAGE", 335, 176, kTextAlignment.center)
+    gfx.setFont(font,gfx.kVariantBold)
+    gfx.drawTextAligned("DEFENSE", 200, 35, kTextAlignment.center)
+    gfx.drawTextAligned("MACHINA", 200, 100, kTextAlignment.center)
+    gfx.drawTextAligned("STORAGE", 200, 165, kTextAlignment.center)
     
+    if closedMenu == true then
+        if playdate.buttonJustPressed(playdate.kButtonA) then
+            self:OpenMenu()
+        end
+        return
+    end
+
     if chooseCannonBool == false then
         if playdate.buttonJustPressed(playdate.kButtonDown) then
-            print("oui")
             mainMenuIndex = math.ring_int(mainMenuIndex +1, 0, 2)
         end
         if playdate.buttonJustPressed(playdate.kButtonUp) then
@@ -288,7 +328,7 @@ function UiManager:mainMenuUpdate()
         end
     end
     gfx.setColor(gfx.kColorWhite)
-    gfx.fillCircleAtPoint(mainMenuPositions[mainMenuIndex+1].x, mainMenuPositions[mainMenuIndex+1].y, 8.5)
+    gfx.fillCircleAtPoint(mainMenuPositions[mainMenuIndex+1].x, mainMenuPositions[mainMenuIndex+1].y, 14)
     if playdate.buttonJustPressed(playdate.kButtonA) and chooseCannonBool == false then
         A = true
         if mainMenuIndex == 0 then
@@ -309,6 +349,13 @@ function UiManager:mainMenuUpdate()
         if playdate.buttonJustPressed(playdate.kButtonB) then
             chooseCannonBool = false
         end
+    end
+
+    if closedMenu == false and chooseCannonBool == false then
+        if playdate.buttonJustPressed(playdate.kButtonB) then
+            self:CloseMenu()
+        end
+        return
     end
 end
 

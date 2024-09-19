@@ -110,12 +110,14 @@ winScreenUpdate = function()
     end
     uiManager:winScreenUpdate()
     sequence.update()
+    
 end
 
 mainMenuUpdate = function()
     deltaTime = playdate.getElapsedTime()
     playdate.resetElapsedTime()
     uiManager:mainMenuUpdate()
+    playdate.timer.updateTimers()
     sequence.update()
     uiManager:displayTitle()
 end
