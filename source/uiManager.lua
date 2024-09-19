@@ -8,7 +8,7 @@ local levelUpCellNumber = 3
 local _pick_anim_y = sequence.new():from(20):to(13, 1, "easeOutSine"):mirror():start()
 endScreenTweet = sequence.new():from(-240):to(0, 1, "outSine")
 
-local font = gfx.font.new("font/test")
+local font = gfx.font.new("font/VHS")
 local smallFont = gfx.font.new("font/font-pixieval-large-white")
 smallFont:setTracking(1)
 local verySmallFont = gfx.font.new("font/Pico8")
@@ -308,9 +308,9 @@ function UiManager:mainMenuUpdate()
     gfx.setImageDrawMode(gfx.kDrawModeCopy)
     mainMenu:draw(0,0)
     gfx.setFont(font,gfx.kVariantBold)
-    gfx.drawTextAligned("DEFENSE", 200, 35, kTextAlignment.center)
-    gfx.drawTextAligned("MACHINA", 200, 100, kTextAlignment.center)
-    gfx.drawTextAligned("STORAGE", 200, 165, kTextAlignment.center)
+    gfx.drawTextAligned("DEFENSE", 200, 41, kTextAlignment.center)
+    gfx.drawTextAligned("MACHINA", 200, 106, kTextAlignment.center)
+    gfx.drawTextAligned("STORAGE", 200, 171, kTextAlignment.center)
     
     if menuMoving == true then
         return
