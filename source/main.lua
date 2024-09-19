@@ -111,6 +111,7 @@ winScreenUpdate = function()
     end
     uiManager:winScreenUpdate()
     sequence.update()
+    playdate.timer.updateTimers()
     uiManager:displayTitle()
 end
 

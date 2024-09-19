@@ -53,7 +53,7 @@ local unlockMenu = gfx.animation.loop.new(animationsData.AchievementPanel.Delay,
 local shopMenu = gfx.animation.loop.new(animationsData.ShopBackground.Delay, animationsData.ShopBackground.Source, true)
 local selectionScreen = gfx.animation.loop.new(animationsData.SelectionScreen.Delay, animationsData.SelectionScreen.Source, true)
 
-local endScreenContour = gfx.image.new("images/ui/menus/end_screen")
+local endScreenContour = gfx.animation.loop.new(animationsData.EndScreen.Delay, animationsData.EndScreen.Source, true)
 local upgradeContour = gfx.image.new("images/ui/menus/upgrade_panel")
 local chooseCannonArrowLeft = gfx.image.new("images/ui/arrow_left")
 local chooseCannonArrowRight = gfx.image.new("images/ui/arrow_right")
@@ -172,7 +172,7 @@ function UiManager:levelUpDisplay()
     end
     gfx.setImageDrawMode(gfx.kDrawModeFillWhite)
     gfx.setFont(font,gfx.kVariantBold)
-    gfx.drawText("Pick Upgrade", 130, 1)
+    gfx.drawTextAligned("Pick Upgrade", 200, 1, kTextAlignment.center)
     if playdate.buttonJustPressed(playdate.kButtonRight) then
         levelUpIndex = math.ring_int(levelUpIndex +1, 0, 2)
     end
@@ -299,9 +299,12 @@ function UiManager:winScreenUpdate()
     endScreenContour:draw(0,0 + endScreenTweet:get())
     local current, pressed, released = playdate.getButtonState()
     if current ~= 0 then
-        tween = false
-        mainMenuIndex = 0
-        playdate.update = mainMenuUpdate
+        self:CloseAndOpenMenu()
+        playdate.timer.new(1000, function ()
+            tween = false
+            mainMenuIndex = 0
+            playdate.update = mainMenuUpdate
+        end)
         return
     end
 end
