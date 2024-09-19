@@ -320,9 +320,9 @@ function UiManager:mainMenuUpdate()
     gfx.setDrawOffset(0,0)
     mainMenu:draw(0,0)
     gfx.setFont(font,gfx.kVariantBold)
-    gfx.drawTextAligned("DEFENSE", 200, 41, kTextAlignment.center)
-    gfx.drawTextAligned("MACHINA", 200, 106, kTextAlignment.center)
-    gfx.drawTextAligned("STORAGE", 200, 171, kTextAlignment.center)
+    gfx.drawTextAligned("DEFEND", 200, 41, kTextAlignment.center)
+    gfx.drawTextAligned("UPGRADE", 200, 106, kTextAlignment.center)
+    gfx.drawTextAligned("COLLECTION", 200, 171, kTextAlignment.center)
     if menuMoving == true and chooseCannonBool == false then
         return
     end
