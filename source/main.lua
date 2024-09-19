@@ -126,14 +126,18 @@ unlockScreenUpdate = function()
     deltaTime = playdate.getElapsedTime()
     playdate.resetElapsedTime()
     uiManager:unlockScreenUpdate()
+    playdate.timer.updateTimers()
     sequence.update()
+    uiManager:displayTitle()
 end
 
 shopUpdate = function()
     deltaTime = playdate.getElapsedTime()
     playdate.resetElapsedTime()
     uiManager:shopUpdate()
+    playdate.timer.updateTimers()
     sequence.update()
+    uiManager:displayTitle()
 end
 
 playdate.update = mainMenuUpdate

@@ -25,23 +25,24 @@ local cannonIndex = 0
 local titleTop = gfx.image.new("images/ui/ui_titleScreen_top")
 local titleBot = gfx.image.new("images/ui/ui_titleScreen_bot")
 local titleBotY = playdate.display.getHeight() / 2 - 13
+local menuMoving = false
 local titleTopOpen = sequence.new():from(0):to(-135, 1, "easeOutSine")
 local titleBotOpen = sequence.new():from(0):to(135, 1, "easeOutSine")
 local titleTopClose = sequence.new():from(0):to(135, 1, "easeOutSine")
 local titleBotClose = sequence.new():from(0):to(-135, 1, "easeOutSine"):callback(function ()
-    print("callback")
     titleTopOpen:set(0)
     titleBotOpen:set(0)
+    menuMoving = false
 end)
 titleBotOpen:callback(function ()
-    print("callback")
     titleTopOpen:set(-135)
     titleBotOpen:set(135)
+    menuMoving = false
 end)
 local core = gfx.image.new("images/ui/core")
 local coreShop = gfx.image.new("images/ui/core_small")
 local enemy = gfx.image.new("images/enemies/large/enemy_large_01")
-local mainMenu = gfx.image.new("images/ui/menus/main_menu")
+local mainMenu = gfx.animation.loop.new(animationsData.MainMenu.Delay, animationsData.MainMenu.Source, true)
 local unlockMenu = gfx.image.new("images/ui/menus/achievement_panel")
 local unlockHeader = gfx.image.new("images/ui/menus/achievement_header")
 local unlockItem = gfx.image.new("images/ui/menus/achievement_item")
@@ -72,12 +73,14 @@ function UiManager:OpenMenu()
     titleTopOpen:restart()
     titleBotOpen:restart()
     closedMenu = false
+    menuMoving = true
 end
 
 function UiManager:CloseMenu()
     closedMenu = true
     titleTopClose:restart()
     titleBotClose:restart()
+    menuMoving = true
 end
 
 function UiManager:OpenAndCloseMenu()
@@ -309,6 +312,10 @@ function UiManager:mainMenuUpdate()
     gfx.drawTextAligned("MACHINA", 200, 100, kTextAlignment.center)
     gfx.drawTextAligned("STORAGE", 200, 165, kTextAlignment.center)
     
+    if menuMoving == true then
+        return
+    end
+
     if closedMenu == true then
         if playdate.buttonJustPressed(playdate.kButtonA) then
             self:OpenMenu()
@@ -335,14 +342,26 @@ function UiManager:mainMenuUpdate()
             chooseCannonBool = true
         end
         if mainMenuIndex == 1 then
-            playdate.update = shopUpdate
+            self:CloseAndOpenMenu()
+            playdate.timer.new(1000, function ()
+                playdate.update = shopUpdate
+            end)
         end
         if mainMenuIndex == 2 then
-            playdate.update = unlockScreenUpdate
+            self:CloseAndOpenMenu()
+            playdate.timer.new(1000, function ()
+                playdate.update = unlockScreenUpdate
+            end)
         end
     end
     if playdate.buttonJustReleased(playdate.kButtonA) then
         A = false
+    end
+    if closedMenu == false and chooseCannonBool == false then
+        if playdate.buttonJustPressed(playdate.kButtonB) then
+            self:CloseMenu()
+        end
+        return
     end
     if chooseCannonBool == true then
         self:chooseCannon()
@@ -351,12 +370,6 @@ function UiManager:mainMenuUpdate()
         end
     end
 
-    if closedMenu == false and chooseCannonBool == false then
-        if playdate.buttonJustPressed(playdate.kButtonB) then
-            self:CloseMenu()
-        end
-        return
-    end
 end
 
 function UiManager:chooseCannon()
@@ -421,8 +434,11 @@ function UiManager:unlockScreenUpdate()
     gfx.clear(gfx.kColorBlack)
     if playdate.buttonJustPressed(playdate.kButtonB) then
         gfx.setDrawOffset(0,0)
-        mainMenuIndex = 2
-        playdate.update = mainMenuUpdate
+        self:CloseAndOpenMenu()
+        playdate.timer.new(1000, function ()
+            mainMenuIndex = 2
+            playdate.update = mainMenuUpdate
+        end)
         return
     end
     local unlockType = nil
@@ -643,9 +659,12 @@ end
 function UiManager:shopUpdate()
     gfx.clear(gfx.kColorBlack)
     if playdate.buttonJustPressed(playdate.kButtonB) then
+        self:CloseAndOpenMenu()
         gfx.setDrawOffset(0,0)
-        mainMenuIndex = 1
-        playdate.update = mainMenuUpdate
+        playdate.timer.new(1000, function ()
+            mainMenuIndex = 1
+            playdate.update = mainMenuUpdate
+        end)
         return
     end
     local x,y = gfx.getDrawOffset()
