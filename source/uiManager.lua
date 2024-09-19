@@ -7,7 +7,7 @@ local levelUpDistance = 15
 local levelUpCellNumber = 3
 local _pick_anim_y = sequence.new():from(20):to(13, 1, "easeOutSine"):mirror():start()
 endScreenTweet = sequence.new():from(-240):to(0, 1, "outSine")
-
+local selectionScreenOpenEnd = false
 local font = gfx.font.new("font/VHS")
 local smallFont = gfx.font.new("font/font-pixieval-large-white")
 smallFont:setTracking(1)
@@ -39,15 +39,19 @@ titleBotOpen:callback(function ()
     titleBotOpen:set(135)
     menuMoving = false
 end)
+local selectionScreenOpen = sequence.new():from(-192):to(0, 1, "easeOutSine"):callback(function ()
+    
+end)
+local selectionScreenClose = sequence.new():from(0):to(-192, 1, "easeOutSine"):callback(function ()
+    
+end)
 local core = gfx.image.new("images/ui/core")
 local coreShop = gfx.image.new("images/ui/core_small")
 local enemy = gfx.image.new("images/enemies/large/enemy_large_01")
 local mainMenu = gfx.animation.loop.new(animationsData.MainMenu.Delay, animationsData.MainMenu.Source, true)
 local unlockMenu = gfx.animation.loop.new(animationsData.AchievementPanel.Delay, animationsData.AchievementPanel.Source, true)
 local shopMenu = gfx.animation.loop.new(animationsData.ShopBackground.Delay, animationsData.ShopBackground.Source, true)
-local unlockHeader = gfx.image.new("images/ui/menus/achievement_header")
-local unlockItem = gfx.image.new("images/ui/menus/achievement_item")
-local shopItem = gfx.image.new("images/ui/menus/shop_item")
+local selectionScreen = gfx.animation.loop.new(animationsData.SelectionScreen.Delay, animationsData.SelectionScreen.Source, true)
 
 local endScreenContour = gfx.image.new("images/ui/menus/end_screen")
 local upgradeContour = gfx.image.new("images/ui/menus/upgrade_panel")
@@ -63,8 +67,10 @@ function UiManager:init()
 end
 
 function UiManager:displayTitle()
-    titleTop:draw(0, titleTopOpen:get() + titleTopClose:get())
-    titleBot:draw(0,titleBotY + titleBotOpen:get() + titleBotClose:get())
+    local x,y = gfx.getDrawOffset()
+    gfx.setImageDrawMode(gfx.kDrawModeCopy)
+    titleTop:draw(0, titleTopOpen:get() + titleTopClose:get() - y)
+    titleBot:draw(0,titleBotY + titleBotOpen:get() + titleBotClose:get() - y)
 end
 
 function UiManager:OpenMenu()
@@ -302,21 +308,23 @@ end
 
 local chooseCannonBool = false
 local A = false
+local gameStarted = false
 
 function UiManager:mainMenuUpdate()
+
     gfx.clear(gfx.kColorBlack)
     gfx.setImageDrawMode(gfx.kDrawModeCopy)
+    gfx.setDrawOffset(0,0)
     mainMenu:draw(0,0)
     gfx.setFont(font,gfx.kVariantBold)
     gfx.drawTextAligned("DEFENSE", 200, 41, kTextAlignment.center)
     gfx.drawTextAligned("MACHINA", 200, 106, kTextAlignment.center)
     gfx.drawTextAligned("STORAGE", 200, 171, kTextAlignment.center)
-    
-    if menuMoving == true then
+    if menuMoving == true and chooseCannonBool == false then
         return
     end
 
-    if closedMenu == true then
+    if closedMenu == true and chooseCannonBool == false then
         if playdate.buttonJustPressed(playdate.kButtonA) then
             self:OpenMenu()
         end
@@ -336,9 +344,12 @@ function UiManager:mainMenuUpdate()
     end
     gfx.setColor(gfx.kColorWhite)
     gfx.fillCircleAtPoint(mainMenuPositions[mainMenuIndex+1].x, mainMenuPositions[mainMenuIndex+1].y, 14)
+
     if playdate.buttonJustPressed(playdate.kButtonA) and chooseCannonBool == false then
         A = true
         if mainMenuIndex == 0 then
+            selectionScreenOpen:from(-192):to(0, 1, "easeOutSine")
+            selectionScreenOpen:restart()
             chooseCannonBool = true
         end
         if mainMenuIndex == 1 then
@@ -364,17 +375,20 @@ function UiManager:mainMenuUpdate()
         return
     end
     if chooseCannonBool == true then
+        selectionScreen:draw(playdate.display.getWidth() /2 - 234/2, selectionScreenOpen:get())
         self:chooseCannon()
-        if playdate.buttonJustPressed(playdate.kButtonB) then
-            chooseCannonBool = false
+        if playdate.buttonJustPressed(playdate.kButtonB) and selectionScreenOpen:isDone() then
+            selectionScreenOpen:from(0):to(-192, 1, "easeOutSine")
+            selectionScreenOpen:restart()
+            playdate.timer.new(1000, function ()
+                chooseCannonBool = false
+            end)
         end
     end
-
 end
 
+
 function UiManager:chooseCannon()
-    gfx.setColor(gfx.kColorBlack)
-    gfx.fillRect(104, 76, 140, 132)
     if playdate.buttonJustPressed(playdate.kButtonRight) then
         cannonIndex = math.ring_int(cannonIndex +1, 0, table.count(player.cannons)-1)
     end
@@ -386,16 +400,16 @@ function UiManager:chooseCannon()
     end
     local cannon = player.cannons[cannonIndex+1]
     local width, height = cannon.image:getSize()
-    local x = GetXYCenteredFromRect(104,76,140,132, width, height).x
-    local y = GetXYCenteredFromRect(104,76,140,132, width, height).y
+    local x = GetXYCenteredFromRect(130,76,140,132, width, height).x
+    local y = GetXYCenteredFromRect(130,76,140,132, width, height).y
     gfx.setImageDrawMode(gfx.kDrawModeCopy)
-    cannon.image:draw(x,y)
+    cannon.image:draw(x,y - 20 + selectionScreenOpen:get())
     gfx.setFont(smallFontAmmolite,gfx.kVariantBold)
     gfx.setImageDrawMode(gfx.kDrawModeFillWhite)
-    gfx.drawTextAligned("CHOOSE CANNON", x + 11, 80, kTextAlignment.center)
-    gfx.drawTextAligned(cannon.name, x + 11, 94, kTextAlignment.center)
-    chooseCannonArrowLeft:draw(110,y + 15)
-    chooseCannonArrowRight:draw(220,y + 15)
+    gfx.drawTextAligned("CHOOSE CANNON", x + 11, 65 + selectionScreenOpen:get(), kTextAlignment.center)
+    gfx.drawTextAligned(cannon.name, x + 11, 65 + 15 + selectionScreenOpen:get(), kTextAlignment.center)
+    chooseCannonArrowLeft:draw(140,y + selectionScreenOpen:get())
+    chooseCannonArrowRight:draw(240,y + selectionScreenOpen:get())
     local offset = 0
     local offsetAdd = 10
     local totalWidth = 0
@@ -412,15 +426,22 @@ function UiManager:chooseCannon()
     table.each(cannon.weapons, function (w)
         local wpUpgrade = table.findByParam(upgradesData, "type", w.className)
         gfx.setImageDrawMode(gfx.kDrawModeCopy)
-        wpUpgrade.image:scaledImage(1):draw(startX + offset, 170)
+        wpUpgrade.image:scaledImage(1):draw(startX + offset, 150 + selectionScreenOpen:get())
         offset = offset + scaledImageWidth + offsetAdd
     end)
+    if selectionScreenOpen:isDone() == false then
+        return
+    end
     if playdate.buttonJustPressed(playdate.kButtonA) and A == false then
         player.chosenCanon = cannon
         player:start()
         game = Game(25,1)
-        chooseCannonBool = false
-        playdate.update = gameUpdate
+        gameStarted = true
+        self:CloseAndOpenMenu()
+        playdate.timer.new(1000, function ()
+            chooseCannonBool = false
+            playdate.update = gameUpdate
+        end)
     end
 end
 
@@ -432,15 +453,8 @@ local selectedItem = 1
 
 function UiManager:unlockScreenUpdate()
     gfx.clear(gfx.kColorBlack)
-    if playdate.buttonJustPressed(playdate.kButtonB) then
-        gfx.setDrawOffset(0,0)
-        self:CloseAndOpenMenu()
-        playdate.timer.new(1000, function ()
-            mainMenuIndex = 2
-            playdate.update = mainMenuUpdate
-        end)
-        return
-    end
+    local x,y = gfx.getDrawOffset()
+
     local unlockType = nil
     local offsetBetweenHeaderAndItems = 35
     local offsetBetweenItems = 5
@@ -522,8 +536,20 @@ function UiManager:unlockScreenUpdate()
         end
     end)
     table.insert(categories, table.shallowcopy(currentCategoryNumber))
-    local x,y = gfx.getDrawOffset()
     unlockMenu:draw(0 + x,0 - y)
+    if menuMoving == true then
+        return
+    end
+    if playdate.buttonJustPressed(playdate.kButtonB) then
+        y = 0
+        selectedItem = 1
+        self:CloseAndOpenMenu()
+        playdate.timer.new(1000, function ()
+            mainMenuIndex = 2
+            playdate.update = mainMenuUpdate
+        end)
+        return
+    end
     if playdate.buttonJustPressed(playdate.kButtonLeft) then
         selectedItem -= 1
         if selectedItem <= 0 then
@@ -658,6 +684,16 @@ end
 
 function UiManager:shopUpdate()
     gfx.clear(gfx.kColorBlack)
+    local x,y = gfx.getDrawOffset()
+    shopMenu:draw(0 + x,0 - y)
+    coreShop:draw(15,8 - y)
+    gfx.setFont(smallFontAmmolite,gfx.kVariantBold)
+    gfx.setImageDrawMode(gfx.kDrawModeFillWhite)
+    gfx.drawTextAligned(playerBonus.gameData.core + 150, 45, 11-y, kTextAlignment.center)
+    gfx.setImageDrawMode(gfx.kDrawModeCopy)
+    if menuMoving == true then
+        return
+    end
     if playdate.buttonJustPressed(playdate.kButtonB) then
         self:CloseAndOpenMenu()
         gfx.setDrawOffset(0,0)
@@ -667,13 +703,6 @@ function UiManager:shopUpdate()
         end)
         return
     end
-    local x,y = gfx.getDrawOffset()
-    shopMenu:draw(0 + x,0 - y)
-    coreShop:draw(15,8 - y)
-    gfx.setFont(smallFontAmmolite,gfx.kVariantBold)
-    gfx.setImageDrawMode(gfx.kDrawModeFillWhite)
-    gfx.drawTextAligned(playerBonus.gameData.core + 150, 45, 11-y, kTextAlignment.center)
-    gfx.setImageDrawMode(gfx.kDrawModeCopy)
 
 end
 

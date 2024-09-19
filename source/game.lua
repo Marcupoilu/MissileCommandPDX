@@ -10,7 +10,6 @@ bgsprite:setZIndex(-9999)
 function Game:init(maxPool, level)
     enemyPoolLimit = maxPool
     gfx.setBackgroundColor(gfx.kColorBlack)
-    gfx.clear()
     generate = false
     playdate.resetElapsedTime()
     self.waves = table.findByParam(wavesData, "Level", level).Waves

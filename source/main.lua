@@ -84,6 +84,7 @@ gameUpdate = function()
     uiManager:update()
     playdate.drawFPS(0, 0)
     sequence.update()
+    uiManager:displayTitle()
 end
 
 
@@ -110,7 +111,7 @@ winScreenUpdate = function()
     end
     uiManager:winScreenUpdate()
     sequence.update()
-    
+    uiManager:displayTitle()
 end
 
 mainMenuUpdate = function()
