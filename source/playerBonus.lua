@@ -36,11 +36,11 @@ function PlayerBonus:start()
             getUpgradePassive("hpMax"),
             getUpgradePassive("damageBonus")
         },
-        upgradeUnlocks = {
-            UnlockPassive("Projectile Speed Up", gfx.image.new("images/ui/icons/projectileSpeed"), "", nil, getUpgradePassive("projectileSpeedBonus"), "+10% Projectile Speed",100, 0, 5, 1.5),
-            UnlockPassive("Projectile Scale Up", gfx.image.new("images/ui/icons/projectileScale"), "", nil, getUpgradePassive("scaleBonus"), "+10% Projectile Scale",100, 0, 5, 1.5),
-            UnlockPassive("HP Up", gfx.image.new("images/ui/icons/hpMax"), "", nil, getUpgradePassive("hpMax"), "+10 HP",100, 0, 5, 1.5),
-            UnlockPassive("Projectile Damage Up", gfx.image.new("images/ui/icons/damageUp"), "", nil, getUpgradePassive("damageBonus"), "+10% Damage Bonus",100, 0, 5, 1.5)
+        shopItems = {
+            table.findByParam(shopItemsData, "name", "Speed Up"),
+            table.findByParam(shopItemsData, "name", "Scale Up"),
+            table.findByParam(shopItemsData, "name", "HP Up"),
+            table.findByParam(shopItemsData, "name", "Damage Up")
         }
     }
 
@@ -74,10 +74,23 @@ function PlayerBonus:start()
         end)
 
         -- unserialize upgrades 
-        local upgradeUnlocks = table.shallowcopy(self.gameData.upgradeUnlocks)
-        self.gameData.upgradeUnlocks = {}
-        table.each(upgradeUnlocks, function (unlock)
-            table.insert(self.gameData.upgradeUnlocks, unlock.upgrade)
+        local shopItems = table.shallowcopy(self.gameData.shopItems)
+        self.gameData.shopItems = {}
+        table.each(shopItems, function (shopItem)
+            shopItem.unlock = table.findByParam(unlocksData, "name", shopItem.name)
+            print(shopItem.name)
+            if shopItem.name == "Speed Up" then
+                shopItem.unlock = UnlockPassive("Speed Up", gfx.image.new("images/ui/icons/projectileSpeed"), "", nil, getUpgradePassive("projectileSpeedBonus"), "+10% Projectile Speed")
+            end
+            if shopItem.name == "Scale Up" then
+                shopItem.unlock = UnlockPassive("Scale Up", gfx.image.new("images/ui/icons/projectileScale"), "", nil, getUpgradePassive("scaleBonus"), "+10% Projectile Scale")
+            end
+            if shopItem.name == "Hp Up" then
+                shopItem.unlock = UnlockPassive("HP Up", gfx.image.new("images/ui/icons/hpMax"), "", nil, getUpgradePassive("hpMax"), "+10 HP")
+            end
+            if shopItem.name == "Damage Up" then
+                shopItem.unlock = UnlockPassive("Damage Up", gfx.image.new("images/ui/icons/damageUp"), "", nil, getUpgradePassive("damageBonus"), "+10% Damage Bonus")
+            end
         end)
     end
 end

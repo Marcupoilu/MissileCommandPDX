@@ -685,6 +685,9 @@ end
 local selectedShopItem = 1
 local shopItems = {}
 
+local shopTween = sequence.new():from(0):to(-135, 1, "easeOutSine")
+local lockInput = false
+
 function UiManager:shopUpdate()
     gfx.clear(gfx.kColorBlack)
     local xOffset,yOffset = gfx.getDrawOffset()
@@ -692,19 +695,32 @@ function UiManager:shopUpdate()
     local x = playdate.display.getWidth() / 2 - width /2
     local y = playdate.display.getHeight()/2 - height/2
     local yAdd = 0
-    table.each(playerBonus.gameData.upgradeUnlocks, function(shopItemData)
+    shopItems = {}
+    table.each(playerBonus.gameData.shopItems, function(shopItemData)
         shopItem:draw(x,y+yAdd)
+        shopItemData.unlock.image:draw(x+21,y+yAdd+33)
+        
+        gfx.setFont(smallFontAmmolite,gfx.kVariantBold)
+        gfx.setImageDrawMode(gfx.kDrawModeFillWhite)
+        gfx.drawTextAligned(shopItemData.name, x + 115, y+yAdd + 15, kTextAlignment.center)
+        gfx.drawTextAligned(shopItemData.level.."/"..shopItemData.levelMax, x + 265, y+yAdd + 15, kTextAlignment.center)
+        gfx.drawTextAligned(shopItemData.cost, x + 272, y+yAdd + 65, kTextAlignment.center)
+        gfx.drawTextAligned(calculateUnlockPercentage(playerBonus.gameData.shopItems, shopItemsData).."%", 370, 16 - yOffset, kTextAlignment.center)
+        gfx.setFont(smallFont,gfx.kVariantBold)
+        gfx.drawTextAligned(shopItemData.unlock.descriptionUnlocked, x + 140, y+yAdd + 50, kTextAlignment.center)
+
+        coreShop:draw(x + 240, y+yAdd + 60)
+
         table.insert(shopItems, {x=x,y=y+yAdd})
         yAdd += 130
     end)
     gfx.setFont(smallFontAmmolite,gfx.kVariantBold)
-    shopMenu:draw(0 + xOffset,0 - yOffset)
     gfx.setImageDrawMode(gfx.kDrawModeCopy)
+    shopMenu:draw(0 + xOffset,0 - yOffset)
     coreShop:draw(15,8 - yOffset)
     gfx.setImageDrawMode(gfx.kDrawModeFillWhite)
     gfx.drawTextAligned(playerBonus.gameData.core + 150, 45, 11-yOffset, kTextAlignment.center)
-    if playdate.buttonJustPressed(playdate.kButtonB) then
-    end
+    gfx.setDrawOffset(0,shopTween:get() )
     if menuMoving == true then
         return
     end
@@ -716,6 +732,25 @@ function UiManager:shopUpdate()
             playdate.update = mainMenuUpdate
         end)
         return
+    end
+    if playdate.buttonJustPressed(playdate.kButtonDown) and lockInput == false then
+        if selectedShopItem >= table.count(playerBonus.gameData.shopItems) then return end
+        selectedShopItem += 1
+        lockInput = true
+        local x,y = gfx.getDrawOffset()
+        shopTween:from(y):to(y-130,0.25,"outExpo"):start():callback(function ()
+            lockInput = false
+        end)
+    end
+
+    if playdate.buttonJustPressed(playdate.kButtonUp) and lockInput == false then
+        if selectedShopItem <= 1 then return end
+        selectedShopItem -= 1
+        lockInput = true
+        local x,y = gfx.getDrawOffset()
+        shopTween:from(y):to(y+130,0.25,"outExpo"):start():callback(function ()
+            lockInput = false
+        end)
     end
 end
 

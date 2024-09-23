@@ -39,8 +39,6 @@ upgradesData =
 function getUpgradePassive(passiveName)
     for key, upgrade in pairs(upgradesData) do
         for key, stat in pairs(upgrade.stats) do        
-            print(passiveName)
-            print(stat.name) 
             if stat.name == passiveName then
                 return upgrade
             end

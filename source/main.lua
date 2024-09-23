@@ -45,6 +45,8 @@ import "unlockWeapon.lua"
 import "unlockPassive.lua"
 import "unlockCannon.lua"
 import "unlocksData.lua"
+import "shopItem"
+import "shopItemsData"
 import "playerBonus.lua"
 
 -- playdate.display.setRefreshRate(50)
