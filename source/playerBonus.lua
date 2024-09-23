@@ -35,6 +35,12 @@ function PlayerBonus:start()
             getUpgradePassive("scaleBonus"),
             getUpgradePassive("hpMax"),
             getUpgradePassive("damageBonus")
+        },
+        upgradeUnlocks = {
+            UnlockPassive("Projectile Speed Up", gfx.image.new("images/ui/icons/projectileSpeed"), "", nil, getUpgradePassive("projectileSpeedBonus"), "+10% Projectile Speed",100, 0, 5, 1.5),
+            UnlockPassive("Projectile Scale Up", gfx.image.new("images/ui/icons/projectileScale"), "", nil, getUpgradePassive("scaleBonus"), "+10% Projectile Scale",100, 0, 5, 1.5),
+            UnlockPassive("HP Up", gfx.image.new("images/ui/icons/hpMax"), "", nil, getUpgradePassive("hpMax"), "+10 HP",100, 0, 5, 1.5),
+            UnlockPassive("Projectile Damage Up", gfx.image.new("images/ui/icons/damageUp"), "", nil, getUpgradePassive("damageBonus"), "+10% Damage Bonus",100, 0, 5, 1.5)
         }
     }
 
@@ -65,6 +71,13 @@ function PlayerBonus:start()
             if upgrade.super.className == "UpgradeStat" then
                 table.insert(self.gameData.shopUnlocks, getUpgradePassiveByName(upgrade.name))
             end
+        end)
+
+        -- unserialize upgrades 
+        local upgradeUnlocks = table.shallowcopy(self.gameData.upgradeUnlocks)
+        self.gameData.upgradeUnlocks = {}
+        table.each(upgradeUnlocks, function (unlock)
+            table.insert(self.gameData.upgradeUnlocks, unlock.upgrade)
         end)
     end
 end

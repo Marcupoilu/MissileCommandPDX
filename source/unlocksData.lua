@@ -1,6 +1,6 @@
 unlocksData = 
 {
-    -- name, image, description, condition, upgrade
+    -- name, image, description, condition, upgrade, cost, level, levelMax, multiplyer
     UnlockWeapon("Aura", gfx.image.new("images/ui/icons/aura"), "Kill 30 enemies", Condition("enemiesKilled", 30), table.findByParam(weaponsData, "className", "Aura"),"Zone that damages enemies when inside"),
     UnlockWeapon("Wiper", gfx.image.new("images/ui/icons/wiper"), "Kill 50 enemies", Condition("enemiesKilled", 50), table.findByParam(weaponsData, "className", "Wiper"),"Inflicts damage every X seconds"),
     UnlockWeapon("BeamReflect", gfx.image.new("images/ui/icons/BeamReflect"), "Kill 50 enemies", Condition("enemiesKilled", 50), table.findByParam(weaponsData, "className", "BeamReflect"),"Reflective Colt bullet"),

@@ -42,9 +42,6 @@ end)
 local selectionScreenOpen = sequence.new():from(-192):to(0, 1, "easeOutSine"):callback(function ()
     
 end)
-local selectionScreenClose = sequence.new():from(0):to(-192, 1, "easeOutSine"):callback(function ()
-    
-end)
 local core = gfx.image.new("images/ui/core")
 local coreShop = gfx.image.new("images/ui/core_small")
 local enemy = gfx.image.new("images/enemies/large/enemy_large_01")
@@ -52,7 +49,7 @@ local mainMenu = gfx.animation.loop.new(animationsData.MainMenu.Delay, animation
 local unlockMenu = gfx.animation.loop.new(animationsData.AchievementPanel.Delay, animationsData.AchievementPanel.Source, true)
 local shopMenu = gfx.animation.loop.new(animationsData.ShopBackground.Delay, animationsData.ShopBackground.Source, true)
 local selectionScreen = gfx.animation.loop.new(animationsData.SelectionScreen.Delay, animationsData.SelectionScreen.Source, true)
-
+local shopItem = gfx.image.new("images/ui/menus/shop_item")
 local endScreenContour = gfx.animation.loop.new(animationsData.EndScreen.Delay, animationsData.EndScreen.Source, true)
 local upgradeContour = gfx.image.new("images/ui/menus/upgrade_panel")
 local chooseCannonArrowLeft = gfx.image.new("images/ui/arrow_left")
@@ -685,15 +682,29 @@ function UiManager:unlockScreenUpdate()
     end
 end
 
+local selectedShopItem = 1
+local shopItems = {}
+
 function UiManager:shopUpdate()
     gfx.clear(gfx.kColorBlack)
-    local x,y = gfx.getDrawOffset()
-    shopMenu:draw(0 + x,0 - y)
-    coreShop:draw(15,8 - y)
+    local xOffset,yOffset = gfx.getDrawOffset()
+    local width, height = shopItem:getSize()
+    local x = playdate.display.getWidth() / 2 - width /2
+    local y = playdate.display.getHeight()/2 - height/2
+    local yAdd = 0
+    table.each(playerBonus.gameData.upgradeUnlocks, function(shopItemData)
+        shopItem:draw(x,y+yAdd)
+        table.insert(shopItems, {x=x,y=y+yAdd})
+        yAdd += 130
+    end)
     gfx.setFont(smallFontAmmolite,gfx.kVariantBold)
-    gfx.setImageDrawMode(gfx.kDrawModeFillWhite)
-    gfx.drawTextAligned(playerBonus.gameData.core + 150, 45, 11-y, kTextAlignment.center)
+    shopMenu:draw(0 + xOffset,0 - yOffset)
     gfx.setImageDrawMode(gfx.kDrawModeCopy)
+    coreShop:draw(15,8 - yOffset)
+    gfx.setImageDrawMode(gfx.kDrawModeFillWhite)
+    gfx.drawTextAligned(playerBonus.gameData.core + 150, 45, 11-yOffset, kTextAlignment.center)
+    if playdate.buttonJustPressed(playdate.kButtonB) then
+    end
     if menuMoving == true then
         return
     end
@@ -706,7 +717,6 @@ function UiManager:shopUpdate()
         end)
         return
     end
-
 end
 
 
