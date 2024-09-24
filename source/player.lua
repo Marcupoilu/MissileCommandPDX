@@ -17,7 +17,7 @@ function Player:init( basePosition, gunPosition)
     self.cannonGunSprite:moveTo( gunPosition.x, gunPosition.y )
     self.cannonBaseSprite:add()
     self.cannonGunSprite:add()
-    self.cannons = {table.findByParam(cannonsData, "id", "blaster"),table.findByParam(cannonsData, "id", "laser")}
+    self.cannons = playerBonus.gameData.cannons
     self.weapons = {}
     self.passives = {}
     self.unlocks = {}

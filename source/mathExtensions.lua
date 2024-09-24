@@ -199,3 +199,26 @@ function calculateUnlockPercentage(playerUnlocks, allUnlocks)
     local percentageUnlocked = (playerUnlockCount / totalUnlocks) * 100
     return math.round(percentageUnlocked)
 end
+
+function calculateShopItemsLevelPercentage(purchasedShopItems, allShopItems)
+    local totalLevelsBought = 0
+    local totalLevelsAvailable = 0
+
+    -- Calcul des niveaux achetés par le joueur
+    for _, item in ipairs(purchasedShopItems) do
+        totalLevelsBought = totalLevelsBought + item.level
+    end
+
+    -- Calcul des niveaux disponibles dans le jeu
+    for _, item in ipairs(allShopItems) do
+        totalLevelsAvailable = totalLevelsAvailable + item.levelMax
+    end
+
+    if totalLevelsAvailable == 0 then
+        return 0 -- Pour éviter une division par zéro
+    end
+
+    -- Calcul du pourcentage
+    local percentage = (totalLevelsBought / totalLevelsAvailable) * 100
+    return math.round(percentage)
+end

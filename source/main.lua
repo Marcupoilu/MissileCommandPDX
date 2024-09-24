@@ -63,7 +63,6 @@ bullets = {}
 -- Managers -- 
 shake = ScreenShake()
 uiManager = UiManager()
-player = Player({x=200,y=202}, {x=200,y=200})
 
 targetTime = 15*60
 time = 0
@@ -71,6 +70,7 @@ deltaTime = 0
 crankPosition = playdate.getCrankPosition()
 game = nil
 playerBonus = PlayerBonus()
+player = Player({x=200,y=202}, {x=200,y=200})
 -- game:startGame()
 
 gameUpdate = function()
@@ -145,3 +145,4 @@ shopUpdate = function()
 end
 
 playdate.update = mainMenuUpdate
+-- uiManager.OpenMenu()

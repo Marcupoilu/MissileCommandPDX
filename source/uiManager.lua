@@ -285,7 +285,8 @@ function UiManager:winScreenUpdate()
     local startX = rectCenterX - totalWidth / 2
     
     table.each(player.currentUnlocks, function (w)
-        gfx.setImageDrawMode(gfx.kDrawModeInverted)
+        gfx.setImageDrawMode(gfx.kDrawModeCopy)
+        imageWidth, imageHeight = w.image:getSize()
         w.image:scaledImage(1):draw(startX + offset, rectCenterY - imageHeight / 2 + 40)
         offset = offset + scaledImageWidth + offsetAdd
     end)
@@ -390,15 +391,15 @@ end
 
 function UiManager:chooseCannon()
     if playdate.buttonJustPressed(playdate.kButtonRight) then
-        cannonIndex = math.ring_int(cannonIndex +1, 0, table.count(player.cannons)-1)
+        cannonIndex = math.ring_int(cannonIndex +1, 0, table.count(playerBonus.gameData.cannons)-1)
     end
     if playdate.buttonJustPressed(playdate.kButtonLeft) then
         cannonIndex -= 1
         if cannonIndex == -1 then
-            cannonIndex = table.count(player.cannons)-1
+            cannonIndex = table.count(playerBonus.gameData.cannons)-1
         end
     end
-    local cannon = player.cannons[cannonIndex+1]
+    local cannon = playerBonus.gameData.cannons[cannonIndex+1]
     local width, height = cannon.image:getSize()
     local x = GetXYCenteredFromRect(130,76,140,132, width, height).x
     local y = GetXYCenteredFromRect(130,76,140,132, width, height).y
@@ -697,19 +698,26 @@ function UiManager:shopUpdate()
     local yAdd = 0
     shopItems = {}
     table.each(playerBonus.gameData.shopItems, function(shopItemData)
+        gfx.setImageDrawMode(gfx.kDrawModeCopy)
         shopItem:draw(x,y+yAdd)
-        shopItemData.unlock.image:draw(x+21,y+yAdd+33)
+        local width, height = shopItemData.unlock.image:getSize()
+        shopItemData.unlock.image:draw(x+50 - width/2,y+yAdd+33)
         
         gfx.setFont(smallFontAmmolite,gfx.kVariantBold)
         gfx.setImageDrawMode(gfx.kDrawModeFillWhite)
         gfx.drawTextAligned(shopItemData.name, x + 115, y+yAdd + 15, kTextAlignment.center)
-        gfx.drawTextAligned(shopItemData.level.."/"..shopItemData.levelMax, x + 265, y+yAdd + 15, kTextAlignment.center)
+        if shopItemData.level >= shopItemData.levelMax then
+            gfx.drawTextAligned("MAX", x + 265, y+yAdd + 15, kTextAlignment.center)
+            shopItemData.cost = 0
+        else
+            gfx.drawTextAligned(shopItemData.level.."/"..shopItemData.levelMax, x + 265, y+yAdd + 15, kTextAlignment.center)
+        end
         gfx.drawTextAligned(shopItemData.cost, x + 272, y+yAdd + 65, kTextAlignment.center)
-        gfx.drawTextAligned(calculateUnlockPercentage(playerBonus.gameData.shopItems, shopItemsData).."%", 370, 16 - yOffset, kTextAlignment.center)
+        gfx.drawTextAligned(calculateShopItemsLevelPercentage(playerBonus.gameData.shopItems, shopItemsData).."%", 370, 16 - yOffset, kTextAlignment.center)
         gfx.setFont(smallFont,gfx.kVariantBold)
         gfx.drawTextAligned(shopItemData.unlock.descriptionUnlocked, x + 140, y+yAdd + 50, kTextAlignment.center)
-
         coreShop:draw(x + 240, y+yAdd + 60)
+
 
         table.insert(shopItems, {x=x,y=y+yAdd})
         yAdd += 130
@@ -719,7 +727,7 @@ function UiManager:shopUpdate()
     shopMenu:draw(0 + xOffset,0 - yOffset)
     coreShop:draw(15,8 - yOffset)
     gfx.setImageDrawMode(gfx.kDrawModeFillWhite)
-    gfx.drawTextAligned(playerBonus.gameData.core + 150, 45, 11-yOffset, kTextAlignment.center)
+    gfx.drawTextAligned(playerBonus.gameData.core, 45, 11-yOffset, kTextAlignment.center)
     gfx.setDrawOffset(0,shopTween:get() )
     if menuMoving == true then
         return
@@ -732,6 +740,23 @@ function UiManager:shopUpdate()
             playdate.update = mainMenuUpdate
         end)
         return
+    end
+    if playdate.buttonJustPressed(playdate.kButtonA) then
+        local boughtItem = playerBonus.gameData.shopItems[selectedShopItem]
+        if boughtItem.level < boughtItem.levelMax then
+            if playerBonus.gameData.core >= boughtItem.cost then
+                playerBonus.gameData.core -= boughtItem.cost
+                boughtItem.level += 1
+                boughtItem.cost *= boughtItem.multiplyer
+                boughtItem.cost = math.round(boughtItem.cost)
+                if boughtItem.unlock.className == "UnlockPassive" then
+                    playerBonus:addPassive(boughtItem.unlock.upgrade)
+                end
+                if boughtItem.unlock.className == "UnlockCannon" then
+                    table.insert(playerBonus.gameData.cannons,boughtItem.unlock.upgrade)
+                end
+            end
+        end
     end
     if playdate.buttonJustPressed(playdate.kButtonDown) and lockInput == false then
         if selectedShopItem >= table.count(playerBonus.gameData.shopItems) then return end

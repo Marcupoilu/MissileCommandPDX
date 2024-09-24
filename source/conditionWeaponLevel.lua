@@ -5,7 +5,7 @@ function ConditionWeaponLevel:init(statName, statValue)
 end
 
 function ConditionWeaponLevel:checkCondition()
-    local weapon = table.findByParam(player.weapons, "type", self.statName)
+    local weapon = table.findByParam(player.weapons, "className", self.statName)
     if weapon ~= nil then
         if weapon.level >= self.statValue then
             return true

@@ -5,5 +5,6 @@ function UnlockPassive:init(name, image, description, condition, upgrade, descri
 end
 
 function UnlockPassive:applyUnlock()
+
     UnlockPassive.super.applyUnlock(self)
 end
