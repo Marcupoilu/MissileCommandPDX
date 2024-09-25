@@ -1,8 +1,7 @@
 class("Xwing").extends(Enemy)
 
-local enemyImage = gfx.image.new("images/enemies/small/enemy_small_01")
 
-function Xwing:init(x,y,speed,hp,xp,damage, core)
+function Xwing:init(x,y,speed,hp,xp,damage, enemyImage, core)
     Xwing.super.init(self,x,y,speed,hp,xp, damage, enemyImage, core)
     self.originPosition.x = self.x
     self.originPosition.y = self.y

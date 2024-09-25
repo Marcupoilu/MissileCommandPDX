@@ -56,9 +56,9 @@ function Enemy:update()
         self.currentAnimation = table.findByParam(self.animations, "Name", self.state).Animation
         self:setImage(self.currentAnimation:image())
     end
-    if self.x > playdate.display.getWidth() or self.y > playdate.display.getHeight() or self.x < 0 or self.y < 0 then
-        self:remove()
-    end
+    -- if self.x > playdate.display.getWidth() or self.y > playdate.display.getHeight() or self.x < 0 or self.y < 0 then
+    --     self:remove()
+    -- end
     local collisions = self:overlappingSprites()
     for index, value in pairs(collisions) do
         if value:isa(Bullet) and table.contains(self.currentOverlappingSprites, value) == false then

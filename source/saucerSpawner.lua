@@ -1,7 +1,7 @@
-class("SaucerSpawner").extends(EnemySpawner)
+class("SaucerSpawner").extends(EnemySpawnerBase)
 
-function SaucerSpawner:init(spawnTime, x, y)
-    SaucerSpawner.super.init(self, spawnTime,x ,y)
+function SaucerSpawner:init(spawnTime, x, y, spawnMaxCount)
+    SaucerSpawner.super.init(self, spawnTime,x ,y, spawnMaxCount)
 
 end
 
