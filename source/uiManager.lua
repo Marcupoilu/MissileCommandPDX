@@ -216,7 +216,7 @@ function UiManager:update()
     gfx.drawTextAligned(player.level,100,225, kTextAlignment.center)
     gfx.setFont(smallFontVariant)
     gfx.drawTextAligned(timeLeft(time),387,227, kTextAlignment.center)
-    self:createBar(121,220,player.hpMax, player.hp, 5)
+    self:createBar(121,219,player.hpMax, player.hp, 5)
     self:createBar(121,235,player.xpMax, player.xp,1)
 end
 
@@ -796,9 +796,8 @@ function UiManager:createInventory(x,y, offset, inventoryTable)
         local item = gfx.sprite.new(value.image)
         item:moveTo(x + offs, y)
         item:setCenter(0.5,0.5)
-        item:setScale(0.03)
         item:setZIndex(1000)
-        item:setImageDrawMode(gfx.kDrawModeFillWhite)
+        item:setImageDrawMode(gfx.kDrawModeCopy)
         item:add()
         offs += offset
         if value.className == "UpgradeWeapon" then
