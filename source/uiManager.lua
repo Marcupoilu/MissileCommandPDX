@@ -120,20 +120,22 @@ function UiManager:generateUpgrades()
             if table.contains(discardedUps, rand) == false then
                 table.insert(discardedUps, rand)
             end
-            rand:updateDescriptionText()
-            -- si c'est une new passive on check si on a de la place dans l'inventaire
-            if rand.className == "UpgradeStat" then
-                if table.contains(player.passives, rand) == false and rand.inventory == nil then
-                    if player.passiveNumber >= player.passiveNumberMax then
-                        passiveCheck = true
+            if rand ~= nil then
+                rand:updateDescriptionText()
+                -- si c'est une new passive on check si on a de la place dans l'inventaire
+                if rand.className == "UpgradeStat" then
+                    if table.contains(player.passives, rand) == false and rand.inventory == nil then
+                        if player.passiveNumber >= player.passiveNumberMax then
+                            passiveCheck = true
+                        end
                     end
                 end
-            end
-            -- si c'est une new weapon on check si on a de la place dans l'inventaire
-            if rand.className == "UpgradeWeapon" then
-                if rand.weapon == nil then
-                    if player.weaponNumber >= player.weaponNumberMax then
-                        weaponCheck = true
+                -- si c'est une new weapon on check si on a de la place dans l'inventaire
+                if rand.className == "UpgradeWeapon" then
+                    if rand.weapon == nil then
+                        if player.weaponNumber >= player.weaponNumberMax then
+                            weaponCheck = true
+                        end
                     end
                 end
             end
@@ -240,7 +242,7 @@ function UiManager:winScreenUpdate()
     -- middle part
     core:draw( 50,70 + endScreenTweet:get())
     gfx.setFont(smallFontAmmolite,gfx.kVariantItalic)
-    gfx.drawTextAligned("X"..player.core, 90, 90 + endScreenTweet:get(), kTextAlignment.center)
+    gfx.drawTextAligned("X"..playerBonus.gameData.core, 90, 90 + endScreenTweet:get(), kTextAlignment.center)
     local screenWidth = playdate.display.getWidth()
     local screenHeight = playdate.display.getHeight()
     local enemyImage = enemy:scaledImage(1)
@@ -701,7 +703,7 @@ function UiManager:shopUpdate()
         gfx.setImageDrawMode(gfx.kDrawModeCopy)
         shopItem:draw(x,y+yAdd)
         local width, height = shopItemData.unlock.image:getSize()
-        shopItemData.unlock.image:draw(x+50 - width/2,y+yAdd+33)
+        shopItemData.unlock.image:draw(x+37 - width/2,y+yAdd+33)
         
         gfx.setFont(smallFontAmmolite,gfx.kVariantBold)
         gfx.setImageDrawMode(gfx.kDrawModeFillWhite)
@@ -717,7 +719,6 @@ function UiManager:shopUpdate()
         gfx.setFont(smallFont,gfx.kVariantBold)
         gfx.drawTextAligned(shopItemData.unlock.descriptionUnlocked, x + 140, y+yAdd + 50, kTextAlignment.center)
         coreShop:draw(x + 240, y+yAdd + 60)
-
 
         table.insert(shopItems, {x=x,y=y+yAdd})
         yAdd += 130

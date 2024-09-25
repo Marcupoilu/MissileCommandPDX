@@ -84,7 +84,7 @@ function Player:update()
     end
 
     -- c'est la que tu fais ton truc de ouf en rotation
-    self.cannonGunSprite:moveTo(self.cannonBaseSprite.x + 10 * math.sin(math.rad(self.cannonGunSprite:getRotation())), self.cannonBaseSprite.y - 10 * math.cos(math.rad(self.cannonGunSprite:getRotation())) + 13)
+    -- self.cannonGunSprite:moveTo(self.cannonBaseSprite.x + 10 * math.sin(math.rad(self.cannonGunSprite:getRotation())), self.cannonBaseSprite.y - 10 * math.cos(math.rad(self.cannonGunSprite:getRotation())) + 13)
 end
 
 function Player:updateCannonPosition()
@@ -162,8 +162,8 @@ end
 
 function Player:loseHp(value)
     local trueValue = value - self.shield
-    if trueValue < 0 then
-        trueValue = 0
+    if trueValue <= 0 then
+        trueValue = 1
     end
     self.hp -= trueValue
     if(self.hp <= 0) then
