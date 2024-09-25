@@ -311,7 +311,6 @@ end
 
 local chooseCannonBool = false
 local A = false
-local gameStarted = false
 
 function UiManager:mainMenuUpdate()
 
@@ -439,7 +438,6 @@ function UiManager:chooseCannon()
         player.chosenCanon = cannon
         player:start()
         game = Game(25,1)
-        gameStarted = true
         self:CloseAndOpenMenu()
         playdate.timer.new(1000, function ()
             chooseCannonBool = false
