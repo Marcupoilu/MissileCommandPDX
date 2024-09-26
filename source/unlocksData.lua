@@ -15,7 +15,7 @@ unlocksData =
     UnlockWeapon("Shockwave", gfx.image.new("images/ui/icons/shockwave"), "Kill 210 enemies", Condition("enemiesKilled", 210), table.findByParam(weaponsData, "className", "Shockwave"),"Pushes back enemies"),
     UnlockWeapon("ToxicVape", gfx.image.new("images/ui/icons/toxicVape"), "Kill 230 enemies", Condition("enemiesKilled", 230), table.findByParam(weaponsData, "className", "ToxicVape"),"Poisons enemies and dot HP"),
     UnlockWeapon("Tracer", gfx.image.new("images/ui/icons/tracer"), "Kill 250 enemies", Condition("enemiesKilled", 250), table.findByParam(weaponsData, "className", "Tracer"),"Laser bouncing on walls"),
-    UnlockPassive("Cooldown-", gfx.image.new("images/ui/icons/cooldown"), "Reach Level 5", Condition("level", 1), getUpgradePassive("attackSpeedBonus"), "-10% Weapons Cooldown",100, 0, 5, 1.5),
+    UnlockPassive("Cooldown-", gfx.image.new("images/ui/icons/cooldown"), "Reach Level 5", Condition("level", 5), getUpgradePassive("attackSpeedBonus"), "-10% Weapons Cooldown",100, 0, 5, 1.5),
     UnlockPassive("XP+", gfx.image.new("images/ui/icons/xpUp"), "Reach Level 10", Condition("level", 10), getUpgradePassive("xpBonus"), "+10% XP Gain",100, 0, 5, 1.5),
     UnlockPassive("Regeneration", gfx.image.new("images/ui/icons/regen"), "Reach Level 10", Condition("level", 10), getUpgradePassive("regenerationRate"),"+10% Regeneration Rate",100, 0, 5, 1.5),
     UnlockPassive("Duration", gfx.image.new("images/ui/icons/duration"), "Reach Level 15", Condition("level", 15), getUpgradePassive("durationBonus"),"+10% Weapons Duration",100, 0, 5, 1.5),

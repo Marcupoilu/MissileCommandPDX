@@ -310,6 +310,7 @@ function UiManager:winScreenUpdate()
 end
 
 local chooseCannonBool = false
+local chooseMap = false
 local A = false
 
 function UiManager:mainMenuUpdate()
@@ -326,14 +327,14 @@ function UiManager:mainMenuUpdate()
         return
     end
 
-    if closedMenu == true and chooseCannonBool == false then
+    if closedMenu == true and chooseCannonBool == false and chooseMap == false then
         if playdate.buttonJustPressed(playdate.kButtonA) then
             self:OpenMenu()
         end
         return
     end
 
-    if chooseCannonBool == false then
+    if chooseCannonBool == false and chooseMap == false then
         if playdate.buttonJustPressed(playdate.kButtonDown) then
             mainMenuIndex = math.ring_int(mainMenuIndex +1, 0, 2)
         end
@@ -347,12 +348,12 @@ function UiManager:mainMenuUpdate()
     gfx.setColor(gfx.kColorWhite)
     gfx.fillCircleAtPoint(mainMenuPositions[mainMenuIndex+1].x, mainMenuPositions[mainMenuIndex+1].y, 14)
 
-    if playdate.buttonJustPressed(playdate.kButtonA) and chooseCannonBool == false then
+    if playdate.buttonJustPressed(playdate.kButtonA) and chooseCannonBool == false and chooseMap == false then
         A = true
         if mainMenuIndex == 0 then
             selectionScreenOpen:from(-192):to(0, 1, "easeOutSine")
             selectionScreenOpen:restart()
-            chooseCannonBool = true
+            chooseMap = true
         end
         if mainMenuIndex == 1 then
             self:CloseAndOpenMenu()
@@ -370,22 +371,69 @@ function UiManager:mainMenuUpdate()
     if playdate.buttonJustReleased(playdate.kButtonA) then
         A = false
     end
-    if closedMenu == false and chooseCannonBool == false then
+    if closedMenu == false and chooseCannonBool == false and chooseMap == false then
         if playdate.buttonJustPressed(playdate.kButtonB) then
             self:CloseMenu()
         end
         return
     end
-    if chooseCannonBool == true then
+    if chooseMap == true then
         selectionScreen:draw(playdate.display.getWidth() /2 - 234/2, selectionScreenOpen:get())
-        self:chooseCannon()
+        self:chooseMap()
         if playdate.buttonJustPressed(playdate.kButtonB) and selectionScreenOpen:isDone() then
             selectionScreenOpen:from(0):to(-192, 1, "easeOutSine")
             selectionScreenOpen:restart()
             playdate.timer.new(1000, function ()
-                chooseCannonBool = false
+                chooseMap = false
             end)
         end
+    end
+    if chooseCannonBool == true and chooseMap == false then
+        selectionScreen:draw(playdate.display.getWidth() /2 - 234/2, selectionScreenOpen:get())
+        self:chooseCannon()
+        if playdate.buttonJustPressed(playdate.kButtonB) and selectionScreenOpen:isDone() then
+            chooseMap = true
+            chooseCannonBool = false
+        end
+    end
+end
+
+local mapIndex = 1
+
+function UiManager:chooseMap()
+    if playdate.buttonJustPressed(playdate.kButtonRight) then
+        mapIndex += 1
+        if mapIndex > playerBonus.gameData.mapCount then
+            mapIndex -= 1
+        end
+    end
+    if playdate.buttonJustPressed(playdate.kButtonLeft) then
+        mapIndex -= 1
+        if mapIndex < 1 then
+            mapIndex = 1
+        end
+    end
+
+    local map = table.findByParam(wavesData, "Level", mapIndex)
+    local width, height = map.Background:getSize()
+    local x = GetXYCenteredFromRect(130,76,140,132, width, height).x
+    local y = GetXYCenteredFromRect(130,76,140,132, width, height).y
+    gfx.setImageDrawMode(gfx.kDrawModeCopy)
+    map.Background:scaledImage(0.55):draw(90,60 + selectionScreenOpen:get())
+    gfx.setFont(smallFontAmmolite,gfx.kVariantBold)
+    gfx.setImageDrawMode(gfx.kDrawModeFillWhite)
+    gfx.drawTextAligned("CHOOSE MAP", x + 195, 65 + selectionScreenOpen:get(), kTextAlignment.center)
+    gfx.drawTextAligned(map.Name, x + 195, 65 + 15 + selectionScreenOpen:get(), kTextAlignment.center)
+    chooseCannonArrowLeft:draw(100,y + selectionScreenOpen:get() + 100)
+    chooseCannonArrowRight:draw(280,y + selectionScreenOpen:get() + 100)
+
+    if selectionScreenOpen:isDone() == false then
+        return
+    end
+    if playdate.buttonJustPressed(playdate.kButtonA) and A == false then
+        A = true
+        chooseCannonBool = true
+        chooseMap = false
     end
 end
 
@@ -437,7 +485,7 @@ function UiManager:chooseCannon()
     if playdate.buttonJustPressed(playdate.kButtonA) and A == false then
         player.chosenCanon = cannon
         player:start()
-        game = Game(25,1)
+        game = Game(30,mapIndex)
         self:CloseAndOpenMenu()
         playdate.timer.new(1000, function ()
             chooseCannonBool = false

@@ -63,7 +63,7 @@ bullets = {}
 shake = ScreenShake()
 uiManager = UiManager()
 
-targetTime = 15*60
+targetTime = 3
 time = 0
 deltaTime = 0
 crankPosition = playdate.getCrankPosition()

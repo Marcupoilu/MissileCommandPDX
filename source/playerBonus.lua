@@ -22,6 +22,7 @@ function PlayerBonus:start()
         rerolls = 0,
         enemiesKilled = 0,
         levelMaxReached = 1,
+        mapCount = 1,
         core = 1000,
         success = false,
         cannons = {table.findByParam(cannonsData, "id", "blaster")},

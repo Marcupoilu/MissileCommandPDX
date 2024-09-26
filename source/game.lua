@@ -1,22 +1,22 @@
 class("Game").extends()
 
 local interval = minutes_to_milliseconds(0.5)
-local bg = gfx.image.new("images/backgrounds/bg_01")
-local bgsprite = gfx.sprite.new(bg)
-bgsprite:setCenter(0,0)
-bgsprite:moveTo(0,0)
-bgsprite:setZIndex(-9999)
 
 function Game:init(maxPool, level)
     enemyPoolLimit = maxPool
     gfx.setBackgroundColor(gfx.kColorBlack)
     generate = false
     playdate.resetElapsedTime()
+    self.level = table.findByParam(wavesData, "Level", level)
     self.waves = table.findByParam(wavesData, "Level", level).Waves
     self.waveNumber = 1
+    self.timer = nil
     self.finish = false
     time = 0
-
+    local bgsprite = gfx.sprite.new(self.level.Background)
+    bgsprite:setCenter(0,0)
+    bgsprite:moveTo(0,0)
+    bgsprite:setZIndex(-9999)
     bgsprite:add()
 
     self:startGame()
@@ -57,7 +57,8 @@ function Game:startGame()
     -- uiManager:createInventory(12,225,21,weaponUpgrades)
     
     self.waves[self.waveNumber]:startWave()
-    playdate.timer.new(interval, self.changeWave, self).repeats = true
+    self.timer = playdate.timer.new(interval, self.changeWave, self)
+    self.timer.repeats = true
 end
 
 function timeLeft(x)
@@ -93,6 +94,13 @@ function Game:changeWave()
 end
 
 function Game:endGame()
+    if self.level.Level == playerBonus.gameData.mapCount then
+        if playerBonus.gameData.mapCount < table.count(wavesData) then
+            playerBonus.gameData.mapCount += 1
+        end
+    end
+    
+    self.timer:remove()
     self.finish = true
     table.each(spawners, function (s)
         s:stopSpawn()
@@ -120,6 +128,7 @@ function Game:endGame()
 end
 
 function Game:loseGame()
+    self.timer:remove()
     self.finish = true
     table.each(spawners, function (s)
         s:stopSpawn()
