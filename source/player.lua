@@ -32,7 +32,7 @@ function Player:start()
     self.hp = self.hpMax
     self.shield = 0 + playerBonus.gameData.shield
     self.xp = 0
-    self.xpMax = 1
+    self.xpMax = 3
     self.xpBonus = 0 + playerBonus.gameData.xpBonus
     self.damageBonus = 0 + playerBonus.gameData.damageBonus
     self.attackSpeedBonus = 0 + playerBonus.gameData.attackSpeedBonus

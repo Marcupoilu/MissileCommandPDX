@@ -2,7 +2,7 @@ class("BulletFreezer").extends(Projectile)
 
 -- local p = ParticleCircle(0,0)
 
-function BulletFreezer:init(x,y,speed, damage, offsetCrank, scale, duration)
+function BulletFreezer:init(x,y,speed, damage, offsetCrank, scale, duration, freezeDuration)
     BulletFreezer.super.init(self, x,y,speed, damage, offsetCrank, scale, duration)
     self.maxLength = 240
     self.currentLength = 0
@@ -11,7 +11,7 @@ function BulletFreezer:init(x,y,speed, damage, offsetCrank, scale, duration)
     self.angle = crankPosition
     self.startPos.x = player.x 
     self.startPos.y = player.y
-    self.freezeDuration = 1
+    self.freezeDuration = freezeDuration
     self.radius += self.speed + (((player.projectileSpeedBonus*self.speed)/100)) * deltaTime
     self.direction = {x=0, y=1}
     self.direction.x = self.radius*math.cos(math.rad(self.angle + self.offset))* deltaTime

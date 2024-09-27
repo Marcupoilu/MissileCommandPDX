@@ -7,46 +7,56 @@ function Shockwave:init(attackSpeed, x, y, speed, damage, projectileAmount, scal
     self.x = x
     self.duration = duration
     self.y = y
+    self.hp = 6
+    self.power = 10
     -- self:debugLevel(10)
 end
 
 function Shockwave:changeLevel()
     self.level += 1
     if self.level == 2 then
-        self.attackSpeed -= 10
-        self.scale += 1
+        self.attackSpeed -= 100
+        self.scale += 0.1
     end
     if self.level == 3 then
-        self.attackSpeed -= 10
+        self.attackSpeed -= 100
+        self.speed += 0.5
+        self.power += 5
     end
     if self.level == 4 then
-        self.attackSpeed -= 10
-        self.scale += 1
+        self.attackSpeed -= 100
+        self.scale += 0.1
+        self.hp += 1
     end
     if self.level == 5 then
-        self.attackSpeed -= 10
+        self.attackSpeed -= 100
         self.projectileAmount += 1
-        self.scale += 1
+        self.scale += 0.1
     end
     if self.level == 6 then
-        self.attackSpeed -= 10
+        self.attackSpeed -= 100
+        self.speed += 0.5
+        self.power += 5
     end
     if self.level == 7 then
-        self.attackSpeed -= 10
-        self.scale += 1
+        self.attackSpeed -= 100
+        self.scale += 0.1
+        self.hp += 1
     end
     if self.level == 8 then
-        self.attackSpeed -= 10
+        self.attackSpeed -= 100
     end
     if self.level == 9 then
-        self.attackSpeed -= 10
-        self.scale += 1
+        self.attackSpeed -= 100
+        self.scale += 0.1
+        self.power += 5
     end
     if self.level == 10 then
-        self.attackSpeed -= 50
+        self.attackSpeed -= 200
         self.projectileAmount += 1
-        self.scale += 5
-        self.speed += 10
+        self.scale += 0.5
+        self.speed += 1
+        self.hp += 2
     end
 end
 
@@ -54,6 +64,6 @@ function Shockwave:shoot()
     Shockwave.super.shoot()
     local angles = cutAngle(self.projectileAmount + player.projectileAmount)
     for key, angle in ipairs(angles) do
-        bulletShockwave = BulletShockwave(self.x, self.y - 20, self.speed, self.damage, angle, self.scale, self.duration)
+        bulletShockwave = BulletShockwave(self.x, self.y - 20, self.speed, self.damage, angle, self.scale, self.duration, self.power, self.hp)
     end
 end

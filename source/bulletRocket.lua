@@ -1,6 +1,6 @@
 class("BulletRocket").extends(Bullet)
 
-local bulletImage = gfx.image.new("images/bullets/bullet_fireworks" )
+local bulletImage = gfx.image.new("images/bullets/bullet_rocket" )
 
 function BulletRocket:init(x,y,speed, damage, offsetCrank, scale, duration, explosionDamage)
     BulletRocket.super.init(self,x,y,speed, damage, offsetCrank, scale, duration, bulletImage)

@@ -9,6 +9,7 @@ function Game:init(maxPool, level)
     playdate.resetElapsedTime()
     self.level = table.findByParam(wavesData, "Level", level)
     self.waves = table.findByParam(wavesData, "Level", level).Waves
+    targetTime = (table.count(self.waves)/2)*60
     self.waveNumber = 1
     self.timer = nil
     self.finish = false

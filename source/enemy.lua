@@ -83,13 +83,13 @@ function Enemy:update()
                 playdate.timer.new(toMilliseconds(value.duration), function() sprite:remove() end)
                 local angles = cutAngle(value.projectileAmount + player.projectileAmount)
                 for key, angle in ipairs(angles) do
-                     BulletDroneLaser(value.x, value.y, value.speed/2, 0.5, angle, 4, value.duration, 0)
+                     BulletDroneLaser(value.x, value.y, value.speed/2, value.damage, angle, value.scale*4, value.duration, 0)
                 end
                 -- value.speed = 0
                 value:loseHp(1)
                 return
             end
-            if value:isa(bulletBlackhole) == false then
+            if value:isa(bulletBlackhole) == false and value:isa(BulletDrone) == false then
                 self:touchEnemy(value)
             end
             if value:isa(BulletShockwave) then
