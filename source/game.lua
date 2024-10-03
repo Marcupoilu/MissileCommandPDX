@@ -1,6 +1,6 @@
 class("Game").extends()
 
-local interval = minutes_to_milliseconds(0.5)
+local interval = minutes_to_milliseconds(0.25)
 
 function Game:init(maxPool, level)
     enemyPoolLimit = maxPool
@@ -9,7 +9,7 @@ function Game:init(maxPool, level)
     playdate.resetElapsedTime()
     self.level = table.findByParam(wavesData, "Level", level)
     self.waves = table.findByParam(wavesData, "Level", level).Waves
-    targetTime = (table.count(self.waves)/2)*60
+    targetTime = interval*table.count(self.waves)/1000
     self.waveNumber = 1
     self.timer = nil
     self.finish = false
@@ -43,7 +43,7 @@ function Game:startGame()
     -- player:addWeapon(table.findByParam(weaponsData, "className", "Plasma"))
     -- player:addWeapon(table.findByParam(weaponsData, "className", "Serpentine"))
     -- player:addWeapon(table.findByParam(weaponsData, "className", "Shockwave"))
-    -- player:addWeapon(table.findByParam(weaponsData, "className", "Rocket"))
+    player:addWeapon(table.findByParam(weaponsData, "className", "Rocket"))
     -- player:addWeapon(table.findByParam(weaponsData, "className", "Guided"))
     -- player:addWeapon(table.findByParam(weaponsData, "className", "Flamethrower"))
     -- player:addWeapon(table.findByParam(weaponsData, "className", "Freezer"))
