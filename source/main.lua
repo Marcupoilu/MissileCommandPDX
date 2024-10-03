@@ -69,7 +69,7 @@ deltaTime = 0
 crankPosition = playdate.getCrankPosition()
 game = nil
 playerBonus = PlayerBonus()
-player = Player({x=200,y=202}, {x=200,y=200})
+player = Player({x=200,y=197}, {x=200,y=200})
 -- game:startGame()
 
 gameUpdate = function()
