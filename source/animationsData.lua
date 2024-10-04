@@ -5,6 +5,7 @@ animationsData =
     BulletPlasma = {{Name = "Idle", Source = gfx.imagetable.new("images/bullets/bullet_plasma"), Delay = 50, Loop = true}},
     BulletSerpentine = {{Name = "Idle", Source = gfx.imagetable.new("images/bullets/bullet_serpentine"), Delay = 30, Loop = true}},
     BulletExplosion = {{Name = "Idle", Source = gfx.imagetable.new("images/bullets/bullet_explosion"), Delay = 33, Loop = false}},
+    BulletFlamethrower = {{Name = "Idle", Source = gfx.imagetable.new("images/bullets/bullet_shotgun"), Delay = 33, Loop = false}},
     Saucer = {},
     Xwing = {},
     MainMenu = {Name = "Idle", Source = gfx.imagetable.new("images/ui/menus/main_menu"), Delay = 70, Loop = true},

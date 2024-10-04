@@ -126,6 +126,10 @@ end
 
 function Enemy:touchEnemy(value, bulletHp)
     if table.contains(self.currentOverlappingSprites, value) == true then return end
+    self:setImageDrawMode(gfx.kDrawModeFillWhite)
+    playdate.timer.new(100, function ()
+        self:setImageDrawMode(gfx.kDrawModeCopy)
+    end)
     p:moveTo(self.x, self.y)
     p:setSize(10,10)
     p:setColor(gfx.kColorWhite)
