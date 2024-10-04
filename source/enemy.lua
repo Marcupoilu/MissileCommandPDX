@@ -89,8 +89,11 @@ function Enemy:update()
                 value:loseHp(1)
                 return
             end
-            if value:isa(bulletBlackhole) == false and value:isa(BulletDrone) == false then
+            if value:isa(BulletBlackhole) == false and value:isa(BulletDrone) == false and value:isa(BulletToxicVape) == false then
                 self:touchEnemy(value)
+            end
+            if value:isa(BulletToxicVape) == true then
+                self:dotEnemy(value)
             end
             if value:isa(BulletShockwave) then
                 self.radius = 0
@@ -113,7 +116,7 @@ function Enemy:update()
                 end)
             end
             if value:isa(BulletRocket) then
-                BulletExplosion(self.x, self.y, value.speed, value.damage+((player.damageBonus*value.damage)/100), angle, value.scale+((player.scaleBonus*value.scale)/100), value.duration, value.explosionDamage)
+                BulletExplosion(self.x, self.y, value.speed, value.damage+((player.damageBonus*value.damage)/100), angle, value.scale, value.duration, value.explosionDamage)
             end
         end
         if value:isa(UISprite) or value:getTag() == 1 then

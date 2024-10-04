@@ -36,7 +36,7 @@ function Player:start()
     self.xpBonus = 0 + playerBonus.gameData.xpBonus
     self.damageBonus = 0 + playerBonus.gameData.damageBonus
     self.attackSpeedBonus = 0 + playerBonus.gameData.attackSpeedBonus
-    self.scaleBonus = 100 + playerBonus.gameData.scaleBonus
+    self.scaleBonus = 0 + playerBonus.gameData.scaleBonus
     self.projectileAmount = 0 + playerBonus.gameData.projectileAmount
     self.regenerationRate = 0 + playerBonus.gameData.regenerationRate
     self.projectileSpeedBonus = 0 + playerBonus.gameData.projectileSpeedBonus
