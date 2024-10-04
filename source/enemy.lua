@@ -113,7 +113,7 @@ function Enemy:update()
                 end)
             end
             if value:isa(BulletRocket) then
-                BulletExplosion(value.x, value.y - 20, value.speed, value.damage+((player.damageBonus*value.damage)/100), angle, value.scale+((player.scaleBonus*value.scale)/100), value.duration, value.explosionDamage)
+                BulletExplosion(self.x, self.y, value.speed, value.damage+((player.damageBonus*value.damage)/100), angle, value.scale+((player.scaleBonus*value.scale)/100), value.duration, value.explosionDamage)
             end
         end
         if value:isa(UISprite) or value:getTag() == 1 then
