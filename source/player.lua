@@ -36,7 +36,7 @@ function Player:start()
     self.xpBonus = 0 + playerBonus.gameData.xpBonus
     self.damageBonus = 0 + playerBonus.gameData.damageBonus
     self.attackSpeedBonus = 0 + playerBonus.gameData.attackSpeedBonus
-    self.scaleBonus = 10 + playerBonus.gameData.scaleBonus
+    self.scaleBonus = 100 + playerBonus.gameData.scaleBonus
     self.projectileAmount = 0 + playerBonus.gameData.projectileAmount
     self.regenerationRate = 0 + playerBonus.gameData.regenerationRate
     self.projectileSpeedBonus = 0 + playerBonus.gameData.projectileSpeedBonus
@@ -143,16 +143,16 @@ end
 function Player:levelUp()
     self.level += 1
     if math.between(self.level, 1,2) then
-        self.xpMax += 5
-    end
-    if math.between(self.level, 3,20) then
         self.xpMax += 10
     end
-    if math.between(self.level, 21,40) then
+    if math.between(self.level, 3,20) then
         self.xpMax += 13
     end
-    if self.level >= 41 then
+    if math.between(self.level, 21,40) then
         self.xpMax += 16
+    end
+    if self.level >= 41 then
+        self.xpMax += 20
     end
     self.xp = 0
     playdate.timer.new(toMilliseconds(.5), function ()

@@ -7,7 +7,7 @@ function EnemySmallThree:init(x,y,speed,hp,xp,damage,enemyImage, core)
     self.originPosition.x = self.x
     self.originPosition.y = self.y
     self.playerX = player.cannonBaseSprite.x
-    self.playerY = player.cannonBaseSprite.y
+    self.playerY = player.cannonBaseSprite.y + 20
     self.overrideDirection = false
     self.amp = 2
     self.freq = 150
