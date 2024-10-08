@@ -30,6 +30,7 @@ function Enemy:init(x,y,speed,hp, xp, damage, enemyImage, core)
     self.state = "Idle"
     self.currentOverlappingSprites = {} 
     self.timer = nil
+    -- self.fx = FX(self.x, self.y, "AnimationHit")
     -- self:setScale(1)
     if table.getsize(self.animations) <= 0 then
         self:setImage(enemyImage)
@@ -133,12 +134,11 @@ function Enemy:touchEnemy(value, bulletHp)
     playdate.timer.new(100, function ()
         self:setImageDrawMode(gfx.kDrawModeCopy)
     end)
-    p:moveTo(self.x, self.y)
-    p:setSize(10,10)
-    p:setColor(gfx.kColorWhite)
-    p:setMode(Particles.modes.DECAY)
-    p:setSpeed(3, 5)
-    p:add(1)
+    FX(self.x, self.y, "AnimationHit", true)
+
+    -- self.fx:add()
+    -- self.fx:moveTo(self.x,self.y)
+    -- self.fx.currentAnimation.frame = 1
     self:loseHp(value.damage + ((player.damageBonus*value.damage)/100), value.className)
     if bulletHp == nil then
         value:loseHp(1)
@@ -151,12 +151,11 @@ end
 
 function Enemy:dotEnemy(value)
     if table.contains(self.currentOverlappingSprites, value) == true then return end
-    p:moveTo(self.x, self.y)
-    p:setSize(10,10)
-    p:setColor(gfx.kColorWhite)
-    p:setMode(Particles.modes.DECAY)
-    p:setSpeed(3, 5)
-    p:add(1)
+    FX(self.x, self.y, "AnimationHit", true)
+
+    -- self.fx:add()
+    -- self.fx:moveTo(self.x,self.y)
+    -- self.fx.currentAnimation.frame = 1
     table.insert(self.currentOverlappingSprites, value)
     table.insert(self.dotValues, value.tickNumber)
     self:dotTimer(value)
@@ -168,12 +167,12 @@ function Enemy:dotTimer(value)
             if dotValue <= 0 or self.dead == true then   
                 return   
             end
-            p:moveTo(self.x, self.y)
-            p:setSize(10,10)
-            p:setColor(gfx.kColorWhite)
-            p:setMode(Particles.modes.DECAY)
-            p:setSpeed(3, 5)
-            p:add(1)
+            FX(self.x, self.y, "AnimationHit", true)
+
+            -- self.fx:add()
+            -- self.fx:moveTo(self.x,self.y)
+            -- self.fx.currentAnimation.frame = 1
+
             self:loseHp(value.damage + ((player.damageBonus*value.damage)/100))
             dotValue -= 1
             self:dotTimer(value)
@@ -193,13 +192,12 @@ function Enemy:loseHp(value, className)
 end
 
 function Enemy:death()
-    -- shake:setShakeAmount(5)
-    p:moveTo(self.x, self.y)
-    p:setSize(7,7)
-    p:setColor(gfx.kColorWhite)
-    p:setMode(Particles.modes.DECAY)
-    p:setSpeed(3, 7)
-    p:add(1)
+    FX(self.x, self.y, "AnimationHit", true)
+
+    -- self.fx:add()
+    -- self.fx:moveTo(self.x,self.y)
+    -- self.fx.currentAnimation.frame = 1
+
     table.remove(enemies, indexOf(enemies, self))
     self.dead = true
     self:remove()

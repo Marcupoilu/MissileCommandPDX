@@ -43,14 +43,6 @@ function Projectile:update()
 end
 
 function Projectile:destroy()
-    if self:isa(BulletPlasma) == true then 
-        p:moveTo(self.x, self.y)
-        p:setSize(5,6)
-        p:setColor(gfx.kColorWhite)
-        p:setMode(Particles.modes.DECAY)
-        p:setSpeed(3, 7)
-        p:add(1)
-    end
     if table.contains(beams, self) then
         table.remove(beams, indexOf(beams, self))
     end
@@ -61,12 +53,7 @@ function Projectile:destroy()
 end
 
 function Projectile:destroyWithParticles()
-        p:moveTo(self.x, self.y)
-        p:setSize(5,6)
-        p:setColor(gfx.kColorWhite)
-        p:setMode(Particles.modes.DECAY)
-        p:setSpeed(3, 7)
-        p:add(1)
+    FX(self.x,self.y,"AnimationHit")
     if table.contains(beams, self) then
         table.remove(beams, indexOf(beams, self))
     end
