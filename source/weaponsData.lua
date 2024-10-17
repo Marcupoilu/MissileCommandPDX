@@ -13,7 +13,7 @@ function CreateWeaponsData()
         Flamethrower(toMilliseconds(3), 200, 175, 1,0.3, 1, 1,1.5), -- to rework integrally
         Freezer(toMilliseconds(1.5), 200, 175, 100, 0, 1, 4, 0.5), -- balanced starter
         LaserDome(toMilliseconds(3), 200, 175, 100, 1, 1, 2, 3), -- balanced starter
-        ToxicVape(toMilliseconds(3), 200, 175, 1, 1, 1, 1, 3), -- to rework integrally
+        ToxicVape(toMilliseconds(3), 200, 175, 3, 1, 1, 1, 10), -- to rework integrally
         Aura(toMilliseconds(3), 200, 175, 1, 0.2, 1, 1, 3), -- to rework collision detection
         Blackhole(toMilliseconds(5), 200, 175, 1, 1, 1, 1, 2), -- balanced starter / rework direction after blackhole for ennemies
         Drone(toMilliseconds(5), 200, 175, 4, 0.5, 1, 1, 3), -- balanced starter

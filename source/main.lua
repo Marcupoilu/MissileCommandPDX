@@ -47,13 +47,10 @@ import "unlocksData.lua"
 import "shopItem"
 import "shopItemsData"
 import "playerBonus.lua"
+import "FX.lua"
 
 -- playdate.display.setRefreshRate(50)
-p = ParticleCircle(0,0)
-pWeapon = ParticleCircle(0,0)
-pFlamethrower = ParticleCircle(0,0)
 -- Collections --
-particles = {}
 upgrades = upgradesData
 enemies = {}
 debugRects = {}
@@ -79,7 +76,6 @@ gameUpdate = function()
     crankPosition = playdate.getCrankPosition()
     player:update()
     gfx.sprite.update()
-    Particles:update()
     playdate.timer.updateTimers()
     game:update()
     uiManager:update()
