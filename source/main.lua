@@ -15,6 +15,7 @@ import "spriteShake.lua"
 import "player.lua"
 import "weaponsSource.lua"
 import "bulletDroneLaser.lua"
+import "enemyManager.lua"
 import "enemiesData.lua"
 import "enemy.lua"
 import "spawner.lua"
@@ -49,10 +50,11 @@ import "shopItemsData"
 import "playerBonus.lua"
 import "FX.lua"
 
--- playdate.display.setRefreshRate(50)
+playdate.display.setRefreshRate(50)
 -- Collections --
 upgrades = upgradesData
 enemies = {}
+enemyManager = EnemyManager()
 debugRects = {}
 beams = {}
 bullets = {}
@@ -75,11 +77,13 @@ gameUpdate = function()
     playdate.resetElapsedTime()
     crankPosition = playdate.getCrankPosition()
     player:update()
+    enemyManager:update()
     gfx.sprite.update()
     playdate.timer.updateTimers()
     game:update()
     uiManager:update()
     playdate.drawFPS(0, 0)
+    Particles:update()
     sequence.update()
     uiManager:displayTitle()
 end

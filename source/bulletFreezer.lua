@@ -48,7 +48,7 @@ function BulletFreezer:update()
         if collision.sprite:isa(Enemy) then
             -- self.endPos.x = collision.entryPoint.x
             -- self.endPos.y = collision.entryPoint.y
-            collision.sprite:stop(self.freezeDuration)
+            collision.sprite:stop(self.freezeDuration, enemy)
         end
     end)
     gfx.setLineCapStyle(gfx.kLineCapStyleRound)

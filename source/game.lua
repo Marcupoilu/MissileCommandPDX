@@ -52,7 +52,7 @@ function Game:startGame()
     -- player:addWeapon(table.findByParam(weaponsData, "className", "Aura"))
     -- player:addWeapon(table.findByParam(weaponsData, "className", "Blackhole"))
     -- player:addWeapon(table.findByParam(weaponsData, "className", "Drone"))
-    player:addWeapon(table.findByParam(weaponsData, "className", "Orbital"))
+    -- player:addWeapon(table.findByParam(weaponsData, "className", "Orbital"))
     -- player:addWeapon(table.findByParam(weaponsData, "className", "BeamReflect"))
     -- player:addWeapon(table.findByParam(weaponsData, "className", "Tracer"))
     -- uiManager:createInventory(12,225,21,weaponUpgrades)
@@ -108,7 +108,7 @@ function Game:endGame()
     end)
     enemiesCopy = table.shallowcopy(enemies)
     for key, value in pairs(enemiesCopy) do
-        value:death()
+        enemyManager:death(value)
     end
     bulletsCopy = table.shallowcopy(bullets)
     for key, value in pairs(bulletsCopy) do
@@ -137,7 +137,7 @@ function Game:loseGame()
     player.cannonGunSprite:setVisible(false)  
     enemiesCopy = table.shallowcopy(enemies)
     for key, value in pairs(enemiesCopy) do
-        value:death()
+        enemyManager:death(value)
     end
     bulletsCopy = table.shallowcopy(bullets)
     for key, value in pairs(bulletsCopy) do

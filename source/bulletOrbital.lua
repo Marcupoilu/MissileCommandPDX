@@ -15,8 +15,8 @@ end
 
 
 function BulletOrbital:update()
-    self:setRotation(self.rot)
-    self.rot += 10
+    -- self:setRotation(self.rot)
+    -- self.rot += 10
     self.radius += self.speed + (((player.projectileSpeedBonus*self.speed)/100)) * deltaTime
     self:moveTo(self.radius*math.cos(math.rad(self.originAngle + self.offset)) + self.originPosition.x, self.radius*math.sin(math.rad(self.originAngle + self.offset)) + self.originPosition.y)
     if self.x > playdate.display.getWidth() or self.y > playdate.display.getHeight() or self.x < 0 or self.y < 0 then

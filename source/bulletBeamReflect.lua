@@ -56,7 +56,7 @@ function BulletBeamReflect:update()
         if collision.sprite:isa(Enemy) and collision.sprite ~= self.currentEnemy then
             self.target = getMinDistanceValue(collision.sprite, gfx.sprite.getAllSprites()  )
             self.currentEnemy = collision.sprite
-            collision.sprite:touchEnemy(self)
+            enemyManager:touchEnemy(self, collision.sprite, false)
             if self.target ~= nil then
                 self.playerX = collision.entryPoint.x
                 self.playerY = collision.entryPoint.y

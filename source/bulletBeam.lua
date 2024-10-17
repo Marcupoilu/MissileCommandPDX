@@ -47,7 +47,7 @@ function BulletBeam:update()
         if collision.sprite:isa(Enemy) then
             self.endPos.x = collision.entryPoint.x
             self.endPos.y = collision.entryPoint.y
-            collision.sprite:touchEnemy(self, false)
+            enemyManager:touchEnemy(self, collision.sprite, false)
             -- collision.sprite:loseHp(self.damage + ((player.damageBonus*self.damage)/100))
             -- p:moveTo(self.endPos.x, self.endPos.y)
             -- p:setSize(5,6)
