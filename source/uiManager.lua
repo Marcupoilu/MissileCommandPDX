@@ -485,7 +485,7 @@ function UiManager:chooseCannon()
     if playdate.buttonJustPressed(playdate.kButtonA) and A == false then
         player.chosenCanon = cannon
         player:start()
-        game = Game(50,mapIndex)
+        game = Game(40,mapIndex)
         self:CloseAndOpenMenu()
         playdate.timer.new(1000, function ()
             chooseCannonBool = false

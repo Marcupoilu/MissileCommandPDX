@@ -48,13 +48,6 @@ function BulletBeam:update()
             self.endPos.x = collision.entryPoint.x
             self.endPos.y = collision.entryPoint.y
             enemyManager:touchEnemy(self, collision.sprite, false)
-            -- collision.sprite:loseHp(self.damage + ((player.damageBonus*self.damage)/100))
-            -- p:moveTo(self.endPos.x, self.endPos.y)
-            -- p:setSize(5,6)
-            -- p:setColor(gfx.kColorWhite)
-            -- p:setMode(Particles.modes.DECAY)
-            -- p:setSpeed(3, 7)
-            -- p:add(1)
         end
     end)
     gfx.setLineCapStyle(gfx.kLineCapStyleRound)
