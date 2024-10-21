@@ -1,10 +1,11 @@
 class("Spawner").extends()
 
 
-function Spawner:init(spawnTime, maxSpawn)
+function Spawner:init(spawnTime, maxSpawn, loop)
     self.spawnTime = spawnTime
     self.maxSpawn = maxSpawn
     self.spawnCount = 0
+    self.loop = loop
 end
 
 function Spawner:startSpawn()

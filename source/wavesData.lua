@@ -1,3 +1,5 @@
+-- random time delay / x (tu touches pas) / y (tu touches pas) / Max Count / EnemyType / EnemyData / stop spawn
+
 wavesData =
 {
     {
@@ -7,7 +9,7 @@ wavesData =
         Waves = {
             Wave(
             {
-                EnemySpawner(math.random(100,100), 34, 0, nil, Xwing, enemiesData.Xwing)
+                EnemySpawner(math.random(100,100), 34, 0, 5, Xwing, enemiesData.Xwing, true)
             }),
             Wave(
             {

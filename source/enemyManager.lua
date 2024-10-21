@@ -141,6 +141,12 @@ function EnemyManager:death(enemy)
     if not index then return end
     table.remove(enemies, index)
     enemy.dead = true
+    if enemy.spawner ~= nil then
+        enemy.spawner.spawnCount -= 1
+        if not enemy.spawner.loop then
+            enemy.spawner:startSpawn()
+        end
+    end
     enemy:remove()
 end
 

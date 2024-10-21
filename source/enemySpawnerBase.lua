@@ -1,7 +1,7 @@
 class("EnemySpawnerBase").extends(Spawner)
 
-function EnemySpawnerBase:init(spawnTime, x, y, spawnMaxCount)
-    EnemySpawnerBase.super.init(self, spawnTime, spawnMaxCount)
+function EnemySpawnerBase:init(spawnTime, x, y, spawnMaxCount, loop)
+    EnemySpawnerBase.super.init(self, spawnTime, spawnMaxCount, loop)
     self.x = x
     self.y = y
 end

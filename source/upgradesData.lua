@@ -32,8 +32,6 @@ upgradesData =
     UpgradeWeapon("Shockwave", "Shockwave", "", "images/ui/icons/shockwave",10, 2 ),
     UpgradeWeapon("ToxicVape", "Toxic Vape", "", "images/ui/icons/toxicVape",10, 8 ),
     UpgradeWeapon("Tracer", "Tracer", "", "images/ui/icons/tracer",10, 9 )
-
-
 }
 
 function getUpgradePassive(passiveName)
