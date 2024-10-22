@@ -38,7 +38,7 @@ function Game:startGame()
     -- local passive = getUpgradePassive("attackSpeedBonus")
     -- passive.count -= 1
     -- player:addPassive(passive)
-    -- player:addWeapon(table.findByParam(weaponsData, "className", "Beam"))
+    player:addWeapon(table.findByParam(weaponsData, "className", "Beam"))
     -- player:addWeapon(table.findByParam(weaponsData, "className", "Wiper"))
     -- player:addWeapon(table.findByParam(weaponsData, "className", "Plasma"))
     -- player:addWeapon(table.findByParam(weaponsData, "className", "Serpentine"))
@@ -64,13 +64,17 @@ end
 
 function timeLeft(x)
     local remaining_time = targetTime - x
-    if remaining_time < 0 then remaining_time = 0 end  -- S'assurer que le temps restant ne soit pas négatif
+    if remaining_time < 0 then remaining_time = 0 end
     local minutes = math.floor(remaining_time / 60)
     local secondes = math.floor(remaining_time % 60)
-    return string.format("%02d:%02d", minutes, secondes)
+    return string.format("%02d:%02d", minutes, secondes) 
 end
 
 function Game:update()
+    -- print(table.count(playdate.timer.allTimers()))
+    -- table.each(playdate.timer.allTimers(), function (t)
+    --     printTable(t.timerEndedCallback)
+    -- end)
     if self.finish == true then
         return
     end

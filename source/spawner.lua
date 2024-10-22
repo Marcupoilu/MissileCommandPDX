@@ -14,6 +14,9 @@ function Spawner:startSpawn()
             return
         end
     end
+    if self.timer ~= nil then
+        self.timer:remove()
+    end
     self.timer = playdate.timer.performAfterDelay(self.spawnTime, function()
         self:spawn()
         self:startSpawn()
@@ -22,6 +25,8 @@ end
 
 function Spawner:stopSpawn()
     self.timer:remove()
+    self.timer = nil
+    printTable(self.timer)
     self = nil
 end
 

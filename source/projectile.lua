@@ -28,7 +28,7 @@ function Projectile:init(x,y,speed, damage, offsetCrank, scale, duration)
     if self:isa(BulletAura) == false and self:isa(BulletBlackHole) == false then
         self:setRotation(self.originAngle + 90)
     end
-    if self.duration ~= nil or self.duration ~= 0 then
+    if self.duration ~= nil and self.duration ~= 0 then
         self.timer = playdate.timer.new(toMilliseconds(self.duration), function() self:destroy() end) 
     end
     table.insert(bullets, self)

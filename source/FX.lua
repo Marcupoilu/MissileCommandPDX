@@ -30,9 +30,9 @@ end
 function FX:update()
     FX.super.update(self)
     -- self:animate()
-    playdate.timer.new(300, function ()
-        self:remove()
-    end)
+    -- playdate.timer.new(300, function ()
+    --     self:remove()
+    -- end)
 end
 
 function FX:updateImage(bulletImage)

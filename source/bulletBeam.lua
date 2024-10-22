@@ -1,19 +1,20 @@
 class("BulletBeam").extends(Projectile)
 
+-- Pré-calculer les constantes si elles ne changent pas
+local math_rad = math.rad
+local math_cos = math.cos
+local math_sin = math.sin
 
-function BulletBeam:init(x,y,speed, damage, offsetCrank, scale, duration)
-    BulletBeam.super.init(self, x,y,speed, damage, offsetCrank, scale,duration)
+function BulletBeam:init(x, y, speed, damage, offsetCrank, scale, duration)
+    BulletBeam.super.init(self, x, y, speed, damage, offsetCrank, scale, duration)
     self.maxLength = 240
     self.currentLength = 0
-    self.startPos = {x=x,y=y}
-    self.endPos = {x=0,y=0}
+    self.startPos = {x = player.x, y = player.y}
+    self.endPos = {x = 0, y = 0}
     self.angle = crankPosition
-    self.startPos.x = player.x 
-    self.startPos.y = player.y
-    self.radius += self.speed + (((player.projectileSpeedBonus*self.speed)/100)) * deltaTime
-    self.direction = {x=0, y=1}
-    self.direction.x = self.radius*math.cos(math.rad(self.angle + self.offset))* deltaTime
-    self.direction.y = self.radius*math.sin(math.rad(self.angle + self.offset))* deltaTime
+    self.radius = self.speed + ((player.projectileSpeedBonus * self.speed) / 100) * deltaTime
+    self.offset = offsetCrank
+    self.scale = scale
     self.duration = duration
     self.lineS = playdate.geometry.lineSegment.new(self.startPos.x, self.startPos.y, self.endPos.x, self.endPos.y)
     self.lasers = {}
@@ -22,34 +23,50 @@ function BulletBeam:init(x,y,speed, damage, offsetCrank, scale, duration)
 end
 
 function BulletBeam:endBeam()
-    table.remove(beams, indexOf(beams, self))
+    local beamIndex = indexOf(beams, self)
+    if beamIndex then
+        table.remove(beams, beamIndex)
+    end
 end
 
 function BulletBeam:update()
-    self.startPos.x = player.cannonGunSprite.x +(self.height+50) * math.cos(math.rad((self.angle - 90) ))
-    self.startPos.y = player.cannonGunSprite.y +(self.height+50) * math.sin(math.rad((self.angle - 90) ))
+    -- Cache des variables pour réduire les appels de méthode
+    local playerSprite = player.cannonGunSprite
+    local playerX, playerY = playerSprite.x, playerSprite.y
+    local rotation = playerSprite:getRotation()
+    local angleRad = math_rad(rotation - 90)
 
-    self.angle = player.cannonGunSprite:getRotation()
-    self.radius += self.speed + (((player.projectileSpeedBonus*self.speed)/100)) * deltaTime
-    self.direction.x = self.radius*math.cos(math.rad((self.angle - 90) + self.offset)) * deltaTime
-    self.direction.y = self.radius*math.sin(math.rad((self.angle - 90) + self.offset)) * deltaTime
-    self.currentLength = self.currentLength + self.speed + (((player.projectileSpeedBonus*self.speed)/100)) * deltaTime
+    -- Calcul de la position de départ, une seule fois
+    self.startPos.x = playerX + (self.height + 50) * math_cos(angleRad)
+    self.startPos.y = playerY + (self.height + 50) * math_sin(angleRad)
 
+    -- Calcul du rayon et direction
+    self.radius = self.radius + (self.speed + ((player.projectileSpeedBonus * self.speed) / 100)) * deltaTime
+    local directionX = self.radius * math_cos(angleRad + math_rad(self.offset)) * deltaTime
+    local directionY = self.radius * math_sin(angleRad + math_rad(self.offset)) * deltaTime
+
+    -- Limitation de la longueur actuelle
+    self.currentLength = self.currentLength + (self.speed + ((player.projectileSpeedBonus * self.speed) / 100)) * deltaTime
     if self.currentLength > self.maxLength then
         self.currentLength = self.maxLength
     end
 
-    
-    self.endPos.x = self.startPos.x + self.direction.x * self.currentLength
-    self.endPos.y = self.startPos.y + self.direction.y * self.currentLength
-    table.each(gfx.sprite.querySpriteInfoAlongLine(self.startPos.x, self.startPos.y, self.endPos.x, self.endPos.y), 
-    function(collision)
+    -- Calcul de la position de fin
+    self.endPos.x = self.startPos.x + directionX * self.currentLength
+    self.endPos.y = self.startPos.y + directionY * self.currentLength
+
+    -- Collision avec les sprites sur la ligne
+    local collisions = gfx.sprite.querySpriteInfoAlongLine(self.startPos.x, self.startPos.y, self.endPos.x, self.endPos.y)
+    for _, collision in ipairs(collisions) do
         if collision.sprite:isa(Enemy) then
             self.endPos.x = collision.entryPoint.x
             self.endPos.y = collision.entryPoint.y
             enemyManager:touchEnemy(self, collision.sprite, false)
+            -- break -- Stopper dès qu'une collision est trouvée
         end
-    end)
+    end
+
+    -- Dessin de la ligne
     gfx.setLineCapStyle(gfx.kLineCapStyleRound)
     gfx.setColor(gfx.kColorWhite)
     gfx.setLineWidth(self.scale)

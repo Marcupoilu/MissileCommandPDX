@@ -28,7 +28,7 @@ end
 
 function Player:start()
     self.level = 1
-    self.hpMax = 100 + playerBonus.gameData.hpMax
+    self.hpMax = 10000000000000000000 + playerBonus.gameData.hpMax
     self.hp = self.hpMax
     self.shield = 0 + playerBonus.gameData.shield
     self.xp = 0
