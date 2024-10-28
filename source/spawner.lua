@@ -30,6 +30,14 @@ function Spawner:startSpawn()
     self.timer.repeats = true
 end
 
+function Spawner:stop()
+    self.timer:pause()
+end
+
+function Spawner:resume()
+    self.timer:start()
+end
+
 function Spawner:stopSpawn()
     if self.timer ~= nil then
         self.timer:remove()
