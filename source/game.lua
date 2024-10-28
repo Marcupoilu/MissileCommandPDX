@@ -38,7 +38,7 @@ function Game:startGame()
     -- local passive = getUpgradePassive("attackSpeedBonus")
     -- passive.count -= 1
     -- player:addPassive(passive)
-    player:addWeapon(table.findByParam(weaponsData, "className", "Beam"))
+    -- player:addWeapon(table.findByParam(weaponsData, "className", "Beam"))
     -- player:addWeapon(table.findByParam(weaponsData, "className", "Wiper"))
     -- player:addWeapon(table.findByParam(weaponsData, "className", "Plasma"))
     -- player:addWeapon(table.findByParam(weaponsData, "className", "Serpentine"))
@@ -58,6 +58,8 @@ function Game:startGame()
     -- uiManager:createInventory(12,225,21,weaponUpgrades)
     
     self.waves[self.waveNumber]:startWave()
+    print("START WAVE : ", self.waveNumber)
+
     self.timer = playdate.timer.new(interval, self.changeWave, self)
     self.timer.repeats = true
 end
@@ -95,6 +97,7 @@ end
 
 function Game:changeWave()
     self.waveNumber += 1
+    print("START WAVE : ", self.waveNumber)
     if self.waveNumber >= table.count(self.waves) then
         return
     end

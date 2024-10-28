@@ -7,7 +7,7 @@ unlocksData =
     UnlockWeapon("Freezer", gfx.image.new("images/ui/icons/freezer"), "Kill 50 enemies", Condition("enemiesKilled", 50), table.findByParam(weaponsData, "className", "Freezer"),"Freezes enemies"),
     UnlockWeapon("Blackhole", gfx.image.new("images/ui/icons/blackHole"), "Kill 75 enemies", Condition("enemiesKilled", 75), table.findByParam(weaponsData, "className", "Blackhole"),"Attracts enemies at its center"),
     UnlockWeapon("Drone", gfx.image.new("images/ui/icons/droneLaser"), "Kill 90 enemies", Condition("enemiesKilled", 90), table.findByParam(weaponsData, "className", "Drone"),"Releases rotating lasers when an enemy is hit"),
-    UnlockWeapon("Flamethrower", gfx.image.new("images/ui/icons/flamethrower"), "Kill 110 enemies", Condition("enemiesKilled", 110), table.findByParam(weaponsData, "className", "Flamethrower"),"Continously damages enemies inside its cone"),
+    UnlockWeapon("Shotgun", gfx.image.new("images/ui/icons/shotgun"), "Kill 110 enemies", Condition("enemiesKilled", 110), table.findByParam(weaponsData, "className", "Flamethrower"),"Fires a short range damaging cone"),
     UnlockWeapon("Guided", gfx.image.new("images/ui/icons/guided"), "Kill 130 enemies", Condition("enemiesKilled", 130), table.findByParam(weaponsData, "className", "Guided"),"Auto-guided weapons"),
     UnlockWeapon("LaserDome", gfx.image.new("images/ui/icons/laserDome"), "Kill 150 enemies", Condition("enemiesKilled", 150), table.findByParam(weaponsData, "className", "LaserDome"),"Laser wall that protects the base"),
     UnlockWeapon("Orbital", gfx.image.new("images/ui/icons/orbital"), "Kill 170 enemies", Condition("enemiesKilled",170), table.findByParam(weaponsData, "className", "Orbital"),"Rotating bullets"),

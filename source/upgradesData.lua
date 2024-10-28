@@ -5,7 +5,7 @@ upgradesData =
     UpgradeStat({{name="attackSpeedBonus",value=10}}, "-10% Cooldown", "images/ui/icons/cooldown",5, 5,nil, "cooldown"),
     UpgradeStat({{name="damageBonus",value=10}}, "+10% Damage", "images/ui/icons/damageUp",5,7,nil, "damage"),
     UpgradeStat({{name="scaleBonus",value=10}}, "+10% bullet \nscale", "images/ui/icons/projectileScale",5,5, nil, "scale"),
-    UpgradeStat({{name="xpBonus",value=10}}, "+10% XP", "images/xpUp",5,4, nil, "xp"),
+    UpgradeStat({{name="xpBonus",value=10}}, "+10% XP", "images/ui/icons/xpUp",5,4, nil, "xp"),
     UpgradeStat({{name="regenerationRate",value=10}}, "+10% hp regen \nspeed", "images/ui/icons/regen",5,6, nil, "regen"),
     UpgradeStat({{name="projectileSpeedBonus",value=10}}, "+10% bullet \nspeed", "images/ui/icons/projectileSpeed",5,4, nil, "speed"),
     UpgradeStat({{name="hpMax",value=10}}, "+1 HP MAX", "images/ui/icons/hpMax",5,3, nil, "hp"),
