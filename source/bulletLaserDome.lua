@@ -19,7 +19,6 @@ function BulletLaserDome:init(x,y,speed, damage, offsetCrank, scale, angle)
     self.lineS = playdate.geometry.lineSegment.new(self.startPos.x, self.startPos.y, self.endPos.x, self.endPos.y)
     self.lasers = {}
     self.tick = 300
-    playdate.timer.new(self.duration, self.endBeam, self)
     table.insert(beams, self)
 end
 
@@ -28,6 +27,7 @@ function BulletLaserDome:endBeam()
 end
 
 function BulletLaserDome:update()
+    BulletLaserDome.super.update(self)
     self.radius += self.speed + (((player.projectileSpeedBonus*self.speed)/100)) * deltaTime
     self.direction.x = self.radius*math.cos(math.rad(self.angle - 90 + self.offset)) * deltaTime
     self.direction.y = self.radius*math.sin(math.rad(self.angle - 90 + self.offset)) * deltaTime

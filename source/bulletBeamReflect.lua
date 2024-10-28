@@ -13,7 +13,6 @@ function BulletBeamReflect:init(x,y,speed, damage, offsetCrank, scale, duration,
     self.startPos.y = player.y
     self.radius += self.speed + (((player.projectileSpeedBonus*self.speed)/100)) * deltaTime
     self.direction = {x=0, y=1}
-    self.duration = duration
     self.lineS = playdate.geometry.lineSegment.new(self.startPos.x, self.startPos.y, self.endPos.x, self.endPos.y)
     self.lasers = {}
     self.startPos.x = player.cannonGunSprite.x +(self.height+50) * math.cos(math.rad((self.originAngle) + self.offset))
@@ -24,7 +23,6 @@ function BulletBeamReflect:init(x,y,speed, damage, offsetCrank, scale, duration,
     self.currentAngle = self.originAngle
     self.currentEnemy = nil
     self.tick = 200
-    playdate.timer.new(toMilliseconds(self.duration), self.endBeam, self)
     table.insert(beams, self)
 end
 

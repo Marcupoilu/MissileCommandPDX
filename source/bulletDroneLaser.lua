@@ -14,11 +14,9 @@ function BulletDroneLaser:init(x,y,speed, damage, offsetCrank, scale,duration, a
     self.direction = {x=0, y=1}
     self.direction.x = self.radius*math.cos(math.rad(self.angle + self.offset))* deltaTime
     self.direction.y = self.radius*math.sin(math.rad(self.angle + self.offset))* deltaTime
-    self.duration = duration
     self.lineS = playdate.geometry.lineSegment.new(self.startPos.x, self.startPos.y, self.endPos.x, self.endPos.y)
     self.lasers = {}
     self.tick = 150
-    playdate.timer.new(toMilliseconds(self.duration), self.endBeam, self)
     table.insert(beams, self)
 end
 

@@ -8,6 +8,7 @@ local math_sin = math.sin
 function BulletBeam:init(x, y, speed, damage, offsetCrank, scale, duration)
     BulletBeam.super.init(self, x, y, speed, damage, offsetCrank, scale, duration)
     self.maxLength = 240
+    -- self.hp = 10000
     self.currentLength = 0
     self.startPos = {x = player.x, y = player.y}
     self.endPos = {x = 0, y = 0}
@@ -15,7 +16,7 @@ function BulletBeam:init(x, y, speed, damage, offsetCrank, scale, duration)
     self.radius = self.speed + ((player.projectileSpeedBonus * self.speed) / 100) * deltaTime
     self.offset = offsetCrank
     self.scale = scale
-    self.duration = duration
+    -- self.duration = duration
     self.lineS = playdate.geometry.lineSegment.new(self.startPos.x, self.startPos.y, self.endPos.x, self.endPos.y)
     self.lasers = {}
     self.tick = 150

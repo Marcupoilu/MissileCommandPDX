@@ -15,7 +15,6 @@ function BulletTracer:init(x,y,speed, damage, offsetCrank, scale, duration)
     self.direction = {x=0, y=1}
     self.direction.x = self.radius*math.cos(math.rad(self.angle + self.offset))* deltaTime
     self.direction.y = self.radius*math.sin(math.rad(self.angle + self.offset))* deltaTime
-    self.duration = duration
     self.lineS = playdate.geometry.lineSegment.new(self.startPos.x, self.startPos.y, self.endPos.x, self.endPos.y)
     self.playerPos = {}
     self.playerPos.x = player.cannonGunSprite.x
