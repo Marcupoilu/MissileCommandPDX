@@ -21,7 +21,7 @@ function EnemySmallThree:update()
         self.angle = math.deg(math.atan(self.randomPoint.y - self.y, self.randomPoint.x - self.x))
     end
     
-    -- EnemySmallTwo.super.update(self)
+    EnemySmallTwo.super.update(self)
 
     -- Mettre à jour la position d'origine
     self.originPosition.x = self.x

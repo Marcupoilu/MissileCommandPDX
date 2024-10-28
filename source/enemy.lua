@@ -1,7 +1,5 @@
 class("Enemy").extends(gfx.sprite)
 
--- local p = ParticleCircle(0,0)
-
 function Enemy:init(x,y,speed,hp, xp, damage, enemyImage, core)
     Enemy.super.init(self)
     self.spawner = nil
@@ -21,7 +19,8 @@ function Enemy:init(x,y,speed,hp, xp, damage, enemyImage, core)
     self.originSpeed = speed
     self.radius = 0
     self.angle = 0
-    self.shakeAmount = 0
+    self.tickAmount = 0
+    self.blinkAmount = 0
     self.offset = 90
     self.originAngle = 0
     self.originPosition = {}
@@ -30,7 +29,7 @@ function Enemy:init(x,y,speed,hp, xp, damage, enemyImage, core)
     self.xpReward = xp
     self.dead = false
     self.state = "Idle"
-    self.currentOverlappingSprites = {} 
+    self.currentOverlappingSprites = {}
     self.timer = nil
     self.frameCount = 0
     -- self.fx = FX(self.x, self.y, "AnimationHit")
@@ -46,6 +45,26 @@ function Enemy:init(x,y,speed,hp, xp, damage, enemyImage, core)
     self:moveTo(x,y)
     self:add()
 
+end
+
+function Enemy:update()
+    Enemy.super.update(self)
+    table.each(self.currentOverlappingSprites, function (bullet)
+        if bullet.tickTime ~= nil then
+            bullet.tickTime -= playdate.display.getRefreshRate()
+            if bullet.tickTime <= 0 then
+                table.remove(self.currentOverlappingSprites, indexOf(self.currentOverlappingSprites, bullet))
+                bullet.tickTime = bullet.tick
+            end
+        end
+    end)
+    if self.blinkAmount > 0 then
+        self.blinkAmount -= 1
+    else
+        if self.drawMode ~= gfx.kDrawModeCopy then
+            self:setImageDrawMode(gfx.kDrawModeCopy)
+        end
+    end
 end
 
 function Enemy:changeState(state)

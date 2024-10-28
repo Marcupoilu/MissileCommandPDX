@@ -7,7 +7,7 @@ function EnemySpawner:init(spawnTime, x, y, spawnMaxCount, enemy, enemyData, loo
 end
 
 function EnemySpawner:spawn()
-    if table.getsize(enemies) >= enemyPoolLimit then
+    if table.count(enemies) >= enemyPoolLimit then
         return
     end
     EnemySpawner.super.spawn(self, self.enemy(0, self.y, self.enemyData.speed, self.enemyData.hp, self.enemyData.xp, self.enemyData.damage, self.enemyData.enemyImage, self.enemyData.core))

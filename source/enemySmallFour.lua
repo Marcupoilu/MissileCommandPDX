@@ -25,7 +25,7 @@ function EnemySmallFour:update()
         self.angle = math.deg(math.atan(self.currentPoint.y - self.y, self.currentPoint.x - self.x) )
     end
     
-    -- EnemySmallFour.super.update(self)
+    EnemySmallFour.super.update(self)
 
     self.originPosition.x = self.x
     self.originPosition.y = self.y

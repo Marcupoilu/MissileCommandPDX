@@ -91,15 +91,13 @@ end
 function EnemyManager:touchEnemy(value, enemy, bulletHp)
     if table.contains(enemy.currentOverlappingSprites, value) then return end
     enemy:setImageDrawMode(gfx.kDrawModeFillWhite)
-    table.insert(self.timers,playdate.timer.new(100, function() enemy:setImageDrawMode(gfx.kDrawModeCopy) end))
+    enemy.blinkAmount = 5
     p:moveTo(enemy.x, enemy.y)
     p:add(1)
     self:loseHp(value.damage + (player.damageBonus * value.damage / 100), enemy, value.className)
     if bulletHp == nil then value:loseHp(1) end
+    value.tickTime = value.tick
     table.insert(enemy.currentOverlappingSprites, value)
-    if value.tick then
-        table.insert(self.timers, playdate.timer.new(value.tick, function() table.remove(enemy.currentOverlappingSprites, indexOf(enemy.currentOverlappingSprites, value)) end))
-    end
 end
 
 function EnemyManager:dotEnemy(value, enemy)
@@ -142,9 +140,6 @@ function EnemyManager:death(enemy)
     enemy.dead = true
     if enemy.spawner ~= nil then
         enemy.spawner.spawnCount -= 1
-        if not enemy.spawner.loop then
-            enemy.spawner:startSpawn()
-        end
     end
     table.each(self.timers, function (t)
         t:remove()

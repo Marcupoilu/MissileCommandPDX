@@ -15,7 +15,7 @@ function Xwing:update()
         self.angle = math.deg(math.atan(self.playerY - self.y, self.playerX - self.x) )
     end
     
-    -- Xwing.super.update(self)
+    Xwing.super.update(self)
 
     self.originPosition.x = self.x
     self.originPosition.y = self.y

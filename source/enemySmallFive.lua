@@ -25,7 +25,7 @@ function EnemySmallFive:update()
         self.angle = math.deg(math.atan(self.currentPoint.y - self.y, self.currentPoint.x - self.x) )
     end
     
-    -- EnemySmallFive.super.update(self)
+    EnemySmallFive.super.update(self)
     self.originPosition.x = self.x
     self.originPosition.y = self.y
     self.radius = self.speed * deltaTime

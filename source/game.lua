@@ -9,7 +9,8 @@ function Game:init(maxPool, level)
     playdate.resetElapsedTime()
     self.level = table.findByParam(wavesData, "Level", level)
     self.waves = table.findByParam(wavesData, "Level", level).Waves
-    targetTime = interval*table.count(self.waves)/1000
+    -- targetTime = interval*table.count(self.waves)/1000
+    targetTime = 5
     self.waveNumber = 1
     self.timer = nil
     self.finish = false
@@ -19,7 +20,6 @@ function Game:init(maxPool, level)
     bgsprite:moveTo(0,0)
     bgsprite:setZIndex(-9999)
     bgsprite:add()
-
     self:startGame()
 end
 
@@ -73,7 +73,7 @@ end
 function Game:update()
     -- print(table.count(playdate.timer.allTimers()))
     -- table.each(playdate.timer.allTimers(), function (t)
-    --     printTable(t.timerEndedCallback)
+    --     printTable(t)
     -- end)
     if self.finish == true then
         return
@@ -94,8 +94,11 @@ function Game:update()
 end
 
 function Game:changeWave()
-        self.waveNumber += 1
-        self.waves[self.waveNumber]:startWave()
+    self.waveNumber += 1
+    if self.waveNumber >= table.count(self.waves) then
+        return
+    end
+    self.waves[self.waveNumber]:startWave()
 end
 
 function Game:endGame()
