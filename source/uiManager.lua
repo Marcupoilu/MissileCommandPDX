@@ -184,6 +184,7 @@ function UiManager:levelUpDisplay()
     if playdate.buttonJustPressed(playdate.kButtonA) then
         generate = false
         ups[levelUpIndex +1]:applyUpgrade()
+        game.timer:start()
         playdate.update = gameUpdate
     end
     if playdate.buttonJustPressed(playdate.kButtonB) and player.rerolls > 0 then

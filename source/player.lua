@@ -156,6 +156,7 @@ function Player:levelUp()
     end
     self.xp = 0
     playdate.timer.new(toMilliseconds(.5), function ()
+        game.timer:pause()
         playdate.update = levelUpUpdate
     end)
 end
