@@ -62,7 +62,7 @@ function BulletBeam:update()
         if collision.sprite:isa(Enemy) then
             self.endPos.x = collision.entryPoint.x
             self.endPos.y = collision.entryPoint.y
-            enemyManager:touchEnemy(self, collision.sprite, false)
+            enemyManager:touchEnemy(self, collision.sprite, true)
             -- break -- Stopper dès qu'une collision est trouvée
         end
     end

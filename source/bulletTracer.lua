@@ -68,7 +68,7 @@ function BulletTracer:update()
     table.each(gfx.sprite.querySpriteInfoAlongLine(self.startPos.x, self.startPos.y, self.endPos.x, self.endPos.y), 
     function(collision)
         if collision.sprite:isa(Enemy) then
-            enemyManager:touchEnemy(self, collision.sprite, false)
+            enemyManager:touchEnemy(self, collision.sprite, true)
             -- collision.sprite:loseHp(self.damage + ((player.damageBonus*self.damage)/100))
         end
     end)
