@@ -28,18 +28,20 @@ function Projectile:init(x,y,speed, damage, offsetCrank, scale, duration)
     if self:isa(BulletAura) == false and self:isa(BulletBlackHole) == false then
         self:setRotation(self.originAngle + 90)
     end
-    if self.duration ~= nil and self.duration ~= 0 then
-        self.timer = playdate.timer.new(toMilliseconds(self.duration), function() self:destroy() end) 
-    end
+    -- if self.duration ~= nil and self.duration ~= 0 then
+        -- self.timer = playdate.timer.new(toMilliseconds(self.duration), function() self:destroy() end) 
+    -- end
     table.insert(bullets, self)
 end
 
-function Projectile:updateDurationTimer(newDuration)
-    self.timer:remove()
-    self.timer = playdate.timer.new(toMilliseconds(newDuration), function() self:destroy() end) 
-end
-
 function Projectile:update()
+    if self.duration == nil or self.duration == 0 then
+        return
+    end
+    self.duration -= playdate.display.getRefreshRate()
+    if self.duration <= 0 then
+        self:destroy()
+    end
 end
 
 function Projectile:destroy()

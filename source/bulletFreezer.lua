@@ -28,6 +28,7 @@ function BulletFreezer:endBeam()
 end
 
 function BulletFreezer:update()
+    BulletFreezer.super.update(self)
     self.angle = player.cannonGunSprite:getRotation()
     self.startPos.x = player.cannonGunSprite.x +(self.height+50) * math.cos(math.rad((self.angle - 90) ))
     self.startPos.y = player.cannonGunSprite.y +(self.height+50) * math.sin(math.rad((self.angle - 90) ))

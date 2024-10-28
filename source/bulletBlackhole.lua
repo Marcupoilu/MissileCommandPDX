@@ -23,6 +23,7 @@ function BulletBlackhole:init(x,y,speed, damage, offsetCrank, scale, duration)
 end
 
 function BulletBlackhole:update()
+    BulletBlackhole.super.update(self)
     self:animate()
     self:moveTo(self.radius*math.cos(math.rad(self.originAngle + self.offset)) + self.originPosition.x, self.radius*math.sin(math.rad(self.originAngle + self.offset)) + self.originPosition.y)
 end

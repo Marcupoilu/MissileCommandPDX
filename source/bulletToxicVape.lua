@@ -9,6 +9,6 @@ function BulletToxicVape:init(x,y,speed, damage, offsetCrank, scale, duration, t
 end
 
 function BulletToxicVape:update()
-    self:animate()
     BulletToxicVape.super.update(self)
+    self:animate()
 end

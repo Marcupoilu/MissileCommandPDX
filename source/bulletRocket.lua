@@ -12,6 +12,7 @@ function BulletRocket:init(x,y,speed, damage, offsetCrank, scale, duration, expl
     playdate.timer.new(50, function() self:setCollideRect(0,0,self:getSize()) end)
 end
 function BulletRocket:update()
+    BulletRocket.super.update(self)
     self:animate()
     self.radius += self.speed + (((player.projectileSpeedBonus*self.speed)/100)) * deltaTime
     self:moveTo(self.radius*math.cos(math.rad(self.originAngle + self.offset)) + self.originPosition.x, self.radius*math.sin(math.rad(self.originAngle + self.offset)) + self.originPosition.y)

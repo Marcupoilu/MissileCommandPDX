@@ -30,6 +30,7 @@ function BulletBeam:endBeam()
 end
 
 function BulletBeam:update()
+    BulletBeam.super.update(self)
     -- Cache des variables pour réduire les appels de méthode
     local playerSprite = player.cannonGunSprite
     local playerX, playerY = playerSprite.x, playerSprite.y

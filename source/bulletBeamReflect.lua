@@ -33,6 +33,7 @@ function BulletBeamReflect:endBeam()
 end
 
 function BulletBeamReflect:update()
+    BulletBeamReflect.super.update(self)
     if self.target ~= nil then
         self.currentAngle = math.deg(math.atan(self.target.y - self.playerY, self.target.x - self.playerX))
     end

@@ -15,6 +15,7 @@ end
 
 
 function BulletOrbital:update()
+    BulletOrbital.super.update(self)
     -- self:setRotation(self.rot)
     -- self.rot += 10
     self.radius += self.speed + (((player.projectileSpeedBonus*self.speed)/100)) * deltaTime

@@ -12,6 +12,7 @@ function BulletSerpentine:init(x,y,speed, damage, offsetCrank, scale, duration)
     self.time = 0
 end
 function BulletSerpentine:update()
+    BulletSerpentine.super.update(self)
     self:animate()
     self.radius += self.speed + (((player.projectileSpeedBonus*self.speed)/100)) * deltaTime
     self.time += deltaTime

@@ -30,7 +30,8 @@ function BulletTracer:endBeam()
 end
 
 function BulletTracer:update()
-    
+    BulletTracer.super.update(self)
+
     self.startPos.x = self.playerPos.x +(self.height+self.offsetHeight) * math.cos(math.rad((self.originAngle)))
     self.startPos.y = self.playerPos.y +(self.height+self.offsetHeight) * math.sin(math.rad((self.originAngle)))
     

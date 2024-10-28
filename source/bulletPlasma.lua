@@ -12,7 +12,10 @@ function BulletPlasma:init(x,y,speed, damage, offsetCrank, scale, duration)
 end
 
 function BulletPlasma:update()
+    BulletPlasma.super.update(self)
     self:animate()
+    self.radius += self.speed + (((player.projectileSpeedBonus*self.speed)/100)) * deltaTime
+    self:moveTo(self.radius*math.cos(math.rad(self.originAngle + self.offset)) + self.originPosition.x, self.radius*math.sin(math.rad(self.originAngle + self.offset)) + self.originPosition.y)
     -- self.rot += self.speed * 10
     -- self:setRotation(self.rot)
     if self.x <= 0 or self.x >= 400 then
@@ -23,6 +26,4 @@ function BulletPlasma:update()
         self.originAngle =  -self.originAngle
         self:resetPosAndRot()
     end
-    self.radius += self.speed + (((player.projectileSpeedBonus*self.speed)/100)) * deltaTime
-    self:moveTo(self.radius*math.cos(math.rad(self.originAngle + self.offset)) + self.originPosition.x, self.radius*math.sin(math.rad(self.originAngle + self.offset)) + self.originPosition.y)
 end

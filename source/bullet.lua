@@ -36,11 +36,12 @@ end
 
 function Bullet:update()
     Bullet.super.update(self)
-    self.radius += self.speed + (((player.projectileSpeedBonus*self.speed)/100)) * deltaTime
-    self:moveTo(self.radius*math.cos(math.rad(self.originAngle + self.offset)) + self.originPosition.x, self.radius*math.sin(math.rad(self.originAngle + self.offset)) + self.originPosition.y)
-    if self.x > playdate.display.getWidth() or self.y > playdate.display.getHeight() or self.x < 0 or self.y < 0 then
+    if self.x - self:getSize()/2 > playdate.display:getWidth() or self.y - self:getSize()/2 > playdate.display:getHeight() or self.x + self:getSize()/2 < 0 or self.y + self:getSize()/2 < 0 then
         self:destroy()
     end
+    if self.className ~= "Bullet" then return end
+    self.radius += self.speed + (((player.projectileSpeedBonus*self.speed)/100)) * deltaTime
+    self:moveTo(self.radius*math.cos(math.rad(self.originAngle + self.offset)) + self.originPosition.x, self.radius*math.sin(math.rad(self.originAngle + self.offset)) + self.originPosition.y)
 end
 
 function Bullet:updateImage(bulletImage)

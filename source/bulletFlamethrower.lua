@@ -14,5 +14,6 @@ function BulletFlamethrower:init(x,y,speed, damage, offsetCrank, scale, duration
 end
 
 function BulletFlamethrower:update()
+    BulletFlamethrower.super.update(self)
     self:animate()
 end
