@@ -67,10 +67,10 @@ function EnemyManager:processDroneBullet(value, enemy)
     local sprite = gfx.sprite.new(gfx.image.new("images/bullets/bullet_drone"))
     sprite:moveTo(value.x, value.y)
     sprite:add()
-    table.insert(self.timers, playdate.timer.new(toMilliseconds(value.duration), function() sprite:remove() end))
+    table.insert(self.timers, playdate.timer.new(value.duration, function() sprite:remove() end))
     local angles = cutAngle(value.projectileAmount + player.projectileAmount)
     for _, angle in ipairs(angles) do
-        BulletDroneLaser(value.x, value.y, value.speed / 2, value.damage, angle, value.scale * 4, value.duration, 0)
+        BulletDroneLaser(value.x, value.y, value.speed / 2, value.damage, angle, value.scale*4, value.duration, 0)
     end
     value:loseHp(1)
 end
