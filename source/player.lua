@@ -118,7 +118,7 @@ function Player:addPassive(passive)
 
     for _, i in ipairs(uiManager.inventoryPassives) do i:remove() end
     uiManager.inventoryPassives = {}
-    uiManager:createInventory(298, 225, 31, self.passives)
+    uiManager:createInventory(300, 222, 29, self.passives)
 end
 
 function Player:regeneration()
@@ -137,9 +137,9 @@ end
 function Player:levelUp()
     self.level += 1
     if math.between(self.level, 1, 2) then
-        self.xpMax += 10
+        self.xpMax += 5
     elseif math.between(self.level, 3, 20) then
-        self.xpMax += 13
+        self.xpMax += 10
     elseif math.between(self.level, 21, 40) then
         self.xpMax += 16
     else

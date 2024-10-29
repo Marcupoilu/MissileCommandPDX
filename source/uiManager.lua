@@ -204,16 +204,16 @@ function UiManager:update()
         local level = tostring(table.findByParam(player.weapons, "className", iw.type).level)
         gfx.setImageDrawMode(gfx.kDrawModeFillWhite)
         gfx.setFont(verySmallFont,gfx.kVariantBold)
-        gfx.drawTextAligned("Lv."..level,10 + offset,235, kTextAlignment.center)
-        offset += 21
+        gfx.drawTextAligned("Lv."..level,12 + offset,235, kTextAlignment.center)
+        offset += 31
     end)
     offset = 0
     table.each(inventoryPassiveTexts, function (ip)
         local level = tostring(ip.countMax - ip.count)
         gfx.setImageDrawMode(gfx.kDrawModeFillWhite)
         gfx.setFont(verySmallFont,gfx.kVariantBold)
-        gfx.drawTextAligned("Lv."..level,295 + offset,235, kTextAlignment.center)
-        offset += 21
+        gfx.drawTextAligned("Lv."..level,299 + offset,235, kTextAlignment.center)
+        offset += 29
     end)
     gfx.setImageDrawMode(gfx.kDrawModeFillWhite)
     gfx.setFont(smallFont,gfx.kVariantBold)
