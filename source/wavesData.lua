@@ -36,8 +36,8 @@ wavesData =
             Wave(--7
             {
                 EnemySpawner(math.random(100,500), 34, 0, 10, Xwing, enemiesData.Xwing),
-                EnemySpawner(math.random(1000,3000), 34, 0, 10, EnemySmallTwo, enemiesData.EnemySmallTwo),
-                EnemySpawner(math.random(1000,3000), 34, 0, 10, EnemySmallEight, enemiesData.EnemySmallEight),
+                EnemySpawner(math.random(1000,5000), 34, 0, 5, EnemySmallTwo, enemiesData.EnemySmallTwo),
+                EnemySpawner(math.random(1000,5000), 34, 0, 5, EnemySmallEight, enemiesData.EnemySmallEight),
             }),           
             Wave(--8
             {
