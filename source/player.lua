@@ -33,7 +33,7 @@ end
 
 function Player:start()
     self.level = 1
-    self.hpMax = 10000000000000000000 + playerBonus.gameData.hpMax
+    self.hpMax = 100 + playerBonus.gameData.hpMax
     self.hp = self.hpMax
     self.shield = playerBonus.gameData.shield or 0
     self.xp, self.xpMax, self.xpBonus = 0, 3, playerBonus.gameData.xpBonus or 0
@@ -47,7 +47,7 @@ function Player:start()
     self.lives = 1 + playerBonus.gameData.lives
     self.rerolls = 100 + playerBonus.gameData.rerolls
     self.weaponNumber, self.passiveNumber = 0, 0
-    self.weaponNumberMax, self.passiveNumberMax = 4, 4
+    self.weaponNumberMax, self.passiveNumberMax = 3, 3
     self.core, self.runLevel, self.enemiesKilled = 0, 1, 0
     self.success = false
     self.unlocks = playerBonus.gameData.unlocks
