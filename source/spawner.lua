@@ -43,7 +43,6 @@ function Spawner:stopSpawn()
         self.timer:remove()
         self.timer = nil
     end
-    self = nil
 end
 
 function Spawner:spawn()

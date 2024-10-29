@@ -55,7 +55,6 @@ function Projectile:destroy()
 end
 
 function Projectile:destroyWithParticles()
-    FX(self.x,self.y,"AnimationHit")
     if table.contains(beams, self) then
         table.remove(beams, indexOf(beams, self))
     end
