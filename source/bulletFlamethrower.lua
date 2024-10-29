@@ -3,10 +3,10 @@ class("BulletFlamethrower").extends(Bullet)
 local bulletImage = gfx.image.new("images/bullets/bullet_shotgun" )
 
 function BulletFlamethrower:init(x,y,speed, damage, offsetCrank, scale, duration)
-    duration = 0.198
+    duration = 300
     BulletFlamethrower.super.init(self,x,y,speed, damage, offsetCrank, scale, duration, bulletImage)
     self.hp = 100000
-    self.tick = 10
+    -- self.tick = 10
     -- self.scale += 1.5
     -- self:setScale(self.scale)
     self:setCenter(0.5, 1)

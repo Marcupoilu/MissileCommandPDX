@@ -10,7 +10,7 @@ function CreateWeaponsData()
         Shockwave(toMilliseconds(1.5), 200, 175, 4, 0.2, 1, 1, toMilliseconds(3)), -- balanced starter
         Rocket(toMilliseconds(3), 200, 175, 3, 0, 1, 1,toMilliseconds(5)), -- balanced starter
         Guided(toMilliseconds(0.3), 200, 175, 4,0.4, 1, 1,toMilliseconds(3)), -- balanced starter (rework direction bug)
-        Flamethrower(toMilliseconds(3), 200, 175, 1,0.3, 1, 1,toMilliseconds(1.5)), -- to rework integrally
+        Flamethrower(toMilliseconds(3), 200, 175, 1,2, 1, 1,toMilliseconds(1.5)), -- to rework integrally
         Freezer(toMilliseconds(1.5), 200, 175, 100, 0, 1, 4, toMilliseconds(0.5)), -- balanced starter
         LaserDome(toMilliseconds(3), 200, 175, 100, 1, 1, 2, toMilliseconds(3)), -- balanced starter
         ToxicVape(toMilliseconds(3), 200, 175, 3, 1, 1, 1, toMilliseconds(10)), -- to rework integrally

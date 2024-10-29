@@ -21,7 +21,7 @@ upgradesData =
     UpgradeWeapon("BeamReflect", "Reflect Beam", "", "images/ui/icons/BeamReflect",10 ,5),
     UpgradeWeapon("Blackhole", "Blackhole", "", "images/ui/icons/BlackHole",10 ,7),
     UpgradeWeapon("Drone", "Laser Drone", "", "images/ui/icons/droneLaser",10 , 7),
-    UpgradeWeapon("Flamethrower", "Flamethrower", "", "images/ui/icons/flamethrower",10 ,4 ),
+    UpgradeWeapon("Flamethrower", "Shotgun", "", "images/ui/icons/shotgun",10 ,4 ),
     UpgradeWeapon("Freezer", "Freezer", "", "images/ui/icons/freezer",10 ,2),
     UpgradeWeapon("Guided", "Guided", "", "images/ui/icons/guided",10 ,4),
     UpgradeWeapon("LaserDome", "Laser Dome", "", "images/ui/icons/laserDome",10 ,1),
