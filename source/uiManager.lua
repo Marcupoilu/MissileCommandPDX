@@ -845,8 +845,8 @@ function UiManager:createInventory(x,y, offset, inventoryTable)
     local offs = 0
     local type = ""
     for key, value in pairs(inventoryTable) do
-        local item = gfx.sprite.new(value.image)
-        item:moveTo(x + offs, y)
+        local item = gfx.sprite.new(gfx.image.new(value.path.."_small"))
+        item:moveTo(x + offs - 1, y - 2)
         item:setCenter(0.5,0.5)
         item:setZIndex(1000)
         item:setImageDrawMode(gfx.kDrawModeCopy)

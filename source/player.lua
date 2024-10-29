@@ -103,7 +103,7 @@ function Player:addWeapon(weapon)
 
         for _, i in ipairs(uiManager.inventoryWeapons) do i:remove() end
         uiManager.inventoryWeapons = {}
-        uiManager:createInventory(13, 225, 20, weaponUpgrades)
+        uiManager:createInventory(13, 225, 31, weaponUpgrades)
     end
 end
 
@@ -118,7 +118,7 @@ function Player:addPassive(passive)
 
     for _, i in ipairs(uiManager.inventoryPassives) do i:remove() end
     uiManager.inventoryPassives = {}
-    uiManager:createInventory(297, 224, 21, self.passives)
+    uiManager:createInventory(298, 225, 31, self.passives)
 end
 
 function Player:regeneration()
