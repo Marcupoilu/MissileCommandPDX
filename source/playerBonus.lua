@@ -30,11 +30,9 @@ function PlayerBonus:start()
         shopUnlocks = {
             table.findByParam(upgradesData, "type", "SimpleCannon"),
             table.findByParam(upgradesData, "type", "Beam"),
-            table.findByParam(upgradesData, "type", "Rocket"),
-            table.findByParam(upgradesData, "type", "Plasma"),
+            table.findByParam(upgradesData, "type", "Flamethrower"),
             getUpgradePassive("projectileSpeedBonus"),
             getUpgradePassive("scaleBonus"),
-            getUpgradePassive("hpMax"),
             getUpgradePassive("damageBonus")
         },
         shopItems = {
