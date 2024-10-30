@@ -9,16 +9,15 @@ wavesData =
         Waves = {
             Wave(--1
             {
-                EnemySpawner(math.random(500,2000), 34, 0, 15, Xwing, enemiesData.Xwing)
+                EnemySpawner(math.random(1000,1000), 34, 0, 15, Xwing, enemiesData.Xwing),
             }),
             Wave(--2
             {
-                EnemySpawner(math.random(500,1000), 34, 0, 20, Xwing, enemiesData.Xwing)
+                EnemySpawner(math.random(500,500), 34, 0, 20, Xwing, enemiesData.Xwing)
             }),
             Wave(--3
             {
-                EnemySpawner(math.random(100,1000), 34, 0, 15, Xwing, enemiesData.Xwing),
-                EnemySpawner(math.random(1000,3000), 34, 0, 5, EnemySmallTwo, enemiesData.EnemySmallTwo),
+                EnemySpawner(math.random(1000,3000), 34, 0, 10, EnemySmallTwo, enemiesData.EnemySmallTwo),
             }),
             Wave(--4
             {
@@ -27,11 +26,12 @@ wavesData =
             }),            
             Wave(--5
             {
-                EnemySpawner(math.random(100,500), 34, 0, nil, Xwing, enemiesData.Xwing),
+                EnemySpawner(math.random(100,100), 34, 0, nil, Xwing, enemiesData.Xwing),
             }),
             Wave(--6
             {
                 EnemySpawner(math.random(100,100), 34, 0, nil, Xwing, enemiesData.Xwing),
+                EnemySpawner(math.random(1000,5000), 34, 0, 5, EnemySmallTwo, enemiesData.EnemySmallTwo)
             }),            
             Wave(--7
             {
