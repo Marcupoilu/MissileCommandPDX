@@ -7,7 +7,6 @@ function Flamethrower:init(attackSpeed, x, y, speed, damage, projectileAmount, s
     self.x = x
     self.duration = duration
     self.y = y
-    self.projectileAmount += 1
     -- self:debugLevel(10)
 end
 
