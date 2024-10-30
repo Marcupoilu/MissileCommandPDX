@@ -9,10 +9,12 @@ function BulletFlamethrower:init(x,y,speed, damage, offsetCrank, scale, duration
     -- self.tick = 10
     -- self.scale += 1.5
     -- self:setScale(self.scale)
-    self:setCenter(0.5, 1)
+    self:setCenter(0.5, 0.5)
     -- print(math.cos(math.rad(self.originAngle) + self.originPosition.x))
     -- print(math.cos(math.rad(self.originAngle + self.offset) + self.originPosition.x))
-    self:moveTo(math.cos(math.rad(self.originAngle + self.offset)) + self.originPosition.x, math.sin(math.rad(self.originAngle + self.offset)) + self.originPosition.y)
+
+    self:moveTo(math.cos(math.rad(self.originAngle + self.offset)) * 20 + self.originPosition.x, math.sin(math.rad(self.originAngle + self.offset)) * 20 + self.originPosition.y + 5)
+    self:setRotation((self.originAngle + 90) + self.offset)
 end
 
 function BulletFlamethrower:update()
