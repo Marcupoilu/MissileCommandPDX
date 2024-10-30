@@ -59,11 +59,11 @@ enemyManager = EnemyManager()
 debugRects = {}
 beams = {}
 bullets = {}
+refreshRate = 1/playdate.display.getRefreshRate() * 1000
 
 -- Managers -- 
 shake = ScreenShake()
 uiManager = UiManager()
-
 time = 0
 deltaTime = 0
 crankPosition = playdate.getCrankPosition()
@@ -94,6 +94,9 @@ gameUpdate = function()
     spriteUpdate()          -- Mise à jour des sprites
     updateTimers()          -- Mise à jour des timers
     game:update()           -- Mise à jour du jeu principal
+    table.each(spawners, function (s)
+        s:update()
+    end)
     uiManager:update()      -- Mise à jour de l'interface utilisateur
     drawFPS(0, 0)           -- Affichage des FPS pour le debugging
     particleUpdate()        -- Mise à jour des particules

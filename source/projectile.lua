@@ -38,7 +38,7 @@ function Projectile:update()
     if self.duration == nil or self.duration == 0 then
         return
     end
-    self.duration -= 1/playdate.display.getRefreshRate() * 1000
+    self.duration -= refreshRate
     if self.duration <= 0 then
         self:destroy()
     end

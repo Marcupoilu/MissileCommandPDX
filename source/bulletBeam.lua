@@ -1,25 +1,30 @@
 class("BulletBeam").extends(Projectile)
 
--- Pré-calculer les constantes si elles ne changent pas
+-- Pré-calcul des constantes mathématiques
 local math_rad = math.rad
 local math_cos = math.cos
 local math_sin = math.sin
+local gfx_setLineCapStyle = gfx.setLineCapStyle
+local gfx_setColor = gfx.setColor
+local gfx_setLineWidth = gfx.setLineWidth
+local gfx_drawLine = gfx.drawLine
+local gfx_querySpriteInfoAlongLine = gfx.sprite.querySpriteInfoAlongLine
 
 function BulletBeam:init(x, y, speed, damage, offsetCrank, scale, duration)
     BulletBeam.super.init(self, x, y, speed, damage, offsetCrank, scale, duration)
     self.maxLength = 240
-    -- self.hp = 10000
     self.currentLength = 0
     self.startPos = {x = player.x, y = player.y}
     self.endPos = {x = 0, y = 0}
     self.angle = crankPosition
-    self.radius = self.speed + ((player.projectileSpeedBonus * self.speed) / 100) * deltaTime
-    self.offset = offsetCrank
+    self.radius = speed * (1 + player.projectileSpeedBonus / 100) * deltaTime
+    self.offset = math_rad(offsetCrank)
     self.scale = scale
-    -- self.duration = duration
     self.lineS = playdate.geometry.lineSegment.new(self.startPos.x, self.startPos.y, self.endPos.x, self.endPos.y)
-    self.lasers = {}
     self.tick = 100
+    gfx_setLineCapStyle(gfx.kLineCapStyleRound)
+    gfx_setColor(gfx.kColorWhite)
+    gfx_setLineWidth(self.scale)
     table.insert(beams, self)
 end
 
@@ -32,49 +37,42 @@ end
 
 function BulletBeam:update()
     BulletBeam.super.update(self)
-    -- Cache des variables pour réduire les appels de méthode
+    
     local playerSprite = player.cannonGunSprite
     local playerX, playerY = playerSprite.x, playerSprite.y
     local rotation = playerSprite:getRotation()
     local angleRad = math_rad(rotation - 90)
 
-    -- Calcul de la position de départ, une seule fois
-    self.startPos.x = playerX + (self.height + 50) * math_cos(angleRad)
-    self.startPos.y = playerY + (self.height + 50) * math_sin(angleRad)
+    -- Position de départ
+    local offsetX = (self.height + 50) * math_cos(angleRad)
+    local offsetY = (self.height + 50) * math_sin(angleRad)
+    self.startPos.x, self.startPos.y = playerX + offsetX, playerY + offsetY
 
-    -- Calcul du rayon et direction
-    self.radius = self.radius + (self.speed + ((player.projectileSpeedBonus * self.speed) / 100)) * deltaTime
-    local directionX = self.radius * math_cos(angleRad + math_rad(self.offset)) * deltaTime
-    local directionY = self.radius * math_sin(angleRad + math_rad(self.offset)) * deltaTime
+    -- Calcul du rayon et direction avec mise à jour
+    self.radius = self.radius + self.speed * (1 + player.projectileSpeedBonus / 100) * deltaTime
+    local directionX = self.radius * math_cos(angleRad + self.offset) * deltaTime
+    local directionY = self.radius * math_sin(angleRad + self.offset) * deltaTime
 
-    -- Limitation de la longueur actuelle
-    self.currentLength = self.currentLength + (self.speed + ((player.projectileSpeedBonus * self.speed) / 100)) * deltaTime
-    if self.currentLength > self.maxLength then
-        self.currentLength = self.maxLength
-    end
+    -- Limite de longueur
+    self.currentLength = math.min(self.currentLength + self.radius, self.maxLength)
 
-    -- Calcul de la position de fin
+    -- Position de fin
     self.endPos.x = self.startPos.x + directionX * self.currentLength
     self.endPos.y = self.startPos.y + directionY * self.currentLength
 
-    -- Collision avec les sprites sur la ligne
-    local collisions = gfx.sprite.querySpriteInfoAlongLine(self.startPos.x, self.startPos.y, self.endPos.x, self.endPos.y)
+    -- Collision avec les sprites
+    local collisions = gfx_querySpriteInfoAlongLine(self.startPos.x, self.startPos.y, self.endPos.x, self.endPos.y)
     for _, collision in ipairs(collisions) do
         if collision.sprite:isa(Enemy) then
-            self.endPos.x = collision.entryPoint.x
-            self.endPos.y = collision.entryPoint.y
+            self.endPos.x, self.endPos.y = collision.entryPoint.x, collision.entryPoint.y
             enemyManager:touchEnemy(self, collision.sprite, true)
-            -- break -- Stopper dès qu'une collision est trouvée
+            break
         end
     end
 
     -- Dessin de la ligne
-    gfx.setLineCapStyle(gfx.kLineCapStyleRound)
-    gfx.setColor(gfx.kColorWhite)
-    gfx.setLineWidth(self.scale)
-    self.lineS.x1 = self.startPos.x
-    self.lineS.y1 = self.startPos.y
-    self.lineS.x2 = self.endPos.x
-    self.lineS.y2 = self.endPos.y
-    gfx.drawLine(self.lineS)
+
+    self.lineS.x1, self.lineS.y1 = self.startPos.x, self.startPos.y
+    self.lineS.x2, self.lineS.y2 = self.endPos.x, self.endPos.y
+    gfx_drawLine(self.lineS)
 end

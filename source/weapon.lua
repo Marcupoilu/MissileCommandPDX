@@ -9,6 +9,7 @@ function Weapon:init(attackSpeed, speed, damage, projectileAmount, scale, durati
     self.scale = scale
     self.damage = damage
     self.projectileAmount = projectileAmount
+    self.timer = nil
     -- self:startShooting()
 end
 
@@ -19,10 +20,12 @@ function Weapon:debugLevel(level)
 end
 
 function Weapon:startShooting()
-    playdate.timer.new(self.attackSpeed-((player.attackSpeedBonus*self.attackSpeed)/100), function()
+    self.timer = playdate.timer.new(self.attackSpeed-((player.attackSpeedBonus*self.attackSpeed)/100), function()
         self:shoot()
-        self:startShooting()
     end)
+    if not self.timer.repeats then
+        self.timer.repeats = true
+    end
 end
 
 function Weapon:shoot()

@@ -11,7 +11,7 @@ function Wave:startWave()
     end)
     spawners = {}
     table.each(self.spawners, function(x) 
-        x:startSpawn()
+        -- x:startSpawn()
         table.insert(spawners, x)
     end)
 end

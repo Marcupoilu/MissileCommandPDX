@@ -48,10 +48,10 @@ function Enemy:init(x,y,speed,hp, xp, damage, enemyImage, core)
 end
 
 function Enemy:update()
-    Enemy.super.update(self)
+    -- Enemy.super.update(self)
     table.each(self.currentOverlappingSprites, function (bullet)
         if bullet.tickTime ~= nil then
-            bullet.tickTime -= 1/playdate.display.getRefreshRate() * 1000
+            bullet.tickTime -= refreshRate
             if bullet.tickTime <= 0 then
                 table.remove(self.currentOverlappingSprites, indexOf(self.currentOverlappingSprites, bullet))
                 bullet.tickTime = bullet.tick

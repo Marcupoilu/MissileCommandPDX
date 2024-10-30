@@ -3,14 +3,16 @@ class("Spawner").extends()
 
 function Spawner:init(spawnTime, maxSpawn, loop)
     self.spawnTime = spawnTime
+    self.currentTime = spawnTime
     self.maxSpawn = maxSpawn
     self.spawnCount = 0
     self.loop = loop
     self.enabled = true
 end
 
-function Spawner:startSpawn()
-    self.timer = playdate.timer.performAfterDelay(self.spawnTime, function()
+function Spawner:update()
+    self.currentTime -= refreshRate
+    if self.currentTime <= 0 then
         if self.enabled == false then
             return
         end
@@ -22,27 +24,22 @@ function Spawner:startSpawn()
                 return
             end
         end
-        -- if self.spawnCount < self.maxSpawn then
-            self:spawn()
-            -- self:startSpawn()
-        -- end
-    end)
-    self.timer.repeats = true
+        self:spawn()
+        self.currentTime = self.spawnTime
+    end
 end
 
 function Spawner:stop()
-    self.timer:pause()
+    self.enabled = false
 end
 
 function Spawner:resume()
-    self.timer:start()
+    self.enabled = true
 end
 
 function Spawner:stopSpawn()
-    if self.timer ~= nil then
-        self.timer:remove()
-        self.timer = nil
-    end
+    self.enabled = false
+    self = nil
 end
 
 function Spawner:spawn()

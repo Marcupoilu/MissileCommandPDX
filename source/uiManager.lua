@@ -185,6 +185,9 @@ function UiManager:levelUpDisplay()
         generate = false
         ups[levelUpIndex +1]:applyUpgrade()
         game.timer:start()
+        table.each(player.weapons, function (w)
+            w.timer:start()
+        end)
         table.each(spawners, function (s)
             s:resume()
         end)
@@ -199,29 +202,29 @@ end
 
 function UiManager:update()
     -- texts layout
-    local offset = 0
-    table.each(inventoryWeaponTexts, function (iw)
-        local level = tostring(table.findByParam(player.weapons, "className", iw.type).level)
-        gfx.setImageDrawMode(gfx.kDrawModeFillWhite)
-        gfx.setFont(verySmallFont,gfx.kVariantBold)
-        gfx.drawTextAligned("Lv."..level,12 + offset,235, kTextAlignment.center)
-        offset += 31
-    end)
-    offset = 0
-    table.each(inventoryPassiveTexts, function (ip)
-        local level = tostring(ip.countMax - ip.count)
-        gfx.setImageDrawMode(gfx.kDrawModeFillWhite)
-        gfx.setFont(verySmallFont,gfx.kVariantBold)
-        gfx.drawTextAligned("Lv."..level,299 + offset,235, kTextAlignment.center)
-        offset += 29
-    end)
-    gfx.setImageDrawMode(gfx.kDrawModeFillWhite)
-    gfx.setFont(smallFont,gfx.kVariantBold)
-    gfx.drawTextAligned(player.level,100,225, kTextAlignment.center)
-    gfx.setFont(smallFontVariant)
-    gfx.drawTextAligned(timeLeft(time),387,227, kTextAlignment.center)
-    self:createBar(121,219,player.hpMax, player.hp, 5)
-    self:createBar(121,235,player.xpMax, player.xp,1)
+    -- local offset = 0
+    -- table.each(inventoryWeaponTexts, function (iw)
+    --     local level = tostring(table.findByParam(player.weapons, "className", iw.type).level)
+    --     gfx.setImageDrawMode(gfx.kDrawModeFillWhite)
+    --     gfx.setFont(verySmallFont,gfx.kVariantBold)
+    --     gfx.drawTextAligned("Lv."..level,12 + offset,235, kTextAlignment.center)
+    --     offset += 31
+    -- end)
+    -- offset = 0
+    -- table.each(inventoryPassiveTexts, function (ip)
+    --     local level = tostring(ip.countMax - ip.count)
+    --     gfx.setImageDrawMode(gfx.kDrawModeFillWhite)
+    --     gfx.setFont(verySmallFont,gfx.kVariantBold)
+    --     gfx.drawTextAligned("Lv."..level,299 + offset,235, kTextAlignment.center)
+    --     offset += 29
+    -- end)
+    -- gfx.setImageDrawMode(gfx.kDrawModeFillWhite)
+    -- gfx.setFont(smallFont,gfx.kVariantBold)
+    -- gfx.drawTextAligned(player.level,100,225, kTextAlignment.center)
+    -- gfx.setFont(smallFontVariant)
+    -- gfx.drawTextAligned(timeLeft(time),387,227, kTextAlignment.center)
+    -- self:createBar(121,219,player.hpMax, player.hp, 5)
+    -- self:createBar(121,235,player.xpMax, player.xp,1)
 end
 
 function UiManager:winScreenUpdate()
