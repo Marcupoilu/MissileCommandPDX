@@ -14,7 +14,7 @@ function BulletFlamethrower:init(x,y,speed, damage, offsetCrank, scale, duration
     -- print(math.cos(math.rad(self.originAngle + self.offset) + self.originPosition.x))
 
     self:moveTo(math.cos(math.rad(self.originAngle + self.offset)) * 20 + self.originPosition.x, math.sin(math.rad(self.originAngle + self.offset)) * 20 + self.originPosition.y + 5)
-    self:setRotation((self.originAngle + 90) + self.offset)
+    -- self:setRotation((self.originAngle + 90) + self.offset)
 end
 
 function BulletFlamethrower:update()
