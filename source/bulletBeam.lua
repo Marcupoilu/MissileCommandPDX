@@ -8,7 +8,7 @@ local gfx_setLineCapStyle = gfx.setLineCapStyle
 local gfx_setColor = gfx.setColor
 local gfx_setLineWidth = gfx.setLineWidth
 local gfx_drawLine = gfx.drawLine
-local gfx_querySpriteInfoAlongLine = gfx.sprite.querySpriteInfoAlongLine
+local gfx_querySpriteAlongLine = gfx.sprite.querySpritesAlongLine
 
 function BulletBeam:init(x, y, speed, damage, offsetCrank, scale, duration)
     BulletBeam.super.init(self, x, y, speed, damage, offsetCrank, scale, duration)
@@ -61,11 +61,11 @@ function BulletBeam:update()
     self.endPos.y = self.startPos.y + directionY * self.currentLength
 
     -- Collision avec les sprites
-    local collisions = gfx_querySpriteInfoAlongLine(self.startPos.x, self.startPos.y, self.endPos.x, self.endPos.y)
+    local collisions = gfx_querySpriteAlongLine(self.startPos.x, self.startPos.y, self.endPos.x, self.endPos.y)
     for _, collision in ipairs(collisions) do
-        if collision.sprite:isa(Enemy) then
-            self.endPos.x, self.endPos.y = collision.entryPoint.x, collision.entryPoint.y
-            enemyManager:touchEnemy(self, collision.sprite, true)
+        if collision:isa(Enemy) then
+            self.endPos.x, self.endPos.y = collision.x, collision.y
+            enemyManager:touchEnemy(self, collision, true)
             break
         end
     end

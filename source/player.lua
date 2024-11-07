@@ -103,6 +103,9 @@ function Player:addWeapon(weapon)
 
         for _, i in ipairs(uiManager.inventoryWeapons) do i:remove() end
         uiManager.inventoryWeapons = {}
+        table.each(inventorySpritesWeapons, function (is)
+            is:remove()
+        end)
         uiManager:createInventory(13, 225, 31, weaponUpgrades)
     end
 end
@@ -118,6 +121,9 @@ function Player:addPassive(passive)
 
     for _, i in ipairs(uiManager.inventoryPassives) do i:remove() end
     uiManager.inventoryPassives = {}
+    table.each(inventorySpritesPassives, function (is)
+        is:remove()
+    end)
     uiManager:createInventory(300, 222, 29, self.passives)
 end
 
@@ -147,10 +153,10 @@ function Player:levelUp()
     end
     self.xp = 0
     playdate.timer.new(toMilliseconds(0.5), function()
-        game.timer:pause()
-        table.each(self.weapons, function (w)
-            w.timer:pause()
-        end)
+        -- game.timer:pause()
+        -- table.each(self.weapons, function (w)
+        --     w.timer:pause()
+        -- end)
         table.each(spawners, function (s)
             s:stop()
         end)

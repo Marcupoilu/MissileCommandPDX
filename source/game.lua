@@ -1,6 +1,7 @@
 class("Game").extends()
 
 local interval = minutes_to_milliseconds(0.25)
+local intervalTime = interval
 
 function Game:init(maxPool, level)
     enemyPoolLimit = maxPool
@@ -60,8 +61,8 @@ function Game:startGame()
     self.waves[self.waveNumber]:startWave()
     print("START WAVE : ", self.waveNumber)
 
-    self.timer = playdate.timer.new(interval, self.changeWave, self)
-    self.timer.repeats = true
+    -- self.timer = playdate.timer.new(interval, self.changeWave, self)
+    -- self.timer.repeats = true
 end
 
 function timeLeft(x)
@@ -73,7 +74,7 @@ function timeLeft(x)
 end
 
 function Game:update()
-    -- print(table.count(playdate.timer.allTimers()))
+    print(table.count(playdate.timer.allTimers()))
     -- table.each(playdate.timer.allTimers(), function (t)
     --     printTable(t)
     -- end)
@@ -87,6 +88,12 @@ function Game:update()
     table.each(beams, function(beam)
         beam:update()
     end)
+
+    intervalTime -= refreshRate
+    if intervalTime <= 0 then
+        intervalTime = interval
+        self:changeWave()
+    end
     -- table.each(debugRects, function(rect)
     --     gfx.setColor(gfx.kColorWhite)
     --     gfx.drawRect(rect)

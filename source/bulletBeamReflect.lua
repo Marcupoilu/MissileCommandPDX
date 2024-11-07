@@ -50,15 +50,15 @@ function BulletBeamReflect:update()
     self.endPos.x = self.startPos.x + self.direction.x * self.currentLength
     self.endPos.y = self.startPos.y + self.direction.y * self.currentLength
 
-    table.each(gfx.sprite.querySpriteInfoAlongLine(self.startPos.x, self.startPos.y, self.endPos.x, self.endPos.y), 
+    table.each(gfx.sprite.querySpritesAlongLine(self.startPos.x, self.startPos.y, self.endPos.x, self.endPos.y), 
     function(collision)
-        if collision.sprite:isa(Enemy) and collision.sprite ~= self.currentEnemy then
-            self.target = getMinDistanceValue(collision.sprite, gfx.sprite.getAllSprites()  )
-            self.currentEnemy = collision.sprite
-            enemyManager:touchEnemy(self, collision.sprite, true)
+        if collision:isa(Enemy) and collision ~= self.currentEnemy then
+            self.target = getMinDistanceValue(collision, gfx.sprite.getAllSprites()  )
+            self.currentEnemy = collision
+            enemyManager:touchEnemy(self, collision, true)
             if self.target ~= nil then
-                self.playerX = collision.entryPoint.x
-                self.playerY = collision.entryPoint.y
+                self.playerX = collision.x
+                self.playerY = collision.y
                 self.radius = 0
             end
             if self.hp <= 0 then

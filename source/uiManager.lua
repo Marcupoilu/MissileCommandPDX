@@ -184,10 +184,10 @@ function UiManager:levelUpDisplay()
     if playdate.buttonJustPressed(playdate.kButtonA) then
         generate = false
         ups[levelUpIndex +1]:applyUpgrade()
-        game.timer:start()
-        table.each(player.weapons, function (w)
-            w.timer:start()
-        end)
+        -- game.timer:start()
+        -- table.each(player.weapons, function (w)
+        --     w.timer:start()
+        -- end)
         table.each(spawners, function (s)
             s:resume()
         end)
@@ -200,32 +200,41 @@ function UiManager:levelUpDisplay()
     
 end
 
-function UiManager:update()
-    -- texts layout
-    -- local offset = 0
-    -- table.each(inventoryWeaponTexts, function (iw)
-    --     local level = tostring(table.findByParam(player.weapons, "className", iw.type).level)
-    --     gfx.setImageDrawMode(gfx.kDrawModeFillWhite)
-    --     gfx.setFont(verySmallFont,gfx.kVariantBold)
-    --     gfx.drawTextAligned("Lv."..level,12 + offset,235, kTextAlignment.center)
-    --     offset += 31
-    -- end)
-    -- offset = 0
-    -- table.each(inventoryPassiveTexts, function (ip)
-    --     local level = tostring(ip.countMax - ip.count)
-    --     gfx.setImageDrawMode(gfx.kDrawModeFillWhite)
-    --     gfx.setFont(verySmallFont,gfx.kVariantBold)
-    --     gfx.drawTextAligned("Lv."..level,299 + offset,235, kTextAlignment.center)
-    --     offset += 29
-    -- end)
-    -- gfx.setImageDrawMode(gfx.kDrawModeFillWhite)
-    -- gfx.setFont(smallFont,gfx.kVariantBold)
-    -- gfx.drawTextAligned(player.level,100,225, kTextAlignment.center)
-    -- gfx.setFont(smallFontVariant)
-    -- gfx.drawTextAligned(timeLeft(time),387,227, kTextAlignment.center)
-    -- self:createBar(121,219,player.hpMax, player.hp, 5)
-    -- self:createBar(121,235,player.xpMax, player.xp,1)
+function UiManager:updateLayout()
+    -- Paramétrer le mode et police au début
+    gfx.setImageDrawMode(gfx.kDrawModeFillWhite)
+    gfx.setFont(verySmallFont, gfx.kVariantBold)
+
+    -- Affichage des niveaux d'armes
+    local offset = 0
+    for _, iw in ipairs(inventoryWeaponTexts) do
+        local weapon = table.findByParam(player.weapons, "className", iw.type)
+        if weapon then
+            local level = tostring(weapon.level)
+            gfx.drawText("Lv."..level, 6 + offset, 235)
+        end
+        offset = offset + 31
+    end
+
+    -- Affichage des niveaux passifs
+    offset = 0
+    for _, ip in ipairs(inventoryPassiveTexts) do
+        local level = tostring(ip.countMax - ip.count)
+        gfx.drawText("Lv."..level, 292 + offset, 235)
+        offset = offset + 29
+    end
+    gfx.setFont(smallFont, gfx.kVariantBold)
+    -- Afficher les niveaux du joueur et le temps restant
+    gfx.drawText(player.level, 98, 225)
+    
+    gfx.setFont(smallFontVariant)
+    gfx.drawText(timeLeft(time), 373.5, 227)
+
+    -- Affichage des barres de HP et XP
+    self:createBar(121, 219, player.hpMax, player.hp, 5)
+    self:createBar(121, 235, player.xpMax, player.xp, 1)
 end
+
 
 function UiManager:winScreenUpdate()
     gfx.setColor(gfx.kColorBlack)
@@ -492,7 +501,7 @@ function UiManager:chooseCannon()
     if playdate.buttonJustPressed(playdate.kButtonA) and A == false then
         player.chosenCanon = cannon
         player:start()
-        game = Game(30,mapIndex)
+        game = Game(25,mapIndex)
         self:CloseAndOpenMenu()
         playdate.timer.new(1000, function ()
             chooseCannonBool = false
@@ -531,7 +540,6 @@ function UiManager:unlockScreenUpdate()
     local currentCategoryNumber = {}
     local currentCategoryName = ""
     table.each(unlocksData, function(unlock)
-        
         if unlock.className ~= unlockType then
             currentX = 0
             local header = {name = unlock.className, completion = 0}
@@ -834,19 +842,24 @@ function UiManager:shopUpdate()
 end
 
 
-function UiManager:createBar(x,y,max, current, height)
-    local maxHP = max 
+function UiManager:createBar(x, y, max, current, height)
     local maxWidth = 158
+    local currentWidth = math.max(0, math.min((current / max) * maxWidth, maxWidth))
 
-    local currentWidth = (current * maxWidth) / maxHP
-    currentWidth = math.max(0, math.min(currentWidth, maxWidth))
-    gfx.setColor(gfx.kColorWhite)
-    gfx.fillRoundRect(x, y, currentWidth, height, 10)
+    if currentWidth > 0 then
+        gfx.setColor(gfx.kColorWhite)
+        gfx.fillRoundRect(x, y, currentWidth, height, 10)
+    end
 end
+
+
+inventorySpritesWeapons = {}
+inventorySpritesPassives = {}
 
 function UiManager:createInventory(x,y, offset, inventoryTable)
     local offs = 0
     local type = ""
+
     for key, value in pairs(inventoryTable) do
         local item = gfx.sprite.new(gfx.image.new(value.path.."_small"))
         item:moveTo(x + offs - 1, y - 2)
@@ -856,8 +869,10 @@ function UiManager:createInventory(x,y, offset, inventoryTable)
         item:add()
         offs += offset
         if value.className == "UpgradeWeapon" then
+            table.insert(inventorySpritesWeapons, item)
             type = "weapon"
         else
+            table.insert(inventorySpritesPassives, item)
             type = "passive"
         end
     end

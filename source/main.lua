@@ -97,7 +97,10 @@ gameUpdate = function()
     table.each(spawners, function (s)
         s:update()
     end)
-    uiManager:update()      -- Mise à jour de l'interface utilisateur
+    uiManager:updateLayout()      -- Mise à jour de l'interface utilisateur
+    table.each(player.weapons, function (w)
+        w:update()
+    end)
     drawFPS(0, 0)           -- Affichage des FPS pour le debugging
     particleUpdate()        -- Mise à jour des particules
     sequenceUpdate()        -- Mise à jour des séquences
