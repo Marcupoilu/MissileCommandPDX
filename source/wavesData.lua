@@ -9,7 +9,7 @@ wavesData =
         Waves = {
             Wave(--1
             {
-                EnemySpawner(math.random(1000,1000), 34, 0, 1, EnemySmallThree, enemiesData.EnemySmallThree),
+                EnemySpawner(math.random(1000,1000), 34, 0, 15, Xwing, enemiesData.Xwing)
             }),
             Wave(--2
             {
