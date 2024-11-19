@@ -7,7 +7,6 @@ function BulletGuided:init(x,y,speed, damage, offsetCrank, scale, duration)
     self.baseAngle = self.originAngle
     self.hp = 1
     self.rot = 0
-    self.power = 5
     self.guidedHitBox = 80
     self.target = nil
     self:setRotation(self.originAngle + 90)
@@ -26,7 +25,7 @@ function BulletGuided:update()
         local angleDiff = (targetAngle - self.originAngle + 540) % 360 - 180
         
         -- Appliquer l'interpolation pour lisser le changement d'angle
-        local interpolationSpeed = 0.1 -- Ajuste cette valeur selon ton besoin
+        local interpolationSpeed = 0.3 -- Ajuste cette valeur selon ton besoin
         self.originAngle = self.originAngle + angleDiff * interpolationSpeed
         
         -- Mettre à jour la rotation de la balle

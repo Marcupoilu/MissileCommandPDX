@@ -86,7 +86,7 @@ function EnemyManager:processShockwaveBullet(value, enemy)
 end
 
 function EnemyManager:processRocketBullet(value, enemy)
-    BulletExplosion(enemy.x, enemy.y, value.speed, value.damage + (player.damageBonus * value.damage / 100), value.angle, value.scale, value.duration, value.explosionDamage)
+    BulletExplosion(enemy.x, enemy.y, value.speed, value.damage + (player.damageBonus * value.damage / 100), value.offset, value.scale, value.duration, value.explosionDamage)
 end
 
 function EnemyManager:touchEnemy(value, enemy, bulletHp)

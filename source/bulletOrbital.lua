@@ -21,7 +21,6 @@ end
 
 function BulletOrbital:update()
     BulletOrbital.super.update(self)
-    print(self.offset)
     local x = math.cos(self.originAngle)
     local y = math.sin(self.originAngle)
 
