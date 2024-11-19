@@ -19,7 +19,6 @@ function Projectile:init(x,y,speed, damage, offsetCrank, scale, duration)
     self.damage = damage
     self.scale =  scale + ((player.scaleBonus*scale)/100)
     
-
     if duration ~= nil then
         self.duration = duration + ((player.durationBonus*duration)/100)
     end

@@ -20,8 +20,7 @@ function EnemySmallThree:update()
         -- Calculer l'angle vers le point cible
         self.angle = math.deg(math.atan(self.randomPoint.y - self.y, self.randomPoint.x - self.x))
     end
-    
-    EnemySmallTwo.super.update(self)
+    -- EnemySmallThree.super.update(self)
 
     -- Mettre à jour la position d'origine
     self.originPosition.x = self.x
@@ -32,14 +31,12 @@ function EnemySmallThree:update()
     
     -- Incrémenter le temps pour animer le mouvement circulaire
     self.time += deltaTime
-    
     -- Calculer l'offset du mouvement circulaire
     local angleRad = math.rad(self.time * self.freq)  -- Utiliser `self.time` pour un mouvement circulaire constant
     
     -- Position de base (ligne droite vers la cible)
     local baseX = self.radius * math.cos(math.rad(self.angle)) + self.originPosition.x
     local baseY = self.radius * math.sin(math.rad(self.angle)) + self.originPosition.y
-    
     -- Ajouter le mouvement circulaire autour de la position de base
     local waveX = self.amp * math.cos(angleRad)
     local waveY = self.amp * math.sin(angleRad)

@@ -53,7 +53,7 @@ function Game:startGame()
     -- player:addWeapon(table.findByParam(weaponsData, "className", "Aura"))
     -- player:addWeapon(table.findByParam(weaponsData, "className", "Blackhole"))
     -- player:addWeapon(table.findByParam(weaponsData, "className", "Drone"))
-    -- player:addWeapon(table.findByParam(weaponsData, "className", "Orbital"))
+    player:addWeapon(table.findByParam(weaponsData, "className", "Orbital"))
     -- player:addWeapon(table.findByParam(weaponsData, "className", "BeamReflect"))
     -- player:addWeapon(table.findByParam(weaponsData, "className", "Tracer"))
     -- uiManager:createInventory(12,225,21,weaponUpgrades)
@@ -74,7 +74,7 @@ function timeLeft(x)
 end
 
 function Game:update()
-    print(table.count(playdate.timer.allTimers()))
+    -- print(table.count(playdate.timer.allTimers()))
     -- table.each(playdate.timer.allTimers(), function (t)
     --     printTable(t)
     -- end)
@@ -118,7 +118,6 @@ function Game:endGame()
         end
     end
     
-    self.timer:remove()
     self.finish = true
     table.each(spawners, function (s)
         s:stopSpawn()
