@@ -5,6 +5,7 @@ wavesData =
     {
         Level = 1, -- ENEMIES AVAILABLE : Xwing, EnemySmallTwo, EnemySmallEight, EnemyMediumOne
         Name = "Deep Space",
+        Music = "1",
         Background = gfx.image.new("images/backgrounds/bg_01"),
         Waves = {
             Wave(--1
@@ -120,6 +121,7 @@ wavesData =
     {
         Level = 2, -- ENEMIES AVAILABLE : Xwing, EnemySmallFour, EnemySmallFive, EnemyMediumOne
         Name = "Orbit",
+        Music = "2",
         Background = gfx.image.new("images/backgrounds/bg_02"),
         Waves = {
             Wave(--1
@@ -232,6 +234,7 @@ wavesData =
     {
         Level = 3, -- ENEMIES AVAILABLE : EnemySmallThree, EnemySmallFive, EnemyMediumTwo, EnemyMediumFive, EnemyLargeOne
         Name = "City",
+        Music = "1",
         Background = gfx.image.new("images/backgrounds/bg_03"),
         Waves = {
             Wave(--1
@@ -348,6 +351,7 @@ wavesData =
     {
         Level = 4,
         Name = "City2",
+        Music = "1",
         Background = gfx.image.new("images/backgrounds/bg_03"),
         Waves = {
             Wave({EnemySpawner(math.random(1000,1000), 34, 0, nil, Xwing, enemiesData.Xwing)}),        
@@ -357,6 +361,7 @@ wavesData =
     {
         Level = 5,
         Name = "City3",
+        Music = "1",
         Background = gfx.image.new("images/backgrounds/bg_03"),
         Waves = {
             Wave({EnemySpawner(math.random(1000,1000), 34, 0, nil, Xwing, enemiesData.Xwing)}),        

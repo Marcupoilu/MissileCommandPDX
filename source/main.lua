@@ -79,8 +79,7 @@ local updateTimers = playdate.timer.updateTimers
 local spriteUpdate = gfx.sprite.update
 local particleUpdate = Particles.update
 local sequenceUpdate = sequence.update
-filePlayer = playdate.sound.fileplayer.new("audio/1")
-filePlayer:play()
+musicPlayer = playdate.sound.fileplayer.new("audio/1")
 -- Fonction principale de mise à jour du jeu
 gameUpdate = function()
     -- Cache des valeurs calculées une seule fois par frame

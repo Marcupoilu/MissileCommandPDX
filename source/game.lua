@@ -17,6 +17,8 @@ function Game:init(maxPool, level)
     self.finish = false
     time = 0
     local bgsprite = gfx.sprite.new(self.level.Background)
+    musicPlayer:load("audio/"..self.level.Music)
+    musicPlayer:play()
     bgsprite:setCenter(0,0)
     bgsprite:moveTo(0,0)
     bgsprite:setZIndex(-9999)
