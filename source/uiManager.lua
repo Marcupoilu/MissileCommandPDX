@@ -77,6 +77,10 @@ function UiManager:OpenMenu()
     titleBotOpen:restart()
     closedMenu = false
     menuMoving = true
+    soundSamplerOpenCloseMenu:play()
+    playdate.timer.new(1000, function ()
+        soundSamplerOpenCloseMenu:stop()
+    end)
 end
 
 function UiManager:CloseMenu()
@@ -84,9 +88,15 @@ function UiManager:CloseMenu()
     titleTopClose:restart()
     titleBotClose:restart()
     menuMoving = true
+    soundSamplerOpenCloseMenu:play()
+    playdate.timer.new(1000, function ()
+        soundSamplerOpenCloseMenu:stop()
+        soundSamplerMenuClose:play()
+    end)
 end
 
 function UiManager:OpenAndCloseMenu()
+
     self:OpenMenu()
     playdate.timer.new(titleBotOpen.duration + 300, function ()
         self:CloseMenu()
@@ -182,6 +192,7 @@ function UiManager:levelUpDisplay()
         end
     end
     if playdate.buttonJustPressed(playdate.kButtonA) then
+        soundSamplerUpgradeSelected:play()
         generate = false
         ups[levelUpIndex +1]:applyUpgrade()
         -- game.timer:start()
@@ -319,6 +330,9 @@ function UiManager:winScreenUpdate()
         playdate.timer.new(1000, function ()
             tween = false
             mainMenuIndex = 0
+            musicPlayer:stop()
+            musicPlayer:load("audio/5")
+            musicPlayer:play()
             playdate.update = mainMenuUpdate
         end)
         return
@@ -807,6 +821,7 @@ function UiManager:shopUpdate()
         local boughtItem = playerBonus.gameData.shopItems[selectedShopItem]
         if boughtItem.level < boughtItem.levelMax then
             if playerBonus.gameData.core >= boughtItem.cost then
+                soundSamplerItemShopSound:play()
                 playerBonus.gameData.core -= boughtItem.cost
                 boughtItem.level += 1
                 boughtItem.cost *= boughtItem.multiplyer

@@ -95,6 +95,7 @@ function EnemyManager:touchEnemy(value, enemy, bulletHp)
     enemy.blinkAmount = 5
     p:moveTo(enemy.x, enemy.y)
     p:add(1)
+    soundSamplerEnemyImpact:play()
     self:loseHp(value.damage + (player.damageBonus * value.damage / 100), enemy, value.className)
     if not bulletHp then value:loseHp(1) end
     value.tickTime = value.tick
@@ -142,6 +143,11 @@ function EnemyManager:death(enemy)
     table.each(self.timers, function(t) t:remove() end)
     enemy:remove()
     table.remove(enemies, index)
+    if enemy.boss ~= nil then
+        soundSamplerBossDeath:play()
+    else
+        soundSamplerEnemyDeath:play()
+    end
 end
 
 function EnemyManager:stop(value, enemy)

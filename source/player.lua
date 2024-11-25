@@ -160,6 +160,7 @@ function Player:levelUp()
         table.each(spawners, function (s)
             s:stop()
         end)
+        soundSamplerLevelUp:play()
         playdate.update = levelUpUpdate
     end)
 end

@@ -44,7 +44,6 @@ function Enemy:init(x,y,speed,hp, xp, damage, enemyImage, core)
     self:setCollideRect(0,0,self:getSize())
     self:moveTo(x,y)
     self:add()
-
 end
 
 function Enemy:update()

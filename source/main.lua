@@ -79,7 +79,22 @@ local updateTimers = playdate.timer.updateTimers
 local spriteUpdate = gfx.sprite.update
 local particleUpdate = Particles.update
 local sequenceUpdate = sequence.update
-musicPlayer = playdate.sound.fileplayer.new("audio/1")
+soundSamplerBossDeath = playdate.sound.sampleplayer.new("audio/bossDeath")
+soundSamplerBullet = playdate.sound.sampleplayer.new("audio/bulletShoot")
+soundSamplerCancel = playdate.sound.sampleplayer.new("audio/cancel")
+soundSamplerConfirm = playdate.sound.sampleplayer.new("audio/confirm")
+soundSamplerEnemyDeath = playdate.sound.sampleplayer.new("audio/enemyDeath")
+soundSamplerEnemyImpact = playdate.sound.sampleplayer.new("audio/enemyImpact")
+soundSamplerItemShopSound = playdate.sound.sampleplayer.new("audio/itemShopSound")
+soundSamplerLevelUp = playdate.sound.sampleplayer.new("audio/levelup")
+soundSamplerOpenCloseMenu = playdate.sound.sampleplayer.new("audio/openCloseMenu")
+soundSamplerMenuClose = playdate.sound.sampleplayer.new("audio/door")
+soundSamplerPlayerHit = playdate.sound.sampleplayer.new("audio/playerHit")
+soundSamplerSelection = playdate.sound.sampleplayer.new("audio/selection")
+soundSamplerUpgradeSelected = playdate.sound.sampleplayer.new("audio/upgradeSelected")
+musicPlayer = playdate.sound.fileplayer.new("audio/5")
+musicPlayer:setVolume(0.5)
+musicPlayer:play()
 -- Fonction principale de mise à jour du jeu
 gameUpdate = function()
     -- Cache des valeurs calculées une seule fois par frame
@@ -120,6 +135,7 @@ levelUpUpdate = function()
     gfx.clear()             -- Nettoyage de l'écran
     uiManager:levelUpDisplay() -- Affichage de la montée de niveau
     sequenceUpdate()        -- Mise à jour des séquences
+    menuSound()
 end
 
 tween = false
@@ -149,6 +165,7 @@ mainMenuUpdate = function()
     updateTimers()             -- Mise à jour des timers
     sequenceUpdate()           -- Mise à jour des séquences
     uiManager:displayTitle()   -- Affichage du titre
+    menuSound()
 end
 
 -- Mise à jour de l'écran de déblocage
@@ -160,6 +177,7 @@ unlockScreenUpdate = function()
     updateTimers()                 -- Mise à jour des timers
     sequenceUpdate()               -- Mise à jour des séquences
     uiManager:displayTitle()       -- Affichage du titre
+    menuSound()
 end
 
 -- Mise à jour de l'écran de la boutique
@@ -171,6 +189,20 @@ shopUpdate = function()
     updateTimers()         -- Mise à jour des timers
     sequenceUpdate()       -- Mise à jour des séquences
     uiManager:displayTitle() -- Affichage du titre
+    menuSound()
+end
+
+function menuSound()
+    if playdate.buttonJustPressed(playdate.kButtonA) then
+        soundSamplerConfirm:play()
+    end
+    if playdate.buttonJustPressed(playdate.kButtonB) then
+        soundSamplerCancel:play()
+    end
+    if playdate.buttonJustPressed(playdate.kButtonRight) or playdate.buttonJustPressed(playdate.kButtonLeft) 
+    or playdate.buttonJustPressed(playdate.kButtonUp) or playdate.buttonJustPressed(playdate.kButtonDown) then
+        soundSamplerSelection:play()
+    end
 end
 
 -- Définit la fonction de mise à jour principale par défaut

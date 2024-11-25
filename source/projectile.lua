@@ -18,7 +18,7 @@ function Projectile:init(x,y,speed, damage, offsetCrank, scale, duration)
     self.speed = speed + ((player.projectileSpeedBonus*speed)/100)
     self.damage = damage
     self.scale =  scale + ((player.scaleBonus*scale)/100)
-    
+    soundSamplerBullet:play()
     if duration ~= nil then
         self.duration = duration + ((player.durationBonus*duration)/100)
     end
