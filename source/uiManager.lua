@@ -160,8 +160,19 @@ function UiManager:generateUpgrades()
     levelUpIndex = 0
 end
 
+local rerollDisplay = gfx.image.new("images/ui/icons/rerolls_small")
+local rerollPanel = gfx.image.new("images/ui/menus/reroll_panel")
+local bButton = gfx.image.new("images/ui/icons/B_Button")
+
 function UiManager:levelUpDisplay()
     gfx.setColor(gfx.kColorWhite)
+    gfx.setImageDrawMode(gfx.kDrawModeCopy)
+    rerollPanel:draw(0,0)
+    rerollDisplay:draw(3,3)
+    bButton:draw(35,14)
+    gfx.setFont(verySmallFont,gfx.kVariantBold)
+    gfx.setImageDrawMode(gfx.kDrawModeFillWhite)
+    gfx.drawTextAligned(tostring(player.rerolls),27,9, kTextAlignment.center)
     local i = 0
     for key, value in pairs(ups) do
         gfx.setColor(gfx.kColorBlack)

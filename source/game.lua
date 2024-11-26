@@ -1,19 +1,25 @@
 class("Game").extends()
 
-local interval = minutes_to_milliseconds(0.25)
-local intervalTime = interval
+-- local interval = minutes_to_milliseconds(0.25)
+-- local intervalTime = interval
 
 function Game:init(maxPool, level)
     enemyPoolLimit = maxPool
     gfx.setBackgroundColor(gfx.kColorBlack)
     generate = false
     playdate.resetElapsedTime()
+    player.weapons = {}
+    player.passives = {}
+    createWavesData()
+    CreateWeaponsData()
+    createUpgradesData()
     self.level = table.findByParam(wavesData, "Level", level)
     self.waves = table.findByParam(wavesData, "Level", level).Waves
+    interval = minutes_to_milliseconds(0.25)
+    intervalTime = interval
     targetTime = interval*table.count(self.waves)/1000
     -- targetTime = 5
     self.waveNumber = 1
-    self.timer = nil
     self.finish = false
     time = 0
     local bgsprite = gfx.sprite.new(self.level.Background)
@@ -28,15 +34,15 @@ function Game:init(maxPool, level)
 end
 
 function Game:startGame()
-    spawners = {}
-    for key, value in pairs(playdate.timer.allTimers()) do
-        value:remove()
-    end
-    player.weapons = {}
-    CreateWeaponsData()
+    -- for key, value in pairs(playdate.timer.allTimers()) do
+    --     print(value)
+    --     value:remove()
+    -- end
+
     table.each(player.chosenCanon.weapons, function (w)
         player:addWeapon(w)
     end)
+    createUpgradesData()
     player:updateCannon()
     -- player:addWeapon(table.findByParam(weaponsData, "className", "SimpleCannon"))
     -- local passive = getUpgradePassive("attackSpeedBonus")
@@ -89,8 +95,9 @@ function Game:update()
         return
     end
     table.each(beams, function(beam)
-        beam:update()
+        beam:update()   
     end)
+    time += deltaTime
 
     intervalTime -= refreshRate
     if intervalTime <= 0 then
@@ -148,7 +155,6 @@ function Game:endGame()
 end
 
 function Game:loseGame()
-    self.timer:remove()
     self.finish = true
     table.each(spawners, function (s)
         s:stopSpawn()

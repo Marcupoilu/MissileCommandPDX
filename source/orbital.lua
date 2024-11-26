@@ -59,7 +59,6 @@ end
 function Orbital:shoot()
     Orbital.super.shoot()
     local angles = cutAngle(self.projectileAmount + player.projectileAmount)
-    printTable(angles)
     for key, angle in ipairs(angles) do
         bulletOrbital = BulletOrbital(self.x, self.y, self.speed, self.damage, angle, self.scale, self.duration, gfx.image.new("images/bullets/bullet_orbital" ))
         playdate.timer.new(200, function ()

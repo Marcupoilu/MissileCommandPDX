@@ -15,12 +15,14 @@ function UpgradeWeapon:updateDescriptionText()
         return
     end
     for key, value in pairs(player.weapons) do
+        print(value["className"])
         if value["className"] == self.type then
             self.weapon = value
             self.descriptionText = string.upper(self.name).."\nlevel  "..value.level+1
             return
         end
     end
+    self.weapon = nil
     self.descriptionText = "NEW WEAPON"..string.char(10)..self.name
 end
 
@@ -30,7 +32,7 @@ end
 
 function UpgradeWeapon:applyUpgrade()
     UpgradeWeapon.super.applyUpgrade(self)
-
+    self:updateDescriptionText()
     if self.weapon ~= nil then
         table.findByParam(player.weapons,"className", self.type):changeLevel()
     else

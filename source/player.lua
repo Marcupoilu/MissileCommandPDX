@@ -23,8 +23,7 @@ function Player:init(basePosition, gunPosition)
     
     -- Initialisation des propriétés du joueur
     self.cannons = playerBonus.gameData.cannons
-    self.weapons = {}
-    self.passives = {}
+
     self.unlocks = {}
     self.shopUnlocks = {}
     self.currentUnlocks = {}
@@ -32,8 +31,10 @@ function Player:init(basePosition, gunPosition)
 end
 
 function Player:start()
+    self.weapons = {}
+    self.passives = {}
     self.level = 1
-    self.hpMax = 20 + playerBonus.gameData.hpMax
+    self.hpMax = 10 + playerBonus.gameData.hpMax
     self.hp = self.hpMax
     self.shield = playerBonus.gameData.shield or 0
     self.xp, self.xpMax, self.xpBonus = 0, 3, playerBonus.gameData.xpBonus or 0
@@ -45,7 +46,7 @@ function Player:start()
     self.projectileSpeedBonus = playerBonus.gameData.projectileSpeedBonus or 0
     self.durationBonus = playerBonus.gameData.durationBonus or 0
     self.lives = 1 + playerBonus.gameData.lives
-    self.rerolls = 100 + playerBonus.gameData.rerolls
+    self.rerolls = 1 + playerBonus.gameData.rerolls
     self.weaponNumber, self.passiveNumber = 0, 0
     self.weaponNumberMax, self.passiveNumberMax = 3, 3
     self.core, self.runLevel, self.enemiesKilled = 0, 1, 0

@@ -34,6 +34,7 @@ import "upgradeStat.lua"
 import "upgradeWeapon.lua"
 import "uiManager.lua"
 import "upgradesData.lua"
+createUpgradesData()
 import "weaponsData.lua"
 CreateWeaponsData()
 import "cannon.lua"
@@ -51,10 +52,11 @@ import "playerBonus.lua"
 import "FX.lua"
 
 playdate.display.setRefreshRate(50)
-
+createWavesData()
 -- Collections --
 upgrades = upgradesData
 enemies = {}
+spawners = {}
 enemyManager = EnemyManager()
 debugRects = {}
 beams = {}
@@ -99,7 +101,6 @@ musicPlayer:play()
 gameUpdate = function()
     -- Cache des valeurs calculées une seule fois par frame
     deltaTime = getElapsedTime()
-    time += deltaTime
     resetElapsedTime()
     
     crankPosition = playdate.getCrankPosition() -- cache la position de la manivelle
