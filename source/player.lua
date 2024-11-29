@@ -56,8 +56,7 @@ function Player:start()
     self.cannons = playerBonus.gameData.cannons
     self.currentUnlocks = {}
     self.cannonGunSprite:setVisible(true)
-    self.timer = playdate.timer.new(30000 - (((self.regenerationRate * 30000) / 100)), self.regeneration, self)
-    self.timer.repeats = true
+    self.regenerationTimer = 30000 - (self.regenerationRate*30000/100)
 end
 
 function Player:updateCannon()
@@ -76,6 +75,11 @@ function Player:update()
         self.cannonGunSprite:setRotation(90)
     elseif math.between(na, 271, 360) then
         self.cannonGunSprite:setRotation(270)
+    end
+    self.regenerationTimer -= refreshRate
+    if self.regenerationTimer <= 0 then
+        self.regenerationTimer = 30000 - (self.regenerationRate*30000/100)
+        self:regeneration()
     end
 end
 
@@ -129,8 +133,9 @@ function Player:addPassive(passive)
 end
 
 function Player:regeneration()
-    if self.regenerationRate > 0 and self.hp < self.hpMax then
-        self.hp += 10
+    if self.hp < self.hpMax then
+        self.hp += 1
+        print(self.hp)
     end
 end
 

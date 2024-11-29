@@ -15,7 +15,6 @@ function UpgradeWeapon:updateDescriptionText()
         return
     end
     for key, value in pairs(player.weapons) do
-        print(value["className"])
         if value["className"] == self.type then
             self.weapon = value
             self.descriptionText = string.upper(self.name).."\nlevel  "..value.level+1

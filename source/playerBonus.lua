@@ -23,7 +23,7 @@ function PlayerBonus:start()
         enemiesKilled = 0,
         levelMaxReached = 1,
         mapCount = 1,
-        core = 1000,
+        core = 0,
         success = false,
         cannons = {table.findByParam(cannonsData, "id", "blaster")},
         unlocks = {},
@@ -36,8 +36,6 @@ function PlayerBonus:start()
             getUpgradePassive("damageBonus")
         },
         shopItems = {
-            table.findByParam(shopItemsData, "name", "Speed Up"),
-            table.findByParam(shopItemsData, "name", "Scale Up"),
             table.findByParam(shopItemsData, "name", "HP Up"),
             table.findByParam(shopItemsData, "name", "Damage Up")
         }

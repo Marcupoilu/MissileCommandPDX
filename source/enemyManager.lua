@@ -129,8 +129,9 @@ function EnemyManager:loseHp(value, enemy, className)
     enemy.hp = enemy.hp - value
     if enemy.hp <= 0 then
         player:gainXP(enemy.xpReward + (player.xpBonus * enemy.xpReward / 100))
-        playerBonus.gameData.core = playerBonus.gameData.core + enemy.core
-        player.enemiesKilled, playerBonus.gameData.enemiesKilled = player.enemiesKilled + 1, playerBonus.gameData.enemiesKilled + 1
+        playerBonus.gameData.core += enemy.core
+        player.enemiesKilled += 1
+        playerBonus.gameData.enemiesKilled += 1
         self:death(enemy)
     end
 end
