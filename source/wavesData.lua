@@ -32,8 +32,8 @@ function createWavesData()
                 }),
                 Wave(--6
                 {
-                    EnemySpawner(math.random(300,300), 34, 0, nil, Xwing, enemiesData.Xwing),
-                    EnemySpawner(math.random(300,300), 34, 0, 15, EnemySmallTwo, enemiesData.EnemySmallTwo)
+                    EnemySpawner(math.random(500,500), 34, 0, nil, Xwing, enemiesData.Xwing),
+                    EnemySpawner(math.random(400,400), 34, 0, 15, EnemySmallTwo, enemiesData.EnemySmallTwo)
                 }),            
                 Wave(--7
                 {
