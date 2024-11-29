@@ -44,6 +44,9 @@ function Projectile:update()
 end
 
 function Projectile:destroy()
+    if self:isa(BulletBeam) then
+        soundSamplerLaserBeam:stop()
+    end
     if table.contains(beams, self) then
         table.remove(beams, indexOf(beams, self))
     end

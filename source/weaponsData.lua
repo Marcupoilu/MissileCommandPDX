@@ -3,7 +3,7 @@ function CreateWeaponsData()
     {
         -- intervalTime, x, y, speed, damage, projectile amount, scale , duration
         SimpleCannon(toMilliseconds(0.5), 200, 175, 7.5, 1, 1, 1), -- balanced starter
-        Beam(toMilliseconds(4), 200, 175, 120, 0.25, 1, 4, toMilliseconds(2)), -- balanced starter
+        Beam(toMilliseconds(3.5), 200, 175, 120, 0.25, 1, 4, toMilliseconds(1)), -- balanced starter
         Wiper(minutes_to_milliseconds(0.5), 200, 175, 1, 3, 1, 1), -- a revoir apres ennemies HP setup
         Plasma(toMilliseconds(8), 200, 175, 4, 1, 1, 1, toMilliseconds(6)),  -- balanced starter
         Serpentine(toMilliseconds(0.5), 200, 175, 4, 0.3, 1, 1, toMilliseconds(3)), -- balanced starter

@@ -62,6 +62,7 @@ end
 function Beam:shoot()
     Beam.super.shoot()
     local angles = cutAngle(self.projectileAmount + player.projectileAmount)
+    soundSamplerLaserBeam:play(0)
     for key, angle in ipairs(angles) do
         bulletBeam = BulletBeam(self.x, self.y - 20, self.speed, self.damage, angle, self.scale, self.duration)
     end
