@@ -21,7 +21,7 @@ function PlayerBonus:start()
         lives = 0,
         rerolls = 0,
         enemiesKilled = 0,
-        levelMaxReached = 1,
+        level = 1,
         mapCount = 1,
         core = 0,
         success = false,
@@ -29,14 +29,15 @@ function PlayerBonus:start()
         unlocks = {},
         shopUnlocks = {
             table.findByParam(upgradesData, "type", "SimpleCannon"),
-            table.findByParam(upgradesData, "type", "Beam"),
+            table.findByParam(upgradesData, "type", "Serpentine"),
             table.findByParam(upgradesData, "type", "Flamethrower"),
             getUpgradePassive("projectileSpeedBonus"),
             getUpgradePassive("scaleBonus"),
             getUpgradePassive("damageBonus")
         },
         shopItems = {
-            table.findByParam(shopItemsData, "name", "HP Up"),
+            table.findByParam(shopItemsData, "name", "Speed Up"),
+            table.findByParam(shopItemsData, "name", "Scale Up"),
             table.findByParam(shopItemsData, "name", "Damage Up")
         }
     }
@@ -91,6 +92,7 @@ function PlayerBonus:start()
             table.insert(self.gameData.shopItems, shopItem)
         end)
     end
+
 end
 
 function PlayerBonus:saveGame()

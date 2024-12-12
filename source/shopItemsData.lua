@@ -1,7 +1,7 @@
 shopItemsData = 
 {
     -- unlock, cost, level, levelMax, multiplyer
-    ShopItem("Speed Up",UnlockPassive("Speed Up", gfx.image.new("images/ui/icons/projectileSpeed"), "", nil, getUpgradePassive("projectileSpeedBonus"), "+10% Projectile Speed"),1000, 0, 5, 1.5),
+    ShopItem("Speed Up",UnlockPassive("Speed Up", gfx.image.new("images/ui/icons/projectileSpeed"), "", nil, getUpgradePassive("projectileSpeedBonus"), "+10% Projectile Speed"),100, 0, 5, 1.5),
     ShopItem("Scale Up",UnlockPassive("Scale Up", gfx.image.new("images/ui/icons/projectileScale"), "", nil, getUpgradePassive("scaleBonus"), "+10% Projectile Scale"),100, 0, 5, 1.5),
     ShopItem("HP Up",UnlockPassive("HP Up", gfx.image.new("images/ui/icons/hpMax"), "", nil, getUpgradePassive("hpMax"), "+10 HP"),100, 0, 5, 1.5),
     ShopItem("Damage Up",UnlockPassive("Damage Up", gfx.image.new("images/ui/icons/damageUp"), "", nil, getUpgradePassive("damageBonus"), "+10% Damage Bonus"),100, 0, 5, 1.5),

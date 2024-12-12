@@ -273,9 +273,9 @@ function UiManager:winScreenUpdate()
     gfx.setFont(diamond_20,gfx.kVariantItalic)
     gfx.setImageDrawMode(gfx.kDrawModeFillWhite)
     if player.success == true then
-        gfx.drawTextAligned("DEFENSE "..player.runLevel.." SUCCESS", rectWidth, 20+ endScreenTweet:get(), kTextAlignment.center)
+        gfx.drawTextAligned("DEFENSE "..playerBonus.gameData.mapCount.." SUCCESS", rectWidth, 20+ endScreenTweet:get(), kTextAlignment.center)
     else
-        gfx.drawTextAligned("DEFENSE "..player.runLevel.." FAILED", rectWidth, 20+ endScreenTweet:get(), kTextAlignment.center)
+        gfx.drawTextAligned("DEFENSE "..playerBonus.gameData.mapCount.." FAILED", rectWidth, 20+ endScreenTweet:get(), kTextAlignment.center)
     end
     -- middle part
     core:draw( 50,70 + endScreenTweet:get())
@@ -298,7 +298,7 @@ function UiManager:winScreenUpdate()
     gfx.drawTextAligned("X"..player.level, 330, 91 + endScreenTweet:get(), kTextAlignment.center)
     -- unlock part
     gfx.setColor(gfx.kColorWhite)
-    local width = rectWidth + 50 
+    local width = rectWidth + 150 
     local height = rectHeight - 80
     local offset = 35
     gfx.setLineWidth(2)

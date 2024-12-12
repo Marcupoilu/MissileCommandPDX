@@ -13,7 +13,7 @@ function createUpgradesData()
         UpgradeStat({{name="hpMax",value=10}, {name="hp", value=10}}, "+10 HP MAX", "images/ui/icons/hpMax",5,3, nil, "hp"),
         UpgradeStat({{name="durationBonus",value=10}}, "+10% duration", "images/ui/icons/duration",5,4, nil, "duration"),
         UpgradeStat({{name="lives",value=1}}, "+1 Life", "images/ui/icons/lifeUp",5,9, true, "lifeUp"),
-        UpgradeStat({{name="shield",value=1}}, "+1 Shield", "images/ui/icons/shield",5,4, nil, "shield"),
+        UpgradeStat({{name="shield",value=1}}, "+1 Armor", "images/ui/icons/shield",5,4, nil, "shield"),
         UpgradeStat({{name="rerolls",value=2}}, "+2 Reroll", "images/ui/icons/rerolls",5,2, true, "rerolls"),
         UpgradeStat({{name="damageBonus",value=4},{name="scaleBonus",value=4}, {name="projectileSpeedBonus",value=4}, {name="attackSpeedBonus",value=4}}, "+4% Omni", "images/ui/icons/omni",5, 10, nil, "omni"),
         UpgradeWeapon("SimpleCannon", "Cannon", "", "images/ui/icons/simpleCannon",10, 2 ),
