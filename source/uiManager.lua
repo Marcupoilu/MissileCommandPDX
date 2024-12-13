@@ -343,7 +343,7 @@ function UiManager:winScreenUpdate()
             mainMenuIndex = 0
             musicPlayer:stop()
             musicPlayer:load("audio/5")
-            musicPlayer:play()
+            musicPlayer:play(0)
             playdate.update = mainMenuUpdate
         end)
         return
@@ -543,93 +543,88 @@ local selectedItem = 1
 
 function UiManager:unlockScreenUpdate()
     gfx.clear(gfx.kColorBlack)
-    local x,y = gfx.getDrawOffset()
+    local x, y = gfx.getDrawOffset()
 
-    local unlockType = nil
+    -- Configuration des offsets
     local offsetBetweenHeaderAndItems = 35
     local offsetBetweenItems = 5
     local offsetBetweenCategories = 20
     local itemNumber = 5
-    local offsetBetweenHeaders = 0  -- Ajouté pour l'offset entre les headers
     local marginX = 5
 
-    local currentX = 0
-    local currentY = 0
-    local currentHeaderY = 0
+    -- Variables de navigation
+    local currentX, currentY = 0, 0
     local rowItemCount = 0
-    local rows = {}
     local headers = {}
-    local itemCount = 0
     local items = {}
-    local categories = {}
-    local currentCategoryNumber = {}
-    local currentCategoryName = ""
-    table.each(unlocksData, function(unlock)
-        if unlock.className ~= unlockType then
-            currentX = 0
-            local header = {name = unlock.className, completion = 0}
-            table.insert(headers, header)
-            currentCategoryName = unlock.className
-            table.insert(rows, {})
-            -- nouvelle catégorie ici
-            if unlockType ~= nil then
-                table.insert(categories, table.shallowcopy(currentCategoryNumber))
-                currentCategoryNumber = {}
-                offsetBetweenHeaders = unlockItem:getSize() + offsetBetweenCategories
-                currentY = currentY + unlockHeader.height + offsetBetweenHeaders
-                currentHeaderY = currentY
-            end
-            currentX = 0  
-            rowItemCount = 0
-            unlockType = unlock.className
+    local unlockType = nil
+    local currentHeaderY = 0
+
+    -- Dessiner les headers et items
+    -- Dessiner les headers et items
+for _, unlock in ipairs(unlocksData) do
+    -- Changement de catégorie (header)
+    if unlock.className ~= unlockType then
+        -- Ajuster currentY en fonction des items précédents
+        if rowItemCount > 0 then
+            currentY = currentY + unlockItem.height + offsetBetweenItems
         end
-        itemCount += 1
-        table.insert(currentCategoryNumber, itemCount)
-        table.each(headers, function (header)
-            unlockHeader:draw(0 + marginX, currentHeaderY + 5)
-            gfx.setImageDrawMode(gfx.kDrawModeFillWhite)
-            if currentCategoryName == "UnlockPassive" then
-                currentCategoryName = "Passives"
-            end
-            if currentCategoryName == "UnlockWeapon" then
-                currentCategoryName = "Weapons"
-            end
-            if currentCategoryName == "UnlockCannon" then
-                currentCategoryName = "Cannons"
-            end
-            -- DRAW HEADER TITLE
-            gfx.setFont(diamond_20)
-            gfx.drawTextAligned(string.upper(currentCategoryName), 70 + marginX, currentHeaderY + 9, kTextAlignment.center)
-        end)
+
+        unlockType = unlock.className
+        currentX, rowItemCount = 0, 0
+        currentY = currentY + offsetBetweenHeaderAndItems + offsetBetweenCategories
+        currentHeaderY = currentY - offsetBetweenHeaderAndItems
+
+        -- Dessiner le header de catégorie
+        table.insert(headers, {name = unlock.className, y = currentHeaderY})
+        gfx.setFont(diamond_20)
+        gfx.setImageDrawMode(gfx.kDrawModeFillWhite)
+        unlockHeader:draw( marginX, currentHeaderY - 15)
+        gfx.drawTextAligned(string.upper(self:formatCategoryName(unlock.className)), 63 + marginX, currentHeaderY -12, kTextAlignment.center)
         gfx.setImageDrawMode(gfx.kDrawModeCopy)
-        unlockItem:draw(currentX + marginX, currentY + offsetBetweenHeaderAndItems)
-        if table.contains(playerBonus.gameData.unlocks, unlock) == false then
-            questionMark:draw(currentX + marginX + 4, currentY + offsetBetweenHeaderAndItems + 5)
-        else
-            unlock.image:draw(currentX + marginX + 13, currentY + offsetBetweenHeaderAndItems + 13)
-        end
-        table.insert(items, {x=currentX + marginX, y=currentY + offsetBetweenHeaderAndItems})
+    end
+
+    -- Dessin des items
+    local itemPosX = currentX + marginX
+    local itemPosY = currentY
+    table.insert(items, {x = itemPosX, y = itemPosY, unlock = unlock})
+
+    -- Dessiner le fond et les icônes
+    unlockItem:draw(itemPosX, itemPosY)
+    if not table.contains(playerBonus.gameData.unlocks, unlock) then
+        questionMark:draw(itemPosX + 4, itemPosY + 5)
+    else
+        unlock.image:draw(itemPosX + 13, itemPosY + 13)
+    end
+
+    -- Dessiner le carré de sélection
+    if selectedItem == #items then
         gfx.setColor(gfx.kColorWhite)
         gfx.setLineWidth(3)
-        if itemCount == selectedItem then
-            gfx.drawRect(currentX + marginX + 5, currentY + offsetBetweenHeaderAndItems + 5,unlockItem:getSize()-10, unlockItem:getSize()-10)
-        end
-        
-        currentX = currentX + unlockItem.width + offsetBetweenItems
-        rowItemCount = rowItemCount + 1
-        
-        if rowItemCount >= itemNumber then
-            currentX = 0 
-            currentY = currentY + unlockItem.height + offsetBetweenItems 
-            rowItemCount = 0 
-        end
-    end)
-    table.insert(categories, table.shallowcopy(currentCategoryNumber))
-    unlockMenu:draw(0 + x,0 - y)
-    if menuMoving == true then
-        return
+        gfx.drawRect(itemPosX + 5, itemPosY + 5, unlockItem:getSize() - 10, unlockItem:getSize() - 10)
     end
-    if playdate.buttonJustPressed(playdate.kButtonB) then
+
+    -- Mise à jour des positions pour l'item suivant
+    currentX = currentX + unlockItem.width + offsetBetweenItems
+    rowItemCount = rowItemCount + 1
+    if rowItemCount >= itemNumber then
+        currentX = 0
+        currentY = currentY + unlockItem.height + offsetBetweenItems
+        rowItemCount = 0
+    end
+end
+
+
+    -- Navigation
+    if playdate.buttonJustPressed(playdate.kButtonDown) then
+        self:moveSelection(items, "down", itemNumber)
+    elseif playdate.buttonJustPressed(playdate.kButtonUp) then
+        self:moveSelection(items, "up", itemNumber)
+    elseif playdate.buttonJustPressed(playdate.kButtonLeft) then
+        selectedItem = math.max(1, selectedItem - 1)
+    elseif playdate.buttonJustPressed(playdate.kButtonRight) then
+        selectedItem = math.min(#items, selectedItem + 1)
+    elseif playdate.buttonJustPressed(playdate.kButtonB) then
         y = 0
         selectedItem = 1
         self:CloseAndOpenMenu()
@@ -639,137 +634,285 @@ function UiManager:unlockScreenUpdate()
         end)
         return
     end
-    if playdate.buttonJustPressed(playdate.kButtonLeft) then
-        selectedItem -= 1
-        if selectedItem <= 0 then
-            selectedItem = 1
-        end
-    end
-    if playdate.buttonJustPressed(playdate.kButtonRight) then
-        selectedItem += 1
-        if selectedItem >= table.count(unlocksData) then
-            selectedItem = table.count(unlocksData)
-            return
-        end
 
-    end
-        if playdate.buttonJustPressed(playdate.kButtonDown) then
-            local lastItemCount = lastLineItemCount(table.count(categories[table.count(categories)]))
-            local rangeOfItem = itemCount - lastItemCount
-            for i = rangeOfItem , itemCount do
-                if selectedItem == i then
-                    return
-                end
-            end
-            local positionTest = {x=items[selectedItem].x,y=items[selectedItem].y+63}
-            local contains = false
-            for key, item in pairs(items) do
-                if positionTest.x == item.x and positionTest.y == item.y then
-                    contains = true
-                    selectedItem = indexOf(items, item) or 0
-                    break
-                else
-                    contains = false
-                end
-            end
-
-            if contains == false then
-                local newY = positionTest.y + offsetBetweenHeaders + offsetBetweenCategories - 55
-                for key, item in pairs(items) do                  
-                    if positionTest.x == item.x and newY == item.y then
-                        contains = true
-                        selectedItem = indexOf(items, item) or 0
-                        break
-                    else
-                        contains = false
-                    end
-                end
-            end
-            
-            if contains == false then
-                local xOffset = 63
-                local found = false
-                while(found == false) do
-                    for key, item in pairs(items) do
-                        if positionTest.x - xOffset == item.x and positionTest.y == item.y then
-                            selectedItem = indexOf(items, item) or 0
-                            found = true
-                        end
-                    end
-                    xOffset += 63
-                end
-            end
-    end
-
-    if playdate.buttonJustPressed(playdate.kButtonUp) then
-        if selectedItem - 5 <= 0 then
-            return
-        end
-    
-        local positionTest = {x=items[selectedItem].x,y=items[selectedItem].y-63}
-        local contains = false
-        for key, item in pairs(items) do
-            if positionTest.x == item.x and positionTest.y == item.y then
-                contains = true
-                selectedItem = indexOf(items, item) or 0
-                break
-            else
-                contains = false
-            end
-        end
-
-        if contains == false then
-            local newY = positionTest.y - (offsetBetweenHeaders + offsetBetweenCategories) + 55
-            for key, item in pairs(items) do                  
-                if positionTest.x == item.x and newY == item.y then
-                    contains = true
-                    selectedItem = indexOf(items, item) or 0
-                    break
-                else
-                    contains = false
-                end
-            end
-        end
-        
-        if contains == false then
-            local xOffset = 63
-            local found = false
-
-            while(found == false) do
-                for key, item in pairs(items) do
-                    if positionTest.x - xOffset == item.x and positionTest.y - 43 == item.y then
-                        selectedItem = indexOf(items, item) or 0
-                        found = true
-                    end
-                end
-                xOffset += 63
-            end
-        end
-    end
-    local unl = unlocksData[selectedItem]
-    gfx.setImageDrawMode(gfx.kDrawModeFillWhite)
-    gfx.setFont(smallFont,gfx.kVariantBold)
-    if table.contains(playerBonus.gameData.unlocks, unl) == false then
-        gfx.drawTextAligned(unl.description, playdate.display.getWidth()/2, 205 - y, kTextAlignment.center)
-    else
-        gfx.drawTextAligned(unl.name, playdate.display.getWidth()/2, 195- y, kTextAlignment.center)
-        gfx.setFont(smallFontAmmolite,gfx.kVariantBold)
-        gfx.drawTextAligned(unl.descriptionUnlocked, playdate.display.getWidth()/2, 215- y, kTextAlignment.center)
-    end
-    gfx.setFont(smallFontAmmolite,gfx.kVariantBold)
-    gfx.drawTextAligned(calculateUnlockPercentage(playerBonus.gameData.unlocks, unlocksData).."%", 370, 16 - y, kTextAlignment.center)
-    gfx.setImageDrawMode(gfx.kDrawModeCopy)
-
-    if items[selectedItem].y +y> 150 then
-        gfx.setDrawOffset(0, y - 80)
-    end
-    if items[selectedItem].y +y < 0 then
-        gfx.setDrawOffset(0, y + 80)
+    -- Scrolling dynamique
+    local selectedItemY = items[selectedItem].y
+    if selectedItemY + y > 150 then
+        gfx.setDrawOffset(0, y - 120)
+    elseif selectedItemY + y < 0 then
+        gfx.setDrawOffset(0, y + 120)
     end
     if y > 0 then
-        gfx.setDrawOffset(0,0)
+        gfx.setDrawOffset(0, 0)
+    end
+
+    -- Affichage du unlockMenu
+    unlockMenu:draw(0 + x, 0 - y)
+
+    -- Afficher le texte de l'élément sélectionné
+    local selectedUnlock = items[selectedItem].unlock
+    gfx.setFont(smallFont, gfx.kVariantBold)
+    if not table.contains(playerBonus.gameData.unlocks, selectedUnlock) then
+        gfx.drawTextAligned(selectedUnlock.description, playdate.display.getWidth() / 2, 205 - y, kTextAlignment.center)
+    else
+        gfx.drawTextAligned(selectedUnlock.name, playdate.display.getWidth() / 2, 195 - y, kTextAlignment.center)
+        gfx.setFont(smallFontAmmolite, gfx.kVariantBold)
+        gfx.drawTextAligned(selectedUnlock.descriptionUnlocked, playdate.display.getWidth() / 2, 215 - y, kTextAlignment.center)
     end
 end
+
+-- Nouvelle méthode pour formater les noms des catégories
+function UiManager:formatCategoryName(name)
+    if name == "UnlockPassive" then return "Passives"
+    elseif name == "UnlockWeapon" then return "Weapons"
+    elseif name == "UnlockCannon" then return "Cannons"
+    else return name end
+end
+
+-- Méthode pour déplacer la sélection
+function UiManager:moveSelection(items, direction, itemsPerRow)
+    local newIndex = selectedItem
+    if direction == "down" then
+        newIndex = selectedItem + itemsPerRow
+    elseif direction == "up" then
+        newIndex = selectedItem - itemsPerRow
+    end
+    if items[newIndex] then
+        selectedItem = newIndex
+    end
+end
+
+
+
+-- function UiManager:unlockScreenUpdate()
+--     gfx.clear(gfx.kColorBlack)
+--     local x,y = gfx.getDrawOffset()
+
+--     local unlockType = nil
+--     local offsetBetweenHeaderAndItems = 35
+--     local offsetBetweenItems = 5
+--     local offsetBetweenCategories = 20
+--     local itemNumber = 5
+--     local offsetBetweenHeaders = 0  -- Ajouté pour l'offset entre les headers
+--     local marginX = 5
+
+--     local currentX = 0
+--     local currentY = 0
+--     local currentHeaderY = 0
+--     local rowItemCount = 0
+--     local rows = {}
+--     local headers = {}
+--     local itemCount = 0
+--     local items = {}
+--     local categories = {}
+--     local currentCategoryNumber = {}
+--     local currentCategoryName = ""
+--     table.each(unlocksData, function(unlock)
+--         if unlock.className ~= unlockType then
+--             currentX = 0
+--             local header = {name = unlock.className, completion = 0}
+--             table.insert(headers, header)
+--             currentCategoryName = unlock.className
+--             table.insert(rows, {})
+--             -- nouvelle catégorie ici
+--             if unlockType ~= nil then
+--                 table.insert(categories, table.shallowcopy(currentCategoryNumber))
+--                 currentCategoryNumber = {}
+--                 offsetBetweenHeaders = unlockItem:getSize() + offsetBetweenCategories
+--                 currentY = currentY + unlockHeader.height + offsetBetweenHeaders
+--                 currentHeaderY = currentY
+--             end
+--             currentX = 0  
+--             rowItemCount = 0
+--             unlockType = unlock.className
+--         end
+--         itemCount += 1
+--         table.insert(currentCategoryNumber, itemCount)
+--         table.each(headers, function (header)
+--             unlockHeader:draw(0 + marginX, currentHeaderY + 5)
+--             gfx.setImageDrawMode(gfx.kDrawModeFillWhite)
+--             if currentCategoryName == "UnlockPassive" then
+--                 currentCategoryName = "Passives"
+--             end
+--             if currentCategoryName == "UnlockWeapon" then
+--                 currentCategoryName = "Weapons"
+--             end
+--             if currentCategoryName == "UnlockCannon" then
+--                 currentCategoryName = "Cannons"
+--             end
+--             -- DRAW HEADER TITLE
+--             gfx.setFont(diamond_20)
+--             gfx.drawTextAligned(string.upper(currentCategoryName), 70 + marginX, currentHeaderY + 9, kTextAlignment.center)
+--         end)
+--         gfx.setImageDrawMode(gfx.kDrawModeCopy)
+--         unlockItem:draw(currentX + marginX, currentY + offsetBetweenHeaderAndItems)
+--         if table.contains(playerBonus.gameData.unlocks, unlock) == false then
+--             questionMark:draw(currentX + marginX + 4, currentY + offsetBetweenHeaderAndItems + 5)
+--         else
+--             unlock.image:draw(currentX + marginX + 13, currentY + offsetBetweenHeaderAndItems + 13)
+--         end
+--         table.insert(items, {x=currentX + marginX, y=currentY + offsetBetweenHeaderAndItems})
+--         gfx.setColor(gfx.kColorWhite)
+--         gfx.setLineWidth(3)
+--         if itemCount == selectedItem then
+--             gfx.drawRect(currentX + marginX + 5, currentY + offsetBetweenHeaderAndItems + 5,unlockItem:getSize()-10, unlockItem:getSize()-10)
+--         end
+        
+--         currentX = currentX + unlockItem.width + offsetBetweenItems
+--         rowItemCount = rowItemCount + 1
+        
+--         if rowItemCount >= itemNumber then
+--             currentX = 0 
+--             currentY = currentY + unlockItem.height + offsetBetweenItems 
+--             rowItemCount = 0 
+--         end
+--     end)
+--     table.insert(categories, table.shallowcopy(currentCategoryNumber))
+--     unlockMenu:draw(0 + x,0 - y)
+--     if menuMoving == true then
+--         return
+--     end
+--     if playdate.buttonJustPressed(playdate.kButtonB) then
+--         y = 0
+--         selectedItem = 1
+--         self:CloseAndOpenMenu()
+--         playdate.timer.new(1000, function ()
+--             mainMenuIndex = 2
+--             playdate.update = mainMenuUpdate
+--         end)
+--         return
+--     end
+--     if playdate.buttonJustPressed(playdate.kButtonLeft) then
+--         selectedItem -= 1
+--         if selectedItem <= 0 then
+--             selectedItem = 1
+--         end
+--     end
+--     if playdate.buttonJustPressed(playdate.kButtonRight) then
+--         selectedItem += 1
+--         if selectedItem >= table.count(unlocksData) then
+--             selectedItem = table.count(unlocksData)
+--             return
+--         end
+
+--     end
+--     if playdate.buttonJustPressed(playdate.kButtonDown) then
+--         local lastItemCount = lastLineItemCount(table.count(categories[table.count(categories)]))
+--         local rangeOfItem = itemCount - lastItemCount
+--         for i = rangeOfItem , itemCount do
+--             if selectedItem == i then
+--                 return
+--             end
+--         end
+--         local positionTest = {x=items[selectedItem].x,y=items[selectedItem].y+63}
+--         local contains = false
+--         for key, item in pairs(items) do
+--             if positionTest.x == item.x and positionTest.y == item.y then
+--                 contains = true
+--                 selectedItem = indexOf(items, item) or 0
+--                 break
+--             else
+--                 contains = false
+--             end
+--         end
+
+--         if contains == false then
+--             local newY = positionTest.y + offsetBetweenHeaders + offsetBetweenCategories - 55
+--             for key, item in pairs(items) do                  
+--                 if positionTest.x == item.x and newY == item.y then
+--                     contains = true
+--                     selectedItem = indexOf(items, item) or 0
+--                     break
+--                 else
+--                     contains = false
+--                 end
+--             end
+--         end
+        
+--         if contains == false then
+--             local xOffset = 63
+--             local found = false
+--             while(found == false) do
+--                 for key, item in pairs(items) do
+--                     if positionTest.x - xOffset == item.x and positionTest.y == item.y then
+--                         selectedItem = indexOf(items, item) or 0
+--                         found = true
+--                     end
+--                 end
+--                 xOffset += 63
+--             end
+--         end
+--     end
+
+--     if playdate.buttonJustPressed(playdate.kButtonUp) then
+--         if selectedItem - 5 <= 0 then
+--             return
+--         end
+    
+--         local positionTest = {x=items[selectedItem].x,y=items[selectedItem].y-63}
+--         local contains = false
+--         for key, item in pairs(items) do
+--             if positionTest.x == item.x and positionTest.y == item.y then
+--                 contains = true
+--                 selectedItem = indexOf(items, item) or 0
+--                 break
+--             else
+--                 contains = false
+--             end
+--         end
+
+--         if contains == false then
+--             local newY = positionTest.y - (offsetBetweenHeaders + offsetBetweenCategories) + 55
+--             for key, item in pairs(items) do                  
+--                 if positionTest.x == item.x and newY == item.y then
+--                     contains = true
+--                     selectedItem = indexOf(items, item) or 0
+--                     break
+--                 else
+--                     contains = false
+--                 end
+--             end
+--         end
+        
+--         if contains == false then
+--             local xOffset = 63
+--             local found = false
+
+--             while(found == false) do
+--                 for key, item in pairs(items) do
+--                     if positionTest.x - xOffset == item.x and positionTest.y - 43 == item.y then
+--                         selectedItem = indexOf(items, item) or 0
+--                         found = true
+--                     end
+--                 end
+--                 xOffset += 63
+--             end
+--         end
+--     end
+--     local unl = unlocksData[selectedItem]
+--     gfx.setImageDrawMode(gfx.kDrawModeFillWhite)
+--     gfx.setFont(smallFont,gfx.kVariantBold)
+--     if table.contains(playerBonus.gameData.unlocks, unl) == false then
+--         gfx.drawTextAligned(unl.description, playdate.display.getWidth()/2, 205 - y, kTextAlignment.center)
+--     else
+--         gfx.drawTextAligned(unl.name, playdate.display.getWidth()/2, 195- y, kTextAlignment.center)
+--         gfx.setFont(smallFontAmmolite,gfx.kVariantBold)
+--         gfx.drawTextAligned(unl.descriptionUnlocked, playdate.display.getWidth()/2, 215- y, kTextAlignment.center)
+--     end
+--     gfx.setFont(smallFontAmmolite,gfx.kVariantBold)
+--     gfx.drawTextAligned(calculateUnlockPercentage(playerBonus.gameData.unlocks, unlocksData).."%", 370, 16 - y, kTextAlignment.center)
+--     gfx.setImageDrawMode(gfx.kDrawModeCopy)
+
+--     if items[selectedItem].y +y> 150 then
+--         gfx.setDrawOffset(0, y - 80)
+--     end
+--     if items[selectedItem].y +y < 0 then
+--         gfx.setDrawOffset(0, y + 80)
+--     end
+--     if y > 0 then
+--         gfx.setDrawOffset(0,0)
+--     end
+-- end
 
 local selectedShopItem = 1
 local shopItems = {}
