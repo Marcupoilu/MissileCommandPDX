@@ -11,7 +11,25 @@ function Weapon:init(attackSpeed, speed, damage, projectileAmount, scale, durati
     self.projectileAmount = projectileAmount
     self.timer = 0
     self.started = false
+    self.originAttackSpeed = attackSpeed
+    self.originDuration = duration
+    self.originSpeed = speed
+    self.originLevel = 1
+    self.originScale = scale
+    self.originDamage = damage
+    self.originProjectileAmount = projectileAmount
     -- self:startShooting()
+end
+
+function Weapon:reset()
+    self.attackSpeed = self.originAttackSpeed
+    self.duration = self.originDuration
+    self.speed = self.originSpeed
+    self.level = self.originLevel
+    self.scale = self.originScale
+    self.damage = self.originDamage
+    self.projectileAmount = self.originProjectileAmount
+    self.started = false
 end
 
 function Weapon:debugLevel(level)

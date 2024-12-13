@@ -47,7 +47,6 @@ function BulletFreezer:update()
     table.each(gfx.sprite.querySpriteInfoAlongLine(self.startPos.x, self.startPos.y, self.endPos.x, self.endPos.y), 
     function(collision)
         if collision.sprite:isa(Enemy) then
-            printTable(collision.sprite)
             -- self.endPos.x = collision.entryPoint.x
             -- self.endPos.y = collision.entryPoint.y
             enemyManager:stop(self.freezeDuration, collision.sprite)

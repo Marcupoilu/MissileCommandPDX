@@ -30,7 +30,7 @@ function createUpgradesData()
         UpgradeWeapon("Orbital", "Orbital", "", "images/ui/icons/orbital",10, 3 ),
         UpgradeWeapon("Plasma", "Plasma", "", "images/ui/icons/plasma",10, 2 ),
         UpgradeWeapon("Rocket", "Explosive", "", "images/ui/icons/rocket",10, 4 ),
-        UpgradeWeapon("Serpentine", "Sine Bullet", "", "images/ui/icons/serpentine",10 , 2 ),
+        UpgradeWeapon("Serpentine", "Serpentine", "", "images/ui/icons/serpentine",10 , 2 ),
         UpgradeWeapon("Shockwave", "Shockwave", "", "images/ui/icons/shockwave",10, 2 ),
         UpgradeWeapon("ToxicVape", "Toxic Vape", "", "images/ui/icons/toxicVape",10, 8 ),
         UpgradeWeapon("Tracer", "Tracer", "", "images/ui/icons/tracer",10, 9 )

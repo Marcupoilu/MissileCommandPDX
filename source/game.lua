@@ -11,8 +11,9 @@ function Game:init(maxPool, level)
     player.weapons = {}
     player.passives = {}
     createWavesData()
-    CreateWeaponsData()
     createUpgradesData()
+    -- CreateWeaponsData()
+    -- createCannonsData()
     self.level = table.findByParam(wavesData, "Level", level)
     self.waves = table.findByParam(wavesData, "Level", level).Waves
     interval = minutes_to_milliseconds(0.25)
@@ -39,7 +40,10 @@ function Game:startGame()
     --     value:remove()
     -- end
 
+
     table.each(player.chosenCanon.weapons, function (w)
+        -- w.level = 1
+        w:reset()
         player:addWeapon(w)
     end)
     createUpgradesData()

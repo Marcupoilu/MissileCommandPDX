@@ -46,7 +46,7 @@ function Player:start()
     self.projectileSpeedBonus = playerBonus.gameData.projectileSpeedBonus or 0
     self.durationBonus = playerBonus.gameData.durationBonus or 0
     self.lives = 1 + playerBonus.gameData.lives
-    self.rerolls = 200 + playerBonus.gameData.rerolls
+    self.rerolls = 2 + playerBonus.gameData.rerolls
     self.weaponNumber, self.passiveNumber = 0, 0
     self.weaponNumberMax, self.passiveNumberMax = 3, 3
     self.core, self.runLevel, self.enemiesKilled = 0, 1, 0
@@ -135,7 +135,6 @@ end
 function Player:regeneration()
     if self.hp < self.hpMax then
         self.hp += 1
-        print(self.hp)
     end
 end
 
