@@ -126,6 +126,7 @@ function Game:changeWave()
 end
 
 function Game:endGame()
+    lockInput = false
     if self.level.Level == playerBonus.gameData.mapCount then
         if playerBonus.gameData.mapCount < table.count(wavesData) then
             playerBonus.gameData.mapCount += 1
@@ -159,6 +160,7 @@ function Game:endGame()
 end
 
 function Game:loseGame()
+    lockInput = false
     self.finish = true
     table.each(spawners, function (s)
         s:stopSpawn()

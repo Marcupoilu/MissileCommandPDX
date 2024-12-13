@@ -336,7 +336,8 @@ function UiManager:winScreenUpdate()
     gfx.setImageDrawMode(gfx.kDrawModeCopy)
     endScreenContour:draw(0,0 + endScreenTweet:get())
     local current, pressed, released = playdate.getButtonState()
-    if current ~= 0 then
+    if current ~= 0 and not lockInput then
+        lockInput = true
         self:CloseAndOpenMenu()
         playdate.timer.new(1000, function ()
             tween = false
@@ -345,6 +346,9 @@ function UiManager:winScreenUpdate()
             musicPlayer:load("audio/5")
             musicPlayer:play(0)
             playdate.update = mainMenuUpdate
+        end)
+        playdate.timer.new(2000, function ()
+            lockInput = false
         end)
         return
     end
@@ -364,6 +368,7 @@ function UiManager:mainMenuUpdate()
     gfx.drawTextAligned("DEFEND", 200, 41, kTextAlignment.center)
     gfx.drawTextAligned("UPGRADE", 200, 106, kTextAlignment.center)
     gfx.drawTextAligned("COLLECTION", 200, 171, kTextAlignment.center)
+    if lockInput then return end
     if menuMoving == true and chooseCannonBool == false then
         return
     end
@@ -398,12 +403,20 @@ function UiManager:mainMenuUpdate()
         end
         if mainMenuIndex == 1 then
             self:CloseAndOpenMenu()
+            lockInput = true
+            playdate.timer.new(2000, function ()
+                lockInput = false
+            end)
             playdate.timer.new(1000, function ()
                 playdate.update = shopUpdate
             end)
         end
         if mainMenuIndex == 2 then
             self:CloseAndOpenMenu()
+            lockInput = true
+            playdate.timer.new(2000, function ()
+                lockInput = false
+            end)
             playdate.timer.new(1000, function ()
                 playdate.update = unlockScreenUpdate
             end)
@@ -527,6 +540,7 @@ function UiManager:chooseCannon()
         player.chosenCanon = cannon
         player:start()
         game = Game(30,mapIndex)
+        lockInput = true
         self:CloseAndOpenMenu()
         playdate.timer.new(1000, function ()
             chooseCannonBool = false
@@ -534,6 +548,7 @@ function UiManager:chooseCannon()
         end)
     end
 end
+
 
 local unlockHeader = gfx.image.new("images/ui/menus/achievement_header")
 local unlockItem = gfx.image.new("images/ui/menus/achievement_item")
@@ -614,7 +629,9 @@ for _, unlock in ipairs(unlocksData) do
     end
 end
 
-
+    if menuMoving then
+        return
+    end
     -- Navigation
     if playdate.buttonJustPressed(playdate.kButtonDown) then
         self:moveSelection(items, "down", itemNumber)
@@ -918,7 +935,8 @@ local selectedShopItem = 1
 local shopItems = {}
 
 local shopTween = sequence.new():from(0):to(-135, 1, "easeOutSine")
-local lockInput = false
+lockInput = false
+lockDpad = false
 
 function UiManager:shopUpdate()
     gfx.clear(gfx.kColorBlack)
@@ -962,9 +980,13 @@ function UiManager:shopUpdate()
     if menuMoving == true then
         return
     end
-    if playdate.buttonJustPressed(playdate.kButtonB) then
+    if playdate.buttonJustPressed(playdate.kButtonB) and not lockInput then
+        lockInput = true
         self:CloseAndOpenMenu()
         gfx.setDrawOffset(0,0)
+        playdate.timer.new(2000, function ()
+            lockInput = false
+        end)
         playdate.timer.new(1000, function ()
             mainMenuIndex = 1
             playdate.update = mainMenuUpdate
@@ -989,23 +1011,23 @@ function UiManager:shopUpdate()
             end
         end
     end
-    if playdate.buttonJustPressed(playdate.kButtonDown) and lockInput == false then
+    if playdate.buttonJustPressed(playdate.kButtonDown) and lockDpad == false then
         if selectedShopItem >= table.count(playerBonus.gameData.shopItems) then return end
         selectedShopItem += 1
-        lockInput = true
+        lockDpad = true
         local x,y = gfx.getDrawOffset()
         shopTween:from(y):to(y-130,0.25,"outExpo"):start():callback(function ()
-            lockInput = false
+            lockDpad = false
         end)
     end
 
-    if playdate.buttonJustPressed(playdate.kButtonUp) and lockInput == false then
+    if playdate.buttonJustPressed(playdate.kButtonUp) and lockDpad == false then
         if selectedShopItem <= 1 then return end
         selectedShopItem -= 1
-        lockInput = true
+        lockDpad = true
         local x,y = gfx.getDrawOffset()
         shopTween:from(y):to(y+130,0.25,"outExpo"):start():callback(function ()
-            lockInput = false
+            lockDpad = false
         end)
     end
 end
