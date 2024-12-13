@@ -25,6 +25,5 @@ function Unlock:applyUnlock()
     end)
     if self.upgrade ~= nil and self.className ~= "UnlockCannon" then
         table.insert(playerBonus.gameData.shopUnlocks, self.upgrade)
-        printTable(playerBonus.gameData.shopUnlocks)
     end
 end

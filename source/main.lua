@@ -39,6 +39,7 @@ import "weaponsData.lua"
 CreateWeaponsData()
 import "cannon.lua"
 import "cannonsData.lua"
+createCannonsData()
 import "condition.lua"
 import "conditionWeaponLevel.lua"
 import "conditionMapCleared.lua"
