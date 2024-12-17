@@ -15,6 +15,7 @@ function BulletAura:init(x,y,speed, damage, offsetCrank, scale, duration)
     self.auraVisibleSprite:setCenter(0.5,0.5)
     self.auraVisibleSprite:add()
     self.auraVisibleSprite:setVisible(true)
+    self.auraVisibleSprite:setScale(self.scale)
     self:moveTo(player.cannonBaseSprite.x, player.cannonBaseSprite.y)
     self.auraVisibleSprite:moveTo(player.cannonBaseSprite.x, player.cannonBaseSprite.y)
 end
