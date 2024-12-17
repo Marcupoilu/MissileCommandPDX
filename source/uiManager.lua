@@ -674,6 +674,7 @@ end
     else
         gfx.drawTextAligned(selectedUnlock.name, playdate.display.getWidth() / 2, 195 - y, kTextAlignment.center)
         gfx.setFont(smallFontAmmolite, gfx.kVariantBold)
+        gfx.setImageDrawMode(gfx.kDrawModeFillWhite)
         gfx.drawTextAligned(selectedUnlock.descriptionUnlocked, playdate.display.getWidth() / 2, 215 - y, kTextAlignment.center)
     end
 end
