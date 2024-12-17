@@ -33,6 +33,7 @@ end
 function Player:start()
     self.weapons = {}
     self.passives = {}
+    self:resetPassiveInventory()
     uiManager:createInventory(300, 222, 29, self.passives)
     self.level = 1
     self.hpMax = 10 + playerBonus.gameData.hpMax
@@ -125,6 +126,10 @@ function Player:addPassive(passive)
         self.passiveNumber += 1
     end
 
+    self:resetPassiveInventory()
+end
+
+function Player:resetPassiveInventory()
     for _, i in ipairs(uiManager.inventoryPassives) do i:remove() end
     uiManager.inventoryPassives = {}
     table.each(inventorySpritesPassives, function (is)

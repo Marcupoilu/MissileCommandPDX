@@ -280,7 +280,7 @@ function UiManager:winScreenUpdate()
     -- middle part
     core:draw( 50,70 + endScreenTweet:get())
     gfx.setFont(smallFontAmmolite,gfx.kVariantItalic)
-    gfx.drawTextAligned("X"..playerBonus.gameData.core, 90, 90 + endScreenTweet:get(), kTextAlignment.center)
+    gfx.drawTextAligned("X"..player.core, 90, 90 + endScreenTweet:get(), kTextAlignment.center)
     local screenWidth = playdate.display.getWidth()
     local screenHeight = playdate.display.getHeight()
     local enemyImage = enemy:scaledImage(1)
