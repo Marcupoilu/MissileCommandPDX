@@ -149,7 +149,7 @@ function UiManager:generateUpgrades()
                     end
                 end
             end
-        until (table.contains(ups, rand) == false and rand.count > 0 and rand.rarity <= rarity and passiveCheck == false and weaponCheck == false)
+        until (table.contains(ups, rand) == false and rand.count > 0  and rand.rarity <= rarity and passiveCheck == false and weaponCheck == false)
         passiveCheck = false
         weaponCheck = false
         if pass == false then 

@@ -12,7 +12,7 @@ function Game:init(maxPool, level)
     player.passives = {}
     createWavesData()
     createUpgradesData()
-    -- CreateWeaponsData()
+    CreateWeaponsData()
     -- createCannonsData()
     self.level = table.findByParam(wavesData, "Level", level)
     self.waves = table.findByParam(wavesData, "Level", level).Waves
