@@ -63,6 +63,7 @@ function UiManager:init()
     self.horizontalLayoutLevelUp = HorizontalLayout(levelUpCellWidth, levelUpDistance, levelUpCellNumber, 20)
 end
 
+
 function UiManager:displayTitle()
     local x,y = gfx.getDrawOffset()
     gfx.setImageDrawMode(gfx.kDrawModeCopy)
