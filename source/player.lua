@@ -33,6 +33,7 @@ end
 function Player:start()
     self.weapons = {}
     self.passives = {}
+    uiManager:createInventory(300, 222, 29, self.passives)
     self.level = 1
     self.hpMax = 10 + playerBonus.gameData.hpMax
     self.hp = self.hpMax
