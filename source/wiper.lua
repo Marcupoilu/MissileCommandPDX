@@ -50,6 +50,6 @@ function Wiper:shoot()
     gfx.clear(gfx.kColorWhite)
     enemiesCopy = table.shallowcopy(enemies)
     for key, value in pairs(enemiesCopy) do
-        value:loseHp(self.damage)
+        enemyManager:touchEnemy(self, value, true)
     end
 end
