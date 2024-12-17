@@ -32,6 +32,8 @@ function Enemy:init(x,y,speed,hp, xp, damage, enemyImage, core)
     self.currentOverlappingSprites = {}
     self.timer = nil
     self.frameCount = 0
+    self.shockwaveTimer = 0
+    self.overrideDirection = false
     -- self.fx = FX(self.x, self.y, "AnimationHit")
     -- self:setScale(1)
     if table.getsize(self.animations) <= 0 then
@@ -63,6 +65,12 @@ function Enemy:update()
         if self.drawMode ~= gfx.kDrawModeCopy then
             self:setImageDrawMode(gfx.kDrawModeCopy)
         end
+    end
+    if self.shockwaveTimer > 0 then
+        self.shockwaveTimer -= refreshRate
+    else
+        self.speed = self.originSpeed
+        self.overrideDirection = false
     end
 end
 

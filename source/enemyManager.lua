@@ -76,13 +76,12 @@ function EnemyManager:processDroneBullet(value, enemy)
 end
 
 function EnemyManager:processShockwaveBullet(value, enemy)
+    if enemy.overrideDirection then return end
     enemy.radius, enemy.angle = 0, value.originAngle
     enemy.originPosition.x, enemy.originPosition.y = enemy.x, enemy.y
     enemy.speed = enemy.speed * value.power
     enemy.overrideDirection = true
-    table.insert(self.timers, playdate.timer.new(100, function()
-        enemy.speed, enemy.overrideDirection = enemy.originSpeed, false
-    end))
+    enemy.shockwaveTimer = 200
 end
 
 function EnemyManager:processRocketBullet(value, enemy)
