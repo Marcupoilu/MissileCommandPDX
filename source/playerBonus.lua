@@ -9,6 +9,7 @@ function PlayerBonus:start()
     self.gameData = 
     {
         hpMax = 0,
+        hp = 0,
         shield = 0,
         xpBonus = 0,
         damageBonus = 0,
@@ -110,6 +111,8 @@ end
 
 function PlayerBonus:addPassive(passive)
     table.each(passive.stats, function (stat)
+        print(stat.name)
+        print(stat.value)
         self.gameData[stat.name] += stat.value
     end)
 end
