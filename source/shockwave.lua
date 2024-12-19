@@ -7,7 +7,7 @@ function Shockwave:init(attackSpeed, x, y, speed, damage, projectileAmount, scal
     self.x = x
     self.duration = duration
     self.y = y
-    self.hp = 5
+    self.hp = 3
     self.power = 5
     -- self:debugLevel(10)
 end
@@ -21,7 +21,7 @@ function Shockwave:changeLevel()
     end
     if self.level == 3 then
         self.speed += 0.5
-        self.power += 2
+        self.power += 1
     end
     if self.level == 4 then
         self.attackSpeed -= 50
@@ -36,7 +36,7 @@ function Shockwave:changeLevel()
     if self.level == 6 then
         self.attackSpeed -= 50
         self.speed += 0.5
-        self.power += 2
+        self.power += 1
         self.hp += 1
     end
     if self.level == 7 then
@@ -57,8 +57,8 @@ function Shockwave:changeLevel()
         self.projectileAmount += 1
         self.scale += 0.5
         self.speed += 1
-        self.hp += 2
-        self.power += 4
+        self.hp += 1
+        self.power += 3
 
     end
 end
