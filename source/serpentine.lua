@@ -7,6 +7,7 @@ function Serpentine:init(attackSpeed, x, y, speed, damage, projectileAmount, sca
     self.x = x
     self.duration = duration
     self.y = y
+    self.hp = 3
     -- self:debugLevel(10)
 end
 
@@ -62,6 +63,6 @@ function Serpentine:shoot()
     Serpentine.super.shoot()
     local angles = cutAngle(self.projectileAmount + player.projectileAmount)
     for key, angle in ipairs(angles) do
-        serpentineBullet = BulletSerpentine(self.x, self.y - 20, self.speed, self.damage+((player.damageBonus*self.damage)/100), angle, self.scale+((player.scaleBonus*self.scale)/100), self.duration)
+        serpentineBullet = BulletSerpentine(self.x, self.y - 20, self.speed, self.damage+((player.damageBonus*self.damage)/100), angle, self.scale+((player.scaleBonus*self.scale)/100), self.duration, self.hp)
     end
 end
