@@ -22,9 +22,10 @@ function Bullet:init(x, y, speed, damage, offsetCrank, scale, duration, bulletIm
     self:updateImage(bulletImage)
     
     Bullet.super.init(self, x, y, speed, damage, offsetCrank, scale, duration)
+    local modifiedScale = self.scale
+    self.scale = math.ceil(self:getSize() * modifiedScale) / self:getSize()
     
     -- Pre-compute scale for better performance
-    self.scale = math.ceil(self:getSize() * scale) / self:getSize()
     self:setScale(self.scale)
     
     self:updateImage(bulletImage)
