@@ -33,6 +33,7 @@ function Enemy:init(x,y,speed,hp, xp, damage, enemyImage, core)
     self.timer = nil
     self.frameCount = 0
     self.shockwaveTimer = 0
+    self.freezeTimer = 0
     self.overrideDirection = false
     -- self.fx = FX(self.x, self.y, "AnimationHit")
     -- self:setScale(1)
@@ -68,7 +69,11 @@ function Enemy:update()
     end
     if self.shockwaveTimer > 0 then
         self.shockwaveTimer -= refreshRate
-    else
+    end
+    if self.freezeTimer > 0 then
+        self.freezeTimer -= refreshRate
+    end
+    if self.shockwaveTimer <= 0 and self.freezeTimer <= 0 then
         self.speed = self.originSpeed
         self.overrideDirection = false
     end

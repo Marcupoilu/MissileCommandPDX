@@ -153,7 +153,5 @@ end
 
 function EnemyManager:stop(value, enemy)
     enemy.speed = 0
-    if value then
-        playdate.timer.new(toMilliseconds(value), function() enemy.speed = enemy.originSpeed end)
-    end
+    enemy.freezeTimer = toMilliseconds(value)
 end
