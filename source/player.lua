@@ -154,14 +154,16 @@ end
 function Player:levelUp()
     self.level += 1
     playerBonus.gameData.level += 1
-    if math.between(self.level, 1, 2) then
+    if math.between(self.level, 1, 4) then
         self.xpMax += 5
-    elseif math.between(self.level, 3, 20) then
+    elseif math.between(self.level, 5, 10) then
         self.xpMax += 10
+    elseif math.between(self.level, 11, 20) then
+        self.xpMax += 15
     elseif math.between(self.level, 21, 40) then
-        self.xpMax += 16
+        self.xpMax += 25
     else
-        self.xpMax += 20
+        self.xpMax += 50
     end
     self.xp = 0
     playdate.timer.new(toMilliseconds(0.5), function()

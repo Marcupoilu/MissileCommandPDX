@@ -14,42 +14,38 @@ function Flamethrower:changeLevel()
     self.level += 1
     if self.level == 2 then
         self.attackSpeed -= 100
+        self.damage += 0.25
         self.scale += 0.15
-        self.damage += 0.5
     end
     if self.level == 3 then
-        self.attackSpeed -= 200
+        self.attackSpeed -= 100
         self.scale += 0.15
     end
     if self.level == 4 then
-        self.attackSpeed -= 100
+        self.damage += 0.25
         self.scale += 0.15
-        self.damage += 0.5
     end
     if self.level == 5 then
         self.attackSpeed -= 200
         self.projectileAmount += 1
         self.scale += 0.25
-        self.damage += 1
+        self.damage += 0.5
     end
     if self.level == 6 then
-        self.attackSpeed -= 200
         self.scale += 0.15
+        self.damage += 0.25
     end
     if self.level == 7 then
         self.attackSpeed -= 100
         self.scale += 0.15
-        self.damage += 0.5
     end
     if self.level == 8 then
-        self.attackSpeed -= 200
-        self.scale += 0.25
-
+        self.attackSpeed -= 100
+        self.damage += 0.25
     end
     if self.level == 9 then
         self.attackSpeed -= 100
-        self.scale += 0.25
-        self.damage += 0.5
+        self.scale += 0.15
     end
     if self.level == 10 then
         self.attackSpeed -= 300
