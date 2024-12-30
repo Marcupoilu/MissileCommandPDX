@@ -18,9 +18,19 @@ function BulletAura:init(x,y,speed, damage, offsetCrank, scale, duration)
     self.auraVisibleSprite:setScale(self.scale)
     self:moveTo(player.cannonBaseSprite.x, player.cannonBaseSprite.y)
     self.auraVisibleSprite:moveTo(player.cannonBaseSprite.x, player.cannonBaseSprite.y)
+    self.timerVisible = 30
 end
 
 function BulletAura:update()
     BulletAura.super.update(self)
+    self.timerVisible -= refreshRate
+    if self.timerVisible < 0 then
+        self.timerVisible = 30
+        if self.auraVisibleSprite:isVisible() then
+            self.auraVisibleSprite:setVisible(false)
+        else
+            self.auraVisibleSprite:setVisible(true)
+        end
+    end
     self:animate()
 end

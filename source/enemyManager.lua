@@ -35,16 +35,23 @@ function EnemyManager:update()
         for _, value in ipairs(collisions) do
             if value:isa(Bullet) and not table.contains(enemy.currentOverlappingSprites, value) then
                 -- Process different bullet types
-                if value:isa(BulletAura) and not enemy:alphaCollision(value) then return end
                 if value:isa(BulletBlackhole) then self:processBlackholeBullet(value, enemy) end
                 if value:isa(BulletDrone) then self:processDroneBullet(value, enemy) return end
                 if value:isa(BulletToxicVape) then self:dotEnemy(value, enemy) end
                 if value:isa(BulletShockwave) then self:processShockwaveBullet(value, enemy) end
                 if value:isa(BulletRocket) then self:processRocketBullet(value, enemy) end
-
+                
                 -- Default bullet collision handling
                 if not value:isa(BulletBlackhole) and not value:isa(BulletDrone) and not value:isa(BulletToxicVape) then
-                    self:touchEnemy(value, enemy)
+                    if value:isa(BulletAura) then
+                        if enemy:alphaCollision(value) then 
+                            self:touchEnemy(value, enemy)
+                        else
+                            print("bulletAura non touchée")
+                        end
+                    else
+                        self:touchEnemy(value, enemy)
+                    end
                 end
             end
 
@@ -89,7 +96,18 @@ function EnemyManager:processRocketBullet(value, enemy)
 end
 
 function EnemyManager:touchEnemy(value, enemy, bulletHp)
-    if table.contains(enemy.currentOverlappingSprites, value) then return end
+    -- Vérifier si l'ennemi est déjà affecté par cette BulletAura récemment
+    if value:isa(BulletAura) then
+        enemy._auraTimers = enemy._auraTimers or {} -- Table pour stocker les timers des auras
+        local lastHitTime = enemy._auraTimers[value] or 0
+        local currentTime = playdate.getCurrentTimeMilliseconds()
+
+        -- Vérifier le cooldown (X millisecondes définies par la BulletAura)
+        if currentTime - lastHitTime < value.tick then return end
+        enemy._auraTimers[value] = currentTime
+    end
+
+    -- Le reste du traitement pour tous les types de projectiles
     enemy:setImageDrawMode(gfx.kDrawModeFillWhite)
     enemy.blinkAmount = 5
     p:moveTo(enemy.x, enemy.y)
@@ -98,8 +116,13 @@ function EnemyManager:touchEnemy(value, enemy, bulletHp)
     self:loseHp(value.damage + (player.damageBonus * value.damage / 100), enemy, value.className)
     if not bulletHp then value:loseHp(1) end
     value.tickTime = value.tick
-    table.insert(enemy.currentOverlappingSprites, value)
+
+    -- Ajout de l'aura uniquement pour gérer la logique des autres bullets
+    if not value:isa(BulletAura) then
+        table.insert(enemy.currentOverlappingSprites, value)
+    end
 end
+
 
 function EnemyManager:dotEnemy(value, enemy)
     if table.contains(enemy.currentOverlappingSprites, value) then return end
