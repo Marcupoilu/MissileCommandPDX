@@ -21,5 +21,6 @@ function BulletAura:init(x,y,speed, damage, offsetCrank, scale, duration)
 end
 
 function BulletAura:update()
+    BulletAura.super.update(self)
     self:animate()
 end

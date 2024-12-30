@@ -40,6 +40,9 @@ function Projectile:update()
     self.duration -= refreshRate
     if self.duration <= 0 then
         self:destroy()
+        if self:isa(BulletAura) then
+            self.auraVisibleSprite:remove()
+        end
     end
 end
 
