@@ -38,7 +38,13 @@ function Bullet:animate()
         local currentAnim = table.findByParam(self.animations, "Name", self.state)
         if currentAnim then
             self.currentAnimation = currentAnim.Animation
-            self:setImage(self.currentAnimation:image())
+
+            if not self:isa(BulletAura) then
+                self:setImage(self.currentAnimation:image())
+            else
+                self.auraVisibleSprite:setImage(self.currentAnimation:image())
+            end
+
         end
     end
 end
