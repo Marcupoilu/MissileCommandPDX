@@ -11,35 +11,34 @@ end
 function Wiper:changeLevel()
     self.level += 1
     if self.level == 2 then
-        self.attackSpeed -= 400
+        self.attackSpeed -= 500
         self.damage += 0.5
     end
     if self.level == 3 then
-        self.attackSpeed -= 400
         self.damage += 0.5
     end
     if self.level == 4 then
-        self.attackSpeed -= 400
+        self.attackSpeed -= 500
     end
     if self.level == 5 then
-        self.attackSpeed -= 400
+        self.attackSpeed -= 1000
         self.damage += 0.5
     end
     if self.level == 6 then
-        self.attackSpeed -= 400
+        self.damage += 0.5
     end
     if self.level == 7 then
-        self.attackSpeed -= 400
+        self.attackSpeed -= 500
         self.damage += 0.5
     end
     if self.level == 8 then
-        self.attackSpeed -= 400
+        self.attackSpeed -= 500
     end
     if self.level == 9 then
-        self.attackSpeed -= 400
+        self.damage += 0.5
     end
     if self.level == 10 then
-        self.attackSpeed -= 5000
+        self.attackSpeed -= 2000
         self.damage += 1
     end
 end
