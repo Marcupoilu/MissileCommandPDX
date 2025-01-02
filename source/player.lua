@@ -151,6 +151,12 @@ function Player:gainXP(xp)
     end
 end
 
+function Player:checkLevel()
+    if self.xp >= self.xpMax then
+        self:levelUp()
+    end
+end
+
 function Player:levelUp()
     self.level += 1
     self.xp = self.xp - self.xpMax

@@ -226,7 +226,7 @@ function UiManager:levelUpDisplay()
             s:resume()
         end)
         playdate.update = gameUpdate
-        player:gainXP(player.xp)
+        player:checkLevel()
     end
     if playdate.buttonJustPressed(playdate.kButtonB) and player.rerolls > 0 then
         player.rerolls -= 1
