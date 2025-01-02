@@ -33,11 +33,13 @@ local titleBotClose = sequence.new():from(0):to(-135, 1, "easeOutSine"):callback
     titleTopOpen:set(0)
     titleBotOpen:set(0)
     menuMoving = false
+    print("closed")
 end)
 titleBotOpen:callback(function ()
     titleTopOpen:set(-135)
     titleBotOpen:set(135)
     menuMoving = false
+    print("open")
 end)
 local selectionScreenOpen = sequence.new():from(-192):to(0, 1, "easeOutSine"):callback(function ()
     
@@ -54,6 +56,7 @@ local endScreenContour = gfx.animation.loop.new(animationsData.EndScreen.Delay, 
 local upgradeContour = gfx.image.new("images/ui/menus/upgrade_panel")
 local chooseCannonArrowLeft = gfx.image.new("images/ui/arrow_left")
 local chooseCannonArrowRight = gfx.image.new("images/ui/arrow_right")
+local levelUpIndexMax = 2
 
 local closedMenu = true
 local mainMenuPositions = {{x=24,y=55},{x=24,y=120},{x=24,y=185}}
@@ -67,6 +70,7 @@ end
 function UiManager:displayTitle()
     local x,y = gfx.getDrawOffset()
     gfx.setImageDrawMode(gfx.kDrawModeCopy)
+
     titleTop:draw(0, titleTopOpen:get() + titleTopClose:get() - y)
     titleBot:draw(0,titleBotY + titleBotOpen:get() + titleBotClose:get() - y)
 end
@@ -135,7 +139,10 @@ function UiManager:generateUpgrades()
                 rand:updateDescriptionText()
                 -- si c'est une new passive on check si on a de la place dans l'inventaire
                 if rand.className == "UpgradeStat" then
-                    if table.contains(player.passives, rand) == false and rand.inventory == nil then
+                    if rand.name == "rerolls" or rand.name == "core" or rand.name =="hpRegen" then
+                        passiveCheck = true
+                    end
+                    if table.contains(player.passives, rand) == false and rand.inventory == nil  then
                         if player.passiveNumber >= player.passiveNumberMax then
                             passiveCheck = true
                         end
@@ -158,9 +165,13 @@ function UiManager:generateUpgrades()
             table.insert(ups, rand)
         end
     end
+    if table.count(ups) <= 0 then
+        table.insert(ups, getUpgradePassiveByName("core"))
+        table.insert(ups, getUpgradePassiveByName("hpRegen"))
+        levelUpIndexMax = 1
+    end
     levelUpIndex = 0
 end
-
 local rerollDisplay = gfx.image.new("images/ui/icons/rerolls_small")
 local rerollPanel = gfx.image.new("images/ui/menus/reroll_panel")
 local bButton = gfx.image.new("images/ui/icons/B_Button")
@@ -195,12 +206,12 @@ function UiManager:levelUpDisplay()
     gfx.setFont(font,gfx.kVariantBold)
     gfx.drawTextAligned("Pick Upgrade", 200, 1, kTextAlignment.center)
     if playdate.buttonJustPressed(playdate.kButtonRight) then
-        levelUpIndex = math.ring_int(levelUpIndex +1, 0, 2)
+        levelUpIndex = math.ring_int(levelUpIndex +1, 0, levelUpIndexMax)
     end
     if playdate.buttonJustPressed(playdate.kButtonLeft) then
         levelUpIndex -= 1
         if levelUpIndex == -1 then
-            levelUpIndex = 2
+            levelUpIndex = levelUpIndexMax
         end
     end
     if playdate.buttonJustPressed(playdate.kButtonA) then
@@ -215,6 +226,7 @@ function UiManager:levelUpDisplay()
             s:resume()
         end)
         playdate.update = gameUpdate
+        player:gainXP(player.xp)
     end
     if playdate.buttonJustPressed(playdate.kButtonB) and player.rerolls > 0 then
         player.rerolls -= 1

@@ -48,7 +48,7 @@ function Player:start()
     self.projectileSpeedBonus = playerBonus.gameData.projectileSpeedBonus or 0
     self.durationBonus = playerBonus.gameData.durationBonus or 0
     self.lives = 1 + playerBonus.gameData.lives
-    self.rerolls = 2 + playerBonus.gameData.rerolls
+    self.rerolls = 1 + playerBonus.gameData.rerolls
     self.weaponNumber, self.passiveNumber = 0, 0
     self.weaponNumberMax, self.passiveNumberMax = 3, 3
     self.core, self.runLevel, self.enemiesKilled = 0, 1, 0
@@ -153,6 +153,8 @@ end
 
 function Player:levelUp()
     self.level += 1
+    self.xp = self.xp - self.xpMax
+    self.rerolls += 1
     playerBonus.gameData.level += 1
     if math.between(self.level, 1, 4) then
         self.xpMax += 5
@@ -165,7 +167,6 @@ function Player:levelUp()
     else
         self.xpMax += 50
     end
-    self.xp = 0
     playdate.timer.new(toMilliseconds(0.5), function()
         -- game.timer:pause()
         -- table.each(self.weapons, function (w)

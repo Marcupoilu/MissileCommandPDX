@@ -1,7 +1,7 @@
 enemiesData = 
 {
     Saucer = {speed = 20, hp = 3, xp = 2, damage = 10, enemyImage = gfx.image.new("images/enemy_saucer"),core = 2},
-    Xwing = {speed = 20, hp = 1, xp = 1, damage = 1, enemyImage = gfx.image.new("images/enemies/small/enemy_small_01"),core = 1},
+    Xwing = {speed = 20, hp = 1, xp = 1000, damage = 1, enemyImage = gfx.image.new("images/enemies/small/enemy_small_01"),core = 1},
     EnemySmallTwo = {speed = 20, hp = 1, xp = 1, damage = 1, enemyImage = gfx.image.new("images/enemies/small/enemy_small_02"),core = 1},
     EnemySmallThree = {speed = 20, hp = 1, xp = 1, damage = 1, enemyImage = gfx.image.new("images/enemies/small/enemy_small_03"),core = 1},
     EnemySmallFour = {speed = 20, hp = 2, xp = 1, damage = 1, enemyImage = gfx.image.new("images/enemies/small/enemy_small_04"), core = 1},
