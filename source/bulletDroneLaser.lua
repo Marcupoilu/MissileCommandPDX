@@ -49,7 +49,7 @@ function BulletDroneLaser:update()
     end)
     gfx.setLineCapStyle(gfx.kLineCapStyleRound)
     gfx.setColor(gfx.kColorWhite)
-    gfx.setLineWidth(self.scale)
+    gfx_setLineWidth(math.random(math.floor(self.scale/3), self.scale))
     self.lineS.x1 = self.startPos.x
     self.lineS.y1 = self.startPos.y
     self.lineS.x2 = self.endPos.x

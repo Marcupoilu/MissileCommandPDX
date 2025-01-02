@@ -74,5 +74,6 @@ function BulletBeam:update()
 
     self.lineS.x1, self.lineS.y1 = self.startPos.x, self.startPos.y
     self.lineS.x2, self.lineS.y2 = self.endPos.x, self.endPos.y
+    gfx_setLineWidth(math.random(math.floor(self.scale/3), self.scale))
     gfx_drawLine(self.lineS)
 end
