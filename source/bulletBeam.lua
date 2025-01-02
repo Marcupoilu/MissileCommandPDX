@@ -19,7 +19,7 @@ function BulletBeam:init(x, y, speed, damage, offsetCrank, scale, duration)
     self.angle = crankPosition
     self.radius = speed * (1 + player.projectileSpeedBonus / 100) * deltaTime
     self.offset = math_rad(offsetCrank)
-    self.scale = scale
+    -- self.scale = scale
     self.lineS = playdate.geometry.lineSegment.new(self.startPos.x, self.startPos.y, self.endPos.x, self.endPos.y)
     self.tick = 100
     gfx_setLineCapStyle(gfx.kLineCapStyleRound)
@@ -74,6 +74,6 @@ function BulletBeam:update()
 
     self.lineS.x1, self.lineS.y1 = self.startPos.x, self.startPos.y
     self.lineS.x2, self.lineS.y2 = self.endPos.x, self.endPos.y
-    gfx_setLineWidth(math.random(math.floor(self.scale/3), self.scale))
+    gfx_setLineWidth(math.random(math.floor(self.scale/3), math.floor(self.scale)))
     gfx_drawLine(self.lineS)
 end
