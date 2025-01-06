@@ -2,11 +2,11 @@ class("BulletAura").extends(Bullet)
 
 local bulletImage = gfx.image.new("images/bullets/bullet_auraPlain" )
 
-function BulletAura:init(x,y,speed, damage, offsetCrank, scale, duration)
+function BulletAura:init(x,y,speed, damage, offsetCrank, scale, duration, tick)
     BulletAura.super.init(self,x,y,speed, damage, offsetCrank, scale, duration, bulletImage)
     self.hp = 1000
     self.rot = 0
-    self.tick = 100
+    self.tick = tick
     self.currentCollision = false
     self:setCenter(0.5,0.5)
     self:setVisible(false)

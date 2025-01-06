@@ -14,7 +14,7 @@ function CreateWeaponsData()
         Freezer(toMilliseconds(4), 200, 175, 100, 0, 1, 4, toMilliseconds(0.5)), -- balanced starter
         LaserDome(toMilliseconds(3), 200, 175, 100, 1, 1, 2, toMilliseconds(3)), -- balanced starter
         ToxicVape(toMilliseconds(3), 200, 175, 3, 1, 1, 1, toMilliseconds(10)), -- to rework integrally
-        Aura(toMilliseconds(3), 200, 175, 1, 0.2, 1, 1, toMilliseconds(3)), -- to rework collision detection
+        Aura(toMilliseconds(3), 200, 175, 1, 0.25, 1, 1, toMilliseconds(3)), -- to rework collision detection
         Blackhole(toMilliseconds(5), 200, 175, 1, 1, 1, 1, toMilliseconds(2)), -- balanced starter / rework direction after blackhole for ennemies
         Drone(toMilliseconds(5), 200, 175, 4, 0.5, 1, 1, toMilliseconds(3)), -- balanced starter
         Orbital(toMilliseconds(2), 200, 175, 50, 1, 1, 1), -- balanced starter / rework orbit fonction speed
