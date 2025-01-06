@@ -60,7 +60,7 @@ function Bullet:update()
     end
     
     -- Update position if Bullet is the base class (not subclassed)
-    if self.className == "Bullet" then
+    if self.className == "Bullet" or self.className == "BulletToxicVape" then
         self.radius += self.speed + (((player.projectileSpeedBonus*self.speed)/100)) * deltaTime
         self:moveTo(self.radius*math.cos(math.rad(self.originAngle + self.offset)) + self.originPosition.x, self.radius*math.sin(math.rad(self.originAngle + self.offset)) + self.originPosition.y)
     end

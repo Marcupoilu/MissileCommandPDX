@@ -13,7 +13,6 @@ function Enemy:init(x,y,speed,hp, xp, damage, enemyImage, core)
             table.insert(self.animations, {Name=animationData.Name, Animation=gfx.animation.loop.new(animationData.Delay, animationData.Source, animationData.Loop)})
         end
     end
-    self.dotValues = {}
     self.spritePos = {}
     self.speed = speed
     self.originSpeed = speed
@@ -35,6 +34,10 @@ function Enemy:init(x,y,speed,hp, xp, damage, enemyImage, core)
     self.shockwaveTimer = 0
     self.freezeTimer = 0
     self.overrideDirection = false
+    self.dotValues = 0
+    self.dotTimer = 0
+    self.lastTickTime = 0
+    self.dotDamage = 0
     -- self.fx = FX(self.x, self.y, "AnimationHit")
     -- self:setScale(1)
     if table.getsize(self.animations) <= 0 then
@@ -60,6 +63,18 @@ function Enemy:update()
             end
         end
     end)
+    if self.dotValues > 0 then
+        self.dotTimer -= refreshRate
+        if self.dotTimer <= 0 then
+            self.blinkAmount = 5
+            p:moveTo(self.x, self.y)
+            p:add(1)
+            p:update()
+            enemyManager:loseHp(self.dotDamage + (player.damageBonus * self.dotDamage / 100), self)
+            self.dotValues -= 1
+            self.dotTimer = 300
+        end
+    end
     if self.blinkAmount > 0 then
         self.blinkAmount -= 1
     else

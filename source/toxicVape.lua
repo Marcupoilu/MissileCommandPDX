@@ -7,6 +7,8 @@ function ToxicVape:init(attackSpeed, x, y, speed, damage, projectileAmount, scal
     self.x = x
     self.duration = duration
     self.tickNumber = 3
+    self.tickTime = 300
+    self.tick = 500
     self.spread = 45
     self.y = y
     -- self:debugLevel(10)
@@ -64,5 +66,5 @@ end
 function ToxicVape:shoot()
     ToxicVape.super.shoot()
     local angle = 0
-    bulletToxicVape = BulletToxicVape(self.x, self.y - 20, self.speed, self.damage, angle, self.scale, self.duration, self.tickNumber, self.spread)
+    bulletToxicVape = BulletToxicVape(self.x, self.y - 20, self.speed, self.damage, angle, self.scale, self.duration, self.tickNumber, self.spread, self.tickTime, self.tick)
 end
