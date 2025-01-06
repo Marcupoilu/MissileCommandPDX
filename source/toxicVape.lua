@@ -19,7 +19,7 @@ function ToxicVape:changeLevel()
     if self.level == 2 then
         self.attackSpeed -= 100
         self.scale += 0.1
-        self.damage += 0.5
+        self.damage += 0.1
     end
     if self.level == 3 then
         self.attackSpeed -= 100
@@ -29,12 +29,16 @@ function ToxicVape:changeLevel()
     if self.level == 4 then
         self.attackSpeed -= 100
         self.scale += 0.1
+        self.damage += 0.1
+
     end
     if self.level == 5 then
         self.attackSpeed -= 100
         self.projectileAmount += 1
         self.scale += 0.1
-        self.damage += 0.5
+        self.damage += 0.2
+        self.tickNumber += 1
+        self.tickTime -= 100
     end
     if self.level == 6 then
         self.attackSpeed -= 100
@@ -44,10 +48,11 @@ function ToxicVape:changeLevel()
     if self.level == 7 then
         self.attackSpeed -= 100
         self.scale += 0.1
-        self.damage += 0.5
+        self.damage += 0.1
     end
     if self.level == 8 then
         self.attackSpeed -= 100
+        self.damage += 0.1
     end
     if self.level == 9 then
         self.attackSpeed -= 100
@@ -58,8 +63,9 @@ function ToxicVape:changeLevel()
         self.projectileAmount += 1
         self.scale += 0.5
         self.speed += 1
-        self.damage += 1
+        self.damage += 0.1
         self.tickNumber += 1
+        self.tickTime -= 100
     end
 end
 
