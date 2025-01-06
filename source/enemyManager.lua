@@ -12,6 +12,7 @@ local math_atan = math.atan
 function EnemyManager:init()
     EnemyManager.super.init(self)
     self.timers = {}
+    self.droneBullets = {Bullet="", Time=0}
 end
 
 function EnemyManager:changeState(state)
@@ -21,6 +22,13 @@ function EnemyManager:changeState(state)
 end
 
 function EnemyManager:update()
+    for _, bullet in ipairs(self.droneBullets) do
+        bullet.Time -= refreshRate
+        if bullet.Time <= 0 then
+            bullet.Bullet:remove()
+            table.remove(self.droneBullets, indexOf(self.droneBullets, bullet))
+        end
+    end
     for _, enemy in ipairs(enemies) do
         if #enemy.animations > 0 then
             local anim = table.findByParam(enemy.animations, "Name", enemy.state)
@@ -74,7 +82,8 @@ function EnemyManager:processDroneBullet(value, enemy)
     local sprite = gfx.sprite.new(gfx.image.new("images/bullets/bullet_drone"))
     sprite:moveTo(value.x, value.y)
     sprite:add()
-    table.insert(self.timers, playdate.timer.new(value.duration, function() sprite:remove() end))
+    local droneBullet = {Bullet=sprite, Time=value.duration}
+    table.insert(self.droneBullets, droneBullet)
     local angles = cutAngle(value.projectileAmount + player.projectileAmount)
     for _, angle in ipairs(angles) do
         BulletDroneLaser(value.x, value.y, value.speed / 2, value.damage, angle, value.scale*4, value.duration, 0)
