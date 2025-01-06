@@ -10,7 +10,7 @@ function BulletLaserDome:init(x,y,speed, damage, offsetCrank, scale, angle)
     self.endPos = {x=0,y=0}
     self.angle = angle
     self.startPos.x = player.x 
-    self.startPos.y = player.y - 10
+    self.startPos.y = player.y - 7
     self.radius += self.speed + (((player.projectileSpeedBonus*self.speed)/100)) * deltaTime
     self.direction = {x=0, y=1}
     self.direction.x = self.radius*math.cos(math.rad(self.angle + self.offset))* deltaTime
