@@ -1,6 +1,6 @@
 class("EnemyManager").extends(gfx.sprite)
 
-local p = ParticleCircle(0, 0)
+p = ParticleCircle(0, 0)
 p:setSize(5, 6)
 p:setColor(gfx.kColorWhite)
 p:setMode(Particles.modes.DECAY)
@@ -130,23 +130,26 @@ function EnemyManager:dotEnemy(value, enemy)
     p:moveTo(enemy.x, enemy.y)
     p:add(1)
     table.insert(enemy.currentOverlappingSprites, value)
-    table.insert(enemy.dotValues, value.tickNumber)
-    self:dotTimer(value, enemy)
+    enemy.lastTickTime = value.tickTime
+    enemy.dotTimer = value.tickTime
+    enemy.dotDamage = value.damage
+    enemy.dotValues += value.tickNumber
+    -- self:dotTimer(value, enemy)
 end
 
-function EnemyManager:dotTimer(value, enemy)
-    for _, dotValue in ipairs(enemy.dotValues) do
-        table.insert(self.timers, playdate.timer.new(toMilliseconds(1), function()
-            if dotValue <= 0 or enemy.dead then return end
-            p:moveTo(enemy.x, enemy.y)
-            p:add(1)
-            p:update()
-            self:loseHp(value.damage + (player.damageBonus * value.damage / 100), enemy)
-            dotValue = dotValue - 1
-            self:dotTimer(value, enemy)
-        end))
-    end
-end
+-- function EnemyManager:dotTimer(value, enemy)
+--     for _, dotValue in ipairs(enemy.dotValues) do
+--         table.insert(self.timers, playdate.timer.new(toMilliseconds(1), function()
+--             if dotValue <= 0 or enemy.dead then return end
+--             p:moveTo(enemy.x, enemy.y)
+--             p:add(1)
+--             p:update()
+--             self:loseHp(value.damage + (player.damageBonus * value.damage / 100), enemy)
+--             dotValue = dotValue - 1
+--             self:dotTimer(value, enemy)
+--         end))
+--     end
+-- end
 
 function EnemyManager:loseHp(value, enemy, className)
     enemy.hp = enemy.hp - value
