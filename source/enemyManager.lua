@@ -76,6 +76,7 @@ function EnemyManager:processBlackholeBullet(value, enemy)
     local dx, dy = value.x - enemy.x, value.y - enemy.y
     enemy.radius, enemy.angle = 0, math_deg(math_atan(dy, dx))
     enemy.originPosition.x, enemy.originPosition.y = enemy.x, enemy.y
+    enemy.overrideDirection = true
 end
 
 function EnemyManager:processDroneBullet(value, enemy)
