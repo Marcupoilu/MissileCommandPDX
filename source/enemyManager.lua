@@ -96,6 +96,7 @@ function EnemyManager:processRocketBullet(value, enemy)
 end
 
 function EnemyManager:touchEnemy(value, enemy, bulletHp)
+    if table.contains(enemy.currentOverlappingSprites, value) then return end
     -- Vérifier si l'ennemi est déjà affecté par cette BulletAura récemment
     if value:isa(BulletAura) then
         enemy._auraTimers = enemy._auraTimers or {} -- Table pour stocker les timers des auras
