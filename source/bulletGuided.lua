@@ -9,7 +9,7 @@ function BulletGuided:init(x,y,speed, damage, offsetCrank, scale, duration)
     self.rot = 0
     self.guidedHitBox = 65
     self.target = nil
-    self:setRotation(self.originAngle + 90)
+    -- self:setRotation(self.originAngle + 90)
 end
 function BulletGuided:update()
     BulletGuided.super.update(self)
