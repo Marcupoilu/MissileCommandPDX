@@ -22,7 +22,9 @@ end
 
 function EnemySmallFive:update()
     if self.overrideDirection == false then
-        self.angle = math.deg(math.atan(self.currentPoint.y - self.y, self.currentPoint.x - self.x) )
+        -- self.angle = math.deg(math.atan(self.currentPoint.y - self.y, self.currentPoint.x - self.x) )
+        self.angle = math.deg(math.atan(self.playerY - self.y, self.playerX - self.x) )
+
     end
     
     EnemySmallFive.super.update(self)
