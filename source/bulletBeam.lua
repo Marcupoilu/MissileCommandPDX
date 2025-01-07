@@ -44,8 +44,8 @@ function BulletBeam:update()
     local angleRad = math_rad(rotation - 90)
 
     -- Position de départ
-    local offsetX = (self.height ) * math_cos(angleRad)
-    local offsetY = (self.height ) * math_sin(angleRad)
+    local offsetX = (self.height + 40 ) * math_cos(angleRad)
+    local offsetY = (self.height + 40) * math_sin(angleRad)
     self.startPos.x, self.startPos.y = playerX + offsetX, playerY + offsetY
 
     -- Calcul du rayon et direction avec mise à jour

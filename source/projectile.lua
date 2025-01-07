@@ -7,8 +7,8 @@ function Projectile:init(x,y,speed, damage, offsetCrank, scale, duration)
     self.originPosition = {}
     self.width, self.height = player.cannonGunSprite:getSize()
     self.originAngle = player.cannonGunSprite:getRotation() - 90
-    self.originPosition.x = player.cannonGunSprite.x +(self.height-60) * math.cos(math.rad(self.originAngle))
-    self.originPosition.y = player.cannonGunSprite.y +(self.height-60) * math.sin(math.rad(self.originAngle))
+    self.originPosition.x = player.cannonGunSprite.x +(self.height-40) * math.cos(math.rad(self.originAngle))
+    self.originPosition.y = player.cannonGunSprite.y +(self.height-40) * math.sin(math.rad(self.originAngle))
     self:moveTo(self.originPosition.x,self.originPosition.y)
     self.x = self.originPosition.x
     self.y = self.originPosition.y

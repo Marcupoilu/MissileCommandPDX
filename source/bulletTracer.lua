@@ -19,7 +19,7 @@ function BulletTracer:init(x,y,speed, damage, offsetCrank, scale, duration)
     self.playerPos = {}
     self.playerPos.x = player.cannonGunSprite.x
     self.playerPos.y = player.cannonGunSprite.y
-    self.offsetHeight = 0
+    self.offsetHeight = 35
     self.tick = 150
     table.insert(beams, self)
 end
@@ -34,7 +34,6 @@ function BulletTracer:update()
     self.startPos.x = self.playerPos.x +(self.height+self.offsetHeight) * math.cos(math.rad((self.originAngle)))
     self.startPos.y = self.playerPos.y +(self.height+self.offsetHeight) * math.sin(math.rad((self.originAngle)))
     
-    self.angle = player.cannonGunSprite:getRotation()
     self.radius += self.speed + (((player.projectileSpeedBonus*self.speed)/100)) * deltaTime
     self.direction.x = self.radius*math.cos(math.rad((self.originAngle) + self.offset)) * deltaTime
     self.direction.y = self.radius*math.sin(math.rad((self.originAngle) + self.offset)) * deltaTime
@@ -55,7 +54,7 @@ function BulletTracer:update()
         self.radius = 0
         self.offsetHeight = 0    
     end
-    if self.endPos.y <= 0 or self.endPos.y >= 240 then
+    if self.endPos.y <= 0 or self.endPos.y >= 205 then
         self.originAngle =  -self.originAngle
         self.playerPos.x = self.endPos.x
         self.playerPos.y = self.endPos.y
@@ -63,7 +62,7 @@ function BulletTracer:update()
         self.offsetHeight = 0  
     end
     self.playerPos.x = math.clamp(self.playerPos.x, 1, 399)
-    self.playerPos.y = math.clamp(self.playerPos.y, 1, 239)
+    self.playerPos.y = math.clamp(self.playerPos.y, 1, 204)
     table.each(gfx.sprite.querySpriteInfoAlongLine(self.startPos.x, self.startPos.y, self.endPos.x, self.endPos.y), 
     function(collision)
         if collision.sprite:isa(Enemy) then
@@ -73,7 +72,7 @@ function BulletTracer:update()
     end)
     gfx.setLineCapStyle(gfx.kLineCapStyleRound)
     gfx.setColor(gfx.kColorWhite)
-    gfx.setLineWidth(self.scale)
+    gfx.setLineWidth(math.random(math.floor(self.scale/3), math.floor(self.scale)))
     self.lineS.x1 = self.startPos.x
     self.lineS.y1 = self.startPos.y
     self.lineS.x2 = self.endPos.x

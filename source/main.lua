@@ -73,7 +73,7 @@ deltaTime = 0
 crankPosition = playdate.getCrankPosition()
 game = nil
 playerBonus = PlayerBonus()
-player = Player({x = 200, y = 197}, {x = 200, y = 200})
+player = Player({x = 200, y = 197}, {x = 200, y = 220})
 
 -- Cache des appels fréquents
 local getElapsedTime = playdate.getElapsedTime

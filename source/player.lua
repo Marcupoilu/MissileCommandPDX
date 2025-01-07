@@ -8,11 +8,10 @@ function Player:init(basePosition, gunPosition)
     self.cannonBaseSprite = gfx.sprite.new(self.cannonBase)
     self.cannonBaseSprite:setZIndex(0)
     self.cannonBaseSprite:setTag(1)
-    self.cannonBaseSprite:setCollideRect(0, 0, self.cannonBaseSprite:getSize())
     self.cannonBaseSprite:setGroups({1})
     self.cannonGunSprite = gfx.sprite.new(self.cannonGun)
     self.cannonGunSprite:setZIndex(-1)
-    self.cannonGunSprite:setCenter(0.5, 0.5)
+    self.cannonGunSprite:setCenter(0.5, 1)
     
     self.cannonBaseSprite:moveTo(basePosition.x, basePosition.y)
     self.cannonGunSprite:moveTo(gunPosition.x, gunPosition.y)
@@ -20,6 +19,7 @@ function Player:init(basePosition, gunPosition)
     self.cannonBaseSprite:add()
     self.cannonGunSprite:add()
     self.cannonBaseSprite:setVisible(false)
+    self.cannonBaseSprite:setCollideRect(0, 0, self.cannonGunSprite:getSize())
     
     -- Initialisation des propriétés du joueur
     self.cannons = playerBonus.gameData.cannons
@@ -73,10 +73,10 @@ function Player:update()
     local na = normalizeAngle(crankPosition)
     if math.between(na, 0, 180) then
         self.cannonGunSprite:setRotation(crankPosition)
-    elseif math.between(na, 181, 270) then
-        self.cannonGunSprite:setRotation(90)
+    elseif math.between(na, 181, 300) then
+        self.cannonGunSprite:setRotation(60)
     elseif math.between(na, 271, 360) then
-        self.cannonGunSprite:setRotation(270)
+        self.cannonGunSprite:setRotation(300)
     end
     self.regenerationTimer -= refreshRate
     if self.regenerationTimer <= 0 then
