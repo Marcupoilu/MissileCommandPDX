@@ -6,7 +6,7 @@ function CreateWeaponsData()
         Beam(toMilliseconds(3.5), 200, 175, 120, 0.25, 1, 4, toMilliseconds(1)), -- balanced starter
         Wiper(toMilliseconds(15), 200, 175, 1, 3, 1, 1), -- a revoir apres ennemies HP setup
         Plasma(toMilliseconds(7), 200, 175, 4, 0.75, 1, 1, toMilliseconds(5)),  -- balanced starter
-        Serpentine(toMilliseconds(0.5), 200, 175, 4, 0.3, 1, 1, toMilliseconds(3)), -- balanced starter
+        Serpentine(toMilliseconds(0.6), 200, 175, 4, 0.3, 1, 1, toMilliseconds(3)), -- balanced starter
         Shockwave(toMilliseconds(2), 200, 175, 4, 0.15, 1, 1, toMilliseconds(3)), -- balanced starter
         Rocket(toMilliseconds(5), 200, 175, 3, 0, 1, 1,toMilliseconds(5)), -- balanced starter
         Guided(toMilliseconds(0.5), 200, 175, 4, 0.5, 1, 1,toMilliseconds(3)), -- balanced starter (rework direction bug)
