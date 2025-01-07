@@ -19,7 +19,7 @@ function BulletTracer:init(x,y,speed, damage, offsetCrank, scale, duration)
     self.playerPos = {}
     self.playerPos.x = player.cannonGunSprite.x
     self.playerPos.y = player.cannonGunSprite.y
-    self.offsetHeight = 50
+    self.offsetHeight = 0
     self.tick = 150
     table.insert(beams, self)
 end

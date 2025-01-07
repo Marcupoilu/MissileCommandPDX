@@ -11,6 +11,7 @@ end
 function SimpleCannon:changeLevel()
     self.level += 1
     if self.level == 2 then
+        self.projectileAmount += 1
         self.damage += 0.1
         self.attackSpeed -= 25
         self.scale += 0.1

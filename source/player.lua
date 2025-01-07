@@ -10,16 +10,16 @@ function Player:init(basePosition, gunPosition)
     self.cannonBaseSprite:setTag(1)
     self.cannonBaseSprite:setCollideRect(0, 0, self.cannonBaseSprite:getSize())
     self.cannonBaseSprite:setGroups({1})
-    
     self.cannonGunSprite = gfx.sprite.new(self.cannonGun)
     self.cannonGunSprite:setZIndex(-1)
-    self.cannonGunSprite:setCenter(0.5, 1)
+    self.cannonGunSprite:setCenter(0.5, 0.5)
     
     self.cannonBaseSprite:moveTo(basePosition.x, basePosition.y)
     self.cannonGunSprite:moveTo(gunPosition.x, gunPosition.y)
     
     self.cannonBaseSprite:add()
     self.cannonGunSprite:add()
+    self.cannonBaseSprite:setVisible(false)
     
     -- Initialisation des propriétés du joueur
     self.cannons = playerBonus.gameData.cannons
