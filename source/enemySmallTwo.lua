@@ -16,7 +16,8 @@ end
 
 function EnemySmallTwo:update()
     if self.overrideDirection == false then
-        self.angle = math.deg(math.atan(self.randomPoint.y - self.y, self.randomPoint.x - self.x) )
+        -- self.angle = math.deg(math.atan(self.randomPoint.y - self.y, self.randomPoint.x - self.x) )
+        self.angle = math.deg(math.atan(self.playerY - self.y, self.playerX - self.x) )
     end
     
     EnemySmallTwo.super.update(self)

@@ -84,11 +84,16 @@ function cutAngle(X)
     -- Génération des angles en répartissant autour de 0
     for i = 0, X-1 do
         local angle = -((X-1)/2) * intervalAngle + i * intervalAngle
+        -- Ajuster pour inclure toujours un angle à 0
+        if X % 2 == 0 and i == X // 2 then
+            angle = 0
+        end
         table.insert(angles, angle)
     end
-    
+
     return angles
 end
+
 
 function indexOf(array, value)
     for i, v in ipairs(array) do

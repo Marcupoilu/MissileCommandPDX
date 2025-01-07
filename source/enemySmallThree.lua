@@ -18,7 +18,9 @@ end
 function EnemySmallThree:update()
     if self.overrideDirection == false then
         -- Calculer l'angle vers le point cible
-        self.angle = math.deg(math.atan(self.randomPoint.y - self.y, self.randomPoint.x - self.x))
+        -- self.angle = math.deg(math.atan(self.randomPoint.y - self.y, self.randomPoint.x - self.x))
+        self.angle = math.deg(math.atan(self.playerY - self.y, self.playerX - self.x) )
+
     end
     -- EnemySmallThree.super.update(self)
 
