@@ -73,7 +73,7 @@ function Player:update()
     local na = normalizeAngle(crankPosition)
     if math.between(na, 30, 145) then
         self.cannonGunSprite:setRotation(crankPosition)
-    elseif math.between(na, 146, 300) then
+    elseif math.between(na, 145, 270) then
         self.cannonGunSprite:setRotation(60)
     elseif math.between(na, 29, 360) then
         self.cannonGunSprite:setRotation(300)
