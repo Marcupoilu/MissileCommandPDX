@@ -16,6 +16,7 @@ function Game:init(maxPool, level)
     -- createCannonsData()
     self.level = table.findByParam(wavesData, "Level", level)
     self.waves = table.findByParam(wavesData, "Level", level).Waves
+    print(level)
     interval = minutes_to_milliseconds(0.25)
     intervalTime = interval
     targetTime = interval*table.count(self.waves)/1000
@@ -23,14 +24,17 @@ function Game:init(maxPool, level)
     self.waveNumber = 1
     self.finish = false
     time = 0
-    local bgsprite = gfx.sprite.new(self.level.Background)
     musicPlayer:stop()
     musicPlayer:load("audio/"..self.level.Music)
     musicPlayer:play(0)
-    bgsprite:setCenter(0,0)
-    bgsprite:moveTo(0,0)
-    bgsprite:setZIndex(-9999)
-    bgsprite:add()
+    table.each(bullets, function (b)
+        b:remove()
+    end)
+    self.bgsprite = gfx.sprite.new(self.level.Background)
+    self.bgsprite:setCenter(0,0)
+    self.bgsprite:moveTo(0,0)
+    self.bgsprite:setZIndex(-9999)
+    self.bgsprite:add()
     self:startGame()
 end
 
@@ -159,6 +163,7 @@ function Game:endGame()
         end
     end)
     playdate.timer.new(300, function ()
+        self.bgsprite:remove()
         playdate.update = winScreenUpdate
     end)    
 end
@@ -188,6 +193,7 @@ function Game:loseGame()
         end
     end)
     playdate.timer.new(500, function ()
+        self.bgsprite:remove()
         playdate.display.setOffset(0, 0)
         playdate.update = winScreenUpdate
     end)

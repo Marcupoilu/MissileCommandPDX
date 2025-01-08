@@ -286,9 +286,9 @@ function UiManager:winScreenUpdate()
     gfx.setFont(diamond_20,gfx.kVariantItalic)
     gfx.setImageDrawMode(gfx.kDrawModeFillWhite)
     if player.success == true then
-        gfx.drawTextAligned("DEFENSE "..playerBonus.gameData.mapCount.." SUCCESS", rectWidth, 20+ endScreenTweet:get(), kTextAlignment.center)
+        gfx.drawTextAligned("WIN", rectWidth, 20+ endScreenTweet:get(), kTextAlignment.center)
     else
-        gfx.drawTextAligned("DEFENSE "..playerBonus.gameData.mapCount.." FAILED", rectWidth, 20+ endScreenTweet:get(), kTextAlignment.center)
+        gfx.drawTextAligned("LOSE", rectWidth, 20+ endScreenTweet:get(), kTextAlignment.center)
     end
     -- middle part
     core:draw( 50,70 + endScreenTweet:get())
@@ -378,7 +378,7 @@ function UiManager:mainMenuUpdate()
     gfx.setDrawOffset(0,0)
     mainMenu:draw(0,0)
     gfx.setFont(font,gfx.kVariantBold)
-    gfx.drawTextAligned("DEFEND", 200, 41, kTextAlignment.center)
+    gfx.drawTextAligned("PLAY", 200, 41, kTextAlignment.center)
     gfx.drawTextAligned("UPGRADE", 200, 106, kTextAlignment.center)
     gfx.drawTextAligned("COLLECTION", 200, 171, kTextAlignment.center)
     if lockInput then return end

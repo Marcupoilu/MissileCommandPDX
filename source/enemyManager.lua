@@ -55,7 +55,6 @@ function EnemyManager:update()
                         if enemy:alphaCollision(value) then 
                             self:touchEnemy(value, enemy)
                         else
-                            print("bulletAura non touchée")
                         end
                     else
                         self:touchEnemy(value, enemy)
