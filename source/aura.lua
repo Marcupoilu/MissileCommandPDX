@@ -14,38 +14,18 @@ end
 function Aura:changeLevel()
     self.level += 1
     if self.level == 2 then
-        self.scale += 0.1
+        self.damage += 0.25
     end
     if self.level == 3 then
-        self.scale += 0.1
-        self.damage += 0.05
+        self.scale += 0.5
     end
     if self.level == 4 then
-        self.scale += 0.1
+        self.tick -= 300
     end
     if self.level == 5 then
+        self.damage += 0.15
         self.scale += 0.25
-        self.damage += 0.1
-        self.tick -= 150
-    end
-    if self.level == 6 then
-        self.scale += 0.1
-    end
-    if self.level == 7 then
-        self.scale += 0.1
-        self.damage += 0.05
-    end
-    if self.level == 8 then
-        self.scale += 0.1
-    end
-    if self.level == 9 then
-        self.scale += 0.1
-        self.damage += 0.05
-    end
-    if self.level == 10 then
-        self.scale += 0.25
-        self.damage += 0.25
-        self.tick -= 150
+        self.tick -= 100
     end
 end
 
