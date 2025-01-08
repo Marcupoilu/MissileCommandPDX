@@ -53,11 +53,12 @@ end
 
 function LaserDome:shoot()
     LaserDome.super.shoot()
-    if self.spawned == true then
-        return 
-    end
+    -- if self.spawned == true then
+    --     return 
+    -- end
     local angle = 0
+    print("spawn")
     bulletLaserDome = BulletLaserDome(self.x, self.y - 20, self.speed, self.damage, angle, self.scale, 270)
-    bulletLaserDome = BulletLaserDome(self.x, self.y - 20, self.speed, self.damage, angle, self.scale, 90)
+    -- bulletLaserDome = BulletLaserDome(self.x, self.y - 20, self.speed, self.damage, angle, self.scale, 90)
     self.spawned = true
 end
