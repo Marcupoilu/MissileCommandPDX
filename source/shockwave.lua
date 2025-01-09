@@ -21,18 +21,18 @@ function Shockwave:changeLevel()
     end
     if self.level == 3 then
         self.projectileAmount += 1
-        self.hp += 2
+        self.hp += 3
         self.scale += 0.25
     end
     if self.level == 4 then
         self.attackSpeed -= 1000
         self.duration += 3
-        self.hp += 2
+        self.hp += 3
     end
     if self.level == 5 then
         self.projectileAmount += 1
         self.attackSpeed -= 500
-        self.hp += 2
+        self.hp += 3
         self.power += 3
     end
 end
