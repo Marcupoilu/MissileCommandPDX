@@ -8,6 +8,7 @@ function Cannon:init(name, weapons, cost, image, imageBase, id)
     self.image = image
     self.imageBase = imageBase
     self.id = id
+    self.weaponLevel = 1
 end
 
 function Cannon:update()

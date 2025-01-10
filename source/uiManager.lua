@@ -1021,7 +1021,14 @@ function UiManager:shopUpdate()
                     playerBonus:addPassive(boughtItem.unlock.upgrade)
                 end
                 if boughtItem.unlock.className == "UnlockCannon" then
-                    table.insert(playerBonus.gameData.cannons,boughtItem.unlock.upgrade)
+                    if not table.contains(playerBonus.gameData.cannons, boughtItem.unlock.upgrade) then
+                        table.insert(playerBonus.gameData.cannons,boughtItem.unlock.upgrade)
+                        local indexOf = indexOf(playerBonus.gameData.cannons, boughtItem.unlock.upgrade)
+                        playerBonus.gameData.cannons[indexOf].weaponLevel = 1
+                    else
+                        local indexOf = indexOf(playerBonus.gameData.cannons, boughtItem.unlock.upgrade)
+                        playerBonus.gameData.cannons[indexOf].weaponLevel += 1
+                    end
                 end
             end
         end

@@ -15,7 +15,7 @@ shopItemsData =
     ShopItem("Omni",table.findByParam(unlocksData, "name","Omni"),1500, 0, 1, 1.5),
     ShopItem("Laser",table.findByParam(unlocksData, "name","Laser"),2000, 0, 1, 1.5),
     ShopItem("Orbiter",table.findByParam(unlocksData, "name","Orbiter"),2000, 0, 1, 1.5),
-    ShopItem("Shotgun",table.findByParam(unlocksData, "name","Shotgun"),2000, 0, 1, 1.5),
+    ShopItem("Shotgun",table.findByParam(unlocksData, "name","Shotgun"),2000, 0, 5, 1.5),
     ShopItem("Launcher",table.findByParam(unlocksData, "name","Launcher"),3000, 0, 1, 1.5),
     ShopItem("Plasma",table.findByParam(unlocksData, "name","Plasma"),3000, 0, 1, 1.5),
     ShopItem("Artillery",table.findByParam(unlocksData, "name","Artillery"),4000, 0, 1, 1.5),

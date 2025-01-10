@@ -49,6 +49,10 @@ function Game:startGame()
         -- w.level = 1
         local weapon = table.findByParam(weaponsData, "className", w.className)
         -- weapon:reset()
+        printTable(player.chosenCanon)
+        for i = 1, player.chosenCanon.weaponLevel-1, 1 do
+            weapon:changeLevel()
+        end
         player:addWeapon(weapon)
     end)
     createUpgradesData()
