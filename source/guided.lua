@@ -13,8 +13,7 @@ end
 function Guided:changeLevel()
     self.level += 1
     if self.level == 2 then
-        self.attackSpeed -= 100
-        self.speed += 2
+        self.attackSpeed -= 200
     end
     if self.level == 3 then
         self.projectileAmount += 1
@@ -27,7 +26,7 @@ function Guided:changeLevel()
     if self.level == 5 then
         self.projectileAmount += 1
         self.damage += 0.5
-        self.speed += 2
+        self.attackSpeed -= 100
     end
 end
 

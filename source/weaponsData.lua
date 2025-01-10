@@ -9,11 +9,11 @@ function CreateWeaponsData()
         Serpentine(toMilliseconds(0.6), 200, 175, 6, 0.3, 1, 1, toMilliseconds(3)), -- balanced starter
         Shockwave(toMilliseconds(3), 200, 175, 4, 0.25, 1, 1, toMilliseconds(3)), -- balanced starter
         Rocket(toMilliseconds(5), 200, 175, 3, 0, 1, 1,toMilliseconds(5)), -- balanced starter
-        Guided(toMilliseconds(0.5), 200, 175, 6, 0.5, 1, 1,toMilliseconds(3)), -- balanced starter (rework direction bug)
+        Guided(toMilliseconds(0.5), 200, 175, 2, 0.5, 1, 1,toMilliseconds(3)), -- balanced starter (rework direction bug)
         Flamethrower(toMilliseconds(2), 200, 175, 1, 2, 1, 1,toMilliseconds(1)), -- to rework integrally
         Freezer(toMilliseconds(4), 200, 175, 100, 0, 1, 4, toMilliseconds(1)), -- balanced starter
-        LaserDome(toMilliseconds(3), 200, 175, 100, 1, 1, 2, toMilliseconds(3)), -- balanced starter
-        ToxicVape(toMilliseconds(3), 200, 175, 2, 0.5, 1, 1, toMilliseconds(10)), -- to rework integrally
+        LaserDome(toMilliseconds(4), 200, 175, 100, 1, 1, 2, toMilliseconds(3)), -- balanced starter
+        ToxicVape(toMilliseconds(4), 200, 175, 2, 0.5, 1, 1, toMilliseconds(10)), -- to rework integrally
         Aura(toMilliseconds(3), 200, 175, 1, 0.25, 1, 1, toMilliseconds(3)), -- to rework collision detection
         Blackhole(toMilliseconds(6), 200, 175, 1, 1, 1, 1, toMilliseconds(2)), -- balanced starter / rework direction after blackhole for ennemies
         Drone(toMilliseconds(5), 200, 175, 4, 0.5, 1, 1, toMilliseconds(3)), -- balanced starter
