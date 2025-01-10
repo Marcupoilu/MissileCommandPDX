@@ -174,6 +174,7 @@ function Player:levelUp()
         self.xpMax += 50
     end
     playdate.timer.new(toMilliseconds(0.5), function()
+        if game.finish == true then return end
         -- game.timer:pause()
         -- table.each(self.weapons, function (w)
         --     w.timer:pause()

@@ -64,25 +64,6 @@ debugRects = {}
 beams = {}
 bullets = {}
 refreshRate = 1/playdate.display.getRefreshRate() * 1000
-
--- Managers -- 
-shake = ScreenShake()
-uiManager = UiManager()
-time = 0
-deltaTime = 0
-crankPosition = playdate.getCrankPosition()
-game = nil
-playerBonus = PlayerBonus()
-player = Player({x = 200, y = 197}, {x = 200, y = 220})
-
--- Cache des appels fréquents
-local getElapsedTime = playdate.getElapsedTime
-local resetElapsedTime = playdate.resetElapsedTime
-local drawFPS = playdate.drawFPS
-local updateTimers = playdate.timer.updateTimers
-local spriteUpdate = gfx.sprite.update
-local particleUpdate = Particles.update
-local sequenceUpdate = sequence.update
 soundSamplerBossDeath = playdate.sound.sampleplayer.new("audio/bossDeath")
 soundSamplerBullet = playdate.sound.sampleplayer.new("audio/bulletShoot")
 soundSamplerCancel = playdate.sound.sampleplayer.new("audio/cancel")
@@ -103,6 +84,25 @@ soundSamplerLaserBeam:setVolume(0.3)
 musicPlayer = playdate.sound.fileplayer.new("audio/5")
 musicPlayer:setVolume(0.5)
 musicPlayer:play(0)
+
+-- Managers -- 
+shake = ScreenShake()
+uiManager = UiManager()
+time = 0
+deltaTime = 0
+crankPosition = playdate.getCrankPosition()
+game = nil
+playerBonus = PlayerBonus()
+player = Player({x = 200, y = 197}, {x = 200, y = 220})
+
+-- Cache des appels fréquents
+local getElapsedTime = playdate.getElapsedTime
+local resetElapsedTime = playdate.resetElapsedTime
+local drawFPS = playdate.drawFPS
+local updateTimers = playdate.timer.updateTimers
+local spriteUpdate = gfx.sprite.update
+local particleUpdate = Particles.update
+local sequenceUpdate = sequence.update
 -- Fonction principale de mise à jour du jeu
 gameUpdate = function()
     -- Cache des valeurs calculées une seule fois par frame

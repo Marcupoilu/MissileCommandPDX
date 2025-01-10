@@ -103,14 +103,14 @@ end
 function UiManager:OpenAndCloseMenu()
 
     self:OpenMenu()
-    playdate.timer.new(titleBotOpen.duration + 300, function ()
+    playdate.timer.new(1050, function ()
         self:CloseMenu()
     end)
 end
 
 function UiManager:CloseAndOpenMenu()
     self:CloseMenu()
-    playdate.timer.new(titleBotClose.duration + 300, function ()
+    playdate.timer.new(1050, function ()
         self:OpenMenu()
     end)
 end
@@ -123,6 +123,7 @@ function UiManager:generateUpgrades()
     local passiveCheck = false
     local weaponCheck = false
     local pass = false
+    printTable(player.shopUnlocks)
     for i = 1, levelUpCellNumber do
         repeat
             if table.count(discardedUps) >= table.count(player.shopUnlocks) then
@@ -139,7 +140,7 @@ function UiManager:generateUpgrades()
                 rand:updateDescriptionText()
                 -- si c'est une new passive on check si on a de la place dans l'inventaire
                 if rand.className == "UpgradeStat" then
-                    if rand.name == "rerolls" or rand.name == "core" or rand.name =="hpRegen" then
+                    if rand.name == "rerolls" or rand.name == "core" or rand.name =="hpRegen" or rand.name == "lives" then
                         passiveCheck = true
                     end
                     if table.contains(player.passives, rand) == false and rand.inventory == nil  then
