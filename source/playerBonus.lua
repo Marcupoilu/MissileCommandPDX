@@ -39,7 +39,8 @@ function PlayerBonus:start()
         shopItems = {
             table.findByParam(shopItemsData, "name", "Speed Up"),
             table.findByParam(shopItemsData, "name", "Scale Up"),
-            table.findByParam(shopItemsData, "name", "Damage Up")
+            table.findByParam(shopItemsData, "name", "Damage Up"),
+            table.findByParam(shopItemsData, "name", "Bolter")
         }
     }
 
