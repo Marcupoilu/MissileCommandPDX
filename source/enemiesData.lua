@@ -8,7 +8,7 @@ enemiesData =
     EnemySmallFive = {speed = 40, hp = 5, xp = 1, damage = 1, enemyImage = gfx.image.new("images/enemies/small/enemy_small_05"), core = 1},
     EnemySmallSix = {speed = 60, hp = 8, xp = 1, damage = 1, enemyImage = gfx.image.new("images/enemies/small/enemy_small_06"), core = 1},
     EnemySmallSeven = {speed = 40, hp = 10, xp = 1, damage = 1, enemyImage = gfx.image.new("images/enemies/small/enemy_small_07"), core = 1},
-    EnemySmallEight = {speed = 40, hp = 12, xp = 1, damage = 2, enemyImage = gfx.image.new("images/enemies/small/enemy_small_08"), core = 2},
+    EnemySmallEight = {speed = 40, hp = 10, xp = 1, damage = 2, enemyImage = gfx.image.new("images/enemies/small/enemy_small_08"), core = 2},
     EnemyMediumOne = {speed = 40, hp = 25, xp = 8, damage = 3, enemyImage = gfx.image.new("images/enemies/medium/enemy_medium_01"), core = 6},
     EnemyMediumTwo = {speed = 20, hp = 40, xp = 8, damage = 4, enemyImage = gfx.image.new("images/enemies/medium/enemy_medium_02"), core = 7},
     EnemyMediumThree = {speed = 20, hp = 50, xp = 8, damage = 4, enemyImage = gfx.image.new("images/enemies/medium/enemy_medium_03"), core = 7},

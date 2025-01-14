@@ -49,7 +49,7 @@ function createWavesData()
                 Wave(--9
                 {
                     EnemySpawner(math.random(100,100), 34, 0, 15, EnemySmallTwo, enemiesData.EnemySmallTwo),
-                    EnemySpawner(math.random(500,500), 34, 0, 3, EnemySmallEight, enemiesData.EnemySmallEight),
+                    EnemySpawner(math.random(500,500), 34, 0, 2, EnemySmallEight, enemiesData.EnemySmallEight),
                 }),
                 Wave(--10
                 {
