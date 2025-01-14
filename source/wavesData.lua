@@ -6,7 +6,7 @@ function createWavesData()
             Level = 1, -- ENEMIES AVAILABLE : Xwing, EnemySmallTwo, EnemySmallEight, EnemyMediumOne
             Name = "Deep Space",
             Music = "1",
-            Background = gfx.image.new("images/backgrounds/bg_01"),
+            Background = gfx.image.new("images/backgrounds/7_bg_city_01"),
             Waves = {
                 Wave(--1
                 {
@@ -18,12 +18,12 @@ function createWavesData()
                 }),
                 Wave(--3
                 {
-                    EnemySpawner(math.random(500,500), 34, 0, 15, EnemySmallTwo, enemiesData.EnemySmallTwo),
+                    EnemySpawner(math.random(1000,1000), 34, 0, 15, EnemySmallTwo, enemiesData.EnemySmallTwo),
                 }),
                 Wave(--4
                 {
-                    EnemySpawner(math.random(1000,1000), 34, 0, 15, Xwing, enemiesData.Xwing),
-                    EnemySpawner(math.random(1000,1000), 34, 0, 15, EnemySmallTwo, enemiesData.EnemySmallTwo),
+                    EnemySpawner(math.random(1500,1500), 34, 0, 15, Xwing, enemiesData.Xwing),
+                    EnemySpawner(math.random(1500,1500), 34, 0, 15, EnemySmallTwo, enemiesData.EnemySmallTwo),
                 }),            
                 Wave(--5
                 {
