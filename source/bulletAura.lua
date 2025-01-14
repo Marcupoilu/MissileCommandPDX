@@ -1,6 +1,7 @@
 class("BulletAura").extends(Bullet)
 
 local bulletImage = gfx.image.new("images/bullets/bullet_auraPlain" )
+bulletSprite = nil
 
 function BulletAura:init(x,y,speed, damage, offsetCrank, scale, duration, tick)
     BulletAura.super.init(self,x,y,speed, damage, offsetCrank, scale, duration, bulletImage)
@@ -18,6 +19,7 @@ function BulletAura:init(x,y,speed, damage, offsetCrank, scale, duration, tick)
     self.auraVisibleSprite:setScale(self.scale)
     self:moveTo(player.cannonBaseSprite.x, player.cannonBaseSprite.y)
     self.auraVisibleSprite:moveTo(player.cannonBaseSprite.x, player.cannonBaseSprite.y)
+    bulletSprite = self.auraVisibleSprite
     self.timerVisible = 30
 end
 

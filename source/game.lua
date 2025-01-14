@@ -45,6 +45,9 @@ function Game:startGame()
     table.each(player.shopUnlocks, function (su)
         su.count = su.countMax
     end)
+    if bulletSprite ~= nil then
+        bulletSprite:remove()
+    end
     table.each(player.chosenCanon.weapons, function (w)
         -- w.level = 1
         local weapon = table.findByParam(weaponsData, "className", w.className)
