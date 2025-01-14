@@ -54,17 +54,17 @@ function createWavesData()
                 }),
                 Wave(--10
                 {
-                    EnemySpawner(math.random(800,800), 34, 0, 10, EnemySmallTwo, enemiesData.EnemySmallTwo),
+                    EnemySpawner(math.random(800,800), 34, 0, 20, EnemySmallTwo, enemiesData.EnemySmallTwo),
                     EnemySpawner(math.random(1500,1500), 34, 0, 3, EnemyMediumOne, enemiesData.EnemyMediumOne),
                 }),
                 Wave(--11
                 {
-                    EnemySpawner(math.random(500,500), 34, 0, 20, EnemySmallTwo, enemiesData.EnemySmallTwo),
+                    EnemySpawner(math.random(500,500), 34, 0, 25, EnemySmallTwo, enemiesData.EnemySmallTwo),
                     EnemySpawner(math.random(1000,1000), 34, 0, 5, EnemyMediumOne, enemiesData.EnemyMediumOne),
                 }),             
                 Wave(--12
                 {
-                    EnemySpawner(math.random(100,100), 34, 0, 20, EnemySmallTwo, enemiesData.EnemySmallTwo),
+                    EnemySpawner(math.random(100,100), 34, 0, 27, EnemySmallTwo, enemiesData.EnemySmallTwo),
                     EnemySpawner(math.random(2000,2000), 34, 0, 3, EnemyMediumOne, enemiesData.EnemyMediumOne),
 
                 }),            

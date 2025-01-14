@@ -14,7 +14,7 @@ enemiesData =
     EnemyMediumThree = {speed = 20, hp = 50, xp = 8, damage = 3, enemyImage = gfx.image.new("images/enemies/medium/enemy_medium_03"), core = 7},
     EnemyMediumFour = {speed = 10, hp = 50, xp = 8, damage = 3, enemyImage = gfx.image.new("images/enemies/medium/enemy_medium_04"), core = 8},
     EnemyMediumFive = {speed = 20, hp = 60, xp = 10, damage = 3, enemyImage = gfx.image.new("images/enemies/medium/enemy_medium_05"), core = 8},
-    EnemyLargeOne = {speed = 20, hp = 400, xp = 15, damage = 5, enemyImage = gfx.image.new("images/enemies/large/enemy_large_01"), core = 15},
+    EnemyLargeOne = {speed = 20, hp = 350, xp = 15, damage = 5, enemyImage = gfx.image.new("images/enemies/large/enemy_large_01"), core = 15},
     EnemyLargeTwo = {speed = 20, hp = 150, xp = 20, damage = 15, enemyImage = gfx.image.new("images/enemies/large/enemy_large_02"), core = 20},
     EnemyLargeThree = {speed = 20, hp = 200, xp = 30, damage = 20, enemyImage = gfx.image.new("images/enemies/large/enemy_large_03"), core = 30},
     EnemyLargeFour = {speed = 5, hp = 300, xp = 50, damage = 50, enemyImage = gfx.image.new("images/enemies/large/enemy_large_04"), core = 60}
