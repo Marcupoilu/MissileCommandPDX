@@ -18,12 +18,13 @@ function createWavesData()
                 }),
                 Wave(--3
                 {
-                    EnemySpawner(math.random(1000,1000), 34, 0, 15, EnemySmallTwo, enemiesData.EnemySmallTwo),
+                    EnemySpawner(math.random(1500,1500), 34, 0, 15, Xwing, enemiesData.Xwing),
+                    EnemySpawner(math.random(1500,1500), 34, 0, 15, EnemySmallTwo, enemiesData.EnemySmallTwo),
                 }),
                 Wave(--4
                 {
-                    EnemySpawner(math.random(1500,1500), 34, 0, 15, Xwing, enemiesData.Xwing),
-                    EnemySpawner(math.random(1500,1500), 34, 0, 15, EnemySmallTwo, enemiesData.EnemySmallTwo),
+                    EnemySpawner(math.random(1000,1000), 34, 0, 15, Xwing, enemiesData.Xwing),
+                    EnemySpawner(math.random(1000,1000), 34, 0, 15, EnemySmallTwo, enemiesData.EnemySmallTwo),
                 }),            
                 Wave(--5
                 {
