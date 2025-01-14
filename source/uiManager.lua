@@ -411,7 +411,7 @@ function UiManager:mainMenuUpdate()
     if playdate.buttonJustPressed(playdate.kButtonA) and chooseCannonBool == false and chooseMap == false then
         A = true
         if mainMenuIndex == 0 then
-            selectionScreenOpen:from(-192):to(0, 1, "easeOutSine")
+            selectionScreenOpen:from(-210):to(0, 1, "easeOutSine")
             selectionScreenOpen:restart()
             chooseMap = true
         end
@@ -446,10 +446,10 @@ function UiManager:mainMenuUpdate()
         return
     end
     if chooseMap == true then
-        selectionScreen:draw(playdate.display.getWidth() /2 - 234/2, selectionScreenOpen:get())
+        selectionScreen:draw(playdate.display.getWidth() /2 - 150, selectionScreenOpen:get())
         self:chooseMap()
         if playdate.buttonJustPressed(playdate.kButtonB) and selectionScreenOpen:isDone() then
-            selectionScreenOpen:from(0):to(-192, 1, "easeOutSine")
+            selectionScreenOpen:from(0):to(-250, 1, "easeOutSine")
             selectionScreenOpen:restart()
             playdate.timer.new(1000, function ()
                 chooseMap = false
@@ -457,7 +457,7 @@ function UiManager:mainMenuUpdate()
         end
     end
     if chooseCannonBool == true and chooseMap == false then
-        selectionScreen:draw(playdate.display.getWidth() /2 - 234/2, selectionScreenOpen:get())
+        selectionScreen:draw(playdate.display.getWidth() /2 - 150, selectionScreenOpen:get())
         self:chooseCannon()
         if playdate.buttonJustPressed(playdate.kButtonB) and selectionScreenOpen:isDone() then
             chooseMap = true
@@ -490,10 +490,10 @@ function UiManager:chooseMap()
     map.Background:scaledImage(0.55):draw(90,60 + selectionScreenOpen:get())
     gfx.setFont(smallFontAmmolite,gfx.kVariantBold)
     gfx.setImageDrawMode(gfx.kDrawModeFillWhite)
-    gfx.drawTextAligned("CHOOSE MAP", x + 195, 65 + selectionScreenOpen:get(), kTextAlignment.center)
-    gfx.drawTextAligned(map.Name, x + 195, 65 + 15 + selectionScreenOpen:get(), kTextAlignment.center)
-    chooseCannonArrowLeft:draw(100,y + selectionScreenOpen:get() + 100)
-    chooseCannonArrowRight:draw(280,y + selectionScreenOpen:get() + 100)
+    gfx.drawTextAligned("CHOOSE MAP", x + 197, 33 + selectionScreenOpen:get(), kTextAlignment.center)
+    gfx.drawTextAligned(map.Name, x + 197, 200 + selectionScreenOpen:get(), kTextAlignment.center)
+    chooseCannonArrowLeft:draw(60,y + selectionScreenOpen:get() + 85)
+    chooseCannonArrowRight:draw(325,y + selectionScreenOpen:get() + 85)
 
     if selectionScreenOpen:isDone() == false then
         return
