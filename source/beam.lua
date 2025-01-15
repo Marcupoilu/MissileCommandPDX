@@ -24,8 +24,8 @@ function Beam:changeLevel()
     end
     if self.level == 5 then
         self.projectileAmount += 1
+        self.damage += 0.5
         self.attackSpeed -= 500
-        self.duration += 1000
     end
 end
 
