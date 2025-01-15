@@ -135,6 +135,10 @@ function UiManager:generateUpgrades()
             if table.contains(discardedUps, rand) == false then
                 table.insert(discardedUps, rand)
             end
+            local remainingUps = table.count(player.shopUnlocks) - table.count(discardedUps)
+            if remainingUps <= 3 then
+                rarity = 10
+            end
             if rand ~= nil then
                 rand:updateDescriptionText()
                 -- si c'est une new passive on check si on a de la place dans l'inventaire
@@ -523,10 +527,10 @@ function UiManager:chooseCannon()
     cannon.image:draw(x,y - 20 + selectionScreenOpen:get())
     gfx.setFont(smallFontAmmolite,gfx.kVariantBold)
     gfx.setImageDrawMode(gfx.kDrawModeFillWhite)
-    gfx.drawTextAligned("CHOOSE CANNON", x + 11, 65 + selectionScreenOpen:get(), kTextAlignment.center)
-    gfx.drawTextAligned(cannon.name, x + 11, 65 + 15 + selectionScreenOpen:get(), kTextAlignment.center)
-    chooseCannonArrowLeft:draw(140,y + selectionScreenOpen:get())
-    chooseCannonArrowRight:draw(240,y + selectionScreenOpen:get())
+    gfx.drawTextAligned("CHOOSE CANNON", x + 11, 33 + selectionScreenOpen:get(), kTextAlignment.center)
+    gfx.drawTextAligned(cannon.name, x + 11, 200 + selectionScreenOpen:get(), kTextAlignment.center)
+    chooseCannonArrowLeft:draw(60,y + selectionScreenOpen:get() - 11)
+    chooseCannonArrowRight:draw(325,y + selectionScreenOpen:get() - 11)
     local offset = 0
     local offsetAdd = 10
     local totalWidth = 0
