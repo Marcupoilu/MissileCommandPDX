@@ -10,6 +10,11 @@ animationsData =
     AnimationHit = {{Name = "Idle", Source = gfx.imagetable.new("images/fx/hit_01"), Delay = 20, Loop = false}},
     Saucer = {},
     Xwing = {},
+    EnemyLargeOne = {{Name = "Idle", Source = gfx.imagetable.new("images/enemies/large/enemy_large_01"), Delay = 20, Loop = true}},
+    EnemyLargeTwo = {{Name = "Idle", Source = gfx.imagetable.new("images/enemies/large/enemy_large_02"), Delay = 20, Loop = true}},
+    EnemyLargeThree = {{Name = "Idle", Source = gfx.imagetable.new("images/enemies/large/enemy_large_03"), Delay = 20, Loop = true}},
+    EnemyLargeFour = {{Name = "Idle", Source = gfx.imagetable.new("images/enemies/large/enemy_large_04"), Delay = 20, Loop = true}},
+
     MainMenu = {Name = "Idle", Source = gfx.imagetable.new("images/ui/menus/main_menu"), Delay = 20, Loop = true},
     SelectionScreen = {Name = "Idle", Source = gfx.imagetable.new("images/ui/menus/selection_screen"), Delay = 20, Loop = true},
     ShopBackground = {Name = "Idle", Source = gfx.imagetable.new("images/ui/menus/shop_background"), Delay = 20, Loop = true},

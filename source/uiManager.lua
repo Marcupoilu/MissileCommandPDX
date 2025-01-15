@@ -123,7 +123,6 @@ function UiManager:generateUpgrades()
     local passiveCheck = false
     local weaponCheck = false
     local pass = false
-    printTable(player.shopUnlocks)
     for i = 1, levelUpCellNumber do
         repeat
             if table.count(discardedUps) >= table.count(player.shopUnlocks) then
@@ -553,7 +552,7 @@ function UiManager:chooseCannon()
     if playdate.buttonJustPressed(playdate.kButtonA) and A == false then
         player.chosenCanon = cannon
         player:start()
-        game = Game(30,mapIndex)
+        game = Game(25,mapIndex)
         lockInput = true
         self:CloseAndOpenMenu()
         playdate.timer.new(1000, function ()
@@ -965,6 +964,7 @@ function UiManager:shopUpdate()
         gfx.setImageDrawMode(gfx.kDrawModeCopy)
         shopItem:draw(x,y+yAdd)
         local width, height = shopItemData.unlock.image:getSize()
+        -- printTable(shopItemData.unlock)
         shopItemData.unlock.image:draw(x+37 - width/2,y+yAdd+33)
         
         gfx.setFont(smallFontAmmolite,gfx.kVariantBold)

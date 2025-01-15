@@ -160,12 +160,12 @@ end
 function Player:levelUp()
     self.level += 1
     self.xp = self.xp - self.xpMax
-    self.rerolls += 1
+    -- self.rerolls += 1
     playerBonus.gameData.level += 1
     if math.between(self.level, 1, 4) then
-        self.xpMax += 5
+        self.xpMax += 3
     elseif math.between(self.level, 5, 10) then
-        self.xpMax += 10
+        self.xpMax += 7
     elseif math.between(self.level, 11, 20) then
         self.xpMax += 15
     elseif math.between(self.level, 21, 40) then
