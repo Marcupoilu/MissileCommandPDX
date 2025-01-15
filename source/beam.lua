@@ -11,7 +11,7 @@ end
 function Beam:changeLevel()
     self.level += 1
     if self.level == 2 then
-        self.damage += 0.25
+        self.damage += 0.5
         self.scale += 0.25
     end
     if self.level == 3 then

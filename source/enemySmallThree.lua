@@ -9,7 +9,7 @@ function EnemySmallThree:init(x,y,speed,hp,xp,damage,enemyImage, core)
     self.playerX = player.cannonBaseSprite.x
     self.playerY = player.cannonBaseSprite.y + 20
     self.overrideDirection = false
-    self.amp = 2
+    self.amp = 1
     self.freq = 150
     self.time = 0
     self.randomPoint = {x=math.random(self:getSize(), 400 - self:getSize()),y=self.playerY}
