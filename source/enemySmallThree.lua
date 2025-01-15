@@ -22,7 +22,7 @@ function EnemySmallThree:update()
         self.angle = math.deg(math.atan(self.playerY - self.y, self.playerX - self.x) )
 
     end
-    -- EnemySmallThree.super.update(self)
+    EnemySmallThree.super.update(self)
 
     -- Mettre à jour la position d'origine
     self.originPosition.x = self.x
