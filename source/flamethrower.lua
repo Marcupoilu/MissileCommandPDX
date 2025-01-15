@@ -25,7 +25,6 @@ function Flamethrower:changeLevel()
         self.scale += 0.25
     end
     if self.level == 5 then
-        self.attackSpeed -= 500
         self.projectileAmount += 1
         self.scale += 0.25
         self.damage += 1
