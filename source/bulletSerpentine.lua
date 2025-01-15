@@ -18,7 +18,7 @@ function BulletSerpentine:update()
     self.time += deltaTime
     local waveOffset = self.amp * math.sin(self.time * self.freq)
 
-    local angleRad = math.rad(self.originAngle)
+    local angleRad = math.rad(self.originAngle + self.offset)
     local baseX = self.radius * math.cos(angleRad) + self.originPosition.x
     local baseY = self.radius * math.sin(angleRad) + self.originPosition.y
 

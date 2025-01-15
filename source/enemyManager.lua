@@ -51,7 +51,7 @@ function EnemyManager:update()
                 
                 -- Default bullet collision handling
                 if not value:isa(BulletBlackhole) and not value:isa(BulletDrone) and not value:isa(BulletToxicVape) then
-                    if value:isa(BulletAura) then
+                    if value:isa(BulletAura) or value:isa(bulletFlamethrower) then
                         if enemy:alphaCollision(value) then 
                             self:touchEnemy(value, enemy)
                         else
