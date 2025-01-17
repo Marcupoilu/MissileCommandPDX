@@ -4,6 +4,7 @@ class("Game").extends()
 -- local intervalTime = interval
 
 function Game:init(maxPool, level)
+
     enemyPoolLimit = maxPool
     gfx.setBackgroundColor(gfx.kColorBlack)
     generate = false
@@ -29,6 +30,11 @@ function Game:init(maxPool, level)
     table.each(bullets, function (b)
         b:remove()
     end)
+    table.each(enemies, function (e)
+        e:remove()
+    end)
+    bullets = {}
+    enemies = {}
     self.bgsprite = gfx.sprite.new(self.level.Background)
     self.bgsprite:setCenter(0,0)
     self.bgsprite:moveTo(0,0)

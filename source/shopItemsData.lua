@@ -13,7 +13,7 @@ shopItemsData =
     ShopItem("Shield",table.findByParam(unlocksData, "name","Shield"),250, 0, 5, 1.5),
     ShopItem("Reroll",table.findByParam(unlocksData, "name","Reroll"),350, 0, 5, 1.5),
     ShopItem("Omni",table.findByParam(unlocksData, "name","Omni"),1500, 0, 1, 1.5),
-    ShopItem("Bolter", UnlockCannon("Bolter", gfx.image.new("images/player/cannons/cannon_simpleCannon"), "", nil, table.findByParam(cannonsData, "id", "blaster"),"Starter Weapon : Bolter",100, 0, 5, 1.5),2000, 0, 5, 1.5),
+    ShopItem("Bolter", UnlockCannon("Bolter", gfx.image.new("images/player/cannons/cannon_simpleCannon"), "", nil, table.findByParam(cannonsData, "id", "blaster"),"Starter Weapon : Bolter",100, 0, 4, 1.5),2000, 0, 4, 1.5),
     ShopItem("Laser",table.findByParam(unlocksData, "name","Laser"),2000, 0, 5, 1.5),
     ShopItem("Orbiter",table.findByParam(unlocksData, "name","Orbiter"),2000, 0, 5, 1.5),
     ShopItem("Shotgun",table.findByParam(unlocksData, "name","Shotgun"),2000, 0, 5, 1.5),
