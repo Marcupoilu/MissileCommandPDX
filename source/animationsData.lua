@@ -20,4 +20,6 @@ animationsData =
     ShopBackground = {Name = "Idle", Source = gfx.imagetable.new("images/ui/menus/shop_background"), Delay = 20, Loop = true},
     EndScreen = {Name = "Idle", Source = gfx.imagetable.new("images/ui/menus/end_screen"), Delay = 20, Loop = true},
     AchievementPanel = {Name = "Idle", Source = gfx.imagetable.new("images/ui/menus/achievement_panel"), Delay = 20, Loop = true},
+    MenuOpen = {Name = "Idle", Source = gfx.imagetable.new("images/ui/anim_transition"), Delay = 33, Loop = false},
+    MenuClose = {Name = "Idle", Source = gfx.imagetable.new("images/ui/anim_transition_reverse"), Delay = 33, Loop = false},
 }
