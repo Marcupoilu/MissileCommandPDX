@@ -362,6 +362,7 @@ function UiManager:winScreenUpdate()
             musicPlayer:stop()
             musicPlayer:load("audio/5")
             musicPlayer:play(0)
+            playdate.restart("menu")
             playdate.update = mainMenuUpdate
         end)
         playdate.timer.new(2000, function ()
@@ -376,7 +377,10 @@ local chooseMap = false
 local A = false
 
 function UiManager:mainMenuUpdate()
-
+    if table.contains(playdate.argv, "menu" ) then
+        -- self:OpenMenu()
+        table.remove(playdate.argv, indexOf(playdate.argv, "menu"))
+    end
     gfx.clear(gfx.kColorBlack)
     gfx.setImageDrawMode(gfx.kDrawModeCopy)
     gfx.setDrawOffset(0,0)
