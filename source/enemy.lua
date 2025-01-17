@@ -67,9 +67,9 @@ function Enemy:update()
         self.dotTimer -= refreshRate
         if self.dotTimer <= 0 then
             self.blinkAmount = 5
-            p:moveTo(self.x, self.y)
-            p:add(1)
-            p:update()
+            -- p:moveTo(self.x, self.y)
+            -- p:add(1)
+            -- p:update()
             enemyManager:loseHp(self.dotDamage + (player.damageBonus * self.dotDamage / 100), self)
             self.dotValues -= 1
             self.dotTimer = 300

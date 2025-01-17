@@ -972,7 +972,6 @@ function UiManager:shopUpdate()
         gfx.setImageDrawMode(gfx.kDrawModeCopy)
         shopItem:draw(x,y+yAdd)
         local width, height = shopItemData.unlock.image:getSize()
-        -- printTable(shopItemData.unlock)
         shopItemData.unlock.image:draw(x+37 - width/2,y+yAdd+33)
         
         gfx.setFont(smallFontAmmolite,gfx.kVariantBold)
