@@ -91,6 +91,9 @@ function PlayerBonus:start()
             if shopItem.name == "Damage Up" then
                 shopItem.unlock = UnlockPassive("Damage Up", gfx.image.new("images/ui/icons/damageUp"), "", nil, getUpgradePassive("damageBonus"), "+10% Damage Bonus")
             end
+            if shopItem.name == "Bolter" then
+                shopItem.unlock = UnlockCannon("Bolter", gfx.image.new("images/player/cannons/cannon_simpleCannon"), "", nil, table.findByParam(cannonsData, "id", "blaster"),"Starter Weapon : Bolter",100, 0, 5, 1.5)
+            end
             table.insert(self.gameData.shopItems, shopItem)
         end)
     end

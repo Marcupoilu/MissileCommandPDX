@@ -1,6 +1,6 @@
 class("EnemyManager").extends(gfx.sprite)
 
-p = ParticleCircle(0, 0)
+local p = ParticleCircle(0, 0)
 p:setSize(5, 6)
 p:setColor(gfx.kColorWhite)
 p:setMode(Particles.modes.DECAY)
@@ -120,8 +120,8 @@ function EnemyManager:touchEnemy(value, enemy, bulletHp)
     -- Le reste du traitement pour tous les types de projectiles
     enemy:setImageDrawMode(gfx.kDrawModeFillWhite)
     enemy.blinkAmount = 5
-    p:moveTo(enemy.x, enemy.y)
-    p:add(1)
+    -- p:moveTo(enemy.x, enemy.y)
+    -- p:add(1)
     soundSamplerEnemyImpact:play()
     self:loseHp(value.damage + (player.damageBonus * value.damage / 100), enemy, value.className)
     if not bulletHp then value:loseHp(1) end
@@ -136,8 +136,8 @@ end
 
 function EnemyManager:dotEnemy(value, enemy)
     if table.contains(enemy.currentOverlappingSprites, value) then return end
-    p:moveTo(enemy.x, enemy.y)
-    p:add(1)
+    -- p:moveTo(enemy.x, enemy.y)
+    -- p:add(1)
     table.insert(enemy.currentOverlappingSprites, value)
     enemy.lastTickTime = value.tickTime
     enemy.dotTimer = value.tickTime
@@ -175,6 +175,8 @@ end
 function EnemyManager:death(enemy)
     local index = indexOf(enemies, enemy)
     if not index then return end
+    p:moveTo(enemy.x, enemy.y)
+    p:add(1)
     enemy.dead = true
     if enemy.spawner then enemy.spawner.spawnCount -= 1 end
     table.each(self.timers, function(t) t:remove() end)
