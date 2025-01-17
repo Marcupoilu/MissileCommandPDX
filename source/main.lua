@@ -103,6 +103,11 @@ local updateTimers = playdate.timer.updateTimers
 local spriteUpdate = gfx.sprite.update
 local particleUpdate = Particles.update
 local sequenceUpdate = sequence.update
+printTable(playdate.menu)
+playdate.getSystemMenu():addMenuItem("Main Menu", function ()
+    playdate.restart("menu")
+end)
+
 -- Fonction principale de mise à jour du jeu
 gameUpdate = function()
     -- Cache des valeurs calculées une seule fois par frame

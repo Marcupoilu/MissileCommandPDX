@@ -62,6 +62,7 @@ local chooseCannonArrowRight = gfx.image.new("images/ui/arrow_right")
 local levelUpIndexMax = 2
 
 local closedMenu = true
+menuClose.frame = 30
 local mainMenuPositions = {{x=24,y=55},{x=24,y=120},{x=24,y=185}}
 function UiManager:init()
     self.inventoryWeapons = {}
@@ -74,32 +75,39 @@ function UiManager:displayTitle()
     local x,y = gfx.getDrawOffset()
     gfx.setImageDrawMode(gfx.kDrawModeCopy)
 
-    titleTop:draw(0, titleTopOpen:get() + titleTopClose:get() - y)
-    titleBot:draw(0,titleBotY + titleBotOpen:get() + titleBotClose:get() - y)
+    if closedMenu then
+        menuClose:draw(0,0-y)
+    else
+        menuOpen:draw(0,0-y)
+    end
 end
 
 function UiManager:OpenMenu()
-    titleTopClose:set(0)
-    titleBotClose:set(0)
-    titleTopOpen:restart()
-    titleBotOpen:restart()
+    -- titleTopClose:set(0)
+    -- titleBotClose:set(0)
+    -- titleTopOpen:restart()
+    -- titleBotOpen:restart()
+    menuOpen.frame = 1
     closedMenu = false
     menuMoving = true
     soundSamplerOpenCloseMenu:play()
     playdate.timer.new(1000, function ()
         soundSamplerOpenCloseMenu:stop()
+        menuMoving = false
     end)
 end
 
 function UiManager:CloseMenu()
     closedMenu = true
-    titleTopClose:restart()
-    titleBotClose:restart()
+    -- titleTopClose:restart()
+    -- titleBotClose:restart()
+    menuClose.frame = 1
     menuMoving = true
     soundSamplerOpenCloseMenu:play()
     playdate.timer.new(1000, function ()
         soundSamplerOpenCloseMenu:stop()
         soundSamplerMenuClose:play()
+        menuMoving = false
     end)
 end
 
@@ -381,7 +389,7 @@ local A = false
 
 function UiManager:mainMenuUpdate()
     if table.contains(playdate.argv, "menu" ) then
-        -- self:OpenMenu()
+        self:OpenMenu()
         table.remove(playdate.argv, indexOf(playdate.argv, "menu"))
     end
     gfx.clear(gfx.kColorBlack)
@@ -563,7 +571,7 @@ function UiManager:chooseCannon()
     if playdate.buttonJustPressed(playdate.kButtonA) and A == false then
         player.chosenCanon = cannon
         player:start()
-        game = Game(25,mapIndex)
+        game = Game(20,mapIndex)
         lockInput = true
         self:CloseAndOpenMenu()
         playdate.timer.new(1000, function ()
