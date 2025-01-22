@@ -35,6 +35,12 @@ function SimpleCannon:shoot()
   
     local angles = cutAngle(self.projectileAmount + player.projectileAmount)
     for key, angle in ipairs(angles) do
-        bullet = Bullet(self.x, self.y, self.speed, self.damage, angle, self.scale, nil, gfx.image.new("images/bullets/bullet_cannon" ))
+        local bullet = BulletPool:get(Bullet)
+        if bullet then
+            bullet:reset(self.x, self.y, self.speed, self.damage, angle, self.scale, toMilliseconds(3), gfx.image.new("images/bullets/bullet_cannon" ))
+        else
+            bullet = Bullet(self.x, self.y, self.speed, self.damage, angle, self.scale, toMilliseconds(3), gfx.image.new("images/bullets/bullet_cannon" ))
+            BulletPool:release(bullet) -- On l'ajoute au pool pour la prochaine fois
+        end    
     end
 end

@@ -18,7 +18,7 @@ function Projectile:init(x,y,speed, damage, offsetCrank, scale, duration)
     self.speed = speed + ((player.projectileSpeedBonus*speed)/100)
     self.damage = damage
     self.scale =  scale + ((player.scaleBonus*scale)/100)
-    soundSamplerBullet:play()
+    self.resetTick = false
     if duration ~= nil then
         self.duration = duration + ((player.durationBonus*duration)/100)
     end
@@ -31,6 +31,7 @@ function Projectile:init(x,y,speed, damage, offsetCrank, scale, duration)
         -- self.timer = playdate.timer.new(toMilliseconds(self.duration), function() self:destroy() end) 
     -- end
     table.insert(bullets, self)
+    -- self.active = false
 end
 
 function Projectile:update()
@@ -46,6 +47,30 @@ function Projectile:update()
     end
 end
 
+function Projectile:reset(x, y, speed, damage, angle, scale, duration, hp)
+    self:init(x, y, speed, damage, angle, scale, duration)
+    -- self:moveTo(x, y)
+    -- self.speed = speed
+    -- self.damage = damage
+    -- self.offsetCrank = angle
+    -- self.scale = scale + ((player.scaleBonus*scale)/100)
+    -- if duration ~= nil then
+    --     self.duration = duration + ((player.durationBonus*duration)/100)
+    -- end
+    -- self.hp = 1
+    -- self.radius = 0
+    if hp ~= nil then
+        self.hp = hp
+    end
+    if self.time ~= nil then
+        self.time = 0
+    end
+    self.resetTick = true
+    self.active = true
+    self:add()
+    soundSamplerBullet:play()
+end
+
 function Projectile:destroy()
     if self:isa(BulletBeam) then
         soundSamplerLaserBeam:stop()
@@ -56,7 +81,7 @@ function Projectile:destroy()
     if self.timer ~= nil then
         playdate.timer.remove(self.timer)
     end
-    self:remove()
+    BulletPool:release(self)
 end
 
 function Projectile:destroyWithParticles()
@@ -66,7 +91,7 @@ function Projectile:destroyWithParticles()
     if self.timer ~= nil then
         playdate.timer.remove(self.timer)
     end
-    self:remove()
+    BulletPool:release(self)
 end
 
 function  Projectile:loseHp(damage)

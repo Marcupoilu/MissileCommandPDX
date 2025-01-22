@@ -4,7 +4,9 @@ function Bullet:init(x, y, speed, damage, offsetCrank, scale, duration, bulletIm
     -- Initialize the Bullet object
     self:moveTo(x, y)
     self:add()
-    
+    if self.className == "Bullet" then
+        bulletImage = gfx.image.new("images/bullets/bullet_cannon")
+    end
     -- Set up animations if available
     self.animations = {}
     local animData = animationsData[self.className]
@@ -27,7 +29,6 @@ function Bullet:init(x, y, speed, damage, offsetCrank, scale, duration, bulletIm
     
     -- Pre-compute scale for better performance
     self:setScale(self.scale)
-    
     self:updateImage(bulletImage)
     self:setCenter(0.5, 0.5)
     self:setCollideRect(0, 0, self:getSize())
@@ -38,7 +39,6 @@ function Bullet:animate()
         local currentAnim = table.findByParam(self.animations, "Name", self.state)
         if currentAnim then
             self.currentAnimation = currentAnim.Animation
-
             if not self:isa(BulletAura) then
                 self:setImage(self.currentAnimation:image())
             end
@@ -47,6 +47,7 @@ function Bullet:animate()
 end
 
 function Bullet:update()
+    if not self.active then return end
     Bullet.super.update(self)
     
     -- Destroy the bullet if it goes out of screen bounds
@@ -77,3 +78,4 @@ function Bullet:updateImage(bulletImage)
         end
     end
 end
+

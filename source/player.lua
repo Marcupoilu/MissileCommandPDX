@@ -28,6 +28,18 @@ function Player:init(basePosition, gunPosition)
     self.shopUnlocks = {}
     self.currentUnlocks = {}
     self.chosenCanon = nil
+    self.level = 1
+    self.hpMax = 10 + playerBonus.gameData.hpMax
+    self.hp = self.hpMax
+    self.shield = playerBonus.gameData.shield or 0
+    self.xp, self.xpMax, self.xpBonus = 0, 3, playerBonus.gameData.xpBonus or 0
+    self.damageBonus = playerBonus.gameData.damageBonus or 0
+    self.attackSpeedBonus = playerBonus.gameData.attackSpeedBonus or 0
+    self.scaleBonus = playerBonus.gameData.scaleBonus or 0
+    self.projectileAmount = playerBonus.gameData.projectileAmount or 0
+    self.regenerationRate = playerBonus.gameData.regenerationRate or 0
+    self.projectileSpeedBonus = playerBonus.gameData.projectileSpeedBonus or 0
+    self.durationBonus = playerBonus.gameData.durationBonus or 0
 end
 
 function Player:start()

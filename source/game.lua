@@ -159,12 +159,12 @@ function Game:endGame()
     table.each(spawners, function (s)
         s:stopSpawn()
     end)
-    enemiesCopy = table.shallowcopy(enemies)
-    for key, value in pairs(enemiesCopy) do
+    -- enemiesCopy = table.shallowcopy(enemies)
+    for key, value in pairs(enemies) do
         enemyManager:death(value)
     end
-    bulletsCopy = table.shallowcopy(bullets)
-    for key, value in pairs(bulletsCopy) do
+    -- bulletsCopy = table.shallowcopy(bullets)
+    for key, value in pairs(bullets) do
         value:destroyWithParticles()
     end   
     player.success = true

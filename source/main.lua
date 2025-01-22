@@ -14,6 +14,7 @@ import "screenShake.lua"
 import "spriteShake.lua"
 import "player.lua"
 import "weaponsSource.lua"
+import "bulletPool.lua"
 import "bulletDroneLaser.lua"
 import "enemyManager.lua"
 import "enemiesData.lua"
@@ -94,6 +95,10 @@ time = 0
 deltaTime = 0
 crankPosition = playdate.getCrankPosition()
 game = nil
+
+-- Pooling
+BulletPool:preload(Bullet, 20, 200, 175, 10, 0.7,0, 1, 1, nil)
+BulletPool:preload(BulletSerpentine, 20, 200, 175, 6, 0.3, 1, 1, 3)  
 
 -- Cache des appels fréquents
 local getElapsedTime = playdate.getElapsedTime

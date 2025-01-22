@@ -11,6 +11,7 @@ function BulletSerpentine:init(x,y,speed, damage, offsetCrank, scale, duration, 
     self.freq = 20
     self.time = 0
 end
+
 function BulletSerpentine:update()
     BulletSerpentine.super.update(self)
     self:animate()

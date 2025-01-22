@@ -55,6 +55,13 @@ end
 function Enemy:update()
     -- Enemy.super.update(self)
     table.each(self.currentOverlappingSprites, function (bullet)
+        if bullet.resetTick then
+            table.remove(self.currentOverlappingSprites, indexOf(self.currentOverlappingSprites, bullet))
+            bullet.resetTick = false
+            if bullet.tickTime ~= nil then
+                bullet.tickTime = bullet.tick
+            end
+        end
         if bullet.tickTime ~= nil then
             bullet.tickTime -= refreshRate
             if bullet.tickTime <= 0 then
