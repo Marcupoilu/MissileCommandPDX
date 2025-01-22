@@ -132,9 +132,9 @@ end
 function Player:resetPassiveInventory()
     for _, i in ipairs(uiManager.inventoryPassives) do i:remove() end
     uiManager.inventoryPassives = {}
-    table.each(inventorySpritesPassives, function (is)
-        is:remove()
-    end)
+    -- table.each(inventorySpritesPassives, function (is)
+    --     is:remove()
+    -- end)
     uiManager:createInventory(300, 222, 29, self.passives)
 end
 
