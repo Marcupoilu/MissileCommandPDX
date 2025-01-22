@@ -29,4 +29,5 @@ end
 function UpgradeStat:applyUpgrade()
     UpgradeStat.super.applyUpgrade(self)
     player:addPassive(self)
+    uiManager:updatePassiveLevels()
 end

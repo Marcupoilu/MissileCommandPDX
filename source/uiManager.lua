@@ -60,6 +60,7 @@ local upgradeContour = gfx.image.new("images/ui/menus/upgrade_panel")
 local chooseCannonArrowLeft = gfx.image.new("images/ui/arrow_left")
 local chooseCannonArrowRight = gfx.image.new("images/ui/arrow_right")
 local levelUpIndexMax = 2
+local uiLayout = gfx.image.new("images/ui/ui_layout")  -- Charge l’image une seule fois
 
 local closedMenu = true
 menuClose.frame = 30
@@ -250,40 +251,78 @@ function UiManager:levelUpDisplay()
     
 end
 
-function UiManager:updateLayout()
-    -- Paramétrer le mode et police au début
-    gfx.setImageDrawMode(gfx.kDrawModeFillWhite)
-    gfx.setFont(verySmallFont, gfx.kVariantBold)
+-- 📌 Stockage des textes en images
+local weaponLevelImages = {}
+local passiveLevelImages = {}
+local playerLevelImage = nil
+local timeLeftImage = nil
 
-    -- Affichage des niveaux d'armes
+-- 🔥 Fonction pour générer un texte sous forme d'image
+local function generateTextImage(text, font, imageDrawMode)
+    -- Calculer la largeur du texte
+    local textWidth, textHeight = gfx.getTextSize(text, font)
+    
+    -- Créer l'image avec des dimensions ajustées à la taille du texte
+    local img = gfx.image.new(textWidth, textHeight)
+    
+    gfx.pushContext(img)
+        gfx.setImageDrawMode(imageDrawMode)
+        gfx.setFont(font)
+        gfx.drawText(text, 0, 0)
+    gfx.popContext()
+    
+    return img
+end
+
+-- 🛠 Mise à jour des textes quand les valeurs changent
+function UiManager:updateWeaponLevels()
+    weaponLevelImages = {}  -- Réinitialise
     local offset = 0
     for _, iw in ipairs(inventoryWeaponTexts) do
         local weapon = table.findByParam(player.weapons, "className", iw.type)
         if weapon then
-            local level = tostring(weapon.level)
-            gfx.drawText("Lv."..level, 6 + offset, 235)
+            weaponLevelImages[#weaponLevelImages + 1] = { img = generateTextImage("Lv." .. weapon.level, verySmallFont, gfx.kDrawModeFillWhite), x = 6 + offset }
         end
         offset = offset + 31
     end
+end
 
-    -- Affichage des niveaux passifs
-    offset = 0
+function UiManager:updatePassiveLevels()
+    passiveLevelImages = {}  -- Réinitialise
+    local offset = 0
     for _, ip in ipairs(inventoryPassiveTexts) do
-        local level = tostring(ip.countMax - ip.count)
-        gfx.drawText("Lv."..level, 292 + offset, 235)
+        passiveLevelImages[#passiveLevelImages + 1] = { img = generateTextImage("Lv." .. (ip.countMax - ip.count), verySmallFont, gfx.kDrawModeFillWhite), x = 292 + offset }
         offset = offset + 29
     end
-    gfx.setFont(smallFont, gfx.kVariantBold)
-    -- Afficher les niveaux du joueur et le temps restant
-    gfx.drawText(player.level, 98, 225)
-    
-    gfx.setFont(smallFontVariant)
-    gfx.drawText(timeLeft(time), 373.5, 227)
+end
 
-    -- Affichage des barres de HP et XP
+
+function UiManager:updatePlayerInfo()
+    playerLevelImage = generateTextImage(tostring(player.level), smallFontVariant, gfx.kDrawModeFillWhite)
+    timeLeftImage = generateTextImage(timeLeft(time), smallFontVariant, gfx.kDrawModeFillWhite)
+end
+
+-- 🎮 Fonction d'affichage optimisée
+function UiManager:updateLayout()
+    uiLayout:draw(0, 205)
+
+    -- 📌 Affichage des niveaux d'armes
+    for _, data in ipairs(weaponLevelImages) do
+        data.img:draw(data.x, 235)
+    end
+
+    -- 📌 Affichage des niveaux passifs
+    for _, data in ipairs(passiveLevelImages) do
+        data.img:draw(data.x, 235)
+    end
+    -- 📌 Affichage des infos joueur
+    playerLevelImage:draw(98, 225)
+    timeLeftImage:draw(373.5, 227)
+    self:updateInventory()
     self:createBar(121, 219, player.hpMax, player.hp, 5)
     self:createBar(121, 235, player.xpMax, player.xp, 1)
 end
+
 
 
 function UiManager:winScreenUpdate()
@@ -572,6 +611,8 @@ function UiManager:chooseCannon()
         player.chosenCanon = cannon
         player:start()
         game = Game(20,mapIndex)
+        self:updateWeaponLevels()
+        self:updatePlayerInfo()
         lockInput = true
         self:CloseAndOpenMenu()
         playdate.timer.new(1000, function ()
@@ -1087,29 +1128,46 @@ end
 inventorySpritesWeapons = {}
 inventorySpritesPassives = {}
 
-function UiManager:createInventory(x,y, offset, inventoryTable)
+function UiManager:createInventory(x, y, offset, inventoryTable)
     local offs = 0
     local type = ""
 
+    -- Réinitialise les tableaux des objets à chaque mise à jour
+    inventorySpritesWeapons = {}
+    inventorySpritesPassives = {}
+
     for key, value in pairs(inventoryTable) do
-        local item = gfx.sprite.new(gfx.image.new(value.path.."_small"))
-        item:moveTo(x + offs - 1, y - 2)
-        item:setCenter(0.5,0.5)
-        item:setZIndex(1000)
-        item:setImageDrawMode(gfx.kDrawModeCopy)
-        item:add()
-        offs += offset
+        -- Créer une image à partir du chemin
+        local img = gfx.image.new(value.path .. "_small")  
+        
+        -- Sauvegarde les images dans les tableaux correspondants
         if value.className == "UpgradeWeapon" then
-            table.insert(inventorySpritesWeapons, item)
+            table.insert(inventorySpritesWeapons, {img = img, x = x + offs - 9, y = y - 9})
             type = "weapon"
         else
-            table.insert(inventorySpritesPassives, item)
+            table.insert(inventorySpritesPassives, {img = img, x = x + offs - 9, y = y - 9})
             type = "passive"
         end
+        offs = offs + offset
     end
+
+    -- Met à jour les textes d'arme ou passifs
     if type == "weapon" then
         inventoryWeaponTexts = inventoryTable
     else
         inventoryPassiveTexts = inventoryTable
+    end
+end
+
+-- Fonction pour dessiner l'inventaire, appelée à chaque frame
+function UiManager:updateInventory()
+    -- Dessiner les armes
+    for _, data in ipairs(inventorySpritesWeapons) do
+        data.img:draw(data.x, data.y)
+    end
+
+    -- Dessiner les objets passifs
+    for _, data in ipairs(inventorySpritesPassives) do
+        data.img:draw(data.x, data.y)
     end
 end

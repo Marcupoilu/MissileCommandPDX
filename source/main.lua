@@ -87,13 +87,13 @@ musicPlayer:play(0)
 
 -- Managers -- 
 shake = ScreenShake()
+playerBonus = PlayerBonus()
+player = Player({x = 200, y = 197}, {x = 200, y = 220})
 uiManager = UiManager()
 time = 0
 deltaTime = 0
 crankPosition = playdate.getCrankPosition()
 game = nil
-playerBonus = PlayerBonus()
-player = Player({x = 200, y = 197}, {x = 200, y = 220})
 
 -- Cache des appels fréquents
 local getElapsedTime = playdate.getElapsedTime
@@ -103,7 +103,6 @@ local updateTimers = playdate.timer.updateTimers
 local spriteUpdate = gfx.sprite.update
 local particleUpdate = Particles.update
 local sequenceUpdate = sequence.update
-printTable(playdate.menu)
 playdate.getSystemMenu():addMenuItem("Main Menu", function ()
     playdate.restart("menu")
 end)

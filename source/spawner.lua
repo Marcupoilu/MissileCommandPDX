@@ -2,6 +2,7 @@ class("Spawner").extends()
 
 
 function Spawner:init(spawnTime, maxSpawn, loop)
+
     self.spawnTime = spawnTime
     self.currentTime = spawnTime
     self.maxSpawn = maxSpawn

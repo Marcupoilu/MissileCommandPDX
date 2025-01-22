@@ -110,9 +110,9 @@ function Player:addWeapon(weapon)
 
         for _, i in ipairs(uiManager.inventoryWeapons) do i:remove() end
         uiManager.inventoryWeapons = {}
-        table.each(inventorySpritesWeapons, function (is)
-            is:remove()
-        end)
+        -- table.each(inventorySpritesWeapons, function (is)
+        --     is:remove()
+        -- end)
         uiManager:createInventory(13, 225, 31, weaponUpgrades)
     end
 end
@@ -159,6 +159,7 @@ end
 
 function Player:levelUp()
     self.level += 1
+    uiManager:updatePlayerInfo()
     self.xp = self.xp - self.xpMax
     -- self.rerolls += 1
     playerBonus.gameData.level += 1

@@ -114,8 +114,6 @@ end
 
 function PlayerBonus:addPassive(passive)
     table.each(passive.stats, function (stat)
-        print(stat.name)
-        print(stat.value)
         self.gameData[stat.name] += stat.value
     end)
 end

@@ -129,6 +129,7 @@ function Game:update()
         intervalTime = interval
         self:changeWave()
     end
+    uiManager.updatePlayerInfo()
     -- table.each(debugRects, function(rect)
     --     gfx.setColor(gfx.kColorWhite)
     --     gfx.drawRect(rect)
