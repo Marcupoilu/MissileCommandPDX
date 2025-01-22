@@ -37,9 +37,9 @@ function SimpleCannon:shoot()
     for key, angle in ipairs(angles) do
         local bullet = BulletPool:get(Bullet)
         if bullet then
-            bullet:reset(self.x, self.y, self.speed, self.damage, angle, self.scale, toMilliseconds(3), gfx.image.new("images/bullets/bullet_cannon" ))
+            bullet:reset(self.x, self.y, self.speed, self.damage, angle, self.scale, toMilliseconds(3))
         else
-            bullet = Bullet(self.x, self.y, self.speed, self.damage, angle, self.scale, toMilliseconds(3), gfx.image.new("images/bullets/bullet_cannon" ))
+            bullet = Bullet(self.x, self.y, self.speed, self.damage, angle, self.scale, toMilliseconds(3))
             BulletPool:release(bullet) -- On l'ajoute au pool pour la prochaine fois
         end    
     end
