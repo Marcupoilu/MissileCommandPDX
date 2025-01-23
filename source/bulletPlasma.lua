@@ -12,6 +12,8 @@ function BulletPlasma:init(x,y,speed, damage, offsetCrank, scale, duration)
 end
 
 function BulletPlasma:update()
+    if not self.active then return end
+
     BulletPlasma.super.update(self)
     self:animate()
     
@@ -28,7 +30,7 @@ function BulletPlasma:update()
         self.offset = -self.offset                -- Appliquer l'inversion à l'offset
         self:resetPosAndRot()
     end
-    if self.y <= 0 or self.y >= 240 then
+    if self.y <= 0 or self.y >= 205 then
         self.originAngle = -self.originAngle      -- Inversion verticale
         self.offset = -self.offset                -- Appliquer l'inversion à l'offset
         self:resetPosAndRot()

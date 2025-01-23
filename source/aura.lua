@@ -30,5 +30,11 @@ function Aura:changeLevel()
 end
 
 function Aura:shoot()
-    bulletAura = BulletAura(self.x, self.y, self.speed, self.damage, angle, self.scale, self.duration, self.tick)
+    local bullet = BulletPool:get(BulletAura)
+    if bullet then
+        bullet:reset(self.x, self.y, self.speed, self.damage, angle, self.scale, self.duration, nil, self.tick)
+    else
+        bullet = BulletAura(self.x, self.y, self.speed, self.damage, angle, self.scale, self.duration, nil, self.tick)
+        BulletPool:release(bullet) -- On l'ajoute au pool pour la prochaine fois
+    end
 end

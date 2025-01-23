@@ -17,6 +17,22 @@ function BulletDroneLaser:init(x,y,speed, damage, offsetCrank, scale,duration, a
     self.lineS = playdate.geometry.lineSegment.new(self.startPos.x, self.startPos.y, self.endPos.x, self.endPos.y)
     self.lasers = {}
     self.tick = 150
+end
+
+function BulletDroneLaser:reset(x, y, speed, damage, offsetCrank, scale, duration, angle)
+    self:init(x, y, speed, damage, offsetCrank, scale, duration, angle)
+    -- self:moveTo(x, y)
+    -- self.speed = speed
+    -- self.damage = damage
+    -- self.offsetCrank = angle
+    -- self.scale = scale + ((player.scaleBonus*scale)/100)
+    -- if duration ~= nil then
+    --     self.duration = duration + ((player.durationBonus*duration)/100)
+    -- end
+    -- self.hp = 1
+    -- self.radius = 0
+    self.resetTick = true
+    self.active = true
     table.insert(beams, self)
 end
 
@@ -25,8 +41,9 @@ function BulletDroneLaser:endBeam()
 end
 
 function BulletDroneLaser:update()
+    if not self.active then return end
     BulletDroneLaser.super.update(self)
-    self.radius += self.speed + (((player.projectileSpeedBonus*self.speed)/100)) * deltaTime
+    self.radius += self.speed * deltaTime
     self.direction.x = self.radius*math.cos(math.rad(self.angle - 90 + self.offset)) * deltaTime
     self.direction.y = self.radius*math.sin(math.rad(self.angle - 90 + self.offset)) * deltaTime
     self.angle += self.speed

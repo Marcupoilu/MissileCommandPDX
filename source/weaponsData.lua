@@ -16,8 +16,8 @@ function CreateWeaponsData()
         ToxicVape(toMilliseconds(4), 200, 175, 2, 0.5, 1, 1, toMilliseconds(10)), -- to rework integrally
         Aura(toMilliseconds(3), 200, 175, 1, 0.25, 1, 1, toMilliseconds(3)), -- to rework collision detection
         Blackhole(toMilliseconds(6), 200, 175, 1, 1, 1, 1, toMilliseconds(2)), -- balanced starter / rework direction after blackhole for ennemies
-        Drone(toMilliseconds(5), 200, 175, 4, 0.5, 1, 1, toMilliseconds(3)), -- balanced starter
-        Orbital(toMilliseconds(3), 200, 175, 50, 1, 1, 1), -- balanced starter / rework orbit fonction speed
+        Drone(toMilliseconds(5), 200, 175, 70, 0.5, 1, 1, toMilliseconds(3)), -- balanced starter
+        Orbital(toMilliseconds(3), 200, 175, 50, 1, 1, 1, toMilliseconds(3)), -- balanced starter / rework orbit fonction speed
         BeamReflect(toMilliseconds(5), 200, 175, 10, 2, 1, 3, toMilliseconds(3)), -- balanced starter
         Tracer(toMilliseconds(6), 200, 175, 5, 0.5, 1, 4, toMilliseconds(4))  -- balanced starter
     }

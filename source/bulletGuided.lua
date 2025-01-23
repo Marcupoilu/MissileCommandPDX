@@ -12,6 +12,8 @@ function BulletGuided:init(x,y,speed, damage, offsetCrank, scale, duration)
     -- self:setRotation(self.originAngle + 90)
 end
 function BulletGuided:update()
+    if not self.active then return end
+
     BulletGuided.super.update(self)
     self:animate()
     self.radius += self.speed + (((player.projectileSpeedBonus*self.speed)/100)) * deltaTime

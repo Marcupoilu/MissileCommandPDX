@@ -19,7 +19,23 @@ function BulletFreezer:init(x,y,speed, damage, offsetCrank, scale, duration, fre
     self.duration = duration
     self.lineS = playdate.geometry.lineSegment.new(self.startPos.x, self.startPos.y, self.endPos.x, self.endPos.y)
     self.lasers = {}
-    playdate.timer.new(self.duration, self.endBeam, self)
+    -- playdate.timer.new(self.duration, self.endBeam, self)
+end
+
+function BulletFreezer:reset(x, y, speed, damage, angle, scale, duration, freezeDuration)
+    self:init(x, y, speed, damage, angle, scale, duration, freezeDuration)
+    -- self:moveTo(x, y)
+    -- self.speed = speed
+    -- self.damage = damage
+    -- self.offsetCrank = angle
+    -- self.scale = scale + ((player.scaleBonus*scale)/100)
+    -- if duration ~= nil then
+    --     self.duration = duration + ((player.durationBonus*duration)/100)
+    -- end
+    -- self.hp = 1
+    -- self.radius = 0
+    self.resetTick = true
+    self.active = true
     table.insert(beams, self)
 end
 
@@ -28,6 +44,8 @@ function BulletFreezer:endBeam()
 end
 
 function BulletFreezer:update()
+    if not self.active then return end
+
     BulletFreezer.super.update(self)
     self.angle = player.cannonGunSprite:getRotation()
     self.startPos.x = player.cannonGunSprite.x +(self.height+50) * math.cos(math.rad((self.angle - 90) ))

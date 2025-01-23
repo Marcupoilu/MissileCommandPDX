@@ -41,6 +41,12 @@ function Shockwave:shoot()
     Shockwave.super.shoot()
     local angles = cutAngle(self.projectileAmount + player.projectileAmount)
     for key, angle in ipairs(angles) do
-        bulletShockwave = BulletShockwave(self.x, self.y - 20, self.speed, self.damage, angle, self.scale, self.duration, self.power, self.hp)
+        local bullet = BulletPool:get(BulletShockwave)
+        if bullet then
+            bullet:reset(self.x, self.y, self.speed, self.damage, angle, self.scale, self.duration, self.power, self.hp)
+        else
+            bullet = BulletShockwave(self.x, self.y, self.speed, self.damage, angle, self.scale, self.duration, self.power, self.hp)
+            BulletPool:release(bullet) -- On l'ajoute au pool pour la prochaine fois
+        end
     end
 end

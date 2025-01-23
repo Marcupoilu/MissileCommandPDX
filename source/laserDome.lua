@@ -36,8 +36,12 @@ function LaserDome:shoot()
     --     return 
     -- end
     local angle = 0
-    print("spawn")
-    bulletLaserDome = BulletLaserDome(self.x, self.y - 20, self.speed, self.damage, angle, self.scale, 270)
-    -- bulletLaserDome = BulletLaserDome(self.x, self.y - 20, self.speed, self.damage, angle, self.scale, 90)
+    local bullet = BulletPool:get(BulletLaserDome)
+    if bullet then
+        bullet:reset(self.x, self.y, self.speed, self.damage, angle, self.scale, self.duration)
+    else
+        bullet = BulletLaserDome(self.x, self.y, self.speed, self.damage, angle, self.scale, self.duration)
+        BulletPool:release(bullet) -- On l'ajoute au pool pour la prochaine fois
+    end   
     self.spawned = true
 end

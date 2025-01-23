@@ -16,7 +16,7 @@ function Projectile:init(x,y,speed, damage, offsetCrank, scale, duration)
     self:setGroups({2})
     self:setCollidesWithGroups({3})
     self.speed = speed + ((player.projectileSpeedBonus*speed)/100)
-    self.damage = damage
+    self.damage = damage + ((player.damageBonus*damage)/100)
     self.scale =  scale + ((player.scaleBonus*scale)/100)
     self.resetTick = false
     if duration ~= nil then
@@ -47,7 +47,7 @@ function Projectile:update()
     end
 end
 
-function Projectile:reset(x, y, speed, damage, angle, scale, duration, hp)
+function Projectile:reset(x, y, speed, damage, angle, scale, duration, hp, tick)
     self:init(x, y, speed, damage, angle, scale, duration)
     -- self:moveTo(x, y)
     -- self.speed = speed
@@ -61,6 +61,9 @@ function Projectile:reset(x, y, speed, damage, angle, scale, duration, hp)
     -- self.radius = 0
     if hp ~= nil then
         self.hp = hp
+    end
+    if tick ~= nil then
+        self.tick = tick
     end
     if self.time ~= nil then
         self.time = 0

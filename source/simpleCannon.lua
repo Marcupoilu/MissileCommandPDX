@@ -4,6 +4,7 @@ class("SimpleCannon").extends(Weapon)
 function SimpleCannon:init(attackSpeed, x, y, speed, damage, projectileAmount, scale)
     SimpleCannon.super.init(self, attackSpeed, speed, damage, projectileAmount, scale)
     -- self:debugLevel(10)
+    self.duration = toMilliseconds(3)
     self.x = x
     self.y = y
 end
@@ -37,9 +38,9 @@ function SimpleCannon:shoot()
     for key, angle in ipairs(angles) do
         local bullet = BulletPool:get(Bullet)
         if bullet then
-            bullet:reset(self.x, self.y, self.speed, self.damage, angle, self.scale, toMilliseconds(3))
+            bullet:reset(self.x, self.y, self.speed, self.damage, angle, self.scale, self.duration)
         else
-            bullet = Bullet(self.x, self.y, self.speed, self.damage, angle, self.scale, toMilliseconds(3))
+            bullet = Bullet(self.x, self.y, self.speed, self.damage, angle, self.scale, self.duration)
             BulletPool:release(bullet) -- On l'ajoute au pool pour la prochaine fois
         end    
     end

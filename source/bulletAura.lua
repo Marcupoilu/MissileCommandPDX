@@ -15,7 +15,7 @@ function BulletAura:init(x,y,speed, damage, offsetCrank, scale, duration, tick)
     self.auraVisibleSprite = gfx.sprite.new(self.auraVisible)
     self.auraVisibleSprite:setCenter(0.5,0.5)
     self.auraVisibleSprite:add()
-    self.auraVisibleSprite:setVisible(true)
+    self.auraVisibleSprite:setVisible(false)
     self.auraVisibleSprite:setScale(self.scale)
     self:moveTo(player.cannonBaseSprite.x, player.cannonBaseSprite.y)
     self.auraVisibleSprite:moveTo(player.cannonBaseSprite.x, player.cannonBaseSprite.y)
@@ -24,6 +24,7 @@ function BulletAura:init(x,y,speed, damage, offsetCrank, scale, duration, tick)
 end
 
 function BulletAura:update()
+    if not self.active then return end
     BulletAura.super.update(self)
     self.timerVisible -= refreshRate
     if self.timerVisible < 0 then

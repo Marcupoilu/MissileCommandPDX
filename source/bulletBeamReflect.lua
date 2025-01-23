@@ -23,6 +23,22 @@ function BulletBeamReflect:init(x,y,speed, damage, offsetCrank, scale, duration,
     self.currentAngle = self.originAngle
     self.currentEnemy = nil
     self.tick = 200
+end
+
+function BulletBeamReflect:reset(x, y, speed, damage, angle, scale, duration, hp)
+    self:init(x, y, speed, damage, angle, scale, duration, hp)
+    -- self:moveTo(x, y)
+    -- self.speed = speed
+    -- self.damage = damage
+    -- self.offsetCrank = angle
+    -- self.scale = scale + ((player.scaleBonus*scale)/100)
+    -- if duration ~= nil then
+    --     self.duration = duration + ((player.durationBonus*duration)/100)
+    -- end
+    -- self.hp = 1
+    -- self.radius = 0
+    self.resetTick = true
+    self.active = true
     table.insert(beams, self)
 end
 
@@ -31,6 +47,7 @@ function BulletBeamReflect:endBeam()
 end
 
 function BulletBeamReflect:update()
+    if not self.active then return end
     BulletBeamReflect.super.update(self)
     if self.target ~= nil then
         self.currentAngle = math.deg(math.atan(self.target.y - self.playerY, self.target.x - self.playerX))
@@ -62,7 +79,7 @@ function BulletBeamReflect:update()
                 self.radius = 0
             end
             if self.hp <= 0 then
-                self:endBeam()
+                self:destroy()
             end
         end
     end)

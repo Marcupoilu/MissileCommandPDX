@@ -37,6 +37,12 @@ function Rocket:shoot()
     Rocket.super.shoot()
     local angles = cutAngle(self.projectileAmount + player.projectileAmount)
     for key, angle in ipairs(angles) do
-        bulletRocket = BulletRocket(self.x, self.y - 20, self.speed, self.damage, angle, self.scale, self.duration, self.explosionDamage)
+        local bullet = BulletPool:get(BulletRocket)
+        if bullet then
+            bullet:reset(self.x, self.y, self.speed, self.damage, angle, self.scale, self.duration, self.explosionDamage)
+        else
+            bullet = BulletRocket(self.x, self.y, self.speed, self.damage, angle, self.scale, self.duration, self.explosionDamage)
+            BulletPool:release(bullet) -- On l'ajoute au pool pour la prochaine fois
+        end
     end
 end

@@ -1,28 +1,25 @@
 class("BulletPool").extends()
 
-BulletPool.pools = {} -- Stocke les pools de chaque type de bullet
+BulletPool.pools = {} 
 
--- 📌 Récupérer une bullet depuis le pool
 function BulletPool:get(bulletClass)
     local pool = self.pools[bulletClass]
     if pool and #pool > 0 then
-        return table.remove(pool) -- 🔹 Récupère une bullet existante
+        return table.remove(pool)
     end
-    return nil -- 🔹 Aucun objet dispo dans le pool
+    return nil 
 end
 
--- 📌 Ajouter une bullet au pool (quand elle est désactivée)
 function BulletPool:release(bullet)
-    local bulletClass = bullet.__index -- 🔹 Identifie la classe de la bullet
+    local bulletClass = bullet.__index 
     if not self.pools[bulletClass] then
-        self.pools[bulletClass] = {} -- 🔹 Créer un pool s'il n'existe pas encore
+        self.pools[bulletClass] = {} 
     end
-    bullet.active = false -- 🔹 Désactive la bullet
-    bullet:remove() -- 🔹 La retire du moteur de rendu
-    table.insert(self.pools[bulletClass], bullet) -- 🔹 Remet la bullet dans le pool
+    bullet.active = false 
+    bullet:remove() 
+    table.insert(self.pools[bulletClass], bullet) 
 end
 
--- 📌 Initialiser un pool avec des bullets préchargées
 function BulletPool:preload(bulletClass, count, ...)
     if not self.pools[bulletClass] then
         self.pools[bulletClass] = {}

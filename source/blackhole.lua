@@ -34,6 +34,12 @@ function Blackhole:shoot()
     Blackhole.super.shoot()
     local angles = cutAngle(self.projectileAmount + player.projectileAmount)
     for key, angle in ipairs(angles) do
-        bulletBlackhole = BulletBlackhole(self.x, self.y - 20, self.speed, self.damage, angle, self.scale, self.duration)
+        local bullet = BulletPool:get(BulletBlackhole)
+        if bullet then
+            bullet:reset(self.x, self.y, self.speed, self.damage, angle, self.scale, self.duration)
+        else
+            bullet = BulletBlackhole(self.x, self.y, self.speed, self.damage, angle, self.scale, self.duration)
+            BulletPool:release(bullet) -- On l'ajoute au pool pour la prochaine fois
+        end
     end
 end

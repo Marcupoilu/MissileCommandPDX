@@ -39,6 +39,12 @@ function ToxicVape:shoot()
     ToxicVape.super.shoot()
     local angles = cutAngle(self.projectileAmount + player.projectileAmount)
     for key, angle in ipairs(angles) do
-        bulletToxicVape = BulletToxicVape(self.x, self.y - 20, self.speed, self.damage, angle, self.scale, self.duration, self.tickNumber, self.spread, self.tickTime, self.tick)
+        local bullet = BulletPool:get(BulletToxicVape)
+        if bullet then
+            bullet:reset(self.x, self.y, self.speed, self.damage, angle, self.scale, self.duration, self.tickNumber, self.spread, self.tickTime, self.tick)
+        else
+            bullet = BulletToxicVape(self.x, self.y, self.speed, self.damage, angle, self.scale, self.duration, self.tickNumber, self.spread, self.tickTime, self.tick)
+            BulletPool:release(bullet) -- On l'ajoute au pool pour la prochaine fois
+        end
     end
 end

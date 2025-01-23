@@ -35,6 +35,12 @@ function Tracer:shoot()
     Tracer.super.shoot()
     local angles = cutAngle(self.projectileAmount + player.projectileAmount)
     for key, angle in ipairs(angles) do
-        bulletTracer = BulletTracer(self.x, self.y - 20, self.speed, self.damage, angle, self.scale, self.duration)
+        local bullet = BulletPool:get(BulletTracer)
+        if bullet then
+            bullet:reset(self.x, self.y, self.speed, self.damage, angle, self.scale, self.duration)
+        else
+            bullet = BulletTracer(self.x, self.y, self.speed, self.damage, angle, self.scale, self.duration)
+            BulletPool:release(bullet) -- On l'ajoute au pool pour la prochaine fois
+        end
     end
 end

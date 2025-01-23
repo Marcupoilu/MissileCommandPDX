@@ -13,6 +13,8 @@ function BulletSerpentine:init(x,y,speed, damage, offsetCrank, scale, duration, 
 end
 
 function BulletSerpentine:update()
+    if not self.active then return end
+
     BulletSerpentine.super.update(self)
     self:animate()
     self.radius += self.speed + (((player.projectileSpeedBonus*self.speed)/100)) * deltaTime

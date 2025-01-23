@@ -82,11 +82,17 @@ function EnemyManager:processDroneBullet(value, enemy)
     local sprite = gfx.sprite.new(gfx.image.new("images/bullets/bullet_drone"))
     sprite:moveTo(value.x, value.y)
     sprite:add()
-    local droneBullet = {Bullet=sprite, Time=value.duration}
+    local droneBullet = {Bullet=sprite, Time=value.duration *1.5}
     table.insert(self.droneBullets, droneBullet)
     local angles = cutAngle(value.projectileAmount + player.projectileAmount)
     for _, angle in ipairs(angles) do
-        BulletDroneLaser(value.x, value.y, value.speed / 2, value.damage, angle, value.scale*4, value.duration, 0)
+        local bullet = BulletPool:get(BulletDroneLaser)
+        if bullet then
+            bullet:reset(value.x, value.y, value.speed/6, value.damage, angle, value.scale*4, value.duration *1.5, 0)
+        else
+            bullet = BulletDroneLaser(value.x, value.y, value.speed/6, value.damage, angle, value.scale*4, value.duration*1.5, 0)
+            BulletPool:release(bullet) -- On l'ajoute au pool pour la prochaine fois
+        end
     end
     value:loseHp(1)
 end
@@ -101,7 +107,13 @@ function EnemyManager:processShockwaveBullet(value, enemy)
 end
 
 function EnemyManager:processRocketBullet(value, enemy)
-    BulletExplosion(enemy.x, enemy.y, value.speed, value.damage + (player.damageBonus * value.damage / 100), value.offset, value.scale, value.duration, value.explosionDamage)
+    local bullet = BulletPool:get(BulletExplosion)
+    if bullet then
+        bullet:reset(enemy.x, enemy.y, value.speed, value.damage + (player.damageBonus * value.damage / 100), value.offset, value.scale, value.duration, value.explosionDamage)
+    else
+        bullet = BulletExplosion(enemy.x, enemy.y, value.speed, value.damage + (player.damageBonus * value.damage / 100), value.offset, value.scale, value.duration, value.explosionDamage)
+        BulletPool:release(bullet) -- On l'ajoute au pool pour la prochaine fois
+    end
 end
 
 function EnemyManager:touchEnemy(value, enemy, bulletHp)

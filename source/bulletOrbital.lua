@@ -1,6 +1,8 @@
 class("BulletOrbital").extends(Bullet)
 
-function BulletOrbital:init(x,y,speed, damage, offsetCrank, scale, duration, bulletImage, originAngle, originPosition)
+local bulletImage = gfx.image.new("images/bullets/bullet_orbital" )
+
+function BulletOrbital:init(x,y,speed, damage, offsetCrank, scale, duration, originAngle, originPosition)
     BulletOrbital.super.init(self,x,y,speed, damage, offsetCrank, scale, duration, bulletImage)
     self.hp = 1
     self.rot = 0
@@ -15,11 +17,12 @@ function BulletOrbital:init(x,y,speed, damage, offsetCrank, scale, duration, bul
     self.amp = 2
     self.freq = 300
     self.time = 0
-
 end
 
 
 function BulletOrbital:update()
+    if not self.active then return end
+
     BulletOrbital.super.update(self)
     local x = math.cos(self.originAngle)
     local y = math.sin(self.originAngle)

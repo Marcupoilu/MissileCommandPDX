@@ -21,6 +21,22 @@ function BulletTracer:init(x,y,speed, damage, offsetCrank, scale, duration)
     self.playerPos.y = player.cannonGunSprite.y
     self.offsetHeight = 35
     self.tick = 150
+end
+
+function BulletTracer:reset(x, y, speed, damage, angle, scale, duration)
+    self:init(x, y, speed, damage, angle, scale, duration)
+    -- self:moveTo(x, y)
+    -- self.speed = speed
+    -- self.damage = damage
+    -- self.offsetCrank = angle
+    -- self.scale = scale + ((player.scaleBonus*scale)/100)
+    -- if duration ~= nil then
+    --     self.duration = duration + ((player.durationBonus*duration)/100)
+    -- end
+    -- self.hp = 1
+    -- self.radius = 0
+    self.resetTick = true
+    self.active = true
     table.insert(beams, self)
 end
 
@@ -29,6 +45,8 @@ function BulletTracer:endBeam()
 end
 
 function BulletTracer:update()
+    if not self.active then return end
+
     BulletTracer.super.update(self)
 
     self.startPos.x = self.playerPos.x +(self.height+self.offsetHeight) * math.cos(math.rad((self.originAngle)))

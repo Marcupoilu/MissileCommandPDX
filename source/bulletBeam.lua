@@ -25,6 +25,22 @@ function BulletBeam:init(x, y, speed, damage, offsetCrank, scale, duration)
     gfx_setLineCapStyle(gfx.kLineCapStyleRound)
     gfx_setColor(gfx.kColorWhite)
     gfx_setLineWidth(self.scale)
+end
+
+function BulletBeam:reset(x, y, speed, damage, angle, scale, duration)
+    self:init(x, y, speed, damage, angle, scale, duration)
+    -- self:moveTo(x, y)
+    -- self.speed = speed
+    -- self.damage = damage
+    -- self.offsetCrank = angle
+    -- self.scale = scale + ((player.scaleBonus*scale)/100)
+    -- if duration ~= nil then
+    --     self.duration = duration + ((player.durationBonus*duration)/100)
+    -- end
+    -- self.hp = 1
+    -- self.radius = 0
+    self.resetTick = true
+    self.active = true
     table.insert(beams, self)
 end
 
@@ -36,6 +52,8 @@ function BulletBeam:endBeam()
 end
 
 function BulletBeam:update()
+    if not self.active then return end
+
     BulletBeam.super.update(self)
     
     local playerSprite = player.cannonGunSprite
