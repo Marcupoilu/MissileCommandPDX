@@ -42,12 +42,12 @@ enemiesData =
     -- STRAIGHT 300 HP
     EnemyLargeOne = {speed = 20, hp = 300, xp = 15, damage = 5, enemyImage = gfx.image.new("images/enemies/large/enemy_large_01"), core = 15},
 
-    -- STRAIGHT 400 HP
+    -- SLOW STRAIGHT 400 HP
     EnemyLargeTwo = {speed = 10, hp = 400, xp = 20, damage = 15, enemyImage = gfx.image.new("images/enemies/large/enemy_large_02"), core = 20},
 
-    -- STRAIGHT 600 HP
+    -- SLOW STRAIGHT 600 HP
     EnemyLargeThree = {speed = 10, hp = 600, xp = 30, damage = 20, enemyImage = gfx.image.new("images/enemies/large/enemy_large_03"), core = 30},
 
-    -- STRAIGHT 1000 HP
+    -- VERY SLOW STRAIGHT 1000 HP
     EnemyLargeFour = {speed = 5, hp = 1000, xp = 50, damage = 50, enemyImage = gfx.image.new("images/enemies/large/enemy_large_04"), core = 60}
 }
