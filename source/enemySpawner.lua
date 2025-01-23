@@ -10,6 +10,13 @@ function EnemySpawner:spawn()
     if table.count(enemies) >= enemyPoolLimit then
         return
     end
-    EnemySpawner.super.spawn(self, self.enemy(0, self.y, self.enemyData.speed, self.enemyData.hp, self.enemyData.xp, self.enemyData.damage, self.enemyData.enemyImage, self.enemyData.core))
+    local enemy = BulletPool:get(self.enemy)
+    if enemy then
+        enemy:reset(0, self.y, self.enemyData.speed, self.enemyData.hp, self.enemyData.xp, self.enemyData.damage, self.enemyData.enemyImage, self.enemyData.core)
+    else
+        enemy = self.enemy(0, self.y, self.enemyData.speed, self.enemyData.hp, self.enemyData.xp, self.enemyData.damage, self.enemyData.enemyImage, self.enemyData.core)
+        BulletPool:release(enemy) -- On l'ajoute au pool pour la prochaine fois
+    end 
+    EnemySpawner.super.spawn(self, enemy)
     self.enemy.spawner = self
 end

@@ -192,7 +192,8 @@ function EnemyManager:death(enemy)
     enemy.dead = true
     if enemy.spawner then enemy.spawner.spawnCount -= 1 end
     table.each(self.timers, function(t) t:remove() end)
-    enemy:remove()
+    BulletPool:release(enemy)
+    -- enemy:remove()
     table.remove(enemies, index)
     if enemy.boss ~= nil then
         soundSamplerBossDeath:play()

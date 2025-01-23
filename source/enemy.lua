@@ -38,6 +38,9 @@ function Enemy:init(x,y,speed,hp, xp, damage, enemyImage, core)
     self.dotTimer = 0
     self.lastTickTime = 0
     self.dotDamage = 0
+    if enemyImage ~= nil then
+        self.enemyImage = enemyImage
+    end
     -- self.fx = FX(self.x, self.y, "AnimationHit")
     -- self:setScale(1)
     if table.getsize(self.animations) <= 0 then
@@ -51,6 +54,7 @@ function Enemy:init(x,y,speed,hp, xp, damage, enemyImage, core)
     self:moveTo(x,y)
     self:add()
 end
+
 
 function Enemy:update()
     -- Enemy.super.update(self)

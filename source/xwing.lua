@@ -10,7 +10,15 @@ function Xwing:init(x,y,speed,hp,xp,damage, enemyImage, core)
     self.overrideDirection = false
 end
 
+
+function Xwing:reset(x,y,speed,hp,xp,damage,enemyImage,core)
+    self:init(x,y,speed,hp,xp,damage,enemyImage,core)
+    self.active = true
+    self:add()
+end
+
 function Xwing:update()
+    if not self.active then return end
     if self.overrideDirection == false then
         self.angle = math.deg(math.atan(self.playerY - self.y, self.playerX - self.x) )
     end

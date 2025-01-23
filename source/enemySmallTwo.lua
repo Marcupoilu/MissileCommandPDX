@@ -14,7 +14,14 @@ function EnemySmallTwo:init(x,y,speed,hp,xp,damage, enemyImage, core)
     self.randomPoint = {x=math.random(self:getSize(), 400 - self:getSize()),y=self.playerY}
 end
 
+function EnemySmallTwo:reset(x,y,speed,hp,xp,damage,enemyImage,core)
+    self:init(x,y,speed,hp,xp,damage,enemyImage,core)
+    self.active = true
+    self:add()
+end
+
 function EnemySmallTwo:update()
+    if not self.active then return end
     if self.overrideDirection == false then
         -- self.angle = math.deg(math.atan(self.randomPoint.y - self.y, self.randomPoint.x - self.x) )
         self.angle = math.deg(math.atan(self.playerY - self.y, self.playerX - self.x) )

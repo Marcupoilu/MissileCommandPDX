@@ -20,7 +20,14 @@ function EnemySmallFive:init(x,y,speed,hp,xp,damage, enemyImage, core)
     end
 end
 
+function EnemySmallFive:reset(x,y,speed,hp,xp,damage,enemyImage,core)
+    self:init(x,y,speed,hp,xp,damage,enemyImage,core)
+    self.active = true
+    self:add()
+end
+
 function EnemySmallFive:update()
+    if not self.active then return end
     if self.overrideDirection == false then
         -- self.angle = math.deg(math.atan(self.currentPoint.y - self.y, self.currentPoint.x - self.x) )
         self.angle = math.deg(math.atan(self.playerY - self.y, self.playerX - self.x) )
