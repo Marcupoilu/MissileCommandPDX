@@ -63,7 +63,7 @@ local levelUpIndexMax = 2
 local uiLayout = gfx.image.new("images/ui/ui_layout")  -- Charge l’image une seule fois
 
 local closedMenu = true
-menuClose.frame = 30
+menuClose.frame = 50
 local mainMenuPositions = {{x=24,y=55},{x=24,y=120},{x=24,y=185}}
 function UiManager:init()
     self.inventoryWeapons = {}
@@ -340,14 +340,14 @@ function UiManager:winScreenUpdate()
     gfx.setFont(diamond_20,gfx.kVariantItalic)
     gfx.setImageDrawMode(gfx.kDrawModeFillWhite)
     if player.success == true then
-        gfx.drawTextAligned("WIN", rectWidth, 20+ endScreenTweet:get(), kTextAlignment.center)
+        gfx.drawTextAligned("THREAT NEUTRALIZED", rectWidth, 20+ endScreenTweet:get(), kTextAlignment.center)
     else
-        gfx.drawTextAligned("LOSE", rectWidth, 20+ endScreenTweet:get(), kTextAlignment.center)
+        gfx.drawTextAligned("SIGNAL LOST", rectWidth, 20+ endScreenTweet:get(), kTextAlignment.center)
     end
     -- middle part
     core:draw( 50,70 + endScreenTweet:get())
     gfx.setFont(smallFontAmmolite,gfx.kVariantItalic)
-    gfx.drawTextAligned("X"..player.core, 90, 90 + endScreenTweet:get(), kTextAlignment.center)
+    gfx.drawTextAligned("X"..player.core, 90, 80 + endScreenTweet:get(), kTextAlignment.center)
     local screenWidth = playdate.display.getWidth()
     local screenHeight = playdate.display.getHeight()
     local enemyImage = enemy:scaledImage(1)
@@ -355,14 +355,14 @@ function UiManager:winScreenUpdate()
     local imageX = (screenWidth - imageWidth) / 2
     local imageY = (screenHeight - imageHeight) / 2
     gfx.setImageDrawMode(gfx.kDrawModeCopy)
-    enemyImage:draw(imageX, imageY - 32 + endScreenTweet:get())
+    enemyImage:draw(imageX - 12, imageY - 35 + endScreenTweet:get())
     gfx.setImageDrawMode(gfx.kDrawModeFillWhite)
-    gfx.drawTextAligned("X"..player.enemiesKilled, imageX + 40, 90 + endScreenTweet:get(), kTextAlignment.center)
+    gfx.drawTextAligned("X"..player.enemiesKilled, imageX + 40, 80 + endScreenTweet:get(), kTextAlignment.center)
     gfx.setImageDrawMode(gfx.kDrawModeFillWhite)
     gfx.setFont(diamond_20,gfx.kVariantItalic)
-    gfx.drawTextAligned("LV", 310, 85 + endScreenTweet:get(), kTextAlignment.center)
+    gfx.drawTextAligned("LV", 305, 77 + endScreenTweet:get(), kTextAlignment.center)
     gfx.setFont(smallFontAmmolite,gfx.kVariantItalic)
-    gfx.drawTextAligned("X"..player.level, 330, 91 + endScreenTweet:get(), kTextAlignment.center)
+    gfx.drawTextAligned("X"..player.level, 330, 80 + endScreenTweet:get(), kTextAlignment.center)
     -- unlock part
     gfx.setColor(gfx.kColorWhite)
     local width = rectWidth + 150 
