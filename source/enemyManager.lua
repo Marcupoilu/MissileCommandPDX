@@ -99,7 +99,7 @@ function EnemyManager:touchEnemy(value, enemy)
     enemy:setImageDrawMode(gfx.kDrawModeFillWhite)
     enemy.blinkAmount = 5
     soundSamplerEnemyImpact:play()
-    self:loseHp(value.damage + (player.damageBonus * value.damage / 100), enemy)
+    self:loseHp(value.damage, enemy)
     value:loseHp(1)
     value.tickTime = value.tick
     table_insert(enemy.currentOverlappingSprites, value)
