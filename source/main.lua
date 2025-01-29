@@ -54,7 +54,7 @@ import "shopItemsData"
 import "playerBonus.lua"
 import "FX.lua"
 
-playdate.display.setRefreshRate(50)
+playdate.display.setRefreshRate(30)
 createWavesData()
 -- Collections --
 upgrades = upgradesData
