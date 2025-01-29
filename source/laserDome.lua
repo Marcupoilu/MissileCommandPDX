@@ -18,7 +18,7 @@ function LaserDome:changeLevel()
         self.speed += 2
     end
     if self.level == 3 then
-        self.tickTime -= 100
+        self.damage += 0.5
         self.scale += 0.25
     end
     if self.level == 4 then
