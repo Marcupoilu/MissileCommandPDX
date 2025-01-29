@@ -1,15 +1,17 @@
 class("BulletLaserDome").extends(Projectile)
 
-function BulletLaserDome:init(x, y, speed, damage, offsetCrank, scale, angle)
-    BulletLaserDome.super.init(self, x, y, speed, damage, offsetCrank, scale)
+function BulletLaserDome:init(x, y, speed, damage, offsetCrank, scale, duration, tick)
+    BulletLaserDome.super.init(self, x, y, speed, damage, offsetCrank, scale, duration)
+    self.hp = 999
     self.maxLength = playdate.display.getWidth() -- Laser couvre toute la largeur de l'écran
     self.startPos = {x = 0, y = player.y - 7}
     self.endPos = {x = self.maxLength, y = self.startPos.y}
     self.speed = speed
+    self.tick = tick
 end
 
-function BulletLaserDome:reset(x, y, speed, damage, angle, scale, duration)
-    self:init(x, y, speed, damage, angle, scale, duration)
+function BulletLaserDome:reset(x, y, speed, damage, angle, scale,duration, tick)
+    self:init(x, y, speed, damage, angle, scale,duration, tick)
     -- self:moveTo(x, y)
     -- self.speed = speed
     -- self.damage = damage
