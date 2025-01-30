@@ -47,7 +47,8 @@ function Game:startGame()
     
     for _, w in ipairs(player.chosenCanon.weapons) do
         local weapon = table.findByParam(weaponsData, "className", w.className)
-        for _ = 1, player.chosenCanon.weaponLevel - 2 do
+        print(player.chosenCanon.weaponLevel)
+        for _ = 1, player.chosenCanon.weaponLevel -1 do
             weapon:changeLevel()
         end
         player:addWeapon(weapon)
@@ -119,6 +120,7 @@ function Game:changeWave()
 end
 
 function Game:endGame()
+    -- uiManager:OpenAndCloseMenu()
     lockInput = false
     self.finish = true
     
