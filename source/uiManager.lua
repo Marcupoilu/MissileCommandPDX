@@ -425,6 +425,7 @@ end
 local chooseCannonBool = false
 local chooseMap = false
 local A = false
+local mapIndex = 1
 
 function UiManager:mainMenuUpdate()
     if table.contains(playdate.argv, "menu" ) then
@@ -504,6 +505,7 @@ function UiManager:mainMenuUpdate()
     end
     if chooseMap == true then
         selectionScreen:draw(playdate.display.getWidth() /2 - 150, selectionScreenOpen:get())
+        mapIndex = playerBonus.gameData.mapCount
         self:chooseMap()
         if playdate.buttonJustPressed(playdate.kButtonB) and selectionScreenOpen:isDone() then
             selectionScreenOpen:from(0):to(-250, 1, "easeOutSine")
@@ -523,7 +525,6 @@ function UiManager:mainMenuUpdate()
     end
 end
 
-local mapIndex = 1
 
 function UiManager:chooseMap()
     if playdate.buttonJustPressed(playdate.kButtonRight) then

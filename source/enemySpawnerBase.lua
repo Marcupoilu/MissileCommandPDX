@@ -12,18 +12,23 @@ function EnemySpawnerBase:spawn(enemy)
     local enemySize = enemy:getSize()
     local positionX, positionY
 
-    -- Détermine la zone de spawn
-    local spawnZones = {
-        {50, width - 50, 0, 0},                     -- Haut
-        {-enemySize, -enemySize, 0, height / 2 - 40}, -- Gauche
-        {width + enemySize, width + enemySize, 0, height / 2 - 40} -- Droite
-    }
-    
-    local x1, x2, y1, y2 = table.unpack(spawnZones[math.random(1, 3)])
-
-    -- Génère une position jusqu'à ce qu'elle soit valide
-    repeat
+    if enemy.boss then
+        -- Les boss spawnent toujours en haut de l'écran
+        positionX = math.random(50, width - 50)
+        positionY = 0
+    else
+        -- Détermine la zone de spawn pour les ennemis normaux
+        local spawnZones = {
+            {50, width - 50, 0, 0},                       -- Haut
+            {-enemySize, -enemySize, 0, height / 2 - 40}, -- Gauche
+            {width + enemySize, width + enemySize, 0, height / 2 - 40} -- Droite
+        }
+        local x1, x2, y1, y2 = table.unpack(spawnZones[math.random(1, 3)])
         positionX, positionY = math.random(x1, x2), math.random(y1, y2)
+    end
+
+    -- Vérifie si la position est valide avant de valider le spawn
+    repeat
         enemy:moveTo(positionX, positionY)
         enemy.x, enemy.y = positionX, positionY
         enemy.originPosition.x, enemy.originPosition.y = positionX, positionY

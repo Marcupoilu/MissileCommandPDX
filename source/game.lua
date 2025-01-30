@@ -44,10 +44,10 @@ function Game:startGame()
     for _, su in ipairs(player.shopUnlocks) do su.count = su.countMax end
     
     if bulletSprite then bulletSprite:remove() end
-    
+    local weaponLevel = 1
     for _, w in ipairs(player.chosenCanon.weapons) do
         local weapon = table.findByParam(weaponsData, "className", w.className)
-        print(player.chosenCanon.weaponLevel)
+        weaponLevel = player.chosenCanon.weaponLevel
         for _ = 1, player.chosenCanon.weaponLevel -1 do
             weapon:changeLevel()
         end
@@ -57,7 +57,7 @@ function Game:startGame()
     createUpgradesData()
     for _, w in ipairs(player.chosenCanon.weapons) do
         local weapon = table.findByParam(player.shopUnlocks, "type", w.className)
-        weapon.count = weapon.count - 1
+        weapon.count = weapon.count - weaponLevel
     end
         -- player:addWeapon(table.findByParam(weaponsData, "className", "Beam"))
     -- player:addWeapon(table.findByParam(weaponsData, "className", "Wiper"))

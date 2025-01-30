@@ -6,30 +6,31 @@ p:setColor(gfx.kColorWhite)
 p:setMode(Particles.modes.DECAY)
 p:setSpeed(3, 7)
 
-local math_deg, math_atan = math.deg, math.atan
-local table_insert, table_remove = table.insert, table.remove
+local math_deg = math.deg
+local math_atan = math.atan
 
 function EnemyManager:init()
     EnemyManager.super.init(self)
     self.timers = {}
-    self.droneBullets = {}
+    self.droneBullets = {Bullet="", Time=0}
+end
+
+function EnemyManager:changeState(state)
+    if self.state ~= state then
+        self.state = state
+    end
 end
 
 function EnemyManager:update()
-    -- Mise à jour des balles drones
-    for i = #self.droneBullets, 1, -1 do
-        local bullet = self.droneBullets[i]
+    for _, bullet in ipairs(self.droneBullets) do
         bullet.Time -= refreshRate
         if bullet.Time <= 0 then
             bullet.Bullet:remove()
-            table_remove(self.droneBullets, i)
+            table.remove(self.droneBullets, indexOf(self.droneBullets, bullet))
         end
     end
-    
-    -- Mise à jour des ennemis
-    for i = #enemies, 1, -1 do
-        local enemy = enemies[i]
-        if enemy.animations and #enemy.animations > 0 then
+    for _, enemy in ipairs(enemies) do
+        if #enemy.animations > 0 then
             local anim = table.findByParam(enemy.animations, "Name", enemy.state)
             if anim then
                 enemy.currentAnimation = anim.Animation
@@ -37,12 +38,31 @@ function EnemyManager:update()
             end
         end
 
-        -- Vérification des collisions
+        -- Process collisions
         local collisions = enemy:overlappingSprites()
-        for _, obj in ipairs(collisions) do
-            if obj:isa(Bullet) and not table.contains(enemy.currentOverlappingSprites, obj) then
-                self:handleBulletCollision(obj, enemy)
-            elseif obj:isa(UISprite) or obj:getTag() == 1 then
+        for _, value in ipairs(collisions) do
+            if value:isa(Bullet) and not table.contains(enemy.currentOverlappingSprites, value) then
+                -- Process different bullet types
+                if value:isa(BulletBlackhole) then self:processBlackholeBullet(value, enemy) end
+                if value:isa(BulletDrone) then self:processDroneBullet(value, enemy) return end
+                if value:isa(BulletToxicVape) then self:dotEnemy(value, enemy) end
+                if value:isa(BulletShockwave) then self:processShockwaveBullet(value, enemy) end
+                if value:isa(BulletRocket) then self:processRocketBullet(value, enemy) end
+                
+                -- Default bullet collision handling
+                if not value:isa(BulletBlackhole) and not value:isa(BulletDrone) and not value:isa(BulletToxicVape) then
+                    if value:isa(BulletAura) or value:isa(bulletFlamethrower) then
+                        if enemy:alphaCollision(value) then 
+                            self:touchEnemy(value, enemy)
+                        else
+                        end
+                    else
+                        self:touchEnemy(value, enemy)
+                    end
+                end
+            end
+
+            if value:isa(UISprite) or value:getTag() == 1 then
                 shake:setShakeAmount(15)
                 player:loseHp(enemy.damage)
                 self:death(enemy)
@@ -51,31 +71,9 @@ function EnemyManager:update()
     end
 end
 
-function EnemyManager:handleBulletCollision(value, enemy)
-    if value:isa(BulletBlackhole) then 
-        self:processBlackholeBullet(value, enemy) 
-    elseif value:isa(BulletDrone) then 
-        self:processDroneBullet(value, enemy) 
-        return 
-    elseif value:isa(BulletToxicVape) then 
-        self:dotEnemy(value, enemy) 
-    elseif value:isa(BulletShockwave) then 
-        self:processShockwaveBullet(value, enemy) 
-    elseif value:isa(BulletRocket) then 
-        self:processRocketBullet(value, enemy) 
-    else
-        if value:isa(BulletAura) or value:isa(bulletFlamethrower) then
-            if enemy:alphaCollision(value) then 
-                self:touchEnemy(value, enemy) 
-            end
-        else
-            self:touchEnemy(value, enemy) 
-        end
-    end
-end
-
 function EnemyManager:processBlackholeBullet(value, enemy)
-    enemy.radius, enemy.angle = 0, math_deg(math_atan(value.y - enemy.y, value.x - enemy.x))
+    local dx, dy = value.x - enemy.x, value.y - enemy.y
+    enemy.radius, enemy.angle = 0, math_deg(math_atan(dy, dx))
     enemy.originPosition.x, enemy.originPosition.y = enemy.x, enemy.y
     enemy.overrideDirection = true
 end
@@ -84,42 +82,104 @@ function EnemyManager:processDroneBullet(value, enemy)
     local sprite = gfx.sprite.new(gfx.image.new("images/bullets/bullet_drone"))
     sprite:moveTo(value.x, value.y)
     sprite:add()
-    table_insert(self.droneBullets, {Bullet = sprite, Time = value.duration * 1.5})
+    local droneBullet = {Bullet=sprite, Time=value.duration *1.5}
+    table.insert(self.droneBullets, droneBullet)
     local angles = cutAngle(value.projectileAmount + player.projectileAmount)
     for _, angle in ipairs(angles) do
-        local bullet = BulletPool:get(BulletDroneLaser) or BulletDroneLaser(value.x, value.y, value.speed / 6, value.damage, angle, value.scale * 4, value.duration * 1.5, 0)
-        bullet:reset(value.x, value.y, value.speed / 6, value.damage, angle, value.scale * 4, value.duration * 1.5, 0)
-        BulletPool:release(bullet)
+        local bullet = BulletPool:get(BulletDroneLaser)
+        if bullet then
+            bullet:reset(value.x, value.y, value.speed/6, value.damage, angle, value.scale*4, value.duration *1.5, 0)
+        else
+            bullet = BulletDroneLaser(value.x, value.y, value.speed/6, value.damage, angle, value.scale*4, value.duration*1.5, 0)
+            BulletPool:release(bullet) -- On l'ajoute au pool pour la prochaine fois
+        end
     end
     value:loseHp(1)
 end
 
-function EnemyManager:touchEnemy(value, enemy)
+function EnemyManager:processShockwaveBullet(value, enemy)
+    if enemy.overrideDirection then return end
+    enemy.radius, enemy.angle = 0, value.originAngle
+    enemy.originPosition.x, enemy.originPosition.y = enemy.x, enemy.y
+    enemy.speed = enemy.speed * value.power
+    enemy.overrideDirection = true
+    enemy.shockwaveTimer = 200
+end
+
+function EnemyManager:processRocketBullet(value, enemy)
+    local bullet = BulletPool:get(BulletExplosion)
+    if bullet then
+        bullet:reset(enemy.x, enemy.y, value.speed, value.damage + (player.damageBonus * value.damage / 100), value.offset, value.scale, value.duration, value.explosionDamage)
+    else
+        bullet = BulletExplosion(enemy.x, enemy.y, value.speed, value.damage + (player.damageBonus * value.damage / 100), value.offset, value.scale, value.duration, value.explosionDamage)
+        BulletPool:release(bullet) -- On l'ajoute au pool pour la prochaine fois
+    end
+end
+
+function EnemyManager:touchEnemy(value, enemy, bulletHp)
     if table.contains(enemy.currentOverlappingSprites, value) then return end
+    -- Vérifier si l'ennemi est déjà affecté par cette BulletAura récemment
+    if value:isa(BulletAura) then
+        enemy._auraTimers = enemy._auraTimers or {} -- Table pour stocker les timers des auras
+        local lastHitTime = enemy._auraTimers[value] or 0
+        local currentTime = playdate.getCurrentTimeMilliseconds()
+
+        -- Vérifier le cooldown (X millisecondes définies par la BulletAura)
+        if currentTime - lastHitTime < value.tick then return end
+        enemy._auraTimers[value] = currentTime
+    end
+
+    -- Le reste du traitement pour tous les types de projectiles
     enemy:setImageDrawMode(gfx.kDrawModeFillWhite)
     enemy.blinkAmount = 5
+    -- p:moveTo(enemy.x, enemy.y)
+    -- p:add(1)
     soundSamplerEnemyImpact:play()
-    self:loseHp(value.damage, enemy)
-    value:loseHp(1)
+    self:loseHp(value.damage + (player.damageBonus * value.damage / 100), enemy, value.className)
+    if not bulletHp then value:loseHp(1) end
     value.tickTime = value.tick
-    table_insert(enemy.currentOverlappingSprites, value)
+
+    -- Ajout de l'aura uniquement pour gérer la logique des autres bullets
+    if not value:isa(BulletAura) then
+        table.insert(enemy.currentOverlappingSprites, value)
+    end
 end
+
 
 function EnemyManager:dotEnemy(value, enemy)
     if table.contains(enemy.currentOverlappingSprites, value) then return end
-    table_insert(enemy.currentOverlappingSprites, value)
-    enemy.lastTickTime, enemy.dotTimer, enemy.dotDamage = value.tickTime, value.tickTime, value.damage
-    enemy.dotValues = enemy.dotValues + value.tickNumber
+    -- p:moveTo(enemy.x, enemy.y)
+    -- p:add(1)
+    table.insert(enemy.currentOverlappingSprites, value)
+    enemy.lastTickTime = value.tickTime
+    enemy.dotTimer = value.tickTime
+    enemy.dotDamage = value.damage
+    enemy.dotValues += value.tickNumber
+    -- self:dotTimer(value, enemy)
 end
 
-function EnemyManager:loseHp(value, enemy)
+-- function EnemyManager:dotTimer(value, enemy)
+--     for _, dotValue in ipairs(enemy.dotValues) do
+--         table.insert(self.timers, playdate.timer.new(toMilliseconds(1), function()
+--             if dotValue <= 0 or enemy.dead then return end
+--             p:moveTo(enemy.x, enemy.y)
+--             p:add(1)
+--             p:update()
+--             self:loseHp(value.damage + (player.damageBonus * value.damage / 100), enemy)
+--             dotValue = dotValue - 1
+--             self:dotTimer(value, enemy)
+--         end))
+--     end
+-- end
+
+function EnemyManager:loseHp(value, enemy, className)
     enemy.hp = enemy.hp - value
     if enemy.hp <= 0 then
         player:gainXP(enemy.xpReward + (player.xpBonus * enemy.xpReward / 100))
-        player.core = player.core + enemy.core
-        playerBonus.gameData.core = playerBonus.gameData.core + enemy.core
-        player.enemiesKilled = player.enemiesKilled + 1
-        playerBonus.gameData.enemiesKilled = playerBonus.gameData.enemiesKilled + 1
+        player.core += enemy.core
+        playerBonus.gameData.core += enemy.core
+        player.enemiesKilled += 1
+        playerBonus.gameData.enemiesKilled += 1
         self:death(enemy)
     end
 end
@@ -130,11 +190,12 @@ function EnemyManager:death(enemy)
     p:moveTo(enemy.x, enemy.y)
     p:add(1)
     enemy.dead = true
-    if enemy.spawner then enemy.spawner.spawnCount = enemy.spawner.spawnCount - 1 end
+    if enemy.spawner then enemy.spawner.spawnCount -= 1 end
     BulletPool:release(enemy)
-    table_remove(enemies, index)
+    -- enemy:remove()
+    table.remove(enemies, index)
     if enemy.boss ~= nil then
-        soundSamplerBossDeath :play()
+        soundSamplerBossDeath:play()
     else
         soundSamplerEnemyDeath:play()
     end

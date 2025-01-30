@@ -34,9 +34,9 @@ function UpgradeWeapon:applyUpgrade()
     self:updateDescriptionText()
     if self.weapon ~= nil then
         table.findByParam(player.weapons,"className", self.type):changeLevel()
-        uiManager:updateWeaponLevels()
     else
         player:addWeapon(table.findByParam(weaponsData, "className", self.type))
         table.findByParam(weaponsData, "className", self.type):shoot()
     end
+    uiManager:updateWeaponLevels()
 end
