@@ -1130,34 +1130,40 @@ inventorySpritesWeapons = {}
 inventorySpritesPassives = {}
 
 function UiManager:createInventory(x, y, offset, inventoryTable)
-    local offs = 0
-    local type = ""
+    local offsWeapons = 0
+    local offsPassives = 0
 
-    -- Réinitialise les tableaux des objets à chaque mise à jour
-    inventorySpritesWeapons = {}
-    inventorySpritesPassives = {}
+    -- On ne réinitialise plus les tableaux ici, pour éviter d'écraser les anciennes entrées
+    local newInventoryWeapons = {}
+    local newInventoryPassives = {}
+    local newWeaponTexts = {}
+    local newPassiveTexts = {}
 
-    for key, value in pairs(inventoryTable) do
-        -- Créer une image à partir du chemin
-        local img = gfx.image.new(value.path .. "_small")  
-        
-        -- Sauvegarde les images dans les tableaux correspondants
+    for _, value in pairs(inventoryTable) do
+        local img = gfx.image.new(value.path .. "_small")
+
         if value.className == "UpgradeWeapon" then
-            table.insert(inventorySpritesWeapons, {img = img, x = x + offs - 9, y = y - 9})
-            type = "weapon"
+            table.insert(newInventoryWeapons, {img = img, x = x + offsWeapons - 9, y = y - 9})
+            table.insert(newWeaponTexts, value) -- Ajoute uniquement si une icône est créée
+            offsWeapons = offsWeapons + offset
         else
-            table.insert(inventorySpritesPassives, {img = img, x = x + offs - 9, y = y - 9})
-            type = "passive"
+            table.insert(newInventoryPassives, {img = img, x = x + offsPassives - 9, y = y - 9})
+            table.insert(newPassiveTexts, value) -- Ajoute uniquement si une icône est créée
+            offsPassives = offsPassives + offset
         end
-        offs = offs + offset
     end
 
-    -- Met à jour les textes d'arme ou passifs
-    if type == "weapon" then
-        inventoryWeaponTexts = inventoryTable
-    else
-        inventoryPassiveTexts = inventoryTable
+    -- Mise à jour des icônes sans écraser les autres catégories
+    for _, data in ipairs(newInventoryWeapons) do
+        table.insert(inventorySpritesWeapons, data)
     end
+    for _, data in ipairs(newInventoryPassives) do
+        table.insert(inventorySpritesPassives, data)
+    end
+
+    -- Mise à jour des textes avec les nouvelles données correctes
+    inventoryWeaponTexts = newWeaponTexts
+    inventoryPassiveTexts = newPassiveTexts
 end
 
 -- Fonction pour dessiner l'inventaire, appelée à chaque frame

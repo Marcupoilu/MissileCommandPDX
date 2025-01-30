@@ -137,6 +137,7 @@ function Player:addPassive(passive)
         table.insert(self.passives, passive)
         self.passiveNumber += 1
     end
+    uiManager:createInventory(300, 222, 29, self.passives)
 
     self:resetPassiveInventory()
 end
@@ -148,6 +149,7 @@ function Player:resetPassiveInventory()
     --     is:remove()
     -- end)
     uiManager:createInventory(300, 222, 29, self.passives)
+
 end
 
 function Player:regeneration()
