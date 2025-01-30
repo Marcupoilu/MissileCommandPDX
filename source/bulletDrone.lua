@@ -27,7 +27,6 @@ end
 function BulletDrone:update()
     if not self.active then return end
     BulletDrone.super.update(self)
-    self:animate()
     self.radius += self.speed * deltaTime
     self:moveTo(self.radius*math.cos(math.rad(self.originAngle + self.offset)) + self.originPosition.x, self.radius*math.sin(math.rad(self.originAngle + self.offset)) + self.originPosition.y)
 end

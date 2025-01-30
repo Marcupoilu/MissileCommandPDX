@@ -35,5 +35,4 @@ function BulletAura:update()
             self.auraVisibleSprite:setVisible(true)
         end
     end
-    self:animate()
 end

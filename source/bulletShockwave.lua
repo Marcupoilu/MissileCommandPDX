@@ -8,7 +8,6 @@ function BulletShockwave:init(x,y,speed, damage, offsetCrank, scale, duration, p
     self.hp = hp
     self.rot = 0
     self.power = power
-    self:setRotation(self.originAngle + 90)
 end
 
 function BulletShockwave:reset(x, y, speed, damage, angle, scale, duration, power, hp)
@@ -31,7 +30,6 @@ function BulletShockwave:update()
     if not self.active then return end
 
     BulletShockwave.super.update(self)
-    self:animate()
     self.radius += self.speed + (((player.projectileSpeedBonus*self.speed)/100)) * deltaTime
     self:moveTo(self.radius*math.cos(math.rad(self.originAngle + self.offset)) + self.originPosition.x, self.radius*math.sin(math.rad(self.originAngle + self.offset)) + self.originPosition.y)
 end

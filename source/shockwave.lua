@@ -9,7 +9,6 @@ function Shockwave:init(attackSpeed, x, y, speed, damage, projectileAmount, scal
     self.y = y
     self.hp = 3
     self.power = 5
-    -- self:debugLevel(10)
 end
 
 function Shockwave:changeLevel()
