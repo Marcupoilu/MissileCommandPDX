@@ -31,12 +31,12 @@ function Game:init(maxPool, level)
     
     bullets, enemies = {}, {}
     
-    self.bgsprite = gfx.sprite.new(self.level.Background)
-    self.bgsprite:setCenter(0, 0)
-    self.bgsprite:moveTo(0, 0)
-    self.bgsprite:setZIndex(-9999)
-    self.bgsprite:add()
-    
+    -- self.bgsprite = gfx.sprite.new(self.level.Background)
+    -- self.bgsprite:setCenter(0, 0)
+    -- self.bgsprite:moveTo(0, 0)
+    -- self.bgsprite:setZIndex(-9999)
+    -- self.bgsprite:add()
+    self.bg = self.level.Background
     self:startGame()
 end
 
@@ -92,7 +92,7 @@ end
 
 function Game:update()
     if self.finish then return end
-    
+    self.bg:draw(0,0)
     if time >= targetTime then
         self:endGame()
         return
@@ -141,7 +141,7 @@ function Game:endGame()
     end
     
     playdate.timer.new(300, function()
-        self.bgsprite:remove()
+        -- self.bgsprite:remove()
         playdate.update = winScreenUpdate
     end)
 end
@@ -165,7 +165,7 @@ function Game:loseGame()
     end
     
     playdate.timer.new(500, function()
-        self.bgsprite:remove()
+        -- self.bgsprite:remove()
         playdate.display.setOffset(0, 0)
         playdate.update = winScreenUpdate
     end)

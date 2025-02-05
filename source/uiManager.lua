@@ -22,28 +22,8 @@ local ups = {}
 local levelUpIndex = 0
 local mainMenuIndex = 0
 local cannonIndex = 0
-local titleTop = gfx.image.new("images/ui/ui_titleScreen_top")
-local titleBot = gfx.image.new("images/ui/ui_titleScreen_bot")
-local titleBotY = playdate.display.getHeight() / 2 - 13
 local menuMoving = false
-local titleTopOpen = sequence.new():from(0):to(-135, 1, "easeOutSine")
-local titleBotOpen = sequence.new():from(0):to(135, 1, "easeOutSine")
-local titleTopClose = sequence.new():from(0):to(135, 1, "easeOutSine")
-local titleBotClose = sequence.new():from(0):to(-135, 1, "easeOutSine"):callback(function ()
-    titleTopOpen:set(0)
-    titleBotOpen:set(0)
-    menuMoving = false
-    print("closed")
-end)
-titleBotOpen:callback(function ()
-    titleTopOpen:set(-135)
-    titleBotOpen:set(135)
-    menuMoving = false
-    print("open")
-end)
-local selectionScreenOpen = sequence.new():from(-192):to(0, 1, "easeOutSine"):callback(function ()
-    
-end)
+local selectionScreenOpen = sequence.new():from(-192):to(0, 1, "easeOutSine")
 local core = gfx.image.new("images/ui/core")
 local coreShop = gfx.image.new("images/ui/core_small")
 local enemy = gfx.image.new("images/enemies/large/enemy_large_01")
@@ -63,12 +43,14 @@ local levelUpIndexMax = 2
 local uiLayout = gfx.image.new("images/ui/ui_layout")  -- Charge l’image une seule fois
 
 local closedMenu = true
+local mapIndex = 1
 menuClose.frame = 50
 local mainMenuPositions = {{x=24,y=55},{x=24,y=120},{x=24,y=185}}
 function UiManager:init()
     self.inventoryWeapons = {}
     self.inventoryPassives = {}
     self.horizontalLayoutLevelUp = HorizontalLayout(levelUpCellWidth, levelUpDistance, levelUpCellNumber, 20)
+    mapIndex = playerBonus.gameData.mapCount
 end
 
 
@@ -425,7 +407,6 @@ end
 local chooseCannonBool = false
 local chooseMap = false
 local A = false
-local mapIndex = 1
 
 function UiManager:mainMenuUpdate()
     if table.contains(playdate.argv, "menu" ) then
@@ -505,7 +486,6 @@ function UiManager:mainMenuUpdate()
     end
     if chooseMap == true then
         selectionScreen:draw(playdate.display.getWidth() /2 - 150, selectionScreenOpen:get())
-        mapIndex = playerBonus.gameData.mapCount
         self:chooseMap()
         if playdate.buttonJustPressed(playdate.kButtonB) and selectionScreenOpen:isDone() then
             selectionScreenOpen:from(0):to(-250, 1, "easeOutSine")
