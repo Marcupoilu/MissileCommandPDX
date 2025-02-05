@@ -1,6 +1,6 @@
 class("BulletSerpentine").extends(Bullet)
 
-local bulletImage = gfx.image.new("images/bullets/bulletSerpentine" )
+local bulletImage = gfx.image.new("images/bullets/bullet_serpentine" )
 
 function BulletSerpentine:init(x,y,speed, damage, offsetCrank, scale, duration, hp)
     BulletSerpentine.super.init(self,x,y,speed, damage, offsetCrank, scale, duration, bulletImage)
@@ -16,7 +16,7 @@ function BulletSerpentine:update()
     if not self.active then return end
 
     BulletSerpentine.super.update(self)
-    self:animate()
+    -- self:animate()
     self.radius += self.speed + (((player.projectileSpeedBonus*self.speed)/100)) * deltaTime
     self.time += deltaTime
     local waveOffset = self.amp * math.sin(self.time * self.freq)
