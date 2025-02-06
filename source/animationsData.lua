@@ -1,20 +1,14 @@
 animationsData = 
 {
-    -- Saucer = {{Name = "Idle", Source = gfx.imagetable.new("images/enemy_saucer"), Delay = 50, Loop = true}},
+    -- BULLETS
     BulletBlackhole = {{Name = "Idle", Source = gfx.imagetable.new("images/bullets/bullet_blackhole"), Delay = 33, Loop = true}},
     BulletPlasma = {{Name = "Idle", Source = gfx.imagetable.new("images/bullets/bullet_plasma"), Delay = 33, Loop = true}},
-    -- BulletSerpentine = {{Name = "Idle", Source = gfx.imagetable.new("images/bullets/bullet_serpentine"), Delay = 20, Loop = true}},
     BulletExplosion = {{Name = "Idle", Source = gfx.imagetable.new("images/bullets/bullet_explosion"), Delay = 33, Loop = false}},
     BulletFlamethrower = {{Name = "Idle", Source = gfx.imagetable.new("images/bullets/bullet_shotgun"), Delay = 33, Loop = false}},
     BulletToxicVape = {{Name = "Idle", Source = gfx.imagetable.new("images/bullets/bullet_toxicVape"), Delay = 33, Loop = true}},
+    -- FX
     AnimationHit = {{Name = "Idle", Source = gfx.imagetable.new("images/fx/hit_01"), Delay = 33, Loop = false}},
-    Saucer = {},
-    Xwing = {},
-    EnemyLargeOne = {{Name = "Idle", Source = gfx.imagetable.new("images/enemies/large/enemy_large_01"), Delay = 33, Loop = true}},
-    EnemyLargeTwo = {{Name = "Idle", Source = gfx.imagetable.new("images/enemies/large/enemy_large_02"), Delay = 33, Loop = true}},
-    EnemyLargeThree = {{Name = "Idle", Source = gfx.imagetable.new("images/enemies/large/enemy_large_03"), Delay = 33, Loop = true}},
-    EnemyLargeFour = {{Name = "Idle", Source = gfx.imagetable.new("images/enemies/large/enemy_large_04"), Delay = 33, Loop = true}},
-
+    -- UI
     MainMenu = {Name = "Idle", Source = gfx.imagetable.new("images/ui/menus/main_menu"), Delay = 33, Loop = true},
     SelectionScreen = {Name = "Idle", Source = gfx.imagetable.new("images/ui/menus/selection_screen"), Delay = 33, Loop = true},
     ShopBackground = {Name = "Idle", Source = gfx.imagetable.new("images/ui/menus/shop_background"), Delay = 33, Loop = true},
