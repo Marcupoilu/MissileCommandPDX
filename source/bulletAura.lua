@@ -4,6 +4,7 @@ local bulletImage = gfx.image.new("images/bullets/bullet_auraPlain" )
 bulletSprite = nil
 
 function BulletAura:init(x,y,speed, damage, offsetCrank, scale, duration, tick)
+    duration = 3000
     BulletAura.super.init(self,x,y,speed, damage, offsetCrank, scale, duration, bulletImage)
     self.hp = 1000
     self.rot = 0

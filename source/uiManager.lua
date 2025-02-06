@@ -44,7 +44,7 @@ local uiLayout = gfx.image.new("images/ui/ui_layout")  -- Charge l’image une s
 
 local closedMenu = true
 local mapIndex = 1
-menuClose.frame = 50
+menuClose.frame = 30
 local mainMenuPositions = {{x=24,y=55},{x=24,y=120},{x=24,y=185}}
 function UiManager:init()
     self.inventoryWeapons = {}
@@ -256,24 +256,23 @@ local function generateTextImage(text, font, imageDrawMode)
     return img
 end
 
--- 🛠 Mise à jour des textes quand les valeurs changent
 function UiManager:updateWeaponLevels()
-    weaponLevelImages = {}  -- Réinitialise
+    -- Au lieu de réinitialiser, on met à jour les valeurs
     local offset = 0
-    for _, iw in ipairs(inventoryWeaponTexts) do
+    for i, iw in ipairs(inventoryWeaponTexts) do
         local weapon = table.findByParam(player.weapons, "className", iw.type)
         if weapon then
-            weaponLevelImages[#weaponLevelImages + 1] = { img = generateTextImage("Lv." .. weapon.level, verySmallFont, gfx.kDrawModeFillWhite), x = 6 + offset }
+            weaponLevelImages[i] = { img = generateTextImage("Lv." .. weapon.level, verySmallFont, gfx.kDrawModeFillWhite), x = 6 + offset }
         end
         offset = offset + 31
     end
 end
 
 function UiManager:updatePassiveLevels()
-    passiveLevelImages = {}  -- Réinitialise
+    -- Même approche pour éviter d'écraser les données des armes
     local offset = 0
-    for _, ip in ipairs(inventoryPassiveTexts) do
-        passiveLevelImages[#passiveLevelImages + 1] = { img = generateTextImage("Lv." .. (ip.countMax - ip.count), verySmallFont, gfx.kDrawModeFillWhite), x = 292 + offset }
+    for i, ip in ipairs(inventoryPassiveTexts) do
+        passiveLevelImages[i] = { img = generateTextImage("Lv." .. (ip.countMax - ip.count), verySmallFont, gfx.kDrawModeFillWhite), x = 292 + offset }
         offset = offset + 29
     end
 end
