@@ -227,3 +227,23 @@ function calculateShopItemsLevelPercentage(purchasedShopItems, allShopItems)
     local percentage = (totalLevelsBought / totalLevelsAvailable) * 100
     return math.round(percentage)
 end
+
+function math.minParam(tbl, param)
+    if not tbl or type(tbl) ~= "table" or #tbl == 0 then
+        return nil -- Retourne nil si la table est vide ou invalide
+    end
+    
+    local minElement = tbl[1] -- Initialise avec le premier élément
+    local minValue = minElement[param] -- Initialise avec la première valeur du paramètre
+    if minValue == nil then return nil end -- Si le paramètre n'existe pas, retourne nil
+    
+    for i = 2, #tbl do
+        local value = tbl[i][param]
+        if value ~= nil and value < minValue then
+            minValue = value
+            minElement = tbl[i]
+        end
+    end
+    
+    return minElement
+end

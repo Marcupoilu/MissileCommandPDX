@@ -53,6 +53,7 @@ import "shopItem"
 import "shopItemsData"
 import "playerBonus.lua"
 import "FX.lua"
+import "BotPlayer.lua"
 
 playdate.display.setRefreshRate(30)
 createWavesData()
@@ -136,6 +137,7 @@ BulletPool:preload(EnemyLargeTwo, 20, 0, 0, 20, 1, 1, 1, gfx.image.new("images/e
 BulletPool:preload(EnemyLargeThree, 20, 0, 0, 20, 1, 1, 1, gfx.image.new("images/enemies/large/enemy_large_03"), 1)
 BulletPool:preload(EnemyLargeFour, 20, 0, 0, 20, 1, 1, 1, gfx.image.new("images/enemies/large/enemy_large_04"), 1)
 
+bot = BotPlayer(player)
 
 -- Cache des appels fréquents
 local getElapsedTime = playdate.getElapsedTime
@@ -154,10 +156,12 @@ gameUpdate = function()
     -- Cache des valeurs calculées une seule fois par frame
     deltaTime = getElapsedTime()
     resetElapsedTime()
-    
-    crankPosition = playdate.getCrankPosition() -- cache la position de la manivelle
-    
-    player:update()         -- Mise à jour du joueur
+    if bot then
+        bot:update()
+    end
+    if not bot then 
+        player:update()         -- Mise à jour du joueur
+    end
     enemyManager:update()   -- Mise à jour des ennemis
     spriteUpdate()          -- Mise à jour des sprites
     updateTimers()          -- Mise à jour des timers

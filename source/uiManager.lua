@@ -18,7 +18,7 @@ local smallFontAmmolite = gfx.font.new("font/onyx_9")
 smallFontAmmolite:setTracking(1)
 smallFontAmmolite:setLeading(5)
 local diamond_20 = gfx.font.new("font/diamond_20")
-local ups = {}
+ups = {}
 local levelUpIndex = 0
 local mainMenuIndex = 0
 local cannonIndex = 0
@@ -203,6 +203,9 @@ function UiManager:levelUpDisplay()
     gfx.setImageDrawMode(gfx.kDrawModeFillWhite)
     gfx.setFont(font,gfx.kVariantBold)
     gfx.drawTextAligned("LEVEL UP", 200, 1, kTextAlignment.center)
+    if bot then
+        bot:levelUp()
+    end
     if playdate.buttonJustPressed(playdate.kButtonRight) then
         levelUpIndex = math.ring_int(levelUpIndex +1, 0, levelUpIndexMax)
     end
@@ -257,59 +260,92 @@ local function generateTextImage(text, font, imageDrawMode)
 end
 
 function UiManager:updateWeaponLevels()
+    -- Vérification : on garde les anciennes images si on ne trouve aucune arme
     local newWeaponLevelImages = {}
+
+    -- Vérification stricte : on ne travaille que si `player.weapons` contient des éléments
+    if #player.weapons == 0 then
+        return  -- Évite d'écraser `weaponLevelImages` par une table vide
+    end
 
     for i, iw in ipairs(inventoryWeaponTexts) do
         local weapon = table.findByParam(player.weapons, "className", iw.type)
+
         if weapon then
-            local text = "Lv." .. weapon.level
-            
-            -- Vérifie si on a déjà cette arme enregistrée avec la bonne valeur
+            -- Sécurisation du niveau de l'arme
+            local weaponLevel = weapon.level or 1
+            local text = "Lv." .. weaponLevel
+
             local existingData = weaponLevelImages[i]
 
-            if existingData and existingData.text == text then
-                -- Si l'image est déjà correcte, on la réutilise
+            if existingData and existingData.weaponType == iw.type then
+                -- Mise à jour seulement si le texte change
+                if existingData.text ~= text then
+                    existingData.img = generateTextImage(text, verySmallFont, gfx.kDrawModeFillWhite)
+                    existingData.text = text
+                end
                 newWeaponLevelImages[i] = existingData
             else
-                -- Sinon, on la met à jour
+                -- Nouvelle entrée
                 newWeaponLevelImages[i] = {
                     img = generateTextImage(text, verySmallFont, gfx.kDrawModeFillWhite),
                     text = text,
+                    weaponType = iw.type,
                     x = 6 + ((i - 1) * 31)
                 }
+            end
+        else
+            -- Si une arme n'est pas trouvée, on garde l'ancienne donnée si elle existe
+            if weaponLevelImages[i] then
+                newWeaponLevelImages[i] = weaponLevelImages[i]
             end
         end
     end
 
-    -- On remplace l'ancien tableau par le nouveau
-    weaponLevelImages = newWeaponLevelImages
+    -- Mise à jour du tableau global UNIQUEMENT si on a de nouvelles données
+    if #newWeaponLevelImages > 0 then
+        weaponLevelImages = newWeaponLevelImages
+    end
 end
 
+
 function UiManager:updatePassiveLevels()
+    print("🛡️ Mise à jour des passifs levels")
+    
     local newPassiveLevelImages = {}
 
     for i, ip in ipairs(inventoryPassiveTexts) do
         local text = "Lv." .. (ip.countMax - ip.count)
 
-        -- Vérifie si on a déjà ce passif enregistré avec la bonne valeur
         local existingData = passiveLevelImages[i]
+        if existingData then
+            print("⚡ Passif trouvé :", ip.type, "Ancien texte:", existingData.text, "Nouveau texte:", text)
+        else
+            print("🆕 Nouveau passif :", ip.type, "Texte:", text)
+        end
 
-        if existingData and existingData.text == text then
-            -- Si l'image est déjà correcte, on la réutilise
+        if existingData and existingData.passiveType == ip.type then
+            if existingData.text ~= text then
+                print("🔄 Mise à jour du texte pour", ip.type)
+                existingData.img = generateTextImage(text, verySmallFont, gfx.kDrawModeFillWhite)
+                existingData.text = text
+            end
             newPassiveLevelImages[i] = existingData
         else
-            -- Sinon, on la met à jour
             newPassiveLevelImages[i] = {
                 img = generateTextImage(text, verySmallFont, gfx.kDrawModeFillWhite),
                 text = text,
+                passiveType = ip.type,
                 x = 292 + ((i - 1) * 29)
             }
         end
     end
 
-    -- On remplace l'ancien tableau par le nouveau
     passiveLevelImages = newPassiveLevelImages
+    print("✅ Passive levels mis à jour. Total:", #passiveLevelImages)
 end
+
+
 
 
 function UiManager:updatePlayerInfo()

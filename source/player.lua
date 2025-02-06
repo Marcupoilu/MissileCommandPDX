@@ -82,12 +82,16 @@ function Player:updateCannon()
 end
 
 function Player:update()
+    if not bot then
+        crankPosition = playdate.getCrankPosition() -- cache la position de la manivelle
+    end
     local na = normalizeAngle(crankPosition)
     if math.between(na, 30, 145) then
         self.cannonGunSprite:setRotation(crankPosition)
     elseif math.between(na, 145, 270) then
         self.cannonGunSprite:setRotation(60)
     elseif math.between(na, 29, 360) then
+        print(na)
         self.cannonGunSprite:setRotation(300)
     end
     self.regenerationTimer -= refreshRate
