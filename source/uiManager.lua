@@ -257,24 +257,58 @@ local function generateTextImage(text, font, imageDrawMode)
 end
 
 function UiManager:updateWeaponLevels()
-    -- Au lieu de réinitialiser, on met à jour les valeurs
-    local offset = 0
+    local newWeaponLevelImages = {}
+
     for i, iw in ipairs(inventoryWeaponTexts) do
         local weapon = table.findByParam(player.weapons, "className", iw.type)
         if weapon then
-            weaponLevelImages[i] = { img = generateTextImage("Lv." .. weapon.level, verySmallFont, gfx.kDrawModeFillWhite), x = 6 + offset }
+            local text = "Lv." .. weapon.level
+            
+            -- Vérifie si on a déjà cette arme enregistrée avec la bonne valeur
+            local existingData = weaponLevelImages[i]
+
+            if existingData and existingData.text == text then
+                -- Si l'image est déjà correcte, on la réutilise
+                newWeaponLevelImages[i] = existingData
+            else
+                -- Sinon, on la met à jour
+                newWeaponLevelImages[i] = {
+                    img = generateTextImage(text, verySmallFont, gfx.kDrawModeFillWhite),
+                    text = text,
+                    x = 6 + ((i - 1) * 31)
+                }
+            end
         end
-        offset = offset + 31
     end
+
+    -- On remplace l'ancien tableau par le nouveau
+    weaponLevelImages = newWeaponLevelImages
 end
 
 function UiManager:updatePassiveLevels()
-    -- Même approche pour éviter d'écraser les données des armes
-    local offset = 0
+    local newPassiveLevelImages = {}
+
     for i, ip in ipairs(inventoryPassiveTexts) do
-        passiveLevelImages[i] = { img = generateTextImage("Lv." .. (ip.countMax - ip.count), verySmallFont, gfx.kDrawModeFillWhite), x = 292 + offset }
-        offset = offset + 29
+        local text = "Lv." .. (ip.countMax - ip.count)
+
+        -- Vérifie si on a déjà ce passif enregistré avec la bonne valeur
+        local existingData = passiveLevelImages[i]
+
+        if existingData and existingData.text == text then
+            -- Si l'image est déjà correcte, on la réutilise
+            newPassiveLevelImages[i] = existingData
+        else
+            -- Sinon, on la met à jour
+            newPassiveLevelImages[i] = {
+                img = generateTextImage(text, verySmallFont, gfx.kDrawModeFillWhite),
+                text = text,
+                x = 292 + ((i - 1) * 29)
+            }
+        end
     end
+
+    -- On remplace l'ancien tableau par le nouveau
+    passiveLevelImages = newPassiveLevelImages
 end
 
 
