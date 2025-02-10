@@ -70,7 +70,21 @@ function BotPlayer:aimAtTarget()
         -- Normalisation de l'angle entre 0 et 360
         if targetAngle < 0 then targetAngle = targetAngle + 360 end
 
-        crankPosition = targetAngle
+        local angleDiff = (targetAngle - crankPosition + 540) % 360 - 180
+        
+        -- Appliquer l'interpolation pour lisser le changement d'angle
+        local interpolationSpeed = 0.1 -- Ajuste cette valeur selon ton besoin
+        crankPosition = crankPosition + angleDiff * interpolationSpeed
+
+        -- local rotationSpeed = 6
+
+        -- if (crankPosition < targetAngle) then
+        --     crankPosition += rotationSpeed
+        -- end
+        -- if (crankPosition > targetAngle) then
+        --     crankPosition -= rotationSpeed
+        -- end
+
         self.player.cannonGunSprite:setRotation(normalizeAngle(crankPosition))
     end
 end

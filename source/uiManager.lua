@@ -137,7 +137,7 @@ function UiManager:generateUpgrades()
                 rand:updateDescriptionText()
                 -- si c'est une new passive on check si on a de la place dans l'inventaire
                 if rand.className == "UpgradeStat" then
-                    if rand.name == "rerolls" or rand.name == "core" or rand.name =="hpRegen" or rand.name == "lifeUp" then
+                    if rand.name == "rerolls" or rand.name == "attackSpeedBonus" or rand.name == "core" or rand.name =="hpRegen" or rand.name == "lifeUp" then
                         passiveCheck = true
                     end
                     if table.contains(player.passives, rand) == false and rand.inventory == nil  then
