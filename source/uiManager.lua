@@ -1187,15 +1187,17 @@ function UiManager:createInventory(x, y, offset, inventoryTable)
     local newInventoryPassives = {}
     local newWeaponTexts = {}
     local newPassiveTexts = {}
-
+    local type = ""
     for _, value in pairs(inventoryTable) do
         local img = gfx.image.new(value.path .. "_small")
 
         if value.className == "UpgradeWeapon" then
+            type ="weapon"
             table.insert(newInventoryWeapons, {img = img, x = x + offsWeapons - 9, y = y - 9})
             table.insert(newWeaponTexts, value) -- Ajoute uniquement si une icône est créée
             offsWeapons = offsWeapons + offset
         else
+            type ="passive"
             table.insert(newInventoryPassives, {img = img, x = x + offsPassives - 9, y = y - 9})
             table.insert(newPassiveTexts, value) -- Ajoute uniquement si une icône est créée
             offsPassives = offsPassives + offset
@@ -1211,8 +1213,11 @@ function UiManager:createInventory(x, y, offset, inventoryTable)
     end
 
     -- Mise à jour des textes avec les nouvelles données correctes
-    inventoryWeaponTexts = newWeaponTexts
-    inventoryPassiveTexts = newPassiveTexts
+    if type == "weapon" then
+        inventoryWeaponTexts = newWeaponTexts
+    else
+        inventoryPassiveTexts = newPassiveTexts
+    end
 end
 
 -- Fonction pour dessiner l'inventaire, appelée à chaque frame
