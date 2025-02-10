@@ -10,24 +10,50 @@ function BotPlayer:update()
     self:aimAtTarget()
 end
 
+
+class('BotPlayer').extends()
+
+function BotPlayer:init(player)
+    self.player = player
+    self.targetEnemy = nil
+end
+
+function BotPlayer:update()
+    self:findTarget()
+    self:aimAtTarget()
+end
+
 function BotPlayer:findTarget()
+    local highestHP = -math.huge
     local closestDist = math.huge
-    local closestEnemy = nil
+    local bestEnemy = nil
+    local threatRadius = 100
+    local immediateThreat = nil
+    local highestThreatHP = -math.huge
     
     for _, enemy in ipairs(enemies) do
-        local dist = self:distanceToPlayer(enemy)
-        if dist < closestDist then
+        local hp = enemy.hp or 0  -- Supposons que chaque ennemi a un champ "hp"
+        local dist = self:distanceToCannon(enemy)
+        
+        if dist <= threatRadius then
+            if hp > highestThreatHP then
+                highestThreatHP = hp
+                immediateThreat = enemy
+            end
+        elseif hp > highestHP or (hp == highestHP and dist < closestDist) then
+            highestHP = hp
             closestDist = dist
-            closestEnemy = enemy
+            bestEnemy = enemy
         end
     end
     
-    self.targetEnemy = closestEnemy
+    self.targetEnemy = immediateThreat or bestEnemy
 end
 
-function BotPlayer:distanceToPlayer(enemy)
-    local dx = enemy.x - 200  -- Position du canon au centre bas (200, 240)
-    local dy = enemy.y - 240
+function BotPlayer:distanceToCannon(enemy)
+    local baseX, baseY = self.player.cannonGunSprite:getPosition()
+    local dx = enemy.x - baseX
+    local dy = enemy.y - baseY
     return math.sqrt(dx * dx + dy * dy)
 end
 
@@ -46,10 +72,9 @@ function BotPlayer:aimAtTarget()
 
         crankPosition = targetAngle
         self.player.cannonGunSprite:setRotation(normalizeAngle(crankPosition))
-
-        -- print("[BotPlayer] Vise l'ennemi - Angle cible:", targetAngle, "CrankPosition:", crankPosition)
     end
 end
+
 
 
 function BotPlayer:levelUp()
