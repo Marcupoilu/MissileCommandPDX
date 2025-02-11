@@ -10,6 +10,8 @@ animationsData =
     AnimationHit = {{Name = "Idle", Source = gfx.imagetable.new("images/fx/hit_01"), Delay = 33, Loop = false}},
     -- UI
     MainMenu = {Name = "Idle", Source = gfx.imagetable.new("images/ui/menus/main_menu"), Delay = 33, Loop = true},
+    MissionComplete = {Name = "Idle", Source = gfx.imagetable.new("images/ui/MISSION_COMPLETE"), Delay = 33, Loop = true},
+    MissionFailed = {Name = "Idle", Source = gfx.imagetable.new("images/ui/MISSION_FAILED"), Delay = 33, Loop = true},
     SelectionScreen = {Name = "Idle", Source = gfx.imagetable.new("images/ui/menus/selection_screen"), Delay = 33, Loop = true},
     ShopBackground = {Name = "Idle", Source = gfx.imagetable.new("images/ui/menus/shop_background"), Delay = 33, Loop = true},
     EndScreen = {Name = "Idle", Source = gfx.imagetable.new("images/ui/menus/end_screen"), Delay = 33, Loop = true},

@@ -29,6 +29,8 @@ local coreShop = gfx.image.new("images/ui/core_small")
 local enemy = gfx.image.new("images/enemies/large/enemy_large_01")
 local menuOpen = gfx.animation.loop.new(animationsData.MenuOpen.Delay, animationsData.MenuOpen.Source, false)
 local menuClose = gfx.animation.loop.new(animationsData.MenuClose.Delay, animationsData.MenuClose.Source, false)
+local missionCompleteScreen = gfx.animation.loop.new(animationsData.MissionComplete.Delay, animationsData.MissionComplete.Source, false)
+local missionFailedScreen = gfx.animation.loop.new(animationsData.MissionFailed.Delay, animationsData.MissionFailed.Source, false)
 
 local mainMenu = gfx.animation.loop.new(animationsData.MainMenu.Delay, animationsData.MainMenu.Source, true)
 local unlockMenu = gfx.animation.loop.new(animationsData.AchievementPanel.Delay, animationsData.AchievementPanel.Source, true)
@@ -45,6 +47,9 @@ local uiLayout = gfx.image.new("images/ui/ui_layout")  -- Charge l’image une s
 local closedMenu = true
 local mapIndex = 1
 menuClose.frame = 30
+missionCompleteScreen.frame = 60
+missionFailedScreen.frame = 60
+
 local mainMenuPositions = {{x=24,y=55},{x=24,y=120},{x=24,y=185}}
 function UiManager:init()
     self.inventoryWeapons = {}
@@ -63,6 +68,8 @@ function UiManager:displayTitle()
     else
         menuOpen:draw(0,0-y)
     end
+    missionCompleteScreen:draw(0,0-y)
+    missionFailedScreen:draw(0,0-y)
 end
 
 function UiManager:OpenMenu()
@@ -107,6 +114,14 @@ function UiManager:CloseAndOpenMenu()
     playdate.timer.new(1050, function ()
         self:OpenMenu()
     end)
+end
+
+function UiManager:CloseAndOpenMissionComplete()
+    missionCompleteScreen.frame = 1
+end
+
+function UiManager:CloseAndOpenMissionFailed()
+    missionFailedScreen.frame = 1
 end
 
 function UiManager:generateUpgrades()
@@ -310,7 +325,6 @@ end
 
 
 function UiManager:updatePassiveLevels()
-    print("🛡️ Mise à jour des passifs levels")
     
     local newPassiveLevelImages = {}
 
@@ -318,15 +332,9 @@ function UiManager:updatePassiveLevels()
         local text = "Lv." .. (ip.countMax - ip.count)
 
         local existingData = passiveLevelImages[i]
-        if existingData then
-            print("⚡ Passif trouvé :", ip.type, "Ancien texte:", existingData.text, "Nouveau texte:", text)
-        else
-            print("🆕 Nouveau passif :", ip.type, "Texte:", text)
-        end
 
         if existingData and existingData.passiveType == ip.type then
             if existingData.text ~= text then
-                print("🔄 Mise à jour du texte pour", ip.type)
                 existingData.img = generateTextImage(text, verySmallFont, gfx.kDrawModeFillWhite)
                 existingData.text = text
             end
@@ -342,7 +350,6 @@ function UiManager:updatePassiveLevels()
     end
 
     passiveLevelImages = newPassiveLevelImages
-    print("✅ Passive levels mis à jour. Total:", #passiveLevelImages)
 end
 
 

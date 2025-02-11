@@ -120,7 +120,7 @@ function Game:changeWave()
 end
 
 function Game:endGame()
-    -- uiManager:OpenAndCloseMenu()
+    uiManager:CloseAndOpenMissionComplete()
     lockInput = false
     self.finish = true
     
@@ -147,6 +147,8 @@ function Game:endGame()
 end
 
 function Game:loseGame()
+    uiManager:CloseAndOpenMissionFailed()
+
     lockInput = false
     self.finish = true
     

@@ -210,14 +210,15 @@ winScreenUpdate = function()
     uiManager:winScreenUpdate() -- Mise à jour de l'interface de l'écran de victoire
     sequenceUpdate()            -- Mise à jour des séquences
     updateTimers()              -- Mise à jour des timers
+    uiManager:updateLayout()      -- Mise à jour de l'interface utilisateur
     uiManager:displayTitle()    -- Affichage du titre
+
 end
 
 -- Mise à jour du menu principal
 mainMenuUpdate = function()
     deltaTime = getElapsedTime()
     resetElapsedTime()
-
     uiManager:mainMenuUpdate() -- Mise à jour du menu principal
     updateTimers()             -- Mise à jour des timers
     sequenceUpdate()           -- Mise à jour des séquences
