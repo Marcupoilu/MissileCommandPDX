@@ -73,7 +73,7 @@ function BotPlayer:aimAtTarget()
         local angleDiff = (targetAngle - crankPosition + 540) % 360 - 180
         
         -- Appliquer l'interpolation pour lisser le changement d'angle
-        local interpolationSpeed = 0.1 -- Ajuste cette valeur selon ton besoin
+        local interpolationSpeed = 0.2 -- Ajuste cette valeur selon ton besoin
         crankPosition = crankPosition + angleDiff * interpolationSpeed
 
         -- local rotationSpeed = 6
