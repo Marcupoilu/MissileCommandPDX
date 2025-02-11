@@ -5,7 +5,7 @@ function createUpgradesData()
         -- stat / amount / description / icon / count max / rarity
         -- type / name / description / icon / count max / rarity
         -- UpgradeStat({{name="attackSpeedBonus",value=10}}, "-10% Cooldown", "images/ui/icons/cooldown",5, 5,nil, "cooldown"),
-        UpgradeStat({{name="damageBonus",value=20}}, "+20% Damage", "images/ui/icons/damageUp",5,7,nil, "damage"),
+        UpgradeStat({{name="damageBonus",value=10}}, "+10% Damage", "images/ui/icons/damageUp",5,7,nil, "damage"),
         UpgradeStat({{name="scaleBonus",value=10}}, "+10% bullet \nscale", "images/ui/icons/projectileScale",5,5, nil, "scale"),
         UpgradeStat({{name="xpBonus",value=20}}, "+20% XP", "images/ui/icons/xpUp",5,4, nil, "xp"),
         UpgradeStat({{name="regenerationRate",value=20}}, "+20% hp regen \nspeed", "images/ui/icons/regen",5,6, nil, "regen"),
