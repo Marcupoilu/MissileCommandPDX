@@ -65,29 +65,30 @@ function BotPlayer:aimAtTarget()
         -- Calcul de la direction vers l'ennemi
         local dx = self.targetEnemy.x - baseX
         local dy = self.targetEnemy.y - baseY
-        local targetAngle = math.deg(math.atan(dy, dx)) -- atan2 gère correctement l'orientation
+        local targetAngle = math.deg(math.atan(dy, dx))
 
         -- Normalisation de l'angle entre 0 et 360
         if targetAngle < 0 then targetAngle = targetAngle + 360 end
 
+        -- Calcul de la différence d'angle
         local angleDiff = (targetAngle - crankPosition + 540) % 360 - 180
-        
-        -- Appliquer l'interpolation pour lisser le changement d'angle
-        local interpolationSpeed = 0.1 -- Ajuste cette valeur selon ton besoin
-        crankPosition = crankPosition + angleDiff * interpolationSpeed
+        local rotationSpeed = 6 -- Définir une vitesse angulaire constante
 
-        -- local rotationSpeed = 6
+        if math.abs(angleDiff) > rotationSpeed then
+            if angleDiff > 0 then
+                crankPosition = crankPosition + rotationSpeed
+            else
+                crankPosition = crankPosition - rotationSpeed
+            end
+        else
+            crankPosition = targetAngle -- Évite d'osciller autour de l'angle cible
+        end
 
-        -- if (crankPosition < targetAngle) then
-        --     crankPosition += rotationSpeed
-        -- end
-        -- if (crankPosition > targetAngle) then
-        --     crankPosition -= rotationSpeed
-        -- end
-
+        -- Appliquer la rotation
         self.player.cannonGunSprite:setRotation(normalizeAngle(crankPosition))
     end
 end
+
 
 
 
