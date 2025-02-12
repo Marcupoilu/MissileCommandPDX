@@ -1,6 +1,7 @@
-name=Template
-author=You
-description=This is template project
-bundleID=com.organization.package
-version=0.0.1
+name=ARMADA
+author=RandomEncounter
+description=An unique take on survivor genre for Playdate! Crank your way through sci-fi bullet hell!
+bundleID=com.RandomEncounter.Armada
+version=1.0.
 buildNumber=1
+imagePath=launcherImages

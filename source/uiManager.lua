@@ -382,8 +382,21 @@ function UiManager:updateLayout()
 end
 
 
-
+local playerCore = 0
+local timer = nil
+local unlockTimerBool = false
+local loadedScreen = false
+local loadedPerks = false
+local unlockTimer = nil
 function UiManager:winScreenUpdate()
+    if not timer then
+        timer = playdate.timer.new(2000, function ()
+            loadedScreen = true
+            playdate.timer.new(1000, function ()
+                loadedPerks = true
+            end)
+        end)
+    end
     gfx.setColor(gfx.kColorBlack)
     local screenWidth = playdate.display.getWidth()
     local screenHeight = playdate.display.getHeight()
@@ -395,66 +408,90 @@ function UiManager:winScreenUpdate()
     local rectY = (screenHeight - rectHeight) / 2
     -- rect part
     gfx.fillRect(0, 0, 400, 210 + endScreenTweet:get())
-    gfx.setFont(diamond_20,gfx.kVariantItalic)
     gfx.setImageDrawMode(gfx.kDrawModeFillWhite)
-    if player.success == true then
-        gfx.drawTextAligned("THREAT NEUTRALIZED", rectWidth, 20+ endScreenTweet:get(), kTextAlignment.center)
-    else
-        gfx.drawTextAligned("SIGNAL LOST", rectWidth, 20+ endScreenTweet:get(), kTextAlignment.center)
-    end
+    -- if player.success == true then
+    --     gfx.drawTextAligned("THREAT NEUTRALIZED", rectWidth, 20+ endScreenTweet:get(), kTextAlignment.center)
+    -- else
+    --     gfx.drawTextAligned("SIGNAL LOST", rectWidth, 20+ endScreenTweet:get(), kTextAlignment.center)
+    -- end
     -- middle part
-    core:draw( 50,70 + endScreenTweet:get())
-    gfx.setFont(smallFontAmmolite,gfx.kVariantItalic)
-    gfx.drawTextAligned("X"..player.core, 90, 80 + endScreenTweet:get(), kTextAlignment.center)
+    if loadedScreen and playerCore < player.core then
+        playerCore += 5
+    end
+    if playerCore > player.core then
+        playerCore = player.core
+    end
+    if loadedScreen then
+        gfx.setFont(diamond_20,gfx.kVariantItalic)
+        gfx.drawTextAligned("CELLS EARNED", 190,35 + endScreenTweet:get(), kTextAlignment.center)
+        gfx.setFont(smallFont,gfx.kVariantItalic)
+        core:draw( 180,70 + endScreenTweet:get())
+        gfx.drawTextAligned("x "..playerCore, 225, 80 + endScreenTweet:get(), kTextAlignment.center)
+    end
     local screenWidth = playdate.display.getWidth()
     local screenHeight = playdate.display.getHeight()
-    local enemyImage = enemy:scaledImage(1)
-    local imageWidth, imageHeight = enemyImage:getSize()
-    local imageX = (screenWidth - imageWidth) / 2
-    local imageY = (screenHeight - imageHeight) / 2
-    gfx.setImageDrawMode(gfx.kDrawModeCopy)
-    enemyImage:draw(imageX - 12, imageY - 35 + endScreenTweet:get())
+    -- local enemyImage = enemy:scaledImage(1)
+    -- local imageWidth, imageHeight = enemyImage:getSize()
+    -- local imageX = (screenWidth - imageWidth) / 2
+    -- local imageY = (screenHeight - imageHeight) / 2
+    -- gfx.setImageDrawMode(gfx.kDrawModeCopy)
+    -- enemyImage:draw(imageX - 12, imageY - 35 + endScreenTweet:get())
+    -- gfx.setImageDrawMode(gfx.kDrawModeFillWhite)
+    -- gfx.drawTextAligned("X"..player.enemiesKilled, imageX + 40, 80 + endScreenTweet:get(), kTextAlignment.center)
     gfx.setImageDrawMode(gfx.kDrawModeFillWhite)
-    gfx.drawTextAligned("X"..player.enemiesKilled, imageX + 40, 80 + endScreenTweet:get(), kTextAlignment.center)
-    gfx.setImageDrawMode(gfx.kDrawModeFillWhite)
-    gfx.setFont(diamond_20,gfx.kVariantItalic)
-    gfx.drawTextAligned("LV", 305, 77 + endScreenTweet:get(), kTextAlignment.center)
-    gfx.setFont(smallFontAmmolite,gfx.kVariantItalic)
-    gfx.drawTextAligned("X"..player.level, 330, 80 + endScreenTweet:get(), kTextAlignment.center)
+    -- gfx.setFont(diamond_20,gfx.kVariantItalic)
+    -- gfx.drawTextAligned("LV", 305, 77 + endScreenTweet:get(), kTextAlignment.center)
+    -- gfx.setFont(smallFontAmmolite,gfx.kVariantItalic)
+    -- gfx.drawTextAligned("X"..player.level, 330, 80 + endScreenTweet:get(), kTextAlignment.center)
     -- unlock part
-    gfx.setColor(gfx.kColorWhite)
-    local width = rectWidth + 150 
-    local height = rectHeight - 80
-    local offset = 35
-    gfx.setLineWidth(2)
-    gfx.drawRect(rectX + rectWidth/2 - width/2, rectY +  rectHeight/2 - height/2 + offset + endScreenTweet:get(), width, height)
-    gfx.setFont(smallFontAmmolite,gfx.kVariantItalic)
-    gfx.setImageDrawMode(gfx.kDrawModeFillWhite)
-    gfx.drawTextAligned("UNLOCKS", rectWidth, 125 + endScreenTweet:get(), kTextAlignment.center)
-    local offset = 0
-    local offsetAdd = 10
-    local totalWidth = 0
-    local scaledImageWidth = 0
-    local imageWidth = 30
-    local imageHeight = 30
+    if table.count(player.currentUnlocks) > 0 and loadedPerks then
+        if not unlockTimerBool then
+            unlockTimerBool = true
+            visibleUnlocks = 0
+            unlockTimer = playdate.timer.keyRepeatTimerWithDelay(500, 500, function()
+                if visibleUnlocks < table.count(player.currentUnlocks) then
+                    visibleUnlocks += 1
+                else
+                    unlockTimer:remove() -- Arrête le timer quand tout est affiché
+                    unlockTimer = nil
+                end
+            end)
+        end
+        gfx.setColor(gfx.kColorWhite)
+        local width = rectWidth + 150 
+        local height = rectHeight - 80
+        local offset = 35
+        
+        gfx.setFont(smallFontAmmolite, gfx.kVariantItalic)
+        gfx.setImageDrawMode(gfx.kDrawModeFillWhite)
+        gfx.drawTextAligned("NEW AVAILABLE PERKS", rectWidth, 125 + endScreenTweet:get(), kTextAlignment.center)
+        
+        local offset = 0
+        local offsetAdd = 10
+        local totalWidth = 0
+        local scaledImageWidth = 0
+        
+        local rectCenterX = rectX + rectWidth / 2
+        local rectCenterY = rectY + rectHeight / 2 + offset + endScreenTweet:get()
     
-    local rectCenterX = rectX + rectWidth / 2
-    local rectCenterY = rectY + rectHeight / 2 + offset + endScreenTweet:get()
-    
-    table.each(player.currentUnlocks, function (w)
-        scaledImageWidth = w.image:scaledImage(1):getSize()
-        totalWidth = totalWidth + scaledImageWidth + offsetAdd
-    end)
-    totalWidth = totalWidth - offsetAdd 
-    
-    local startX = rectCenterX - totalWidth / 2
-    
-    table.each(player.currentUnlocks, function (w)
-        gfx.setImageDrawMode(gfx.kDrawModeCopy)
-        imageWidth, imageHeight = w.image:getSize()
-        w.image:scaledImage(1):draw(startX + offset, rectCenterY - imageHeight / 2 + 40)
-        offset = offset + scaledImageWidth + offsetAdd
-    end)
+        -- Calculer la largeur totale pour centrer les images
+        for i = 1, math.min(visibleUnlocks, #player.currentUnlocks) do
+            local w = player.currentUnlocks[i]
+            scaledImageWidth = w.image:scaledImage(1):getSize()
+            totalWidth = totalWidth + scaledImageWidth + offsetAdd
+        end
+        totalWidth = totalWidth - offsetAdd 
+        local startX = rectCenterX - totalWidth / 2
+        
+        -- Affichage progressif des images
+        for i = 1, math.min(visibleUnlocks, #player.currentUnlocks) do
+            local w = player.currentUnlocks[i]
+            gfx.setImageDrawMode(gfx.kDrawModeCopy)
+            local imageWidth, imageHeight = w.image:getSize()
+            w.image:scaledImage(1):draw(startX + offset, rectCenterY - imageHeight / 2 + 45)
+            offset = offset + scaledImageWidth + offsetAdd
+        end
+    end
     gfx.setFont(verySmallFont,gfx.kVariantItalic)
     gfx.setImageDrawMode(gfx.kDrawModeFillWhite)
     gfx.drawTextAligned("PRESS BUTTON TO CONTINUE", rectWidth, 200 + endScreenTweet:get(), kTextAlignment.center)
@@ -495,7 +532,7 @@ function UiManager:mainMenuUpdate()
     mainMenu:draw(0,0)
     gfx.setFont(font,gfx.kVariantBold)
     gfx.drawTextAligned("PLAY", 200, 41, kTextAlignment.center)
-    gfx.drawTextAligned("UPGRADE", 200, 106, kTextAlignment.center)
+    gfx.drawTextAligned("SHOP", 200, 106, kTextAlignment.center)
     gfx.drawTextAligned("COLLECTION", 200, 171, kTextAlignment.center)
     if lockInput then return end
     if menuMoving == true and chooseCannonBool == false then

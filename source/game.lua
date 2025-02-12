@@ -127,11 +127,27 @@ function Game:endGame()
     if self.level.Level == playerBonus.gameData.mapCount and playerBonus.gameData.mapCount < #wavesData then
         playerBonus.gameData.mapCount = playerBonus.gameData.mapCount + 1
     end
-    
-    for _, s in ipairs(spawners) do s:stopSpawn() end
-    for _, e in ipairs(enemies) do enemyManager:death(e) end
-    for _, b in ipairs(bullets) do b:destroyWithParticles() end
-    
+    for i = #spawners, 1, -1 do
+        spawners[i]:stopSpawn()
+    end
+
+    for i = #enemies, 1, -1 do
+        local success, err = pcall(function()
+            enemyManager:death(enemies[i])
+        end)
+        if not success then
+            print("Error destroying enemy:", err)
+        end
+    end
+
+    for i = #bullets, 1, -1 do
+        local success, err = pcall(function()
+            bullets[i]:destroyWithParticles()
+        end)
+        if not success then
+            print("Error destroying bullet:", err)
+        end
+    end
     player.success = true
     for _, unlock in ipairs(unlocksData) do
         if not table.contains(player.unlocks, unlock) and unlock.condition and unlock.condition:checkCondition() then
@@ -152,11 +168,27 @@ function Game:loseGame()
     lockInput = false
     self.finish = true
     
-    for _, s in ipairs(spawners) do s:stopSpawn() end
-    player.cannonGunSprite:setVisible(false)
-    
-    for _, e in ipairs(enemies) do enemyManager:death(e) end
-    for _, b in ipairs(bullets) do b:destroyWithParticles() end
+    for i = #spawners, 1, -1 do
+        spawners[i]:stopSpawn()
+    end
+
+    for i = #enemies, 1, -1 do
+        local success, err = pcall(function()
+            enemyManager:death(enemies[i])
+        end)
+        if not success then
+            print("Error destroying enemy:", err)
+        end
+    end
+
+    for i = #bullets, 1, -1 do
+        local success, err = pcall(function()
+            bullets[i]:destroyWithParticles()
+        end)
+        if not success then
+            print("Error destroying bullet:", err)
+        end
+    end
     
     player.success = false
     for _, unlock in ipairs(unlocksData) do
