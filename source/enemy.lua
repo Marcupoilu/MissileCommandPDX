@@ -57,23 +57,39 @@ function Enemy:update()
     if not self.active then return end
     
     -- Optimisation de la gestion des balles en itérant sur une copie
-    local newOverlappingSprites = {}
-    for _, bullet in ipairs(self.currentOverlappingSprites) do
+    -- local newOverlappingSprites = {}
+    -- for _, bullet in ipairs(self.currentOverlappingSprites) do
+    --     if bullet.resetTick then
+    --         bullet.resetTick = false
+    --         if bullet.tickTime then
+    --             bullet.tickTime = bullet.tick
+    --         end
+    --     elseif bullet.tickTime then
+    --         bullet.tickTime -= refreshRate
+    --         if bullet.tickTime > 0 then
+    --             table.insert(newOverlappingSprites, bullet)
+    --         end
+    --     else
+    --         table.insert(newOverlappingSprites, bullet)
+    --     end
+    -- end
+    -- self.currentOverlappingSprites = newOverlappingSprites
+    table.each(self.currentOverlappingSprites, function (bullet)
         if bullet.resetTick then
+            table.remove(self.currentOverlappingSprites, indexOf(self.currentOverlappingSprites, bullet))
             bullet.resetTick = false
-            if bullet.tickTime then
+            if bullet.tickTime ~= nil then
                 bullet.tickTime = bullet.tick
             end
-        elseif bullet.tickTime then
-            bullet.tickTime -= refreshRate
-            if bullet.tickTime > 0 then
-                table.insert(newOverlappingSprites, bullet)
-            end
-        else
-            table.insert(newOverlappingSprites, bullet)
         end
-    end
-    self.currentOverlappingSprites = newOverlappingSprites
+        if bullet.tickTime ~= nil then
+            bullet.tickTime -= refreshRate
+            if bullet.tickTime <= 0 then
+                table.remove(self.currentOverlappingSprites, indexOf(self.currentOverlappingSprites, bullet))
+                bullet.tickTime = bullet.tick
+            end
+        end
+    end)
     
     if self.dotValues > 0 then
         self.dotTimer -= refreshRate
