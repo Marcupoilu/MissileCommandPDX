@@ -18,7 +18,7 @@ function createUpgradesData()
         UpgradeStat({{name="core",value=100}}, "+100 Core", "images/ui/core",10000,1, true, "core"),
         UpgradeStat({{name="hp",value=5}}, "+5 HP", "images/ui/icons/hpMax",10000,1, true, "hpRegen"),
         UpgradeStat({{name="bulletHpBonus",value=1}}, "+1 Bullet Piercing", "images/ui/icons/piercing",10000,1, nil, "bulletHpBonus"),
-        UpgradeStat({{name="damageBonus",value=5},{name="scaleBonus",value=5}, {name="projectileSpeedBonus",value=5}, {name="attackSpeedBonus",value=5}}, "+5% Omni", "images/ui/icons/omni",5, 10, nil, "omni"),
+        UpgradeStat({{name="damageBonus",value=5},{name="scaleBonus",value=5}, {name="projectileSpeedBonus",value=5}, {name="bulletHpBonus",value=1}}, "+5% Omni", "images/ui/icons/omni",5, 10, nil, "omni"),
         UpgradeWeapon("SimpleCannon", "Cannon", "", "images/ui/icons/simpleCannon",5, 2 ),
         UpgradeWeapon("Beam", "Laser Beam", "", "images/ui/icons/beam",5, 3 ),
         UpgradeWeapon("Aura", "Aura", "", "images/ui/icons/aura" ,5, 3),
