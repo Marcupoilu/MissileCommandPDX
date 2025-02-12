@@ -25,7 +25,7 @@ function PlayerBonus:start()
         enemiesKilled = 0,
         level = 1,
         mapCount = 1,
-        core = 10000,
+        core = 0,
         success = false,
         cannons = {table.findByParam(cannonsData, "id", "blaster")},
         unlocks = {},
@@ -41,7 +41,7 @@ function PlayerBonus:start()
             table.findByParam(shopItemsData, "name", "Speed Up"),
             table.findByParam(shopItemsData, "name", "Scale Up"),
             table.findByParam(shopItemsData, "name", "Damage Up"),
-            table.findByParam(shopItemsData, "name", "Bolter")
+            table.findByParam(shopItemsData, "name", "Bolter Cannon")
         }
     }
 
