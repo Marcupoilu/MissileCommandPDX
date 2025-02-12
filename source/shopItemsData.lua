@@ -8,6 +8,7 @@ shopItemsData =
     -- ShopItem("Cooldown-",table.findByParam(unlocksData, "name","Cooldown-"),800, 0, 5, 1.5),
     ShopItem("XP+",table.findByParam(unlocksData, "name","XP+"),600, 0, 5, 2),
     ShopItem("Regeneration",table.findByParam(unlocksData, "name","Regeneration"),1000, 0, 5, 1.5),
+    ShopItem("Bullet Piercing",table.findByParam(unlocksData, "name","Bullet Piercing"),1000, 0, 5, 1.5),
     ShopItem("Duration",table.findByParam(unlocksData, "name","Duration"),800, 0, 5, 2),
     ShopItem("Life Up",table.findByParam(unlocksData, "name","Life Up"),2000, 0, 5, 2.5),
     ShopItem("Shield",table.findByParam(unlocksData, "name","Shield"),800, 0, 5, 1.5),

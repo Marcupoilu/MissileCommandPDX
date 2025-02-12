@@ -19,7 +19,7 @@ function Projectile:init(x,y,speed, damage, offsetCrank, scale, duration)
     self.damage = damage + ((player.damageBonus*damage)/100)
     self.scale =  scale + ((player.scaleBonus*scale)/100)
     self.resetTick = false
-    if duration ~= nil then
+    if duration ~= nil and not self:isa(BulletAura) then
         self.duration = duration + ((player.durationBonus*duration)/100)
     end
     self.radius = 0
@@ -99,7 +99,7 @@ end
 
 function  Projectile:loseHp(damage)
     self.hp -= damage
-    if self.hp <= 0 then
+    if self.hp + player.bulletHpBonus <= 0 then
         self:destroy()
     end
 end

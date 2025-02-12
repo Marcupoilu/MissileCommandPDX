@@ -17,6 +17,7 @@ unlocksData =
     UnlockWeapon("Tracer", gfx.image.new("images/ui/icons/tracer"), "Clear City 2", conditionMapCleared(8), table.findByParam(upgradesData, "type", "Tracer"),"Laser bouncing on walls"),
     UnlockWeapon("Wiper", gfx.image.new("images/ui/icons/wiper"), "Clear City 3", conditionMapCleared(9), table.findByParam(upgradesData, "type", "Wiper"),"Instantly damages all enemies"),
     -- UnlockPassive("Cooldown-", gfx.image.new("images/ui/icons/cooldown"), "Clear Deep Space 3", conditionMapCleared(3), getUpgradePassive("attackSpeedBonus"), "-10% Weapons Cooldown",250, 0, 5, 1.5),
+    UnlockPassive("Bullet Piercing", gfx.image.new("images/ui/icons/piercing"), "Clear Orbit 3", Condition("enemiesKilled", 1,true), getUpgradePassive("bulletHpBonus"),"+1 Bullet Piercing",250, 0, 5, 1.5),
     UnlockPassive("Regeneration", gfx.image.new("images/ui/icons/regen"), "Clear Orbit 3", conditionMapCleared(6), getUpgradePassive("regenerationRate"),"+20% Regeneration Rate",250, 0, 5, 1.5),
     UnlockPassive("Omni", gfx.image.new("images/ui/icons/omni"), "Clear City 3", conditionMapCleared(9), getUpgradePassiveByName("omni"),"+5% Weapons Damage, Cooldown, Scale And Speed",1000, 0, 1, 1.5),
     UnlockPassive("HP+", gfx.image.new("images/ui/icons/hpMax"), "Level up 15 times", Condition("level", 15, true), getUpgradePassive("hpMax"),"+5 HP",500, 0, 5, 1.5),
