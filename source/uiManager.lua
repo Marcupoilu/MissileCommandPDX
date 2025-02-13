@@ -416,7 +416,7 @@ function UiManager:winScreenUpdate()
     -- end
     -- middle part
     if loadedScreen and playerCore < player.core then
-        playerCore += 5
+        playerCore += 20
     end
     if playerCore > player.core then
         playerCore = player.core
