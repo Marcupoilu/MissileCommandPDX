@@ -98,21 +98,21 @@ function createWavesData()
                 Wave(--18
                 {
                     EnemySpawner(math.random(100,100), 34, 0, 10, EnemySmallEight, enemiesData.EnemySmallEight),
-                    EnemySpawner(math.random(100,100), 34, 0, 5, EnemyMediumOne, enemiesData.EnemyMediumOne),
-                    EnemySpawner(math.random(100,100), 34, 0, 1, EnemyLargeOne, enemiesData.EnemyLargeOne),
+                    EnemySpawner(math.random(50,50), 34, 0, 5, EnemyMediumOne, enemiesData.EnemyMediumOne),
+                    EnemySpawner(math.random(0,0), 34, 0, 1, EnemyLargeOne, enemiesData.EnemyLargeOne),
                 }), 
                 Wave(--19
                 {
                     EnemySpawner(math.random(100,100), 34, 0, 8, EnemySmallEight, enemiesData.EnemySmallEight),
-                    EnemySpawner(math.random(100,100), 34, 0, 8, EnemyMediumOne, enemiesData.EnemyMediumOne),
-                    EnemySpawner(math.random(100,100), 34, 0, 2, EnemyLargeOne, enemiesData.EnemyLargeOne),
+                    EnemySpawner(math.random(50,50), 34, 0, 8, EnemyMediumOne, enemiesData.EnemyMediumOne),
+                    EnemySpawner(math.random(0,0), 34, 0, 2, EnemyLargeOne, enemiesData.EnemyLargeOne),
 
                 }),
                 Wave(--20
                 {
                     EnemySpawner(math.random(100,100), 34, 0, 5, EnemySmallEight, enemiesData.EnemySmallEight),
-                    EnemySpawner(math.random(100,100), 34, 0, 10, EnemyMediumOne, enemiesData.EnemyMediumOne),
-                    EnemySpawner(math.random(100,100), 34, 0, 3, EnemyLargeOne, enemiesData.EnemyLargeOne),
+                    EnemySpawner(math.random(50,50), 34, 0, 10, EnemyMediumOne, enemiesData.EnemyMediumOne),
+                    EnemySpawner(math.random(0,0), 34, 0, 3, EnemyLargeOne, enemiesData.EnemyLargeOne),
                 })        
             }
         },
@@ -125,37 +125,37 @@ function createWavesData()
                 Wave(--1
                 {
                     EnemySpawner(math.random(1000,1000), 34, 0, 5, Xwing, enemiesData.Xwing),
-                    EnemySpawner(math.random(1000,1000), 34, 0, 5, EnemySmallFive, enemiesData.EnemySmallFive),
+                    EnemySpawner(math.random(1000,1000), 34, 0, 5, EnemySmallTwo, enemiesData.EnemySmallTwo),
                 }),
                 Wave(--2
                 {
                     EnemySpawner(math.random(250,250), 34, 0, 10, Xwing, enemiesData.Xwing),
-                    EnemySpawner(math.random(500,500), 34, 0, 5, EnemySmallFive, enemiesData.EnemySmallFive),
+                    EnemySpawner(math.random(500,500), 34, 0, 5, EnemySmallTwo, enemiesData.EnemySmallTwo),
                 }),
                 Wave(--3
                 {
                     EnemySpawner(math.random(250,250), 34, 0, 5, Xwing, enemiesData.Xwing),
-                    EnemySpawner(math.random(500,500), 34, 0, 10, EnemySmallFive, enemiesData.EnemySmallFive),
+                    EnemySpawner(math.random(500,500), 34, 0, 10, EnemySmallTwo, enemiesData.EnemySmallTwo),
                     EnemySpawner(math.random(1000,1000), 34, 0, 5, EnemySmallThree, enemiesData.EnemySmallThree),
                 }),
                 Wave(--4
                 {
-                    EnemySpawner(math.random(500,500), 34, 0, 15, EnemySmallFive, enemiesData.EnemySmallFive),
+                    EnemySpawner(math.random(500,500), 34, 0, 10, EnemySmallFive, enemiesData.EnemySmallFive),
                     EnemySpawner(math.random(500,500), 34, 0, 10, EnemySmallThree, enemiesData.EnemySmallThree),
                 }),            
                 Wave(--5
                 {
                     EnemySpawner(math.random(100,100), 34, 0, 5, Xwing, enemiesData.Xwing),
-                    EnemySpawner(math.random(100,100), 34, 0, 20, EnemySmallThree, enemiesData.EnemySmallThree),
+                    EnemySpawner(math.random(100,100), 34, 0, 15, EnemySmallThree, enemiesData.EnemySmallThree),
                 }),
                 Wave(--6
                 {
-                    EnemySpawner(math.random(250,250), 34, 0, 15, EnemySmallFive, enemiesData.EnemySmallFive),
+                    EnemySpawner(math.random(250,250), 34, 0, 10, EnemySmallFive, enemiesData.EnemySmallFive),
                     EnemySpawner(math.random(250,250), 34, 0, 10, EnemySmallThree, enemiesData.EnemySmallThree),
                 }),            
                 Wave(--7
                 {
-                    EnemySpawner(math.random(100,100), 34, 0, 25, EnemySmallFive, enemiesData.EnemySmallFive),
+                    EnemySpawner(math.random(100,100), 34, 0, 20, EnemySmallFive, enemiesData.EnemySmallFive),
                 }),           
                 Wave(--8
                 {
@@ -171,20 +171,21 @@ function createWavesData()
                 }),
                 Wave(--10
                 {
-                    EnemySpawner(math.random(1000,1000), 34, 0, 3, EnemyMediumOne, enemiesData.EnemyMediumOne),
-                    EnemySpawner(math.random(1000,1000), 34, 0, 3, EnemyMediumThree, enemiesData.EnemyMediumThree),
+                    EnemySpawner(math.random(250,250), 34, 0, 10, EnemySmallThree, enemiesData.EnemySmallThree),
+                    EnemySpawner(math.random(1000,1000), 34, 0, 1, EnemyMediumOne, enemiesData.EnemyMediumOne),
+                    EnemySpawner(math.random(1000,1000), 34, 0, 1, EnemyMediumThree, enemiesData.EnemyMediumThree),
                 }),
                 Wave(--11
                 {
-                    EnemySpawner(math.random(500,500), 34, 0, 5, EnemyMediumOne, enemiesData.EnemyMediumOne),
-                    EnemySpawner(math.random(500,500), 34, 0, 5, EnemyMediumThree, enemiesData.EnemyMediumThree),
+                    EnemySpawner(math.random(250,250), 34, 0, 15, EnemySmallThree, enemiesData.EnemySmallThree),
+                    EnemySpawner(math.random(1000,1000), 34, 0, 1, EnemyMediumOne, enemiesData.EnemyMediumOne),
+                    EnemySpawner(math.random(1000,1000), 34, 0, 1, EnemyMediumThree, enemiesData.EnemyMediumThree),
                 }),             
                 Wave(--12
                 {
-                    EnemySpawner(math.random(500,500), 34, 0, 10, EnemySmallThree, enemiesData.EnemySmallThree),
-                    EnemySpawner(math.random(1000,1000), 34, 0, 1, EnemyMediumThree, enemiesData.EnemyMediumThree),
-                    EnemySpawner(math.random(500,500), 34, 0, 10, EnemySmallFive, enemiesData.EnemySmallFive),
+                    EnemySpawner(math.random(250,250), 34, 0, 15, EnemySmallFive, enemiesData.EnemySmallFive),
                     EnemySpawner(math.random(1000,1000), 34, 0, 1, EnemyMediumOne, enemiesData.EnemyMediumOne),
+                    EnemySpawner(math.random(1000,1000), 34, 0, 1, EnemyMediumThree, enemiesData.EnemyMediumThree),
                 }),            
                 Wave(--13
                 {
@@ -199,10 +200,10 @@ function createWavesData()
                 Wave(--15
                 {
                     EnemySpawner(math.random(500,500), 34, 0, 7, EnemySmallThree, enemiesData.EnemySmallThree),
-                    EnemySpawner(math.random(1000,1000), 34, 0, 3, EnemyMediumThree, enemiesData.EnemyMediumThree),
+                    EnemySpawner(math.random(100,100), 34, 0, 2, EnemyMediumThree, enemiesData.EnemyMediumThree),
                     EnemySpawner(math.random(500,500), 34, 0, 7, EnemySmallFive, enemiesData.EnemySmallFive),
-                    EnemySpawner(math.random(1000,1000), 34, 0, 3, EnemyMediumOne, enemiesData.EnemyMediumOne),
-                    EnemySpawner(math.random(3000,3000), 34, 0, 1, EnemyLargeOne, enemiesData.EnemyLargeOne),
+                    EnemySpawner(math.random(100,100), 34, 0, 2, EnemyMediumOne, enemiesData.EnemyMediumOne),
+                    EnemySpawner(math.random(0,0), 34, 0, 1, EnemyLargeOne, enemiesData.EnemyLargeOne),
                 }),
                 Wave(--16
                 {
@@ -212,8 +213,10 @@ function createWavesData()
                 }),             
                 Wave(--17
                 {
-                    EnemySpawner(math.random(100,100), 34, 0, 20, EnemyMediumOne, enemiesData.EnemyMediumOne),
-                    EnemySpawner(math.random(1000,1000), 34, 0, 2, EnemyLargeOne, enemiesData.EnemyLargeOne),
+                    EnemySpawner(math.random(500,500), 34, 0, 8, EnemySmallThree, enemiesData.EnemySmallThree),
+                    EnemySpawner(math.random(100,100), 34, 0, 1, EnemyMediumThree, enemiesData.EnemyMediumThree),
+                    EnemySpawner(math.random(500,500), 34, 0, 8, EnemySmallFive, enemiesData.EnemySmallFive),
+                    EnemySpawner(math.random(100,100), 34, 0, 1, EnemyMediumOne, enemiesData.EnemyMediumOne),
                 }), 
                 Wave(--18
                 {
@@ -243,37 +246,36 @@ function createWavesData()
                 Wave(--1
                 {
                     EnemySpawner(math.random(1000,1000), 34, 0, 10, Xwing, enemiesData.Xwing),
-                    EnemySpawner(math.random(2000,2000), 34, 0, 5, EnemySmallFour, enemiesData.EnemySmallFour),
+                    EnemySpawner(math.random(2000,2000), 34, 0, 5, EnemySmallThree, enemiesData.EnemySmallThree),
                 }),
                 Wave(--2
                 {
                     EnemySpawner(math.random(500,500), 34, 0, 10, Xwing, enemiesData.Xwing),
-                    EnemySpawner(math.random(1000,1000), 34, 0, 10, EnemySmallFour, enemiesData.EnemySmallFour),
+                    EnemySpawner(math.random(1000,1000), 34, 0, 10, EnemySmallThree, enemiesData.EnemySmallThree),
                 }),
                 Wave(--3
                 {
-                    EnemySpawner(math.random(500,500), 34, 0, 10, EnemySmallFour, enemiesData.EnemySmallFour),
-                    EnemySpawner(math.random(500,500), 34, 0, 10, EnemySmallFive, enemiesData.EnemySmallFive),
+                    EnemySpawner(math.random(500,500), 34, 0, 10, EnemySmallTwo, enemiesData.EnemySmallTwo),
+                    EnemySpawner(math.random(500,500), 34, 0, 10, EnemySmallThree, enemiesData.EnemySmallThree),
                 }),
                 Wave(--4
                 {
-                    EnemySpawner(math.random(100,100), 34, 0, 10, EnemySmallFive, enemiesData.EnemySmallFive),
-                    EnemySpawner(math.random(100,100), 34, 0, 5, EnemySmallEight, enemiesData.EnemySmallEight),
+                    EnemySpawner(math.random(100,100), 34, 0, 10, EnemySmallTwo, enemiesData.EnemySmallTwo),
+                    EnemySpawner(math.random(100,100), 34, 0, 5, EnemySmallFive, enemiesData.EnemySmallFive),
                 }),            
                 Wave(--5
                 {
-                    EnemySpawner(math.random(100,100), 34, 0, 10, EnemySmallEight, enemiesData.EnemySmallEight),
-                    EnemySpawner(math.random(100,100), 34, 0, 5, EnemySmallSeven, enemiesData.EnemySmallSeven),
+                    EnemySpawner(math.random(100,100), 34, 0, 10, EnemySmallSix, enemiesData.EnemySmallSix),
+                    EnemySpawner(math.random(100,100), 34, 0, 5, EnemySmallFive, enemiesData.EnemySmallFive),
                 }),
                 Wave(--6
                 {
-                    EnemySpawner(math.random(100,100), 34, 0, 15, EnemySmallEight, enemiesData.EnemySmallEight),
+                    EnemySpawner(math.random(100,100), 34, 0, 15, EnemySmallFive, enemiesData.EnemySmallFive),
                     EnemySpawner(math.random(100,100), 34, 0, 1, EnemyMediumOne, enemiesData.EnemyMediumOne),
                 }),            
                 Wave(--7
                 {
                     EnemySpawner(math.random(100,100), 34, 0, 5, EnemySmallEight, enemiesData.EnemySmallEight),
-                    EnemySpawner(math.random(100,100), 34, 0, 10, EnemySmallSix, enemiesData.EnemySmallSix),
                     EnemySpawner(math.random(100,100), 34, 0, 1, EnemyMediumOne, enemiesData.EnemyMediumOne),
 
                 }),           
