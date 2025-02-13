@@ -2,7 +2,7 @@ unlocksData =
 {
     -- name, image, description, condition, upgrade, cost, level, levelMax, multiplyer
     UnlockWeapon("Shockwave", gfx.image.new("images/ui/icons/shockwave"), "Kill 100 enemies", Condition("enemiesKilled", 100,true), table.findByParam(upgradesData, "type", "Shockwave"),"Wide projectiles that pushes back enemies"),
-    UnlockWeapon("Guided", gfx.image.new("images/ui/icons/guided"), "Kill 1000 enemies", Condition("enemiesKilled", 1000,true), table.findByParam(upgradesData, "type", "Guided"),"Auto-guided bullets"),
+    -- UnlockWeapon("Guided", gfx.image.new("images/ui/icons/guided"), "Kill 1000 enemies", Condition("enemiesKilled", 1000,true), table.findByParam(upgradesData, "type", "Guided"),"Auto-guided bullets"),
     UnlockWeapon("Aura", gfx.image.new("images/ui/icons/aura"), "Kill 3000 enemies", Condition("enemiesKilled", 3000, true), table.findByParam(upgradesData, "type", "Aura"),"Zone that damages enemies inside"),
     UnlockWeapon("Toxic Vape", gfx.image.new("images/ui/icons/toxicVape"), "Kill 5000 enemies", Condition("enemiesKilled", 5000,true), table.findByParam(upgradesData, "type", "ToxicVape"),"Slow projectile that poisons enemies"),
     UnlockWeapon("Blackhole", gfx.image.new("images/ui/icons/blackHole"), "Kill 10000 enemies", Condition("enemiesKilled", 10000, true), table.findByParam(upgradesData, "type", "Blackhole"),"Attracts enemies at its center"),
