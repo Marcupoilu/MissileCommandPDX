@@ -27,6 +27,7 @@ function Shockwave:changeLevel()
         self.attackSpeed -= 1000
         self.duration += 3
         self.hp += 3
+        self.scale += 0.25
     end
     if self.level == 5 then
         self.projectileAmount += 1
