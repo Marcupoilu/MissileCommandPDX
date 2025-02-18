@@ -11,7 +11,7 @@ function createUpgradesData()
         UpgradeStat({{name="regenerationRate",value=20}}, "+20% hp regen \nspeed", "images/ui/icons/regen",5,6, nil, "regen"),
         UpgradeStat({{name="projectileSpeedBonus",value=20}}, "+20% bullet \nspeed", "images/ui/icons/projectileSpeed",5,4, nil, "speed"),
         UpgradeStat({{name="hpMax",value=5}, {name="hp", value=5}}, "+5 HP MAX", "images/ui/icons/hpMax",5,3, nil, "hp"),
-        UpgradeStat({{name="durationBonus",value=20}}, "+20% duration", "images/ui/icons/duration",5,4, nil, "duration"),
+        UpgradeStat({{name="durationBonus",value=10}}, "+10% duration", "images/ui/icons/duration",5,4, nil, "duration"),
         UpgradeStat({{name="lives",value=1}}, "+1 Life", "images/ui/icons/lifeUp",5,9, true, "lifeUp"),
         UpgradeStat({{name="shield",value=1}}, "+1 Armor", "images/ui/icons/shield",5,4, nil, "shield"),
         UpgradeStat({{name="rerolls",value=2}}, "+2 Reroll", "images/ui/icons/rerolls",5,2, true, "rerolls"),

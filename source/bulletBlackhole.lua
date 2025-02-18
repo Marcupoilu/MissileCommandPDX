@@ -9,7 +9,7 @@ function BulletBlackhole:init(x,y,speed, damage, offsetCrank, scale, duration)
     self.tick = 300
     self.currentCollision = false
     self.particleSystem = {}
-    self.radius = 70
+    self.radius = 110
     self:setCenter(0.5,0.5)
     self:setZIndex(-1000)
     -- local width,height = self:getSize()

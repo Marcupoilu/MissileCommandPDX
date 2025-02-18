@@ -72,7 +72,7 @@ function BotPlayer:aimAtTarget()
 
         -- Calcul de la différence d'angle
         local angleDiff = (targetAngle - crankPosition + 540) % 360 - 180
-        local rotationSpeed = 6 -- Définir une vitesse angulaire constante
+        local rotationSpeed = 8 -- Définir une vitesse angulaire constante
 
         if math.abs(angleDiff) > rotationSpeed then
             if angleDiff > 0 then

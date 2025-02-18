@@ -6,7 +6,7 @@ function Rocket:init(attackSpeed, x, y, speed, damage, projectileAmount, scale, 
     Rocket.super.init(self, attackSpeed, speed, damage, projectileAmount, scale)
     self.x = x
     self.duration = duration
-    self.explosionDamage = 2
+    self.explosionDamage = 5
     self.y = y
     -- self:debugLevel(10)
 end
@@ -16,6 +16,7 @@ function Rocket:changeLevel()
     if self.level == 2 then
         self.scale += 0.25
         self.speed += 2
+        self.explosionDamage += 2
     end
     if self.level == 3 then
         self.projectileAmount += 1

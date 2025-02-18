@@ -18,17 +18,16 @@ function Plasma:changeLevel()
     end
     if self.level == 3 then
         self.projectileAmount += 1
-        self.attackSpeed -= 1000
+        self.attackSpeed -= 500
     end
     if self.level == 4 then
         self.damage += 0.25
-        self.scale += 0.25
-        self.duration += 1000
+        self.scale += 0.5
     end
     if self.level == 5 then
         self.projectileAmount += 1
+        self.damage += 0.5
         self.speed += 2
-        self.attackSpeed -= 1000
     end
 end
 

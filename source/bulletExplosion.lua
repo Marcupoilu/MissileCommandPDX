@@ -10,7 +10,6 @@ function BulletExplosion:init(x,y,speed, damage, offsetCrank, scale, duration, e
     self.damage = explosionDamage
     self.hp = 1000
     self:moveTo(x,y)
-    self:setScale(2)
     self:setCollideRect(0, 0, self:getSize())
     -- self.tick = 100
 end

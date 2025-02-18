@@ -13,41 +13,41 @@ enemiesData =
     EnemySmallFour = {speed = 20, hp = 4, xp = 1, damage = 1, enemyImage = gfx.image.new("images/enemies/small/enemy_small_04"), core = 1},
 
     -- STRAIGHT 5 HP
-    EnemySmallFive = {speed = 15, hp = 5, xp = 1, damage = 1, enemyImage = gfx.image.new("images/enemies/small/enemy_small_05"), core = 1},
+    EnemySmallFive = {speed = 15, hp = 5, xp = 1, damage = 1, enemyImage = gfx.image.new("images/enemies/small/enemy_small_05"), core = 2},
 
     -- FAST STRAIGHT 4 HP
-    EnemySmallSix = {speed = 40, hp = 4, xp = 1, damage = 1, enemyImage = gfx.image.new("images/enemies/small/enemy_small_06"), core = 1},
+    EnemySmallSix = {speed = 40, hp = 4, xp = 1, damage = 1, enemyImage = gfx.image.new("images/enemies/small/enemy_small_06"), core = 2},
 
     -- STRAIGHT 10 HP
-    EnemySmallSeven = {speed = 20, hp = 5, xp = 10, damage = 1, enemyImage = gfx.image.new("images/enemies/small/enemy_small_07"), core = 1},
+    EnemySmallSeven = {speed = 20, hp = 5, xp = 10, damage = 1, enemyImage = gfx.image.new("images/enemies/small/enemy_small_07"), core = 2},
 
     -- SLOW STRAIGHT 15 HP
     EnemySmallEight = {speed = 15, hp = 15, xp = 1, damage = 1, enemyImage = gfx.image.new("images/enemies/small/enemy_small_08"), core = 2},
 
     -- FAST STRAIGHT 12 HP
-    EnemyMediumOne = {speed = 30, hp = 12, xp = 8, damage = 3, enemyImage = gfx.image.new("images/enemies/medium/enemy_medium_01"), core = 6},
+    EnemyMediumOne = {speed = 30, hp = 12, xp = 8, damage = 3, enemyImage = gfx.image.new("images/enemies/medium/enemy_medium_01"), core = 7},
 
     -- CIRCULAR 25 HP 
-    EnemyMediumTwo = {speed = 12, hp = 25, xp = 8, damage = 3, enemyImage = gfx.image.new("images/enemies/medium/enemy_medium_02"), core = 7},
+    EnemyMediumTwo = {speed = 12, hp = 25, xp = 8, damage = 3, enemyImage = gfx.image.new("images/enemies/medium/enemy_medium_02"), core = 8},
 
     -- SINUS 30 HP
-    EnemyMediumThree = {speed = 20, hp = 30, xp = 8, damage = 3, enemyImage = gfx.image.new("images/enemies/medium/enemy_medium_03"), core = 7},
+    EnemyMediumThree = {speed = 20, hp = 30, xp = 8, damage = 3, enemyImage = gfx.image.new("images/enemies/medium/enemy_medium_03"), core = 9},
     
     -- SLOW STRAIGHT 80 HP
-    EnemyMediumFour = {speed = 12, hp = 80, xp = 8, damage = 3, enemyImage = gfx.image.new("images/enemies/medium/enemy_medium_04"), core = 8},
+    EnemyMediumFour = {speed = 12, hp = 80, xp = 8, damage = 3, enemyImage = gfx.image.new("images/enemies/medium/enemy_medium_04"), core = 10},
 
     -- STRAIGHT 50 HP
-    EnemyMediumFive = {speed = 20, hp = 50, xp = 10, damage = 3, enemyImage = gfx.image.new("images/enemies/medium/enemy_medium_05"), core = 8},
+    EnemyMediumFive = {speed = 20, hp = 50, xp = 10, damage = 3, enemyImage = gfx.image.new("images/enemies/medium/enemy_medium_05"), core = 10},
 
     -- STRAIGHT 100 HP
-    EnemyLargeOne = {speed = 12, hp = 100, xp = 15, damage = 5, enemyImage = gfx.image.new("images/enemies/large/enemy_large_01"), core = 15},
+    EnemyLargeOne = {speed = 12, hp = 100, xp = 15, damage = 5, enemyImage = gfx.image.new("images/enemies/large/enemy_large_01"), core = 20},
 
-    -- SLOW STRAIGHT 400 HP
-    EnemyLargeTwo = {speed = 10, hp = 400, xp = 20, damage = 15, enemyImage = gfx.image.new("images/enemies/large/enemy_large_02"), core = 20},
+    -- SLOW STRAIGHT 200 HP
+    EnemyLargeTwo = {speed = 10, hp = 200, xp = 20, damage = 15, enemyImage = gfx.image.new("images/enemies/large/enemy_large_02"), core = 40},
 
     -- SLOW STRAIGHT 600 HP
-    EnemyLargeThree = {speed = 10, hp = 600, xp = 30, damage = 20, enemyImage = gfx.image.new("images/enemies/large/enemy_large_03"), core = 30},
+    EnemyLargeThree = {speed = 10, hp = 600, xp = 30, damage = 20, enemyImage = gfx.image.new("images/enemies/large/enemy_large_03"), core = 60},
 
     -- VERY SLOW STRAIGHT 1000 HP
-    EnemyLargeFour = {speed = 5, hp = 1000, xp = 50, damage = 50, enemyImage = gfx.image.new("images/enemies/large/enemy_large_04"), core = 60}
+    EnemyLargeFour = {speed = 5, hp = 1000, xp = 50, damage = 50, enemyImage = gfx.image.new("images/enemies/large/enemy_large_04"), core = 100}
 }

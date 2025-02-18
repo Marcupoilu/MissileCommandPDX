@@ -13,19 +13,20 @@ end
 function Blackhole:changeLevel()
     self.level += 1
     if self.level == 2 then
-        self.duration += 2
+        self.duration += 500
     end
     if self.level == 3 then
         self.projectileAmount += 1
+        self.scale += 0.25
     end
     if self.level == 4 then
-        self.attackSpeed -= 2000
+        self.attackSpeed -= 500
         self.scale += 0.25
     end
     if self.level == 5 then
         self.projectileAmount += 1
         self.scale += 0.25
-        self.duration += 1
+        self.duration += 500
         self.attackSpeed -= 1000
     end
 end
