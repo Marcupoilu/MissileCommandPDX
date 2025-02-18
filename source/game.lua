@@ -121,6 +121,7 @@ end
 
 function Game:endGame()
     uiManager:CloseAndOpenMissionComplete()
+    soundSamplerLaserBeam:stop()
     lockInput = false
     self.finish = true
     
@@ -164,7 +165,7 @@ end
 
 function Game:loseGame()
     uiManager:CloseAndOpenMissionFailed()
-
+    soundSamplerLaserBeam:stop()
     lockInput = false
     self.finish = true
     
