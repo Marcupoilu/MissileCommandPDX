@@ -8,8 +8,9 @@ function BulletRocket:init(x,y,speed, damage, offsetCrank, scale, duration, expl
     self.lineS = {}
     self.hp = 1
     self.explosionDamage = explosionDamage
-    self:setRotation(self.originAngle + 90)
-    playdate.timer.new(50, function() self:setCollideRect(0,0,self:getSize()) end)
+    -- self:setRotation(self.originAngle + 90)
+    self:setCollideRect(0,0,self:getSize())
+    -- playdate.timer.new(50, function() self:setCollideRect(0,0,self:getSize()) end)
 end
 
 function BulletRocket:reset(x, y, speed, damage, angle, scale, duration, explosionDamage)
