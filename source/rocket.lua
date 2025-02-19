@@ -21,13 +21,15 @@ function Rocket:changeLevel()
     if self.level == 3 then
         self.projectileAmount += 1
         self.explosionDamage += 2
+        self.attackSpeed -= 500
     end
     if self.level == 4 then
-        self.attackSpeed -= 1000
+        self.attackSpeed -= 500
         self.speed += 2
     end
     if self.level == 5 then
         self.projectileAmount += 1
+        self.attackSpeed -= 1000
         self.explosionDamage += 2
         self.scale += 0.25
         self.speed += 2

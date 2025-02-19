@@ -16,6 +16,7 @@ function LaserDome:changeLevel()
     self.level += 1
     if self.level == 2 then
         self.speed += 2
+        self.attackSpeed -= 1000
     end
     if self.level == 3 then
         self.damage += 0.5

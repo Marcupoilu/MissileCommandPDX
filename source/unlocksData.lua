@@ -21,7 +21,7 @@ unlocksData =
     UnlockPassive("Regeneration", gfx.image.new("images/ui/icons/regen"), "Clear Orbit 3", conditionMapCleared(6), getUpgradePassive("regenerationRate"),"+20% Regeneration Rate",250, 0, 5, 1.5),
     UnlockPassive("Omni", gfx.image.new("images/ui/icons/omni"), "Clear City 3", conditionMapCleared(9), getUpgradePassiveByName("omni"),"+5% Weapons Damage, Scale And Speed, +1 Bullet Piercing",1000, 0, 1, 1.5),
     UnlockPassive("HP+", gfx.image.new("images/ui/icons/hpMax"), "Level up 15 times", Condition("level", 15, true), getUpgradePassive("hpMax"),"+5 HP",500, 0, 5, 1.5),
-    UnlockPassive("XP+", gfx.image.new("images/ui/icons/xpUp"), "Level up 30 times", Condition("level", 30, true), getUpgradePassive("xpBonus"), "+20% XP Gain",1000, 0, 5, 2),
+    UnlockPassive("XP+", gfx.image.new("images/ui/icons/xpUp"), "Level up 30 times", Condition("level", 30, true), getUpgradePassive("xpBonus"), "+10% XP Gain",1000, 0, 5, 2),
     UnlockPassive("Reroll", gfx.image.new("images/ui/icons/rerolls"), "Level up 50 times", Condition("level", 50, true), getUpgradePassive("rerolls"),"+5 Rerolls",500, 0, 5, 1.5),
     UnlockPassive("Armor", gfx.image.new("images/ui/icons/shield"), "Level up 70 times", Condition("level", 70, true), getUpgradePassive("shield"),"-1 Damage Taken",250, 0, 5, 1.5),
     UnlockPassive("Duration", gfx.image.new("images/ui/icons/duration"), "Level up 100 times", Condition("level", 100, true), getUpgradePassive("durationBonus"),"+10% Weapons Duration",100, 0, 5, 1.5),
